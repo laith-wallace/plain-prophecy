@@ -95,6 +95,13 @@ const paths = [
     cta: "View Evidence →",
     accent: "#8b4513",
   },
+  {
+    label: "Learn by doing",
+    desc: "Swipe through 8 Daniel prophecies — commit to an answer before the reveal, then see how history and Scripture converge on Christ.",
+    href: "/prophet",
+    cta: "Start Prophet →",
+    accent: "var(--sda-accent)",
+  },
 ];
 
 export default function HomePage() {
