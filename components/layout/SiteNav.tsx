@@ -6,6 +6,7 @@ import { useState } from "react";
 const links = [
   { href: "/", label: "Home" },
   { href: "/compare", label: "Compare" },
+  { href: "/learn", label: "Learn" },
   { href: "/prophet", label: "Prophet" },
   { href: "/about", label: "About" },
 ];
@@ -70,7 +71,7 @@ export default function SiteNav() {
                 letterSpacing: "0.12em",
                 textTransform: "uppercase",
                 color:
-                  pathname === l.href
+                  pathname === l.href || (l.href !== "/" && pathname.startsWith(l.href))
                     ? "var(--sda-accent)"
                     : "rgba(255,255,255,0.65)",
                 textDecoration: "none",
@@ -124,7 +125,7 @@ export default function SiteNav() {
                 letterSpacing: "0.12em",
                 textTransform: "uppercase",
                 color:
-                  pathname === l.href
+                  pathname === l.href || (l.href !== "/" && pathname.startsWith(l.href))
                     ? "var(--sda-accent)"
                     : "rgba(255,255,255,0.75)",
                 textDecoration: "none",

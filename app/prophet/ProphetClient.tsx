@@ -160,12 +160,35 @@ function ConnectionWeb({
     ctx.fillText("CHRIST", cx, cy + 28);
   }, [completed]);
 
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Trap focus within modal and close on Escape
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    el.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
   return (
-    <div className="map-backdrop" onClick={onClose}>
-      <div className="map-container" onClick={(e) => e.stopPropagation()}>
+    <div className="map-backdrop" onClick={onClose} role="presentation">
+      <div
+        className="map-container"
+        onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Prophecy Connection Web"
+        ref={containerRef}
+        tabIndex={-1}
+        style={{ outline: "none" }}
+      >
         <div className="map-header">
           <div className="map-title">Prophecy Connection Web</div>
-          <button className="map-close-btn" onClick={onClose}>
+          <button className="map-close-btn" onClick={onClose} aria-label="Close connection web">
             ✕
           </button>
         </div>
@@ -522,10 +545,19 @@ const SwipeCard = forwardRef<
     <div
       ref={cardRef}
       className={`swipe-card${promoting ? " promoting" : ""}`}
+      role="button"
+      tabIndex={0}
+      aria-label={`Prophecy ${prophecy.number}: ${prophecy.title}. Tap or press Enter to reveal.`}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       onPointerCancel={handlePointerUp}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onReveal();
+        }
+      }}
       onClick={(e) => {
         // Only open reveal on simple tap (no drag)
         const totalDrag = Math.abs(drag.current.currentX - drag.current.startX);
@@ -816,23 +848,21 @@ export default function ProphetClient() {
         </div>
 
         {/* Circular action buttons */}
-        <div className="swipe-action-btns" aria-hidden="true">
+        <div className="swipe-action-btns">
           <button
             className="swipe-action-btn swipe-action-btn--left"
             onClick={() => {
               hideHints();
               swipeCardRef.current?.triggerSwipe("left");
             }}
-            aria-label="Not sure — swipe left"
-            tabIndex={-1}
+            aria-label="Not sure — mark prophecy as uncertain"
           >
             ✕
           </button>
           <button
             className="swipe-action-btn swipe-action-btn--reveal"
             onClick={handleReveal}
-            aria-label="Reveal prophecy"
-            tabIndex={-1}
+            aria-label="Reveal prophecy details"
           >
             ?
           </button>
@@ -842,8 +872,7 @@ export default function ProphetClient() {
               hideHints();
               swipeCardRef.current?.triggerSwipe("right");
             }}
-            aria-label="Fulfilled — swipe right"
-            tabIndex={-1}
+            aria-label="Fulfilled — mark prophecy as fulfilled"
           >
             ✓
           </button>
