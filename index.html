@@ -596,9 +596,176 @@
     .tab-btn { padding: 0.7rem 0.85rem; font-size: 0.62rem; }
     .masthead h1 { font-size: 1.7rem; }
   }
+  /* ===== SCORING EXPLAINER / HOW IT WORKS ===== */
+  .scoring-explainer {
+    margin-top: 3rem;
+    border-top: 3px double var(--ink);
+    padding-top: 2.5rem;
+  }
+
+  .se-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--neutral);
+    margin-bottom: 0.5rem;
+  }
+
+  .se-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 900;
+    margin-bottom: 0.6rem;
+    line-height: 1.15;
+  }
+
+  .se-subtitle {
+    font-size: 0.875rem;
+    color: var(--neutral);
+    line-height: 1.65;
+    max-width: 720px;
+    margin-bottom: 2rem;
+  }
+
+  .se-criteria-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .se-criterion-card {
+    border: 2px solid var(--ink);
+    display: flex;
+    gap: 0;
+    overflow: hidden;
+  }
+
+  .se-crit-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: var(--paper);
+    background: var(--ink);
+    min-width: 52px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 0.85rem 0.5rem;
+    opacity: 0.9;
+    flex-shrink: 0;
+  }
+
+  .se-crit-content {
+    padding: 0.9rem 1rem;
+  }
+
+  .se-crit-title {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+  }
+
+  .se-crit-desc {
+    font-size: 0.78rem;
+    color: #4a4540;
+    line-height: 1.6;
+  }
+
+  /* Deductions / honest assessment */
+  .se-deductions {
+    border: 2px solid var(--ink);
+    overflow: hidden;
+  }
+
+  .se-ded-header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 1.5rem 1.75rem;
+  }
+
+  .se-ded-header .se-eyebrow {
+    color: rgba(255,255,255,0.55);
+  }
+
+  .se-ded-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.65rem;
+  }
+
+  .se-ded-intro {
+    font-size: 0.84rem;
+    line-height: 1.65;
+    opacity: 0.85;
+    max-width: 800px;
+  }
+
+  .se-ded-grid {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .se-ded-item {
+    padding: 1.1rem 1.75rem;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .se-ded-item:last-child { border-bottom: none; }
+  .se-ded-item:nth-child(even) { background: var(--cream-mid); }
+
+  .se-ded-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--sda-primary);
+    margin-bottom: 0.45rem;
+  }
+
+  .se-ded-reason {
+    font-size: 0.84rem;
+    line-height: 1.68;
+    color: #3a3530;
+  }
+
+  /* Mobile adjustments for scoring explainer */
+  @media (max-width: 768px) {
+    .scoring-explainer {
+      margin-top: 2rem;
+      padding-top: 1.75rem;
+    }
+    .se-criteria-grid {
+      grid-template-columns: 1fr;
+    }
+    .se-ded-header {
+      padding: 1.1rem 1rem;
+    }
+    .se-ded-item {
+      padding: 0.9rem 1rem;
+    }
+    .se-ded-reason {
+      font-size: 0.8rem;
+    }
+  }
+
 </style>
+
 </head>
 <body>
+<div id="progress-bar"></div>
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
+<div id="share-bar">
+  <span class="sb-lbl">Share</span>
+  <button class="share-btn" id="copy-btn" onclick="copyLink()">🔗 Copy Link</button>
+  <a class="share-btn" id="wa-btn" href="" target="_blank" rel="noopener">💬 WhatsApp</a>
+  <a class="share-btn" id="tw-btn" href="" target="_blank" rel="noopener">𝕏 Twitter</a>
+  <button id="share-dismiss" onclick="document.getElementById('share-bar').style.display='none'" title="Dismiss">✕</button>
+</div>
 <div class="page-wrapper">
 
   <div class="masthead">
@@ -934,6 +1101,98 @@
         </tr>
       </tbody>
     </table>
+
+    <!-- HOW SCORING WORKS -->
+    <div class="scoring-explainer">
+
+      <div class="se-header">
+        <div class="se-eyebrow">Methodology</div>
+        <h2 class="se-title">How Scoring Works</h2>
+        <p class="se-subtitle">Each criterion is scored 1–10 on five independent axes, then averaged. This is not advocacy scoring — both traditions are held to the same evidentiary standard.</p>
+      </div>
+
+      <div class="se-criteria-grid">
+        <div class="se-criterion-card">
+          <div class="se-crit-num">01</div>
+          <div class="se-crit-content">
+            <div class="se-crit-title">Biblical Textual Basis</div>
+            <p class="se-crit-desc">Does the position have direct, explicit textual support? Proof-texts must be read in their natural grammatical and contextual sense without requiring supplementary assumptions to function. A high score here means the text says what the position claims.</p>
+          </div>
+        </div>
+        <div class="se-criterion-card">
+          <div class="se-crit-num">02</div>
+          <div class="se-crit-content">
+            <div class="se-crit-title">Internal Consistency</div>
+            <p class="se-crit-desc">Does the position hold together without requiring contradictions elsewhere in Scripture? A rebuilt Temple that reinstates animal sacrifice, for instance, contradicts Hebrews 7–10. Deductions that create new problems elsewhere are penalised.</p>
+          </div>
+        </div>
+        <div class="se-criterion-card">
+          <div class="se-crit-num">03</div>
+          <div class="se-crit-content">
+            <div class="se-crit-title">Historical Verification</div>
+            <p class="se-crit-desc">Have the prophetic anchors been confirmed by independent historical sources? Dates, decrees, and events cited as fulfilments are checked against archaeology, secular chronology, and peer-reviewed scholarship — not just denominational tradition.</p>
+          </div>
+        </div>
+        <div class="se-criterion-card">
+          <div class="se-crit-num">04</div>
+          <div class="se-crit-content">
+            <div class="se-crit-title">Hermeneutical Integrity</div>
+            <p class="se-crit-desc">Is the interpretive method applied consistently across all texts? Selective literalism (literal days for the Tribulation, symbolic language for everything else) is penalised. The day-year principle must apply wherever days are used symbolically, not just when convenient.</p>
+          </div>
+        </div>
+        <div class="se-criterion-card">
+          <div class="se-crit-num">05</div>
+          <div class="se-crit-content">
+            <div class="se-crit-title">Scholarly &amp; Historical Consensus</div>
+            <p class="se-crit-desc">How does the position fare against the weight of pre-modern exegetical tradition? The Reformation consensus, patristic writing, and academic biblical scholarship (not popular publishing) are considered. A position invented in the 1830s with no prior-century precedent scores lower here.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="se-deductions">
+        <div class="se-ded-header">
+          <div class="se-eyebrow" style="margin-bottom:0.4rem">Honest Assessment</div>
+          <h3 class="se-ded-title">Why Some SDA Positions Are Not 10/10</h3>
+          <p class="se-ded-intro">The SDA Historicist framework scores significantly higher than Futurism across every criterion — but intellectual honesty demands acknowledging where legitimate scholarly pushback exists. A 10/10 requires near-unanimous agreement among qualified exegetes. Several SDA positions, while superior to the Futurist alternative, carry interpretive steps that remain contested.</p>
+        </div>
+
+        <div class="se-ded-grid">
+
+          <div class="se-ded-item">
+            <div class="se-ded-label">Day-Year Principle — 9/10 (not 10/10)</div>
+            <p class="se-ded-reason">Numbers 14:34 and Ezekiel 4:6 provide explicit textual grounding — this is the strongest element of the Historicist case. The single point deducted reflects a genuine scholarly debate: both texts use the day-year equivalence in a specific narrative context (wilderness punishment; Ezekiel's symbolic siege act), and some exegetes question whether they constitute a universal hermeneutical rule applicable to all apocalyptic prophetic time-periods. The <em>principle</em> is explicitly stated; its <em>universal scope</em> requires an additional inference. Most proponents of the principle find the inference well-supported; not all neutral scholars concede it without argument.</p>
+          </div>
+
+          <div class="se-ded-item">
+            <div class="se-ded-label">Identity of the Rapture / Second Coming — 9/10 (not 10/10)</div>
+            <p class="se-ded-reason">The SDA position that 1 Thessalonians 4:16–17 describes a single visible Second Coming is exegetically strong (the language of "shout," "voice of the archangel," and "trump" is decidedly public). The one-point deduction acknowledges that the passage's grammar does not <em>explicitly</em> rule out a prior removal of the saints — it simply does not require one. The SDA reading is the more natural reading; it is not, however, beyond all dispute. Post-tribulation rapturists within mainstream Evangelicalism make substantially the same argument, so the debate is not unique to SDA.</p>
+          </div>
+
+          <div class="se-ded-item">
+            <div class="se-ded-label">Historical Verification of Prophetic Anchors — 9/10 (not 10/10)</div>
+            <p class="se-ded-reason">457 BC, 27 AD, 31 AD, 34 AD, 538 AD, 1798 AD are all historically documented with strong external evidence. However, "verified" is not the same as "unambiguous." The precise regnal-year calculation for Artaxerxes I places the decree in 457 BC using the Jewish civil calendar — not all chronologists agree on the exact year (some prefer 458 BC). Similarly, the precise crucifixion date of 31 AD (rather than 30 or 33 AD) involves calendar reconstruction. The dates are defensible and well-evidenced, but the margin of scholarly agreement is not absolute — hence 9, not 10.</p>
+          </div>
+
+          <div class="se-ded-item">
+            <div class="se-ded-label">Hermeneutical Origins &amp; Scholarly Pedigree — 9/10 (not 10/10)</div>
+            <p class="se-ded-reason">The Reformation consensus was strongly Historicist, and this is the dominant weight of evidence. The one-point deduction reflects that the Reformers were not monolithic in every detail of their prophetic interpretation — and that some of their Antichrist identifications were partly shaped by polemical context (anti-Rome Reformation politics) rather than purely dispassionate exegesis. Additionally, while the patristic material favours a continuous-historical reading of prophecy, full systematised Historicism as a method is largely a Reformation-era development, not a first-century consensus. These are nuances, not defeaters — but fair scoring acknowledges them.</p>
+          </div>
+
+          <div class="se-ded-item">
+            <div class="se-ded-label">Millennium Location (Rev 20) — 8/10 (not 10/10)</div>
+            <p class="se-ded-reason">The SDA reading that the millennium occurs in heaven (not on earth) is coherent with John 14:2–3 and the conditionalist view of death. However, Revelation 20 itself does not explicitly name heaven as the location — "thrones" and "souls" are mentioned, but the geography is inferred. The earth-desolate motif (Jer 4:23–27) is a strong cross-reference, though Jeremiah's immediate context was Babylonian invasion. The amillennial reading (influential in Reformed theology) arrives at similar conclusions through a different route. The SDA position is defensible but involves more inferential steps than, say, the contiguous 70-weeks reading — hence 8.</p>
+          </div>
+
+          <div class="se-ded-item">
+            <div class="se-ded-label">Application of Revelation to Real History — 8/10 (not 10/10)</div>
+            <p class="se-ded-reason">The identification of the seven churches as seven successive historical eras of church history, and the seven seals and trumpets as specific historical events, is compelling and has strong Reformation precedent. The two-point deduction reflects that some of these historical identifications involve more interpretive flexibility than others. Assigning specific trumpet blasts to the fall of Rome or the rise of Islam is plausible but not as tightly anchored to a single textual signal as, say, the 457 BC decree. The overall framework is robust; some of the specific historical mappings within it are more speculative.</p>
+          </div>
+
+        </div>
+      </div>
+
+    </div><!-- /scoring-explainer -->
+
   </div><!-- /tab-scoring -->
 
 
@@ -1280,6 +1539,224 @@
   .ev-col:last-child { border-bottom: none; }
   .ev-summary-banner .sb-grid { grid-template-columns: 1fr 1fr; }
 }
+
+/* ===== READING PROGRESS BAR ===== */
+#progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--sda-accent), var(--futurist-accent));
+  z-index: 9999;
+  transition: width 0.08s linear;
+  pointer-events: none;
+}
+
+/* ===== SCROLL TO TOP ===== */
+#scroll-top {
+  position: fixed;
+  bottom: 5rem;
+  right: 1.25rem;
+  width: 42px; height: 42px;
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.25s, transform 0.25s;
+  z-index: 800;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+}
+#scroll-top.visible { opacity: 1; transform: translateY(0); }
+#scroll-top:hover { background: var(--sda-primary); }
+
+/* ===== SHARE BAR ===== */
+#share-bar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: var(--ink);
+  color: var(--paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.55rem 2.5rem;
+  z-index: 800;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.sb-lbl {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.58rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  opacity: 0.4;
+}
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.72rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: transparent;
+  color: var(--paper);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+.share-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.4); }
+.share-btn.copied { background: var(--sda-primary); border-color: var(--sda-primary); }
+#share-dismiss {
+  position: absolute;
+  right: 0.65rem;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.3);
+  cursor: pointer;
+  font-size: 1.05rem;
+  padding: 0.35rem;
+  line-height: 1;
+}
+#share-dismiss:hover { color: rgba(255,255,255,0.65); }
+
+/* ===== TAB FADE TRANSITION ===== */
+.tab-content { display: none; }
+.tab-content.active { display: block; animation: fadeTab 0.2s ease forwards; }
+@keyframes fadeTab {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== MEDIA COVERAGE ROW ===== */
+.media-row {
+  background: #100f0d;
+  padding: 1.1rem 1.25rem 1.4rem;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+.media-row-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.56rem;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 0.85rem;
+}
+.media-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.65rem;
+}
+.media-card {
+  background: #1c1b18;
+  border: 1px solid rgba(255,255,255,0.08);
+  overflow: hidden;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.18s, transform 0.18s, box-shadow 0.18s;
+  color: inherit;
+  target: _blank;
+}
+.media-card:hover {
+  border-color: rgba(255,255,255,0.22);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+}
+.media-thumb {
+  position: relative;
+  background: #252320;
+  aspect-ratio: 16/9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.thumb-icon {
+  position: absolute;
+  inset: 0;
+  font-size: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.1;
+  user-select: none;
+}
+.play-btn {
+  width: 38px; height: 38px;
+  background: rgba(255,255,255,0.88);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  color: #111;
+  z-index: 2;
+  transition: transform 0.15s, background 0.15s;
+  flex-shrink: 0;
+}
+.media-card:hover .play-btn { transform: scale(1.12); background: #fff; }
+.media-info {
+  padding: 0.55rem 0.7rem 0.7rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.outlet-badge {
+  display: inline-block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.1rem 0.4rem;
+  border-radius: 2px;
+  width: fit-content;
+}
+.o-cnn  { background: #CC0000; color: #fff; }
+.o-fox  { background: #003580; color: #fff; }
+.o-bbc  { background: #BB1918; color: #fff; }
+.o-aj   { background: #c9941c; color: #1a1000; }
+.o-nyt  { background: #1a1a1a; color: #eee; border: 1px solid rgba(255,255,255,0.2); }
+.o-ap   { background: #2a2a2a; color: #eee; }
+.o-dw   { background: #003C78; color: #fff; }
+.o-pbs  { background: #0052A5; color: #fff; }
+.o-time { background: #D42B29; color: #fff; }
+.media-headline {
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.42;
+  color: rgba(255,255,255,0.82);
+}
+.media-cta {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.58rem;
+  color: rgba(255,255,255,0.28);
+  margin-top: auto;
+  padding-top: 0.2rem;
+  transition: color 0.15s;
+}
+.media-card:hover .media-cta { color: rgba(255,255,255,0.55); }
+
+@media (max-width: 768px) {
+  .media-cards { grid-template-columns: 1fr 1fr; gap: 0.55rem; }
+  .media-row { padding: 0.85rem 0.9rem 1rem; }
+  .media-headline { font-size: 0.7rem; }
+}
+@media (max-width: 420px) {
+  .media-cards { grid-template-columns: 1fr; }
+  .sb-lbl { display: none; }
+}
 </style>
 
 <!-- =========================================
@@ -1340,6 +1817,35 @@
         </div>
       </div>
     </div>
+    <div class="media-row">
+      <div class="media-row-label">&#9654; Watch media coverage</div>
+      <div class="media-cards">
+        <a class="media-card" href="https://www.youtube.com/results?search_query=CNN+Project+2025+Christian+nationalism" target="_blank" rel="noopener">
+          <div class="media-thumb"><div class="thumb-icon">&#127909;</div><div class="play-btn">&#9654;</div></div>
+          <div class="media-info">
+            <span class="outlet-badge o-cnn">CNN</span>
+            <div class="media-headline">Project 2025 &amp; the Christian Nationalism Blueprint</div>
+            <div class="media-cta">Watch on YouTube &rarr;</div>
+          </div>
+        </a>
+        <a class="media-card" href="https://www.youtube.com/results?search_query=Al+Jazeera+Christian+nationalism+USA+church+state" target="_blank" rel="noopener">
+          <div class="media-thumb"><div class="thumb-icon">&#127758;</div><div class="play-btn">&#9654;</div></div>
+          <div class="media-info">
+            <span class="outlet-badge o-aj">Al Jazeera</span>
+            <div class="media-headline">Church-State Separation Under Threat in America</div>
+            <div class="media-cta">Watch on YouTube &rarr;</div>
+          </div>
+        </a>
+        <a class="media-card" href="https://www.youtube.com/results?search_query=BBC+Louisiana+Ten+Commandments+classroom+law" target="_blank" rel="noopener">
+          <div class="media-thumb"><div class="thumb-icon">&#9878;</div><div class="play-btn">&#9654;</div></div>
+          <div class="media-info">
+            <span class="outlet-badge o-bbc">BBC News</span>
+            <div class="media-headline">Louisiana Mandates Ten Commandments in Public Schools</div>
+            <div class="media-cta">Watch on YouTube &rarr;</div>
+          </div>
+        </a>
+      </div>
+    </div>
   </div>
 
   <!-- SECTION 2: SUNDAY LAW MOVEMENT -->
@@ -1389,6 +1895,35 @@
           <div class="ev-news-meta">Vatican · Multiple statements 2014–2025</div>
           <div class="ev-news-body">Pope Francis has repeatedly argued Sunday work harms families and questions "whether working on Sundays is true freedom." He has pressed EU legislators on Sunday trading laws. Dies Domini (John Paul II, 1998) called for states to guarantee Sunday as a legal right — the ongoing papal pressure on secular governments is documented across multiple pontificates.</div>
         </div>
+      </div>
+    </div>
+    <div class="media-row">
+      <div class="media-row-label">&#9654; Watch media coverage</div>
+      <div class="media-cards">
+        <a class="media-card" href="https://www.youtube.com/results?search_query=Pope+Francis+Laudato+Si+Sunday+rest+environment" target="_blank" rel="noopener">
+          <div class="media-thumb"><div class="thumb-icon">&#9728;</div><div class="play-btn">&#9654;</div></div>
+          <div class="media-info">
+            <span class="outlet-badge o-dw">DW News</span>
+            <div class="media-headline">Pope Francis Calls for Mandatory Sunday Rest to Save the Planet</div>
+            <div class="media-cta">Watch on YouTube &rarr;</div>
+          </div>
+        </a>
+        <a class="media-card" href="https://www.youtube.com/results?search_query=EU+Sunday+working+time+directive+court+ruling" target="_blank" rel="noopener">
+          <div class="media-thumb"><div class="thumb-icon">&#127979;</div><div class="play-btn">&#9654;</div></div>
+          <div class="media-info">
+            <span class="outlet-badge o-bbc">BBC News</span>
+            <div class="media-headline">EU Court Strengthens Sunday Rest Protections Across Member States</div>
+            <div class="media-cta">Watch on YouTube &rarr;</div>
+          </div>
+        </a>
+        <a class="media-card" href="https://www.youtube.com/results?search_query=Fox+News+Sunday+blue+laws+religious+freedom" target="_blank" rel="noopener">
+          <div class="media-thumb"><div class="thumb-icon">&#128197;</div><div class="play-btn">&#9654;</div></div>
+          <div class="media-info">
+            <span class="outlet-badge o-fox">Fox News</span>
+            <div class="media-headline">Sunday Laws: Religious Liberty or State Religion?</div>
+            <div class="media-cta">Watch on YouTube &rarr;</div>
+          </div>
+        </a>
       </div>
     </div>
   </div>
@@ -1442,6 +1977,35 @@
         </div>
       </div>
     </div>
+    <div class="media-row">
+      <div class="media-row-label">&#9654; Watch media coverage</div>
+      <div class="media-cards">
+        <a class="media-card" href="https://www.youtube.com/results?search_query=Vatican+Synod+Synodality+ecumenical+unity+2033" target="_blank" rel="noopener">
+          <div class="media-thumb"><div class="thumb-icon">&#9967;</div><div class="play-btn">&#9654;</div></div>
+          <div class="media-info">
+            <span class="outlet-badge o-ap">AP News</span>
+            <div class="media-headline">Vatican Synod: Targeting 2033 for Global Christian Unity</div>
+            <div class="media-cta">Watch on YouTube &rarr;</div>
+          </div>
+        </a>
+        <a class="media-card" href="https://www.youtube.com/results?search_query=CNN+Catholic+Protestant+reunion+ecumenism" target="_blank" rel="noopener">
+          <div class="media-thumb"><div class="thumb-icon">&#10016;</div><div class="play-btn">&#9654;</div></div>
+          <div class="media-info">
+            <span class="outlet-badge o-cnn">CNN</span>
+            <div class="media-headline">Catholics and Protestants: The Drive Toward Visible Unity</div>
+            <div class="media-cta">Watch on YouTube &rarr;</div>
+          </div>
+        </a>
+        <a class="media-card" href="https://www.youtube.com/results?search_query=DW+Pope+Leo+XIV+ecumenical+dialogue+2026" target="_blank" rel="noopener">
+          <div class="media-thumb"><div class="thumb-icon">&#127759;</div><div class="play-btn">&#9654;</div></div>
+          <div class="media-info">
+            <span class="outlet-badge o-dw">DW News</span>
+            <div class="media-headline">Pope Leo XIV &amp; the New Ecumenical Agenda</div>
+            <div class="media-cta">Watch on YouTube &rarr;</div>
+          </div>
+        </a>
+      </div>
+    </div>
   </div>
 
   <!-- SECTION 4: MARK OF THE BEAST TECHNOLOGY -->
@@ -1493,6 +2057,35 @@
         </div>
       </div>
     </div>
+    <div class="media-row">
+      <div class="media-row-label">&#9654; Watch media coverage</div>
+      <div class="media-cards">
+        <a class="media-card" href="https://www.youtube.com/results?search_query=BBC+digital+ID+biometric+surveillance+global" target="_blank" rel="noopener">
+          <div class="media-thumb"><div class="thumb-icon">&#128065;</div><div class="play-btn">&#9654;</div></div>
+          <div class="media-info">
+            <span class="outlet-badge o-bbc">BBC News</span>
+            <div class="media-headline">The Rise of Global Digital Identity &amp; Biometric Control</div>
+            <div class="media-cta">Watch on YouTube &rarr;</div>
+          </div>
+        </a>
+        <a class="media-card" href="https://www.youtube.com/results?search_query=Al+Jazeera+CBDC+central+bank+digital+currency+economic+control" target="_blank" rel="noopener">
+          <div class="media-thumb"><div class="thumb-icon">&#128179;</div><div class="play-btn">&#9654;</div></div>
+          <div class="media-info">
+            <span class="outlet-badge o-aj">Al Jazeera</span>
+            <div class="media-headline">Central Bank Digital Currencies &amp; the End of Financial Privacy</div>
+            <div class="media-cta">Watch on YouTube &rarr;</div>
+          </div>
+        </a>
+        <a class="media-card" href="https://www.youtube.com/results?search_query=CNN+digital+ID+surveillance+state+freedoms" target="_blank" rel="noopener">
+          <div class="media-thumb"><div class="thumb-icon">&#128241;</div><div class="play-btn">&#9654;</div></div>
+          <div class="media-info">
+            <span class="outlet-badge o-cnn">CNN</span>
+            <div class="media-headline">Your Digital Identity: Who Controls It?</div>
+            <div class="media-cta">Watch on YouTube &rarr;</div>
+          </div>
+        </a>
+      </div>
+    </div>
   </div>
 
   <!-- SECTION 5: PAPAL WOUND HEALED -->
@@ -1540,6 +2133,35 @@
         </div>
       </div>
     </div>
+    <div class="media-row">
+      <div class="media-row-label">&#9654; Watch media coverage</div>
+      <div class="media-cards">
+        <a class="media-card" href="https://www.youtube.com/results?search_query=Al+Jazeera+Vatican+global+influence+papacy+power" target="_blank" rel="noopener">
+          <div class="media-thumb"><div class="thumb-icon">&#9997;</div><div class="play-btn">&#9654;</div></div>
+          <div class="media-info">
+            <span class="outlet-badge o-aj">Al Jazeera</span>
+            <div class="media-headline">How the Vatican Became a Global Power Again</div>
+            <div class="media-cta">Watch on YouTube &rarr;</div>
+          </div>
+        </a>
+        <a class="media-card" href="https://www.youtube.com/results?search_query=BBC+Pope+Leo+XIV+first+American+pope+elected" target="_blank" rel="noopener">
+          <div class="media-thumb"><div class="thumb-icon">&#127787;</div><div class="play-btn">&#9654;</div></div>
+          <div class="media-info">
+            <span class="outlet-badge o-bbc">BBC News</span>
+            <div class="media-headline">Pope Leo XIV: First American Pope &amp; His Global Agenda</div>
+            <div class="media-cta">Watch on YouTube &rarr;</div>
+          </div>
+        </a>
+        <a class="media-card" href="https://www.youtube.com/results?search_query=Fox+News+Vatican+Lateran+Treaty+pope+political+power" target="_blank" rel="noopener">
+          <div class="media-thumb"><div class="thumb-icon">&#127968;</div><div class="play-btn">&#9654;</div></div>
+          <div class="media-info">
+            <span class="outlet-badge o-fox">Fox News</span>
+            <div class="media-headline">The Vatican's Remarkable Restoration of Political Power</div>
+            <div class="media-cta">Watch on YouTube &rarr;</div>
+          </div>
+        </a>
+      </div>
+    </div>
   </div>
 
   <!-- SECTION 6: DANIEL UNSEALED / KNOWLEDGE INCREASED -->
@@ -1579,6 +2201,35 @@
           <div class="ev-news-meta">OpenAI · Jan 2023 · Fastest consumer product ever</div>
           <div class="ev-news-body">The fastest acceleration of human knowledge access in history is occurring now. Simultaneously, the same technology enables mass surveillance, misinformation, and the construction of the very tracking infrastructure that Revelation 13's economic exclusion would require. The technology is morally neutral — but its prophetic convergence is remarkable.</div>
         </div>
+      </div>
+    </div>
+    <div class="media-row">
+      <div class="media-row-label">&#9654; Watch media coverage</div>
+      <div class="media-cards">
+        <a class="media-card" href="https://www.youtube.com/results?search_query=BBC+information+age+AI+knowledge+explosion" target="_blank" rel="noopener">
+          <div class="media-thumb"><div class="thumb-icon">&#128218;</div><div class="play-btn">&#9654;</div></div>
+          <div class="media-info">
+            <span class="outlet-badge o-bbc">BBC News</span>
+            <div class="media-headline">The Information Age: Humanity's Greatest Knowledge Revolution</div>
+            <div class="media-cta">Watch on YouTube &rarr;</div>
+          </div>
+        </a>
+        <a class="media-card" href="https://www.youtube.com/results?search_query=NYT+ChatGPT+100+million+users+AI+revolution" target="_blank" rel="noopener">
+          <div class="media-thumb"><div class="thumb-icon">&#129302;</div><div class="play-btn">&#9654;</div></div>
+          <div class="media-info">
+            <span class="outlet-badge o-nyt">NYT</span>
+            <div class="media-headline">ChatGPT &amp; the Fastest Technology Adoption in History</div>
+            <div class="media-cta">Watch on YouTube &rarr;</div>
+          </div>
+        </a>
+        <a class="media-card" href="https://www.youtube.com/results?search_query=Al+Jazeera+global+internet+5+billion+users+digital+divide" target="_blank" rel="noopener">
+          <div class="media-thumb"><div class="thumb-icon">&#127760;</div><div class="play-btn">&#9654;</div></div>
+          <div class="media-info">
+            <span class="outlet-badge o-aj">Al Jazeera</span>
+            <div class="media-headline">5 Billion Online: The World's Digital Transformation</div>
+            <div class="media-cta">Watch on YouTube &rarr;</div>
+          </div>
+        </a>
       </div>
     </div>
   </div>
@@ -1631,6 +2282,35 @@
         </div>
       </div>
     </div>
+    <div class="media-row">
+      <div class="media-row-label">&#9654; Watch media coverage</div>
+      <div class="media-cards">
+        <a class="media-card" href="https://www.youtube.com/results?search_query=Al+Jazeera+Russia+Ukraine+war+2024+update" target="_blank" rel="noopener">
+          <div class="media-thumb"><div class="thumb-icon">&#128656;</div><div class="play-btn">&#9654;</div></div>
+          <div class="media-info">
+            <span class="outlet-badge o-aj">Al Jazeera</span>
+            <div class="media-headline">Russia-Ukraine: The Largest European Land War Since WWII</div>
+            <div class="media-cta">Watch on YouTube &rarr;</div>
+          </div>
+        </a>
+        <a class="media-card" href="https://www.youtube.com/results?search_query=CNN+Gaza+war+2024+latest+Middle+East" target="_blank" rel="noopener">
+          <div class="media-thumb"><div class="thumb-icon">&#128680;</div><div class="play-btn">&#9654;</div></div>
+          <div class="media-info">
+            <span class="outlet-badge o-cnn">CNN</span>
+            <div class="media-headline">Gaza War &amp; Middle East Escalation: Full Coverage</div>
+            <div class="media-cta">Watch on YouTube &rarr;</div>
+          </div>
+        </a>
+        <a class="media-card" href="https://www.youtube.com/results?search_query=Open+Doors+Christian+persecution+record+2024" target="_blank" rel="noopener">
+          <div class="media-thumb"><div class="thumb-icon">&#9995;</div><div class="play-btn">&#9654;</div></div>
+          <div class="media-info">
+            <span class="outlet-badge o-fox">Fox News</span>
+            <div class="media-headline">Global Christian Persecution at Record Highs in 2024</div>
+            <div class="media-cta">Watch on YouTube &rarr;</div>
+          </div>
+        </a>
+      </div>
+    </div>
   </div>
 
   <!-- SECTION 8: LATTER RAIN / THREE ANGELS GLOBAL REACH -->
@@ -1670,6 +2350,35 @@
           <div class="ev-news-meta">Wycliffe Bible Translators · 2024</div>
           <div class="ev-news-body">The complete Bible is available in 736 languages. The New Testament in 1,658 languages. Some Scripture in 3,658 languages total. Digital access via YouVersion Bible App: 750 million downloads across 1,600 languages. Matthew 24:14 is closer to technical fulfilment today than at any point in church history.</div>
         </div>
+      </div>
+    </div>
+    <div class="media-row">
+      <div class="media-row-label">&#9654; Watch media coverage</div>
+      <div class="media-cards">
+        <a class="media-card" href="https://www.youtube.com/results?search_query=Adventist+SDA+church+22+million+global+growth+mission" target="_blank" rel="noopener">
+          <div class="media-thumb"><div class="thumb-icon">&#127775;</div><div class="play-btn">&#9654;</div></div>
+          <div class="media-info">
+            <span class="outlet-badge o-ap">AP News</span>
+            <div class="media-headline">Seventh-day Adventists: The World's Fastest Growing Protestant Church</div>
+            <div class="media-cta">Watch on YouTube &rarr;</div>
+          </div>
+        </a>
+        <a class="media-card" href="https://www.youtube.com/results?search_query=Bible+translation+Wycliffe+3658+languages+gospel" target="_blank" rel="noopener">
+          <div class="media-thumb"><div class="thumb-icon">&#128214;</div><div class="play-btn">&#9654;</div></div>
+          <div class="media-info">
+            <span class="outlet-badge o-pbs">PBS</span>
+            <div class="media-headline">The Bible Now Available in 3,658 Languages Worldwide</div>
+            <div class="media-cta">Watch on YouTube &rarr;</div>
+          </div>
+        </a>
+        <a class="media-card" href="https://www.youtube.com/results?search_query=BBC+gospel+Matthew+24+global+mission+complete" target="_blank" rel="noopener">
+          <div class="media-thumb"><div class="thumb-icon">&#127758;</div><div class="play-btn">&#9654;</div></div>
+          <div class="media-info">
+            <span class="outlet-badge o-bbc">BBC News</span>
+            <div class="media-headline">The Gospel to All Nations: How Close Are We?</div>
+            <div class="media-cta">Watch on YouTube &rarr;</div>
+          </div>
+        </a>
       </div>
     </div>
   </div>
