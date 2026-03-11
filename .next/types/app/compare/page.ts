@@ -1,4 +1,4 @@
-// File: /Users/laithwallace/CursorProjectDev/SDA Historicism/app/compare/page.tsx
+// File: /Users/laithwallace/CursorProjectDev/Plain Prophecy/app/compare/page.tsx
 import * as entry from '../../../../app/compare/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

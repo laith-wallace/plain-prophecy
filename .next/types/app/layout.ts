@@ -1,4 +1,4 @@
-// File: /Users/laithwallace/CursorProjectDev/SDA Historicism/app/layout.tsx
+// File: /Users/laithwallace/CursorProjectDev/Plain Prophecy/app/layout.tsx
 import * as entry from '../../../app/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
