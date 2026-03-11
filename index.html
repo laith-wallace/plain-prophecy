@@ -80,10 +80,14 @@
     gap: 0;
     margin-bottom: 2.5rem;
     border: 2px solid var(--ink);
-    width: fit-content;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
   }
+  .tab-nav::-webkit-scrollbar { display: none; }
   .tab-btn {
-    padding: 0.6rem 1.4rem;
+    padding: 0.7rem 1.4rem;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 0.72rem;
     letter-spacing: 0.1em;
@@ -94,6 +98,8 @@
     color: var(--neutral);
     border-right: 2px solid var(--ink);
     transition: all 0.2s;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
   .tab-btn:last-child { border-right: none; }
   .tab-btn.active {
@@ -446,11 +452,149 @@
     gap: 0.5rem;
   }
 
+  /* ============================================
+     MOBILE — comprehensive overhaul
+  ============================================ */
   @media (max-width: 768px) {
-    .comparison-grid { grid-template-columns: 1fr; }
-    .pillars-grid { grid-template-columns: 1fr; }
+
+    /* Layout & spacing */
+    .page-wrapper { padding: 1.5rem 1rem 3rem; }
+
+    /* Masthead */
+    .masthead { padding-bottom: 1.25rem; margin-bottom: 1.75rem; }
+    .masthead .eyebrow { font-size: 0.6rem; letter-spacing: 0.18em; }
+    .masthead .subtitle { font-size: 0.82rem; }
+
+    /* Tab nav */
+    .tab-nav { margin-bottom: 1.5rem; }
+    .tab-btn { padding: 0.75rem 1.1rem; font-size: 0.68rem; }
+
+    /* Timeline comparison — stack columns */
+    .comparison-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+
+    /* Era blocks — remove side date gutter, stack vertically */
+    .era-block {
+      grid-template-columns: 1fr;
+      display: flex;
+      flex-direction: column;
+    }
+    .era-date {
+      padding: 0.5rem 1rem;
+      text-align: left;
+      justify-content: flex-start;
+      border-right: none;
+      border-bottom: 1px solid var(--divider);
+      font-size: 0.68rem;
+    }
+    .era-content { padding: 0.85rem 1rem; }
+    .era-content h3 { font-size: 0.95rem; }
+    .era-content .era-desc { font-size: 0.8rem; }
+
+    /* Column headers */
+    .col-header { padding: 1rem; }
+    .col-header h2 { font-size: 1.1rem; }
+
+    /* Key diff box */
+    .key-diff { padding: 1rem; }
+    .key-diff p { font-size: 0.82rem; }
+
+    /* ---- SCORING TABLE → CARD STACK ---- */
+    .criteria-table thead { display: none; }
+    .criteria-table, .criteria-table tbody,
+    .criteria-table tr, .criteria-table td { display: block; width: 100%; }
+
+    .criteria-table tr {
+      border: 2px solid var(--ink);
+      margin-bottom: 1rem;
+      background: var(--paper);
+    }
+    .criteria-table tr:nth-child(even) td { background: transparent; }
+    .criteria-table tr.verdict-row { border-color: var(--ink); }
+    .criteria-table tr.total-row {
+      border-top: 3px solid var(--ink);
+      margin-top: 1.5rem;
+    }
+
+    .criteria-table td {
+      padding: 0.65rem 0.85rem;
+      border-bottom: 1px solid var(--divider);
+      font-size: 0.82rem;
+      position: relative;
+    }
+    .criteria-table td:last-child { border-bottom: none; }
+
+    /* Label each column with a data-label */
+    .criteria-table td[data-label]::before {
+      content: attr(data-label);
+      display: block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--neutral);
+      margin-bottom: 0.3rem;
+    }
+
+    /* Score cells in card layout */
+    .score-cell {
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .score-pill { width: auto; padding: 0.2rem 0.6rem; }
+
+    /* Verdict + total rows */
+    .verdict-row td { padding: 0.75rem 0.85rem; font-size: 0.82rem; }
+    .total-row td { padding: 0.75rem 0.85rem; }
+
+    /* Accuracy intro */
+    .accuracy-intro { margin-bottom: 1.25rem; }
+    .accuracy-intro p { font-size: 0.84rem; }
+
+    /* Pillars */
+    .pillars-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .pillar-card .card-body p { font-size: 0.82rem; }
+    .pillar-card .card-num { font-size: 1.6rem; }
+
+    /* Verdict panel */
     .verdict-panel { grid-template-columns: 1fr; }
     .verdict-side.futurist-v { border-right: none; border-bottom: 3px solid var(--ink); }
+    .verdict-side { padding: 1.25rem; }
+    .verdict-side h3 { font-size: 1rem; }
+    .verdict-side ul li { font-size: 0.8rem; }
+
+    /* Final banner */
+    .final-banner { padding: 1.5rem 1rem; }
+    .final-banner .fb-body { font-size: 0.82rem; }
+
+    /* Evidence tab */
+    .ev-columns { grid-template-columns: 1fr; }
+    .ev-col { border-right: none; border-bottom: 1px solid var(--divider); }
+    .ev-col:last-child { border-bottom: none; }
+    .ev-section-header { padding: 0.85rem 1rem; grid-template-columns: 28px 1fr; }
+    .ev-section-number { font-size: 1.4rem; }
+    .ev-section-title { font-size: 0.95rem; }
+    .ev-section-label { font-size: 0.55rem; }
+    .ev-news-item { padding: 0.5rem 0.65rem; }
+    .ev-news-headline { font-size: 0.76rem; }
+    .ev-news-body { font-size: 0.74rem; }
+    .ev-summary-banner .sb-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    .ev-summary-banner .sb-stat .num { font-size: 1.3rem; }
+    .ev-summary-banner .sb-stat .desc { font-size: 0.7rem; }
+    .ev-summary-banner .sb-title { font-size: 1.2rem; }
+    .ev-summary-banner { padding: 1.5rem 1rem; }
+    .ev-col p { font-size: 0.8rem; }
+    .ev-scripture { font-size: 0.77rem; padding: 0.4rem 0.6rem; }
+
+    /* Footer */
+    .doc-footer { flex-direction: column; gap: 0.4rem; font-size: 0.63rem; }
+  }
+
+  /* Extra small screens */
+  @media (max-width: 380px) {
+    .tab-btn { padding: 0.7rem 0.85rem; font-size: 0.62rem; }
+    .masthead h1 { font-size: 1.7rem; }
   }
 </style>
 </head>
@@ -712,81 +856,81 @@
       </thead>
       <tbody>
         <tr>
-          <td class="criterion">Day-Year Principle (Num 14:34; Ezek 4:6)</td>
-          <td>Rejects it for most prophecies; insists on literal 7 years for Dan 9:27 and literal 1,260 days for Tribulation</td>
-          <td>Explicitly mandated by two independent Scriptures (Num 14:34; Ezek 4:6). Applied consistently across Daniel and Revelation. All anchor dates historically verified.</td>
-          <td class="score-cell"><span class="score-pill score-low">3/10</span></td>
-          <td class="score-cell"><span class="score-pill score-high">9/10</span></td>
+          <td class="criterion" data-label="Criterion">Day-Year Principle (Num 14:34; Ezek 4:6)</td>
+          <td data-label="Futurist Position">Rejects it for most prophecies; insists on literal 7 years for Dan 9:27 and literal 1,260 days for Tribulation</td>
+          <td data-label="SDA Historicist Position">Explicitly mandated by two independent Scriptures (Num 14:34; Ezek 4:6). Applied consistently across Daniel and Revelation. All anchor dates historically verified.</td>
+          <td class="score-cell" data-label="Futurist Score"><span class="score-pill score-low">3/10</span></td>
+          <td class="score-cell" data-label="SDA Score"><span class="score-pill score-high">9/10</span></td>
         </tr>
         <tr>
-          <td class="criterion">The 70th Week of Daniel (Dan 9:24–27)</td>
-          <td>Inserts a 2,000+ year gap between week 69 and week 70 — no textual basis. Antichrist fulfils week 70 in the future.</td>
-          <td>All 70 weeks are contiguous (457 BC–34 AD). Jesus confirms the covenant (v.27). Cross ends sacrifice. Stephen's stoning = 34 AD. Historically verified at every data point.</td>
-          <td class="score-cell"><span class="score-pill score-low">2/10</span></td>
-          <td class="score-cell"><span class="score-pill score-high">10/10</span></td>
+          <td class="criterion" data-label="Criterion">The 70th Week of Daniel (Dan 9:24–27)</td>
+          <td data-label="Futurist Position">Inserts a 2,000+ year gap between week 69 and week 70 — no textual basis. Antichrist fulfils week 70 in the future.</td>
+          <td data-label="SDA Historicist Position">All 70 weeks are contiguous (457 BC–34 AD). Jesus confirms the covenant (v.27). Cross ends sacrifice. Stephen's stoning = 34 AD. Historically verified at every data point.</td>
+          <td class="score-cell" data-label="Futurist Score"><span class="score-pill score-low">2/10</span></td>
+          <td class="score-cell" data-label="SDA Score"><span class="score-pill score-high">10/10</span></td>
         </tr>
         <tr>
-          <td class="criterion">The Rapture as Distinct Event (1 Thess 4:16–17)</td>
-          <td>A "secret" removal of the church — two separate returns of Christ. First secret, then public 7 years later. Pre-tribulation rapture invented by J.N. Darby c.1830.</td>
-          <td>1 Thess 4 describes the Second Coming — one event, visible to all (Rev 1:7). No biblical text teaches two separate returns of Christ. Paul's language is public and audible ("shout," "trumpet").</td>
-          <td class="score-cell"><span class="score-pill score-low">2/10</span></td>
-          <td class="score-cell"><span class="score-pill score-high">9/10</span></td>
+          <td class="criterion" data-label="Criterion">The Rapture as Distinct Event (1 Thess 4:16–17)</td>
+          <td data-label="Futurist Position">A "secret" removal of the church — two separate returns of Christ. First secret, then public 7 years later. Pre-tribulation rapture invented by J.N. Darby c.1830.</td>
+          <td data-label="SDA Historicist Position">1 Thess 4 describes the Second Coming — one event, visible to all (Rev 1:7). No biblical text teaches two separate returns of Christ. Paul's language is public and audible ("shout," "trumpet").</td>
+          <td class="score-cell" data-label="Futurist Score"><span class="score-pill score-low">2/10</span></td>
+          <td class="score-cell" data-label="SDA Score"><span class="score-pill score-high">9/10</span></td>
         </tr>
         <tr>
-          <td class="criterion">Identity of the "Little Horn" / Antichrist (Dan 7; 2 Thess 2)</td>
-          <td>A future world political leader who rules for 7 years. Requires a rebuilt Jerusalem Temple and restored sacrificial system (implicitly denying the finality of Calvary).</td>
-          <td>The "little horn" = papal Rome (also identified by Luther, Calvin, Wesley, Newton). All diagnostic markers match: speaks against God, wears out saints, changes times and law, 1,260 years of dominance.</td>
-          <td class="score-cell"><span class="score-pill score-low">3/10</span></td>
-          <td class="score-cell"><span class="score-pill score-high">9/10</span></td>
+          <td class="criterion" data-label="Criterion">Identity of the "Little Horn" / Antichrist (Dan 7; 2 Thess 2)</td>
+          <td data-label="Futurist Position">A future world political leader who rules for 7 years. Requires a rebuilt Jerusalem Temple and restored sacrificial system (implicitly denying the finality of Calvary).</td>
+          <td data-label="SDA Historicist Position">The "little horn" = papal Rome (also identified by Luther, Calvin, Wesley, Newton). All diagnostic markers match: speaks against God, wears out saints, changes times and law, 1,260 years of dominance.</td>
+          <td class="score-cell" data-label="Futurist Score"><span class="score-pill score-low">3/10</span></td>
+          <td class="score-cell" data-label="SDA Score"><span class="score-pill score-high">9/10</span></td>
         </tr>
         <tr>
-          <td class="criterion">Historical Verification of Prophetic Anchors</td>
-          <td>No historical event verifies the 7-year Tribulation — it is entirely future. The Rapture is unverifiable. All timeline anchors are speculative and future.</td>
-          <td>Every anchor is historically verifiable: Artaxerxes' decree (457 BC), Baptism of Jesus (27 AD), Crucifixion (31 AD), Stephen (34 AD), Justinian (538), Napoleon/Pius VI (1798), 1844.</td>
-          <td class="score-cell"><span class="score-pill score-low">1/10</span></td>
-          <td class="score-cell"><span class="score-pill score-high">9/10</span></td>
+          <td class="criterion" data-label="Criterion">Historical Verification of Prophetic Anchors</td>
+          <td data-label="Futurist Position">No historical event verifies the 7-year Tribulation — it is entirely future. The Rapture is unverifiable. All timeline anchors are speculative and future.</td>
+          <td data-label="SDA Historicist Position">Every anchor is historically verifiable: Artaxerxes' decree (457 BC), Baptism of Jesus (27 AD), Crucifixion (31 AD), Stephen (34 AD), Justinian (538), Napoleon/Pius VI (1798), 1844.</td>
+          <td class="score-cell" data-label="Futurist Score"><span class="score-pill score-low">1/10</span></td>
+          <td class="score-cell" data-label="SDA Score"><span class="score-pill score-high">9/10</span></td>
         </tr>
         <tr>
-          <td class="criterion">Hermeneutical Origins &amp; Scholarly Pedigree</td>
-          <td>Futurism was first developed by Jesuit priest Francisco Ribera (1590 AD) as a Counter-Reformation move to deflect Protestant identification of Rome as Antichrist. Popularised by Darby (1830s) — no patristic support.</td>
-          <td>Historicism was the dominant prophetic method of the entire Reformation (Luther, Calvin, Knox, Tyndale, Newton, Wesley). It has deep patristic roots and was the consensus until the 19th century.</td>
-          <td class="score-cell"><span class="score-pill score-low">2/10</span></td>
-          <td class="score-cell"><span class="score-pill score-high">9/10</span></td>
+          <td class="criterion" data-label="Criterion">Hermeneutical Origins &amp; Scholarly Pedigree</td>
+          <td data-label="Futurist Position">Futurism was first developed by Jesuit priest Francisco Ribera (1590 AD) as a Counter-Reformation move to deflect Protestant identification of Rome as Antichrist. Popularised by Darby (1830s) — no patristic support.</td>
+          <td data-label="SDA Historicist Position">Historicism was the dominant prophetic method of the entire Reformation (Luther, Calvin, Knox, Tyndale, Newton, Wesley). It has deep patristic roots and was the consensus until the 19th century.</td>
+          <td class="score-cell" data-label="Futurist Score"><span class="score-pill score-low">2/10</span></td>
+          <td class="score-cell" data-label="SDA Score"><span class="score-pill score-high">9/10</span></td>
         </tr>
         <tr>
-          <td class="criterion">Internal Biblical Consistency</td>
-          <td>The rebuilt Temple and restored animal sacrifices would contradict Hebrews 7–10 (Christ's sacrifice is final and complete). The gap theory also requires OT prophecy to have two radically different audiences.</td>
-          <td>The heavenly sanctuary of Hebrews 8–9 interprets Dan 8:14. The investigative judgment ties Lev 16 (Yom Kippur), Dan 7:9–10, and Rev 14:7 into one coherent system. No internal contradictions.</td>
-          <td class="score-cell"><span class="score-pill score-low">3/10</span></td>
-          <td class="score-cell"><span class="score-pill score-high">9/10</span></td>
+          <td class="criterion" data-label="Criterion">Internal Biblical Consistency</td>
+          <td data-label="Futurist Position">The rebuilt Temple and restored animal sacrifices would contradict Hebrews 7–10 (Christ's sacrifice is final and complete). The gap theory also requires OT prophecy to have two radically different audiences.</td>
+          <td data-label="SDA Historicist Position">The heavenly sanctuary of Hebrews 8–9 interprets Dan 8:14. The investigative judgment ties Lev 16 (Yom Kippur), Dan 7:9–10, and Rev 14:7 into one coherent system. No internal contradictions.</td>
+          <td class="score-cell" data-label="Futurist Score"><span class="score-pill score-low">3/10</span></td>
+          <td class="score-cell" data-label="SDA Score"><span class="score-pill score-high">9/10</span></td>
         </tr>
         <tr>
-          <td class="criterion">Christological Centrality</td>
-          <td>Places heavy focus on Israel's national restoration and earthly politics. Christ's Second Coming becomes one event in a complex sequence centred on national Israel, not the cosmic lordship of Christ.</td>
-          <td>Every prophetic period anchors to Christ: He is the Messiah of 457 BC, the Sacrifice of 31 AD, the High Priest of 1844, and the Coming King. The investigative judgment is His intercession, not a work of merit.</td>
-          <td class="score-cell"><span class="score-pill score-mid">5/10</span></td>
-          <td class="score-cell"><span class="score-pill score-high">9/10</span></td>
+          <td class="criterion" data-label="Criterion">Christological Centrality</td>
+          <td data-label="Futurist Position">Places heavy focus on Israel's national restoration and earthly politics. Christ's Second Coming becomes one event in a complex sequence centred on national Israel, not the cosmic lordship of Christ.</td>
+          <td data-label="SDA Historicist Position">Every prophetic period anchors to Christ: He is the Messiah of 457 BC, the Sacrifice of 31 AD, the High Priest of 1844, and the Coming King. The investigative judgment is His intercession, not a work of merit.</td>
+          <td class="score-cell" data-label="Futurist Score"><span class="score-pill score-mid">5/10</span></td>
+          <td class="score-cell" data-label="SDA Score"><span class="score-pill score-high">9/10</span></td>
         </tr>
         <tr>
-          <td class="criterion">Millennium Location (Rev 20)</td>
-          <td>Earthly millennium with Christ reigning in Jerusalem. Requires geographic Israel, national politics, and a Davidic earthly throne — reading Revelation's symbolic language literally.</td>
-          <td>Millennium in heaven (John 14:2–3; Rev 20). Earth desolate (Jer 4:23–27). Satan bound — no one to deceive. Consistent with the state of the dead (unconscious) and conditionalist immortality.</td>
-          <td class="score-cell"><span class="score-pill score-mid">5/10</span></td>
-          <td class="score-cell"><span class="score-pill score-high">8/10</span></td>
+          <td class="criterion" data-label="Criterion">Millennium Location (Rev 20)</td>
+          <td data-label="Futurist Position">Earthly millennium with Christ reigning in Jerusalem. Requires geographic Israel, national politics, and a Davidic earthly throne — reading Revelation's symbolic language literally.</td>
+          <td data-label="SDA Historicist Position">Millennium in heaven (John 14:2–3; Rev 20). Earth desolate (Jer 4:23–27). Satan bound — no one to deceive. Consistent with the state of the dead (unconscious) and conditionalist immortality.</td>
+          <td class="score-cell" data-label="Futurist Score"><span class="score-pill score-mid">5/10</span></td>
+          <td class="score-cell" data-label="SDA Score"><span class="score-pill score-high">8/10</span></td>
         </tr>
         <tr>
-          <td class="criterion">Application of Revelation to Real History</td>
-          <td>Chapters 4–19 of Revelation have no application until the future Tribulation. The church age is essentially a prophetic blank. This renders most of Revelation irrelevant to 2,000 years of church history.</td>
-          <td>Revelation speaks to real persecuted churches (1st century), through the Reformation, into the modern age. The seven churches (Rev 1–3) = seven historical eras. Seven seals, seven trumpets = church history unfolding.</td>
-          <td class="score-cell"><span class="score-pill score-low">3/10</span></td>
-          <td class="score-cell"><span class="score-pill score-high">8/10</span></td>
+          <td class="criterion" data-label="Criterion">Application of Revelation to Real History</td>
+          <td data-label="Futurist Position">Chapters 4–19 of Revelation have no application until the future Tribulation. The church age is essentially a prophetic blank. This renders most of Revelation irrelevant to 2,000 years of church history.</td>
+          <td data-label="SDA Historicist Position">Revelation speaks to real persecuted churches (1st century), through the Reformation, into the modern age. The seven churches (Rev 1–3) = seven historical eras. Seven seals, seven trumpets = church history unfolding.</td>
+          <td class="score-cell" data-label="Futurist Score"><span class="score-pill score-low">3/10</span></td>
+          <td class="score-cell" data-label="SDA Score"><span class="score-pill score-high">8/10</span></td>
         </tr>
         <tr class="total-row">
-          <td class="criterion">TOTAL SCORE (out of 100)</td>
-          <td></td>
-          <td></td>
-          <td class="score-cell"><span class="score-pill score-low" style="width:64px">29/100</span></td>
-          <td class="score-cell"><span class="score-pill score-high" style="width:64px">89/100</span></td>
+          <td class="criterion" data-label="Criterion">TOTAL SCORE (out of 100)</td>
+          <td data-label="Futurist Position"></td>
+          <td data-label="SDA Historicist Position"></td>
+          <td class="score-cell" data-label="Futurist Score"><span class="score-pill score-low" style="width:64px">29/100</span></td>
+          <td class="score-cell" data-label="SDA Score"><span class="score-pill score-high" style="width:64px">89/100</span></td>
         </tr>
       </tbody>
     </table>
