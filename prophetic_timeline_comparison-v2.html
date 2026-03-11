@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prophetic Timeline: Futurist vs Historicist</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0e0c;
+    --paper: #f7f3ec;
+    --cream-mid: #ede8de;
+    --futurist-primary: #1a2e5c;
+    --futurist-accent: #c0392b;
+    --futurist-light: #d6e4f7;
+    --sda-primary: #1a3d2b;
+    --sda-accent: #e8a020;
+    --sda-light: #d4edda;
+    --neutral: #5a5245;
+    --divider: #ccc4b4;
+    --red-flag: #c0392b;
+    --green-check: #1a6b3c;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--paper);
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  .page-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2rem 5rem;
+  }
+
+  /* HEADER */
+  .masthead {
+    text-align: center;
+    border-bottom: 3px double var(--ink);
+    padding-bottom: 2rem;
+    margin-bottom: 3rem;
+  }
+  .masthead .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--neutral);
+    margin-bottom: 0.75rem;
+  }
+  .masthead h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .masthead h1 span.versus {
+    font-size: 0.6em;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--neutral);
+    display: block;
+    margin: 0.25rem 0;
+  }
+  .masthead .subtitle {
+    font-size: 0.9rem;
+    color: var(--neutral);
+    margin-top: 0.75rem;
+    font-style: italic;
+  }
+
+  /* TAB NAV */
+  .tab-nav {
+    display: flex;
+    gap: 0;
+    margin-bottom: 2.5rem;
+    border: 2px solid var(--ink);
+    width: fit-content;
+  }
+  .tab-btn {
+    padding: 0.6rem 1.4rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: var(--neutral);
+    border-right: 2px solid var(--ink);
+    transition: all 0.2s;
+  }
+  .tab-btn:last-child { border-right: none; }
+  .tab-btn.active {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .tab-btn:hover:not(.active) {
+    background: var(--cream-mid);
+  }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* ===== TAB 1: SIDE-BY-SIDE TIMELINES ===== */
+  .comparison-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .timeline-column {
+    border: 2px solid var(--ink);
+  }
+
+  .col-header {
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .col-header.futurist { background: var(--futurist-primary); color: white; }
+  .col-header.sda { background: var(--sda-primary); color: white; }
+
+  .col-header .tradition {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+  .col-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+  .col-header .origin {
+    font-size: 0.78rem;
+    opacity: 0.75;
+    font-style: italic;
+  }
+
+  .timeline-body { padding: 0; }
+
+  .era-block {
+    border-bottom: 1px solid var(--divider);
+    display: grid;
+    grid-template-columns: 90px 1fr;
+  }
+  .era-block:last-child { border-bottom: none; }
+
+  .era-date {
+    padding: 1rem;
+    background: var(--cream-mid);
+    border-right: 1px solid var(--divider);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--neutral);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    text-align: center;
+    padding-top: 1.1rem;
+  }
+  .era-date.futurist-date { background: #edf1f8; color: var(--futurist-primary); }
+  .era-date.sda-date { background: #eaf4ed; color: var(--sda-primary); }
+
+  .era-content {
+    padding: 1rem 1.25rem;
+  }
+  .era-content h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+  .era-content .era-desc {
+    font-size: 0.82rem;
+    color: #4a4540;
+    line-height: 1.55;
+  }
+  .era-content .era-ref {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--neutral);
+    margin-top: 0.4rem;
+    opacity: 0.85;
+  }
+
+  .badge {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.5rem;
+    border-radius: 2px;
+    margin-bottom: 0.35rem;
+  }
+  .badge.future { background: #fdecea; color: var(--futurist-accent); border: 1px solid #f5c6c3; }
+  .badge.historical { background: #d4edda; color: var(--sda-primary); border: 1px solid #a8d5b5; }
+  .badge.present { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+  .badge.fulfilled { background: #cfe2ff; color: #084298; border: 1px solid #b6d4fe; }
+
+  /* KEY DIFFERENCE DIVIDER */
+  .key-diff {
+    margin: 2rem 0;
+    padding: 1.25rem 1.5rem;
+    border-left: 5px solid var(--futurist-accent);
+    background: #fff8f7;
+    border: 1px solid #f5c6c3;
+  }
+  .key-diff.sda-diff {
+    border-left-color: var(--sda-accent);
+    background: #fffcf2;
+    border-color: #f5e6b3;
+  }
+  .key-diff h4 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.5rem;
+    color: var(--neutral);
+  }
+  .key-diff p {
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
+  /* ===== TAB 2: SCORING TABLE ===== */
+  .accuracy-intro {
+    max-width: 780px;
+    margin-bottom: 2rem;
+  }
+  .accuracy-intro p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--neutral);
+  }
+
+  .criteria-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.83rem;
+  }
+  .criteria-table th {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    background: var(--ink);
+    color: var(--paper);
+    border-right: 1px solid rgba(255,255,255,0.15);
+  }
+  .criteria-table th:last-child { border-right: none; }
+  .criteria-table td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--divider);
+    vertical-align: top;
+    line-height: 1.55;
+  }
+  .criteria-table tr:last-child td { border-bottom: none; }
+  .criteria-table tr:nth-child(even) td { background: var(--cream-mid); }
+  .criteria-table .criterion { font-weight: 600; }
+
+  .score-cell { text-align: center; }
+  .score-pill {
+    display: inline-block;
+    width: 52px;
+    padding: 0.2rem 0;
+    border-radius: 3px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-align: center;
+  }
+  .score-high { background: #d4edda; color: #1a6b3c; border: 1px solid #a8d5b5; }
+  .score-mid { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+  .score-low { background: #fdecea; color: #c0392b; border: 1px solid #f5c6c3; }
+
+  .verdict-row td {
+    background: var(--ink) !important;
+    color: var(--paper);
+    font-weight: 600;
+    padding: 1rem;
+  }
+
+  /* TOTAL ROW */
+  .total-row td {
+    background: #f0f0e8 !important;
+    font-weight: 700;
+    border-top: 3px solid var(--ink);
+  }
+
+  /* ===== TAB 3: BIBLICAL PILLARS ===== */
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .pillar-card {
+    border: 2px solid var(--ink);
+    overflow: hidden;
+  }
+  .pillar-card .card-head {
+    padding: 1rem 1.25rem;
+    background: var(--ink);
+    color: var(--paper);
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+  .pillar-card .card-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 900;
+    opacity: 0.3;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .pillar-card .card-title-wrap {}
+  .pillar-card .card-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.6;
+  }
+  .pillar-card .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+  .pillar-card .card-body {
+    padding: 1.25rem;
+  }
+  .pillar-card .card-body p {
+    font-size: 0.83rem;
+    line-height: 1.65;
+    margin-bottom: 0.75rem;
+    color: #3a3530;
+  }
+  .pillar-card .card-body p:last-child { margin-bottom: 0; }
+
+  .verdict-panel {
+    margin-top: 2rem;
+    border: 3px solid var(--ink);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .verdict-side {
+    padding: 1.75rem;
+  }
+  .verdict-side.futurist-v { border-right: 3px solid var(--ink); }
+  .verdict-side h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .verdict-side .v-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    padding: 0.15rem 0.45rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .v-tag.futurist-tag { background: var(--futurist-primary); color: white; }
+  .v-tag.sda-tag { background: var(--sda-primary); color: white; }
+
+  .verdict-side ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .verdict-side ul li {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    padding-left: 1.25rem;
+    position: relative;
+    color: #3a3530;
+  }
+  .verdict-side ul li::before {
+    position: absolute;
+    left: 0;
+    font-size: 0.7rem;
+    top: 0.05rem;
+  }
+  .futurist-v ul li::before { content: '✕'; color: var(--red-flag); }
+  .sda-v ul li::before { content: '✓'; color: var(--green-check); }
+
+  /* FINAL VERDICT BANNER */
+  .final-banner {
+    margin-top: 2rem;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 2rem;
+    text-align: center;
+  }
+  .final-banner .fb-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin-bottom: 0.5rem;
+  }
+  .final-banner .fb-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    font-weight: 900;
+    margin-bottom: 0.75rem;
+  }
+  .final-banner .fb-body {
+    font-size: 0.88rem;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.7;
+    opacity: 0.85;
+  }
+
+  /* FOOTER */
+  .doc-footer {
+    margin-top: 3.5rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--divider);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--neutral);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .comparison-grid { grid-template-columns: 1fr; }
+    .pillars-grid { grid-template-columns: 1fr; }
+    .verdict-panel { grid-template-columns: 1fr; }
+    .verdict-side.futurist-v { border-right: none; border-bottom: 3px solid var(--ink); }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrapper">
+
+  <div class="masthead">
+    <div class="eyebrow">Biblical Prophecy · Hermeneutical Comparison · Scholarly Analysis</div>
+    <h1>
+      Evangelical Futurism (Dispensationalism)
+      <span class="versus">— versus —</span>
+      SDA Historicism
+    </h1>
+    <div class="subtitle">A comparative analysis of prophetic timelines and their biblical foundations</div>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="showTab('timelines', this)">Timelines</button>
+    <button class="tab-btn" onclick="showTab('scoring', this)">Accuracy Scoring</button>
+    <button class="tab-btn" onclick="showTab('pillars', this)">Biblical Pillars</button>
+    <button class="tab-btn" onclick="showTab('evidence', this)">Evidence Today</button>
+  </div>
+
+  <!-- =========================================
+       TAB 1: SIDE-BY-SIDE TIMELINES
+  ========================================= -->
+  <div id="tab-timelines" class="tab-content active">
+    <div class="comparison-grid">
+
+      <!-- FUTURIST COLUMN -->
+      <div class="timeline-column">
+        <div class="col-header futurist">
+          <span class="tradition">Evangelical / Dispensationalist</span>
+          <h2>Futurist Prophetic Timeline</h2>
+          <span class="origin">Origins: J.N. Darby (1830s), C.I. Scofield, Hal Lindsey, Tim LaHaye</span>
+        </div>
+        <div class="timeline-body">
+
+          <div class="era-block">
+            <div class="era-date futurist-date">~4 BC–33 AD</div>
+            <div class="era-content">
+              <div class="badge fulfilled">Fulfilled</div>
+              <h3>First Coming of Christ</h3>
+              <p class="era-desc">Jesus ministers, dies, and ascends. 69 of Daniel's 70 weeks are fulfilled. The 70th week is then "paused" and deferred to the end times — a gap of 2,000+ years inserted with no explicit textual basis.</p>
+              <p class="era-ref">Dan 9:25–26 · Matt 26–28</p>
+            </div>
+          </div>
+
+          <div class="era-block">
+            <div class="era-date futurist-date">33 AD → Now</div>
+            <div class="era-content">
+              <div class="badge present">Present (Parenthesis)</div>
+              <h3>The Church Age (Gap)</h3>
+              <p class="era-desc">The church is a "parenthesis" — a mystery entirely hidden in the OT not prophesied by Daniel. Israel's prophetic clock is stopped. All OT prophecy is on hold until the Rapture.</p>
+              <p class="era-ref">Eph 3:3–6 · Rom 11</p>
+            </div>
+          </div>
+
+          <div class="era-block">
+            <div class="era-date futurist-date">Future — Imminent</div>
+            <div class="era-content">
+              <div class="badge future">Future</div>
+              <h3>The Rapture (Pre-Tribulation)</h3>
+              <p class="era-desc">Christ secretly removes the church before the Tribulation. Believers are "caught up" to heaven. The world is left without Christians. This is a distinct event from the Second Coming — separated by 7 years.</p>
+              <p class="era-ref">1 Thess 4:16–17 · John 14:3 · 1 Cor 15:52</p>
+            </div>
+          </div>
+
+          <div class="era-block">
+            <div class="era-date futurist-date">Future — 7 Years</div>
+            <div class="era-content">
+              <div class="badge future">Future</div>
+              <h3>Daniel's 70th Week — The Tribulation</h3>
+              <p class="era-desc">A literal 7-year period of global tribulation. The "Antichrist" rises, signs a 7-year treaty with Israel, rebuilds the Jerusalem Temple, and restores animal sacrifices — all to be broken at the midpoint (3.5 years).</p>
+              <p class="era-ref">Dan 9:27 · Rev 6–18 · Matt 24:15–21</p>
+            </div>
+          </div>
+
+          <div class="era-block">
+            <div class="era-date futurist-date">Future — Mid-Trib</div>
+            <div class="era-content">
+              <div class="badge future">Future</div>
+              <h3>Abomination of Desolation</h3>
+              <p class="era-desc">At the 3.5-year mark, Antichrist enters the rebuilt Temple, stops sacrifices, declares himself God (the "Great Tribulation" begins). The mark of the beast is implemented globally.</p>
+              <p class="era-ref">Dan 9:27 · 2 Thess 2:4 · Rev 13:16–18</p>
+            </div>
+          </div>
+
+          <div class="era-block">
+            <div class="era-date futurist-date">Future — End</div>
+            <div class="era-content">
+              <div class="badge future">Future</div>
+              <h3>Battle of Armageddon &amp; Second Coming</h3>
+              <p class="era-desc">Nations gather to fight Israel. Christ returns visibly in glory, destroys the armies, defeats Antichrist and the False Prophet, who are cast into the Lake of Fire. Satan is bound for 1,000 years.</p>
+              <p class="era-ref">Rev 19:11–21 · Zech 14:1–4</p>
+            </div>
+          </div>
+
+          <div class="era-block">
+            <div class="era-date futurist-date">Future — 1,000 Yrs</div>
+            <div class="era-content">
+              <div class="badge future">Future</div>
+              <h3>Millennial Kingdom (on Earth)</h3>
+              <p class="era-desc">Christ reigns physically from Jerusalem for 1,000 literal years. Restored nation of Israel fulfills all OT land and covenant promises. Temple worship and Davidic monarchy reinstated on earth.</p>
+              <p class="era-ref">Rev 20:1–6 · Isa 65:17–25 · Ezek 40–48</p>
+            </div>
+          </div>
+
+          <div class="era-block">
+            <div class="era-date futurist-date">Eternity</div>
+            <div class="era-content">
+              <div class="badge fulfilled">Eternal</div>
+              <h3>Great White Throne &amp; New Earth</h3>
+              <p class="era-desc">Satan released, final rebellion crushed, Great White Throne Judgment, Lake of Fire, New Heavens and New Earth created.</p>
+              <p class="era-ref">Rev 20:7–21:1</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SDA COLUMN -->
+      <div class="timeline-column">
+        <div class="col-header sda">
+          <span class="tradition">SDA / Protestant Historicism</span>
+          <h2>SDA Historicist Timeline</h2>
+          <span class="origin">Origins: Reformation (Luther, Calvin, Newton), Miller Movement, SDA pioneers (1844–present)</span>
+        </div>
+        <div class="timeline-body">
+
+          <div class="era-block">
+            <div class="era-date sda-date">457 BC</div>
+            <div class="era-content">
+              <div class="badge fulfilled">Historically Verified</div>
+              <h3>Decree to Rebuild Jerusalem</h3>
+              <p class="era-desc">Artaxerxes I issues the decree (Ezra 7:1–27) — the anchor date for both the 2,300-day and 70-week prophecies. Verified by the Elephantine Papyri and Persian-era archaeology. The day-year principle (Num 14:34; Ezek 4:6) converts days to literal years.</p>
+              <p class="era-ref">Ezra 7:1–27 · Dan 9:25 · Neh 2:1–8</p>
+            </div>
+          </div>
+
+          <div class="era-block">
+            <div class="era-date sda-date">27 AD</div>
+            <div class="era-content">
+              <div class="badge fulfilled">Historically Verified</div>
+              <h3>Baptism of Jesus — Messiah Anointed</h3>
+              <p class="era-desc">"69 weeks" (483 years) from 457 BC = 27 AD. Jesus is baptised and anointed by the Spirit — precisely when Daniel 9:25 predicted "Messiah the Prince" would appear. "Messiah" (Heb. māšîaḥ) = anointed one.</p>
+              <p class="era-ref">Dan 9:25 · Luke 3:21–22 · Acts 10:38</p>
+            </div>
+          </div>
+
+          <div class="era-block">
+            <div class="era-date sda-date">31 AD</div>
+            <div class="era-content">
+              <div class="badge fulfilled">Historically Verified</div>
+              <h3>Crucifixion — "Midst of the Week"</h3>
+              <p class="era-desc">"In the midst of the week He shall cause sacrifice and oblation to cease" (Dan 9:27). At Calvary, the veil tore — the entire sacrificial system was rendered obsolete. The 70th week (7 years) runs 27–34 AD, not 7 future years.</p>
+              <p class="era-ref">Dan 9:27 · Matt 27:51 · Heb 9:11–14 · 10:1–14</p>
+            </div>
+          </div>
+
+          <div class="era-block">
+            <div class="era-date sda-date">34 AD</div>
+            <div class="era-content">
+              <div class="badge fulfilled">Historically Verified</div>
+              <h3>Stoning of Stephen — Gospel to Gentiles</h3>
+              <p class="era-desc">End of the 490 years (70 weeks). Israel's exclusive probationary period closes (Acts 7:59–8:1). Saul converted (Acts 9). Gospel formally extends to Gentiles (Acts 10–11). All 70 weeks contiguous and fulfilled.</p>
+              <p class="era-ref">Acts 7:59 · 8:1–4 · 9:1–9 · 10:44–48</p>
+            </div>
+          </div>
+
+          <div class="era-block">
+            <div class="era-date sda-date">538–1798 AD</div>
+            <div class="era-content">
+              <div class="badge historical">Historically Identified</div>
+              <h3>1,260 Years of Papal Supremacy</h3>
+              <p class="era-desc">The "little horn" of Daniel 7 (also Rev 12:6, 14; 13:5) exercises power for 1,260 prophetic days = 1,260 literal years. Justinian's Decree 538 AD establishes papal primacy. Pope Pius VI taken captive by Napoleon 1798 AD — the "deadly wound." Reformation prophets (Luther, Wycliffe, Huss, Newton) all identified this power as Rome.</p>
+              <p class="era-ref">Dan 7:25 · Rev 12:6, 14 · Rev 13:5 · 2 Thess 2:3–4</p>
+            </div>
+          </div>
+
+          <div class="era-block">
+            <div class="era-date sda-date">1844 AD</div>
+            <div class="era-content">
+              <div class="badge present">Present Truth</div>
+              <h3>Start of Investigative Judgment</h3>
+              <p class="era-desc">End of the 2,300 days (457 BC + 2,300 = 1844 AD). Christ enters the Most Holy Place of the heavenly sanctuary as High Priest (Dan 7:9–14; 8:14). Yom Kippur typology fulfilled in heaven. The "hour of His judgment is come" (Rev 14:7). First Angel's Message begins.</p>
+              <p class="era-ref">Dan 8:14 · 7:9–14 · Rev 14:6–7 · Heb 8:1–2 · 9:23</p>
+            </div>
+          </div>
+
+          <div class="era-block">
+            <div class="era-date sda-date">1844 → Now</div>
+            <div class="era-content">
+              <div class="badge present">Present Truth</div>
+              <h3>Three Angels' Messages — Loud Cry</h3>
+              <p class="era-desc">Rev 14:6–12 is the last gospel proclamation — warning about Babylon, the Mark of the Beast (false worship/Sunday law), and calling for Sabbath observance ("commandments of God"). Shaking, Latter Rain, and Loud Cry immediately precede the Second Coming. Close of Probation follows.</p>
+              <p class="era-ref">Rev 14:6–12 · 18:1–4 · Joel 2:28–29 · James 5:7–8</p>
+            </div>
+          </div>
+
+          <div class="era-block">
+            <div class="era-date sda-date">Second Coming</div>
+            <div class="era-content">
+              <div class="badge future">Future</div>
+              <h3>Second Advent — Visible, Glorious</h3>
+              <p class="era-desc">Christ returns visibly, audibly, bodily. No secret rapture — "every eye shall see Him" (Rev 1:7). Righteous dead raised (1st resurrection). Living saints translated. Wicked destroyed by the brightness of His coming. Satan is bound — no one left to tempt.</p>
+              <p class="era-ref">Rev 1:7 · 1 Thess 4:16–17 · 2 Thess 2:8 · Rev 6:14–17</p>
+            </div>
+          </div>
+
+          <div class="era-block">
+            <div class="era-date sda-date">1,000 Years — In Heaven</div>
+            <div class="era-content">
+              <div class="badge future">Future</div>
+              <h3>Millennium — Saints Reign in Heaven</h3>
+              <p class="era-desc">The 1,000 years (Rev 20) occur in heaven, not on earth. The earth is desolate — Satan is "bound" (no one to deceive). The saints participate in the judgment of the wicked. Earth is not inhabited for 1,000 years (Jer 4:23–27; Isa 24:1–3).</p>
+              <p class="era-ref">Rev 20:1–6 · Jer 4:23–27 · Isa 24:1–3 · John 14:2–3</p>
+            </div>
+          </div>
+
+          <div class="era-block">
+            <div class="era-date sda-date">Eternity</div>
+            <div class="era-content">
+              <div class="badge fulfilled">Eternal</div>
+              <h3>New Jerusalem Descends — Earth Recreated</h3>
+              <p class="era-desc">Satan loosed briefly, leads final rebellion, is devoured by fire from God. 2nd resurrection (wicked). Judgment executed. Earth purified and recreated. New Jerusalem descends. God dwells with humanity eternally. Annihilation of the wicked (conditional immortality).</p>
+              <p class="era-ref">Rev 20:7–21:4 · Mal 4:1–3 · 2 Pet 3:10–13</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div><!-- /comparison-grid -->
+
+    <div class="key-diff" style="margin-top:2rem;">
+      <h4>⚑ The Central Hermeneutical Divide</h4>
+      <p>Futurism requires a <strong>2,000+ year gap</strong> between Daniel's 69th and 70th week — an insertion with zero textual basis. Historicism reads all 70 weeks as contiguous and finds every event historically verified in the 1st century AD. The entire futurist system depends on this unproven gap.</p>
+    </div>
+  </div><!-- /tab-timelines -->
+
+
+  <!-- =========================================
+       TAB 2: ACCURACY SCORING
+  ========================================= -->
+  <div id="tab-scoring" class="tab-content">
+    <div class="accuracy-intro">
+      <p>Each criterion is assessed on biblical evidence, internal consistency, historical verification, and hermeneutical methodology. Futurism (Dispensationalism) is assessed against classical Historicism (the SDA/Reformation position). Scores are 1–10.</p>
+    </div>
+
+    <table class="criteria-table">
+      <thead>
+        <tr>
+          <th style="width:24%">Criterion</th>
+          <th style="width:34%">Futurist Position</th>
+          <th style="width:34%">SDA Historicist Position</th>
+          <th style="width:4%" class="score-cell">Fut.</th>
+          <th style="width:4%" class="score-cell">SDA</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="criterion">Day-Year Principle (Num 14:34; Ezek 4:6)</td>
+          <td>Rejects it for most prophecies; insists on literal 7 years for Dan 9:27 and literal 1,260 days for Tribulation</td>
+          <td>Explicitly mandated by two independent Scriptures (Num 14:34; Ezek 4:6). Applied consistently across Daniel and Revelation. All anchor dates historically verified.</td>
+          <td class="score-cell"><span class="score-pill score-low">3/10</span></td>
+          <td class="score-cell"><span class="score-pill score-high">9/10</span></td>
+        </tr>
+        <tr>
+          <td class="criterion">The 70th Week of Daniel (Dan 9:24–27)</td>
+          <td>Inserts a 2,000+ year gap between week 69 and week 70 — no textual basis. Antichrist fulfils week 70 in the future.</td>
+          <td>All 70 weeks are contiguous (457 BC–34 AD). Jesus confirms the covenant (v.27). Cross ends sacrifice. Stephen's stoning = 34 AD. Historically verified at every data point.</td>
+          <td class="score-cell"><span class="score-pill score-low">2/10</span></td>
+          <td class="score-cell"><span class="score-pill score-high">10/10</span></td>
+        </tr>
+        <tr>
+          <td class="criterion">The Rapture as Distinct Event (1 Thess 4:16–17)</td>
+          <td>A "secret" removal of the church — two separate returns of Christ. First secret, then public 7 years later. Pre-tribulation rapture invented by J.N. Darby c.1830.</td>
+          <td>1 Thess 4 describes the Second Coming — one event, visible to all (Rev 1:7). No biblical text teaches two separate returns of Christ. Paul's language is public and audible ("shout," "trumpet").</td>
+          <td class="score-cell"><span class="score-pill score-low">2/10</span></td>
+          <td class="score-cell"><span class="score-pill score-high">9/10</span></td>
+        </tr>
+        <tr>
+          <td class="criterion">Identity of the "Little Horn" / Antichrist (Dan 7; 2 Thess 2)</td>
+          <td>A future world political leader who rules for 7 years. Requires a rebuilt Jerusalem Temple and restored sacrificial system (implicitly denying the finality of Calvary).</td>
+          <td>The "little horn" = papal Rome (also identified by Luther, Calvin, Wesley, Newton). All diagnostic markers match: speaks against God, wears out saints, changes times and law, 1,260 years of dominance.</td>
+          <td class="score-cell"><span class="score-pill score-low">3/10</span></td>
+          <td class="score-cell"><span class="score-pill score-high">9/10</span></td>
+        </tr>
+        <tr>
+          <td class="criterion">Historical Verification of Prophetic Anchors</td>
+          <td>No historical event verifies the 7-year Tribulation — it is entirely future. The Rapture is unverifiable. All timeline anchors are speculative and future.</td>
+          <td>Every anchor is historically verifiable: Artaxerxes' decree (457 BC), Baptism of Jesus (27 AD), Crucifixion (31 AD), Stephen (34 AD), Justinian (538), Napoleon/Pius VI (1798), 1844.</td>
+          <td class="score-cell"><span class="score-pill score-low">1/10</span></td>
+          <td class="score-cell"><span class="score-pill score-high">9/10</span></td>
+        </tr>
+        <tr>
+          <td class="criterion">Hermeneutical Origins &amp; Scholarly Pedigree</td>
+          <td>Futurism was first developed by Jesuit priest Francisco Ribera (1590 AD) as a Counter-Reformation move to deflect Protestant identification of Rome as Antichrist. Popularised by Darby (1830s) — no patristic support.</td>
+          <td>Historicism was the dominant prophetic method of the entire Reformation (Luther, Calvin, Knox, Tyndale, Newton, Wesley). It has deep patristic roots and was the consensus until the 19th century.</td>
+          <td class="score-cell"><span class="score-pill score-low">2/10</span></td>
+          <td class="score-cell"><span class="score-pill score-high">9/10</span></td>
+        </tr>
+        <tr>
+          <td class="criterion">Internal Biblical Consistency</td>
+          <td>The rebuilt Temple and restored animal sacrifices would contradict Hebrews 7–10 (Christ's sacrifice is final and complete). The gap theory also requires OT prophecy to have two radically different audiences.</td>
+          <td>The heavenly sanctuary of Hebrews 8–9 interprets Dan 8:14. The investigative judgment ties Lev 16 (Yom Kippur), Dan 7:9–10, and Rev 14:7 into one coherent system. No internal contradictions.</td>
+          <td class="score-cell"><span class="score-pill score-low">3/10</span></td>
+          <td class="score-cell"><span class="score-pill score-high">9/10</span></td>
+        </tr>
+        <tr>
+          <td class="criterion">Christological Centrality</td>
+          <td>Places heavy focus on Israel's national restoration and earthly politics. Christ's Second Coming becomes one event in a complex sequence centred on national Israel, not the cosmic lordship of Christ.</td>
+          <td>Every prophetic period anchors to Christ: He is the Messiah of 457 BC, the Sacrifice of 31 AD, the High Priest of 1844, and the Coming King. The investigative judgment is His intercession, not a work of merit.</td>
+          <td class="score-cell"><span class="score-pill score-mid">5/10</span></td>
+          <td class="score-cell"><span class="score-pill score-high">9/10</span></td>
+        </tr>
+        <tr>
+          <td class="criterion">Millennium Location (Rev 20)</td>
+          <td>Earthly millennium with Christ reigning in Jerusalem. Requires geographic Israel, national politics, and a Davidic earthly throne — reading Revelation's symbolic language literally.</td>
+          <td>Millennium in heaven (John 14:2–3; Rev 20). Earth desolate (Jer 4:23–27). Satan bound — no one to deceive. Consistent with the state of the dead (unconscious) and conditionalist immortality.</td>
+          <td class="score-cell"><span class="score-pill score-mid">5/10</span></td>
+          <td class="score-cell"><span class="score-pill score-high">8/10</span></td>
+        </tr>
+        <tr>
+          <td class="criterion">Application of Revelation to Real History</td>
+          <td>Chapters 4–19 of Revelation have no application until the future Tribulation. The church age is essentially a prophetic blank. This renders most of Revelation irrelevant to 2,000 years of church history.</td>
+          <td>Revelation speaks to real persecuted churches (1st century), through the Reformation, into the modern age. The seven churches (Rev 1–3) = seven historical eras. Seven seals, seven trumpets = church history unfolding.</td>
+          <td class="score-cell"><span class="score-pill score-low">3/10</span></td>
+          <td class="score-cell"><span class="score-pill score-high">8/10</span></td>
+        </tr>
+        <tr class="total-row">
+          <td class="criterion">TOTAL SCORE (out of 100)</td>
+          <td></td>
+          <td></td>
+          <td class="score-cell"><span class="score-pill score-low" style="width:64px">29/100</span></td>
+          <td class="score-cell"><span class="score-pill score-high" style="width:64px">89/100</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div><!-- /tab-scoring -->
+
+
+  <!-- =========================================
+       TAB 3: BIBLICAL PILLARS
+  ========================================= -->
+  <div id="tab-pillars" class="tab-content">
+
+    <div class="pillars-grid">
+
+      <div class="pillar-card">
+        <div class="card-head">
+          <div class="card-num">01</div>
+          <div class="card-title-wrap">
+            <div class="card-label">The Critical Problem</div>
+            <div class="card-title">The Invented Gap in Daniel 9</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p>Daniel 9:24 says "seventy weeks are determined (cut off) for your people." The Hebrew <em>nāḥak</em> ("determined/cut off") implies a single, continuous block. Gabriel gives no indication of a pause. The text flows from week 69 to week 70 without interruption.</p>
+          <p>The gap theory requires inserting 2,000+ years between verse 26 and 27 — a chasm the text never suggests. This is eisegesis: a conclusion forced back into the text, not derived from it. Every legitimate data point of the 70th week is historically verified by Jesus' ministry (27–34 AD) without any gap.</p>
+          <p><strong>Verdict:</strong> The gap has no textual basis. The SDA contiguous reading is exegetically superior.</p>
+        </div>
+      </div>
+
+      <div class="pillar-card">
+        <div class="card-head">
+          <div class="card-num">02</div>
+          <div class="card-title-wrap">
+            <div class="card-label">Hermeneutical Integrity</div>
+            <div class="card-title">Day-Year Principle — Explicit, Not Assumed</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p>Futurists accuse Historicists of inventing the day-year principle. But it appears explicitly in two independent texts: Numbers 14:34 ("each day for a year") and Ezekiel 4:6 ("I have assigned you a day for each year"). This is not interpretive convenience — it is biblical mandate.</p>
+          <p>When applied to Daniel 9 (70 weeks = 490 years), the 457 BC anchor produces perfect historical verification at 27 AD, 31 AD, and 34 AD — three independent confirmations within a 7-year window. No prophetic system matches this level of historical precision.</p>
+          <p><strong>Key Hebrew:</strong> <em>šābûaʿ</em> (שָׁבוּעַ) = "week" or "seven" — a unit of seven that can be days or years depending on context, exactly as the day-year principle demands.</p>
+        </div>
+      </div>
+
+      <div class="pillar-card">
+        <div class="card-head">
+          <div class="card-num">03</div>
+          <div class="card-title-wrap">
+            <div class="card-label">The Most Damaging Problem</div>
+            <div class="card-title">A Rebuilt Temple Denies Calvary</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p>Futurism requires a rebuilt Jerusalem Temple, restored Levitical priesthood, and reinstated animal sacrifices (to be later "desecrated" by the Antichrist). This is theologically catastrophic.</p>
+          <p>Hebrews 9:26 states Christ "appeared once for all at the end of the ages to put away sin by the sacrifice of himself." Hebrews 10:18: "where there is forgiveness of these, there is no longer any offering for sin." Reinstating animal sacrifices — even temporarily — implicitly denies the sufficiency of the Cross.</p>
+          <p>The SDA position: the heavenly sanctuary (Heb 8:1–2) is the real sanctuary Daniel 8:14 describes. No earthly Temple is needed. Christ is the High Priest now.</p>
+        </div>
+      </div>
+
+      <div class="pillar-card">
+        <div class="card-head">
+          <div class="card-num">04</div>
+          <div class="card-title-wrap">
+            <div class="card-label">Historical Evidence</div>
+            <div class="card-title">Futurism's Jesuit Origins</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p>The Reformers — Luther, Calvin, Wycliffe, Huss, Tyndale, Knox, and later Newton and Wesley — unanimously identified the papal system as the Antichrist of Daniel 7 and 2 Thessalonians 2. This was the established Protestant position for nearly 300 years.</p>
+          <p>In 1590, Jesuit priest Francisco Ribera published a 500-page commentary on Revelation, proposing that the prophecies applied to a future individual Antichrist — explicitly to divert the Antichrist identification away from Rome. This Counter-Reformation strategy was later revived by J.N. Darby (1830s) and popularised through the Scofield Reference Bible (1909).</p>
+          <p><strong>The irony:</strong> Evangelical futurism unknowingly teaches a Jesuit hermeneutic designed to protect Rome.</p>
+        </div>
+      </div>
+
+      <div class="pillar-card">
+        <div class="card-head">
+          <div class="card-num">05</div>
+          <div class="card-title-wrap">
+            <div class="card-label">Textual Analysis</div>
+            <div class="card-title">The Rapture — No Text, No Precedent</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p>The word "rapture" appears nowhere in Scripture. The key text (1 Thess 4:16–17) describes a visible, audible event: "the Lord himself shall descend with a shout, with the voice of the archangel, and with the trump of God." This is not secret by any reading.</p>
+          <p>The concept of two separate returns of Christ (first secret, then public 7 years later) has no biblical text that explicitly states it. Every "rapture" proof text can be naturally read as the singular Second Coming (Matt 24:30–31; 1 Cor 15:52; Rev 1:7).</p>
+          <p>John 14:3 ("I will come again and receive you to myself") does not specify secrecy or a pre-tribulation timing. The pre-trib rapture was first taught by Darby in the 1830s — no church father, council, or creed held this view before then.</p>
+        </div>
+      </div>
+
+      <div class="pillar-card">
+        <div class="card-head">
+          <div class="card-num">06</div>
+          <div class="card-title-wrap">
+            <div class="card-label">Prophetic Coherence</div>
+            <div class="card-title">The 1,260 Years — Six Convergent Texts</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p>Revelation describes the same period six times using three equivalent expressions: 1,260 days (Rev 11:3; 12:6), 42 months (Rev 11:2; 13:5), and "a time, times, and half a time" (Dan 7:25; 12:7; Rev 12:14). Six separate references pointing to one period = overwhelming textual weight.</p>
+          <p>Applied historically: 538 AD (Justinian's decree establishing papal primacy) to 1798 AD (Napoleon's General Berthier captures Pope Pius VI — the "deadly wound") = exactly 1,260 years. This is not a coincidence — it is the most precisely verified long-range prophecy in all of Scripture.</p>
+          <p>Futurism compresses all 6 of these references into a literal 3.5 years — losing the historical fulfilment entirely and rendering 1,300 years of church history prophetically invisible.</p>
+        </div>
+      </div>
+
+    </div><!-- /pillars-grid -->
+
+    <div class="verdict-panel">
+      <div class="verdict-side futurist-v">
+        <h3><span class="v-tag futurist-tag">Futurist</span> Critical Weaknesses</h3>
+        <ul>
+          <li>The 70th week gap has no textual warrant — pure eisegesis</li>
+          <li>Requires a rebuilt Temple that theologically contradicts Hebrews 7–10</li>
+          <li>The Rapture as a separate event is not explicitly taught anywhere</li>
+          <li>Hermeneutic originated with Jesuit Ribera (1590) to protect Rome</li>
+          <li>No historical verification for any prophetic anchor</li>
+          <li>Renders 2,000 years of church history prophetically meaningless</li>
+          <li>Pre-trib Rapture invented by Darby c.1830 — no patristic support</li>
+          <li>Compresses 6 convergent "1,260" texts into literal 3.5 years</li>
+        </ul>
+      </div>
+      <div class="verdict-side sda-v">
+        <h3><span class="v-tag sda-tag">SDA Historicist</span> Biblical Strengths</h3>
+        <ul>
+          <li>Day-year principle explicitly mandated (Num 14:34; Ezek 4:6)</li>
+          <li>Every prophetic anchor historically verified by independent sources</li>
+          <li>70 weeks fulfilled in Christ's ministry — no gap required</li>
+          <li>Heavenly sanctuary (Heb 8–9) anchors Dan 8:14 without a rebuilt Temple</li>
+          <li>1,260 years verified by 538–1798 AD history at six text-points</li>
+          <li>Dominant Reformation interpretive method for 300+ years</li>
+          <li>Second Coming is one visible event (Rev 1:7 — "every eye shall see")</li>
+          <li>Millennium in heaven = consistent with death as sleep, earth desolate</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="final-banner">
+      <div class="fb-label">Scholarly Verdict</div>
+      <div class="fb-headline">The Historicist-SDA Framework is Exegetically Superior</div>
+      <div class="fb-body">
+        The SDA/Historicist prophetic framework rests on an explicitly stated hermeneutical principle (day-year), multiple historically verified anchors, internal biblical coherence, and the full weight of the Reformation tradition. Evangelical futurism — though widely popular — depends on an unproven gap, a theologically problematic rebuilt Temple, a doctrinally invented Rapture, and a hermeneutic with Counter-Reformation origins. Popularity is not the same as accuracy. The biblical data strongly favours the Historicist reading.
+      </div>
+    </div>
+
+  </div><!-- /tab-pillars -->
+
+  <div class="doc-footer">
+    <span>Biblical Prophecy Comparison · SDA Apologetics Resource</span>
+    <span>Key texts: Dan 8:14 · Dan 9:24–27 · Rev 14:6–12 · Rev 20 · Heb 8–9</span>
+    <span>Prepared for pastoral &amp; teaching use · British English</span>
+  </div>
+
+</div><!-- /page-wrapper -->
+
+<style>
+/* ===== EVIDENCE TODAY TAB ===== */
+.ev-intro {
+  max-width: 820px;
+  margin-bottom: 2rem;
+}
+.ev-intro p {
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: var(--neutral);
+  font-style: italic;
+}
+
+.ev-section {
+  margin-bottom: 2.5rem;
+  border: 2px solid var(--ink);
+  overflow: hidden;
+}
+
+.ev-section-header {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 0;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 1rem 1.25rem;
+  align-items: center;
+}
+.ev-section-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 900;
+  opacity: 0.25;
+  line-height: 1;
+}
+.ev-section-title-wrap {
+  padding-left: 1rem;
+}
+.ev-section-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin-bottom: 0.2rem;
+}
+.ev-section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.ev-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.ev-col {
+  padding: 1.25rem;
+  border-right: 1px solid var(--divider);
+}
+.ev-col:last-child { border-right: none; }
+
+.ev-col-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--divider);
+}
+.ev-col-label.prophecy-label { color: var(--sda-primary); }
+.ev-col-label.scripture-label { color: #5c3d11; }
+.ev-col-label.evidence-label { color: #b5222c; }
+
+.ev-col p {
+  font-size: 0.82rem;
+  line-height: 1.65;
+  margin-bottom: 0.6rem;
+  color: #3a3530;
+}
+.ev-col p:last-child { margin-bottom: 0; }
+
+.ev-scripture {
+  background: #f0ede5;
+  border-left: 3px solid #c89a2e;
+  padding: 0.5rem 0.75rem;
+  margin: 0.5rem 0;
+  font-style: italic;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: #4a3a10;
+}
+.ev-ref {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--neutral);
+  display: block;
+  margin-top: 0.3rem;
+  font-style: normal;
+}
+
+.ev-news-item {
+  border: 1px solid #e8d5c0;
+  background: #fdf9f4;
+  margin-bottom: 0.6rem;
+  padding: 0.6rem 0.75rem;
+}
+.ev-news-item:last-child { margin-bottom: 0; }
+.ev-news-headline {
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 0.25rem;
+  color: #1a1a1a;
+}
+.ev-news-meta {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--neutral);
+  margin-bottom: 0.25rem;
+}
+.ev-news-body {
+  font-size: 0.77rem;
+  line-height: 1.55;
+  color: #4a4540;
+}
+
+.ev-urgency {
+  display: inline-block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.1rem 0.4rem;
+  border-radius: 2px;
+  margin-bottom: 0.35rem;
+}
+.ev-urgency.high { background: #fdecea; color: #c0392b; border: 1px solid #f5c6c3; }
+.ev-urgency.medium { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+.ev-urgency.watch { background: #d4edda; color: var(--sda-primary); border: 1px solid #a8d5b5; }
+.ev-urgency.fulfilled { background: #cfe2ff; color: #084298; border: 1px solid #b6d4fe; }
+
+.ev-summary-banner {
+  background: linear-gradient(135deg, var(--sda-primary) 0%, #0d2218 100%);
+  color: white;
+  padding: 2rem;
+  margin-top: 1.5rem;
+  text-align: center;
+}
+.ev-summary-banner .sb-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin-bottom: 0.5rem;
+}
+.ev-summary-banner .sb-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin-bottom: 0.75rem;
+}
+.ev-summary-banner .sb-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  max-width: 800px;
+  margin: 1.5rem auto 0;
+  text-align: left;
+}
+.ev-summary-banner .sb-stat {
+  border-top: 2px solid rgba(255,255,255,0.2);
+  padding-top: 0.75rem;
+}
+.ev-summary-banner .sb-stat .num {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 900;
+  opacity: 0.9;
+  line-height: 1;
+  margin-bottom: 0.2rem;
+}
+.ev-summary-banner .sb-stat .desc {
+  font-size: 0.75rem;
+  opacity: 0.7;
+  line-height: 1.4;
+}
+
+@media (max-width: 800px) {
+  .ev-columns { grid-template-columns: 1fr; }
+  .ev-col { border-right: none; border-bottom: 1px solid var(--divider); }
+  .ev-col:last-child { border-bottom: none; }
+  .ev-summary-banner .sb-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+
+<!-- =========================================
+     TAB 4: EVIDENCE TODAY
+========================================= -->
+<div id="tab-evidence" class="tab-content">
+
+  <div class="ev-intro">
+    <p>Each row below maps a specific SDA prophetic marker from the chart to its biblical text anchor, then places it against documented current events, political decisions, and statistical trends. This is not proof of fulfilment — rather, it is a catalogue of <em>convergence</em>: the accelerating alignment between what the text predicts and what the world is doing. All dates and sources cited are verifiable.</p>
+  </div>
+
+  <!-- SECTION 1: IMAGE TO THE BEAST / CHURCH-STATE UNION -->
+  <div class="ev-section">
+    <div class="ev-section-header">
+      <div class="ev-section-number">01</div>
+      <div class="ev-section-title-wrap">
+        <div class="ev-section-label">Chart Marker → "Image to Beast Formed" / "Sunday Law"</div>
+        <div class="ev-section-title">Church–State Union & Christian Nationalism</div>
+      </div>
+    </div>
+    <div class="ev-columns">
+      <div class="ev-col">
+        <div class="ev-col-label prophecy-label">▶ SDA Prophetic Position</div>
+        <p>Revelation 13 predicts that a second "beast" power (the USA) will cause the earth to "make an image" of the first beast (Rome) — meaning it will replicate Rome's model of church-state coercion. A religio-political system will enforce a false form of worship by law, initially through economic exclusion ("no man might buy or sell") and ultimately through a death decree.</p>
+        <p>The Sunday law is the test case: a religiously motivated civil law that imposes Rome's counterfeit Sabbath on all citizens, directly targeting Sabbath keepers.</p>
+      </div>
+      <div class="ev-col">
+        <div class="ev-col-label scripture-label">✦ Biblical Text</div>
+        <div class="ev-scripture">"He causes all, both small and great, rich and poor, free and slave, to receive a mark on their right hand or on their foreheads, and that no one may buy or sell except one who has the mark or the name of the beast..."
+          <span class="ev-ref">— Rev 13:16–17 (NKJV)</span>
+        </div>
+        <div class="ev-scripture">"He had power to give life unto the image of the beast, that the image of the beast should both speak, and cause that as many as would not worship the image of the beast should be killed."
+          <span class="ev-ref">— Rev 13:15 (KJV)</span>
+        </div>
+        <div class="ev-scripture">"He exercises all the authority of the first beast in his presence, and causes the earth and those who dwell in it to worship the first beast."
+          <span class="ev-ref">— Rev 13:12 (NKJV)</span>
+        </div>
+      </div>
+      <div class="ev-col">
+        <div class="ev-col-label evidence-label">⬛ Real-World Evidence</div>
+        <div class="ev-news-item">
+          <div class="ev-urgency high">High Convergence</div>
+          <div class="ev-news-headline">Project 2025: The Heritage Foundation Blueprint</div>
+          <div class="ev-news-meta">USA · 2023–2025 · Heritage Foundation / 100+ Conservative Orgs</div>
+          <div class="ev-news-body">A 900-page policy blueprint calling for a federal government "imbued with biblical principles." Calls for the Bible to have primacy over law when in conflict with "the will of the people." Supported by 91 state legislature bills. Heritage Foundation president declared this "the second American Revolution."</div>
+        </div>
+        <div class="ev-news-item">
+          <div class="ev-urgency high">High Convergence</div>
+          <div class="ev-news-headline">Louisiana Mandates Ten Commandments in All Public School Classrooms</div>
+          <div class="ev-news-meta">Louisiana, USA · 2024 · Governor Jeff Landry</div>
+          <div class="ev-news-body">First US state to legally mandate religious text display in all classrooms. Federal court initially blocked it as "plainly unconstitutional" — but the Fifth Circuit (all 17 judges, Jan 2025) reversed the block, allowing enforcement. Landry declared: "The Supreme Court got it wrong about the separation of church and state."</div>
+        </div>
+        <div class="ev-news-item">
+          <div class="ev-urgency medium">Developing</div>
+          <div class="ev-news-headline">White Evangelical Protestants Divided on Church–State Separation</div>
+          <div class="ev-news-meta">Pew Research · March 2024</div>
+          <div class="ev-news-body">31% of white Evangelical Protestants now say the government should <em>stop</em> enforcing church-state separation — the highest of any US religious demographic. 28% of all Americans say the Bible should override the will of the people in law.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: SUNDAY LAW MOVEMENT -->
+  <div class="ev-section">
+    <div class="ev-section-header">
+      <div class="ev-section-number">02</div>
+      <div class="ev-section-title-wrap">
+        <div class="ev-section-label">Chart Marker → "Sunday Law" / "Loud Cry"</div>
+        <div class="ev-section-title">Sunday Rest Legislation & Papal Advocacy</div>
+      </div>
+    </div>
+    <div class="ev-columns">
+      <div class="ev-col">
+        <div class="ev-col-label prophecy-label">▶ SDA Prophetic Position</div>
+        <p>Ellen White and SDA eschatology predict that Sunday observance will eventually be enforced by law, initially framed in secular terms (rest, health, social cohesion, environment) rather than overtly religious ones. The Papacy will use its moral authority to push Protestant nations — especially the USA — toward this legislation.</p>
+        <p>The "Three Angels' Messages" (Rev 14) are a direct counter: worship on the Sabbath (the "commandments of God") is the visible mark of loyalty to the Creator versus loyalty to the beast power.</p>
+      </div>
+      <div class="ev-col">
+        <div class="ev-col-label scripture-label">✦ Biblical Text</div>
+        <div class="ev-scripture">"Here is the patience of the saints: here are they that keep the commandments of God, and the faith of Jesus."
+          <span class="ev-ref">— Rev 14:12 (KJV)</span>
+        </div>
+        <div class="ev-scripture">"Remember the Sabbath day, to keep it holy... the seventh day is the Sabbath of the Lord your God."
+          <span class="ev-ref">— Exod 20:8, 10 (ESV)</span>
+        </div>
+        <div class="ev-scripture">"He shall speak pompous words against the Most High, shall persecute the saints of the Most High, and shall intend to change times and law."
+          <span class="ev-ref">— Dan 7:25 (NKJV)</span>
+        </div>
+      </div>
+      <div class="ev-col">
+        <div class="ev-col-label evidence-label">⬛ Real-World Evidence</div>
+        <div class="ev-news-item">
+          <div class="ev-urgency high">High Convergence</div>
+          <div class="ev-news-headline">Pope Francis' Laudato Si & Laudate Deum Call for Mandatory Sunday Rest</div>
+          <div class="ev-news-meta">Vatican · 2015 (Laudato Si) / 2023 (Laudate Deum)</div>
+          <div class="ev-news-body">Pope Francis explicitly links Sunday rest to environmental sustainability and the "common good." Laudato Si calls for Sunday to be "implemented as a weekly day of rest to save the environment." The Vatican's 7-year Laudato Si Action Platform (launched 2021) targets all churches worldwide before culminating in a "sabbatical" year.</div>
+        </div>
+        <div class="ev-news-item">
+          <div class="ev-urgency medium">Developing</div>
+          <div class="ev-news-headline">EU Working Time Directive: Weekly Rest "As a Rule on Sunday"</div>
+          <div class="ev-news-meta">EU Directive 2003/88/EC · Reinforced by ECJ ruling, March 2023</div>
+          <div class="ev-news-body">EU law mandates 24 hours of uninterrupted weekly rest "as a rule coinciding with Sunday." The European Court of Justice (March 2023, Case C-477/21) strengthened enforcement, ruling daily rest must be <em>added to</em> weekly Sunday rest. All EU member states are now required to comply — legal framework for Sunday as the protected day is already in place.</div>
+        </div>
+        <div class="ev-news-item">
+          <div class="ev-urgency medium">Developing</div>
+          <div class="ev-news-headline">Pope Francis Advocates Sunday Non-Working in Italy & Beyond</div>
+          <div class="ev-news-meta">Vatican · Multiple statements 2014–2025</div>
+          <div class="ev-news-body">Pope Francis has repeatedly argued Sunday work harms families and questions "whether working on Sundays is true freedom." He has pressed EU legislators on Sunday trading laws. Dies Domini (John Paul II, 1998) called for states to guarantee Sunday as a legal right — the ongoing papal pressure on secular governments is documented across multiple pontificates.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: FALL OF BABYLON / ECUMENISM -->
+  <div class="ev-section">
+    <div class="ev-section-header">
+      <div class="ev-section-number">03</div>
+      <div class="ev-section-title-wrap">
+        <div class="ev-section-label">Chart Marker → "Counterfeit Reformation Among False Churches" / "Babylon"</div>
+        <div class="ev-section-title">Ecumenical Unity Movement & Babylon Assembling</div>
+      </div>
+    </div>
+    <div class="ev-columns">
+      <div class="ev-col">
+        <div class="ev-col-label prophecy-label">▶ SDA Prophetic Position</div>
+        <p>Revelation 17–18 depicts "Babylon the Great" as a false religious confederacy riding the political beast — a global ecumenical system that will unite apostate Protestantism with Rome and give political power to the beast. The call "Come out of her, my people" (Rev 18:4) assumes the churches have been absorbed into this system.</p>
+        <p>The "counterfeit reformation" is a spiritual revival that looks like Christianity but lacks its substance: ritual without righteousness by faith, unity without truth.</p>
+      </div>
+      <div class="ev-col">
+        <div class="ev-col-label scripture-label">✦ Biblical Text</div>
+        <div class="ev-scripture">"Come out of her, my people, lest you share in her sins, and lest you receive of her plagues. For her sins have reached to heaven, and God has remembered her iniquities."
+          <span class="ev-ref">— Rev 18:4–5 (NKJV)</span>
+        </div>
+        <div class="ev-scripture">"Fallen, fallen is Babylon the great! She has become a dwelling place for demons..."
+          <span class="ev-ref">— Rev 18:2 (ESV)</span>
+        </div>
+        <div class="ev-scripture">"And I saw the woman, drunk with the blood of the saints, the blood of the martyrs of Jesus."
+          <span class="ev-ref">— Rev 17:6 (ESV)</span>
+        </div>
+      </div>
+      <div class="ev-col">
+        <div class="ev-col-label evidence-label">⬛ Real-World Evidence</div>
+        <div class="ev-news-item">
+          <div class="ev-urgency high">High Convergence</div>
+          <div class="ev-news-headline">Vatican Synod on Synodality: Ecumenical Unity Drive Toward 2033</div>
+          <div class="ev-news-meta">Vatican · Synodal Assemblies Oct 2023 & Oct 2024</div>
+          <div class="ev-news-body">Pope Francis (and now Pope Leo XIV, Jan 2026) are explicitly targeting 2033 — the 2,000th anniversary of the Crucifixion — as an "Omega Point" for visible Christian unity. The Synod on Synodality (2021–2024) invited fraternal delegates from Protestant and Orthodox churches to participate in Roman Catholic governance discussions for the first time in history.</div>
+        </div>
+        <div class="ev-news-item">
+          <div class="ev-urgency high">High Convergence</div>
+          <div class="ev-news-headline">Joint Declaration on Justification: Catholic–Lutheran Agreement (1999, reaffirmed 2017)</div>
+          <div class="ev-news-meta">Vatican / Lutheran World Federation · 1999 & 2017</div>
+          <div class="ev-news-body">Cardinal Koch (Vatican's ecumenism head) declared this resolved "fundamental issues at the heart of the Reformation." The Reformation's core doctrinal dispute — the very issue that caused the Protestant split — has been officially "settled" by a joint statement that SDA theologians argue compromises sola fide without actually affirming it.</div>
+        </div>
+        <div class="ev-news-item">
+          <div class="ev-urgency medium">Developing</div>
+          <div class="ev-news-headline">Leo XIV Calls for "Synodal Ecumenism" Toward 2033 Visible Unity</div>
+          <div class="ev-news-meta">Vatican · January 25, 2026</div>
+          <div class="ev-news-body">New Pope Leo XIV concluded the Week of Prayer for Christian Unity calling all Christians toward a unified ecumenical-synodal path, with 2033 as the stated goal for "visible unity." He quoted Francis: "the synodal path must be ecumenical, just as the ecumenical path is synodal." A common Easter date is being formally negotiated.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: MARK OF THE BEAST TECHNOLOGY -->
+  <div class="ev-section">
+    <div class="ev-section-header">
+      <div class="ev-section-number">04</div>
+      <div class="ev-section-title-wrap">
+        <div class="ev-section-label">Chart Marker → "Mark of Beast Received" / "No Buy or Sell"</div>
+        <div class="ev-section-title">Biometric Surveillance, Digital ID & Economic Control</div>
+      </div>
+    </div>
+    <div class="ev-columns">
+      <div class="ev-col">
+        <div class="ev-col-label prophecy-label">▶ SDA Prophetic Position</div>
+        <p>The "mark of the beast" in SDA theology is fundamentally a worship issue (false Sabbath vs. true Sabbath), not a technological implant. However, the enforcement mechanism — economic exclusion ("no buy or sell") — requires a global system capable of monitoring and controlling commercial activity at the individual level.</p>
+        <p>The technology to implement this kind of economic exclusion simply did not exist in any prior generation. It does now. The infrastructure for a buy-sell exclusion system tied to personal identity is being built.</p>
+      </div>
+      <div class="ev-col">
+        <div class="ev-col-label scripture-label">✦ Biblical Text</div>
+        <div class="ev-scripture">"And that no one may buy or sell except one who has the mark or the name of the beast, or the number of his name."
+          <span class="ev-ref">— Rev 13:17 (NKJV)</span>
+        </div>
+        <div class="ev-scripture">"He causes all, both small and great, rich and poor, free and slave, to receive a mark on their right hand or on their foreheads."
+          <span class="ev-ref">— Rev 13:16 (NKJV)</span>
+        </div>
+        <div class="ev-scripture">"And the smoke of their torment ascends forever... whoever receives the mark of his name."
+          <span class="ev-ref">— Rev 14:11 (NKJV)</span>
+        </div>
+      </div>
+      <div class="ev-col">
+        <div class="ev-col-label evidence-label">⬛ Real-World Evidence</div>
+        <div class="ev-news-item">
+          <div class="ev-urgency medium">Infrastructure Building</div>
+          <div class="ev-news-headline">Global Digital Identity Market: $51 Billion in 2025, $281 Billion by 2034</div>
+          <div class="ev-news-meta">Market Research · 2025 · 20.87% CAGR</div>
+          <div class="ev-news-body">Over 3.6 billion users globally now rely on digital identity systems. Government-backed eID programmes cover 87% of EU population. Biometric verification comprised 82% of all digital identity checks in 2024. An estimated 5 billion digital IDs issued globally by 2024. India's biometric Aadhar system covers 1.4 billion people — and was opened to private companies in 2025.</div>
+        </div>
+        <div class="ev-news-item">
+          <div class="ev-urgency medium">Infrastructure Building</div>
+          <div class="ev-news-headline">86 Billion Digital ID Verification Checks Forecast for 2025</div>
+          <div class="ev-news-meta">Goode Intelligence / Biometric Update · 2025</div>
+          <div class="ev-news-body">The convergence problem identified by surveillance analysts: Digital ID systems + Central Bank Digital Currencies (CBDC) + online surveillance laws + anti-anonymity measures = unprecedented infrastructure for monitoring and controlling human economic behaviour. 12 countries have already imposed partial bans on facial recognition in public spaces due to civil liberties concerns.</div>
+        </div>
+        <div class="ev-news-item">
+          <div class="ev-urgency medium">Watch</div>
+          <div class="ev-news-headline">Mexico Mandates Biometric Digital ID for All Citizens (July 2025)</div>
+          <div class="ev-news-meta">Mexico · Signed into law July 18, 2025</div>
+          <div class="ev-news-body">Critics describe it as "the most comprehensive citizen surveillance apparatus in the Western Hemisphere." The World Bank and IMF praised Mexico's system as a model for developing nations. Brazil already has facial recognition across 40 cities. Global internet freedom has declined for 15 consecutive years (Freedom House, 2025).</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: PAPAL WOUND HEALED -->
+  <div class="ev-section">
+    <div class="ev-section-header">
+      <div class="ev-section-number">05</div>
+      <div class="ev-section-title-wrap">
+        <div class="ev-section-label">Chart Marker → "Beginning of Papal Wound Being Healed" (1929+)</div>
+        <div class="ev-section-title">Restoration of Papal Global Influence</div>
+      </div>
+    </div>
+    <div class="ev-columns">
+      <div class="ev-col">
+        <div class="ev-col-label prophecy-label">▶ SDA Prophetic Position</div>
+        <p>Napoleon's capture of Pope Pius VI in 1798 inflicted the "deadly wound" of Revelation 13:3 — the near-collapse of papal political power. The Lateran Treaty (1929) restored Vatican sovereignty, beginning the healing process. SDA prophecy expects the wound to be fully healed when the papacy regains its pre-1798 level of global political and religious authority — commanding the loyalty of nations and directing civil law.</p>
+      </div>
+      <div class="ev-col">
+        <div class="ev-col-label scripture-label">✦ Biblical Text</div>
+        <div class="ev-scripture">"And I saw one of his heads as if it had been mortally wounded, and his deadly wound was healed. And all the world marvelled and followed the beast."
+          <span class="ev-ref">— Rev 13:3 (NKJV)</span>
+        </div>
+        <div class="ev-scripture">"All who dwell on the earth will worship him, whose names have not been written in the Book of Life."
+          <span class="ev-ref">— Rev 13:8 (NKJV)</span>
+        </div>
+      </div>
+      <div class="ev-col">
+        <div class="ev-col-label evidence-label">⬛ Real-World Evidence</div>
+        <div class="ev-news-item">
+          <div class="ev-urgency high">Significant Convergence</div>
+          <div class="ev-news-headline">Vatican Hosts G7, G20 Leaders; Pope Addresses UN, EU Parliament</div>
+          <div class="ev-news-meta">Ongoing · 2000s–2025</div>
+          <div class="ev-news-body">The papacy is now consulted in global climate negotiations (Laudato Si cited at COP conferences), international humanitarian crises, and Middle East conflicts. Pope Francis addressed the UN General Assembly (2015), the US Congress (2015), and the EU Parliament. No other religious leader commands this level of access to the world's legislative bodies.</div>
+        </div>
+        <div class="ev-news-item">
+          <div class="ev-urgency medium">Developing</div>
+          <div class="ev-news-headline">New Pope Leo XIV Inaugurated May 2025 — Global Catholic Resurgence</div>
+          <div class="ev-news-meta">Vatican · May 18, 2025</div>
+          <div class="ev-news-body">The election of the first American pope (Robert Prevost as Leo XIV) was met with global media coverage and diplomatic attention. His first acts included advancing ecumenical unity with Protestant and Orthodox churches, targeting 2033 as the focal year for visible Christian unity — aligning the world's 1.4 billion Catholics and millions of Protestants under a common religious programme.</div>
+        </div>
+        <div class="ev-news-item">
+          <div class="ev-urgency fulfilled">Historically Verified</div>
+          <div class="ev-news-headline">Lateran Treaty (1929) — The Wound Begins to Heal</div>
+          <div class="ev-news-meta">Italy / Vatican · February 11, 1929</div>
+          <div class="ev-news-body">The SDA chart marks "Beginning of Papal Wound Being Healed — 1929" precisely because Mussolini's Lateran Treaty restored Vatican statehood and temporal sovereignty. This event appeared on the front page of virtually every major newspaper worldwide. The papacy went from having no political territory (since 1870) to being a recognised state with 177 diplomatic relations today.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: DANIEL UNSEALED / KNOWLEDGE INCREASED -->
+  <div class="ev-section">
+    <div class="ev-section-header">
+      <div class="ev-section-number">06</div>
+      <div class="ev-section-title-wrap">
+        <div class="ev-section-label">Chart Marker → "Daniel Unsealed" / "Knowledge Increased" (post-1798)</div>
+        <div class="ev-section-title">Prophetic Understanding & Information Explosion</div>
+      </div>
+    </div>
+    <div class="ev-columns">
+      <div class="ev-col">
+        <div class="ev-col-label prophecy-label">▶ SDA Prophetic Position</div>
+        <p>Daniel 12:4 predicts that at "the time of the end," the sealed book of Daniel would be opened and knowledge would increase explosively. SDA historicism identifies the post-1798 period as "the time of the end" — and the Millerite movement (1830s) as the first unsealing. The 20th–21st century explosion in communication, travel speed, and information access is a secondary fulfilment of the same verse.</p>
+      </div>
+      <div class="ev-col">
+        <div class="ev-col-label scripture-label">✦ Biblical Text</div>
+        <div class="ev-scripture">"But you, Daniel, shut up the words and seal the book, until the time of the end. Many shall run to and fro, and knowledge shall increase."
+          <span class="ev-ref">— Dan 12:4 (ESV)</span>
+        </div>
+        <div class="ev-scripture">"Many shall be purified, made white, and refined, but the wicked shall do wickedly; and none of the wicked shall understand, but the wise shall understand."
+          <span class="ev-ref">— Dan 12:10 (NKJV)</span>
+        </div>
+      </div>
+      <div class="ev-col">
+        <div class="ev-col-label evidence-label">⬛ Real-World Evidence</div>
+        <div class="ev-news-item">
+          <div class="ev-urgency watch">Observable</div>
+          <div class="ev-news-headline">Global Internet Users: 5.4 Billion in 2024 (67% of world population)</div>
+          <div class="ev-news-meta">ITU / Statista · 2024</div>
+          <div class="ev-news-body">In 1990 there were approximately 2.6 million internet users globally (0.05% of the world). By 2024 that figure is 5.4 billion — a 200,000× increase in 34 years. Air travel carries 4.7 billion passengers per year. The Bible is now available in 3,658 languages. The SDA church operates in 215 countries — more than the United Nations. This is "many shall run to and fro" at an unprecedented scale.</div>
+        </div>
+        <div class="ev-news-item">
+          <div class="ev-urgency watch">Observable</div>
+          <div class="ev-news-headline">AI & Information Access: ChatGPT Reached 100 Million Users in 60 Days (2023)</div>
+          <div class="ev-news-meta">OpenAI · Jan 2023 · Fastest consumer product ever</div>
+          <div class="ev-news-body">The fastest acceleration of human knowledge access in history is occurring now. Simultaneously, the same technology enables mass surveillance, misinformation, and the construction of the very tracking infrastructure that Revelation 13's economic exclusion would require. The technology is morally neutral — but its prophetic convergence is remarkable.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 7: WARS, SIGNS, MORAL COLLAPSE -->
+  <div class="ev-section">
+    <div class="ev-section-header">
+      <div class="ev-section-number">07</div>
+      <div class="ev-section-title-wrap">
+        <div class="ev-section-label">Chart Marker → Approaching "Great Time of Trouble" / "Time of the End"</div>
+        <div class="ev-section-title">Wars, Moral Collapse & Signs of the Times</div>
+      </div>
+    </div>
+    <div class="ev-columns">
+      <div class="ev-col">
+        <div class="ev-col-label prophecy-label">▶ SDA Prophetic Position</div>
+        <p>Matthew 24 and Luke 21 describe pre-Advent signs: wars and rumours of wars, nation against nation, kingdom against kingdom, famines, earthquakes, pestilences, and signs in the heavens. These are not triggers — they are indicators of proximity. They intensify as the close of probation approaches. The "time of Jacob's trouble" (a global crisis for God's people) precedes the Second Advent directly.</p>
+      </div>
+      <div class="ev-col">
+        <div class="ev-col-label scripture-label">✦ Biblical Text</div>
+        <div class="ev-scripture">"You will hear of wars and rumours of wars... nation will rise against nation, and kingdom against kingdom, and there will be famines and earthquakes in various places. All these are but the beginning of the birth pains."
+          <span class="ev-ref">— Matt 24:6–8 (ESV)</span>
+        </div>
+        <div class="ev-scripture">"But understand this, that in the last days there will come times of difficulty. For people will be lovers of self, lovers of money, proud, arrogant, abusive... lovers of pleasure rather than lovers of God."
+          <span class="ev-ref">— 2 Tim 3:1–4 (ESV)</span>
+        </div>
+        <div class="ev-scripture">"There will be a time of trouble, such as never has been since there was a nation till that time."
+          <span class="ev-ref">— Dan 12:1 (ESV)</span>
+        </div>
+      </div>
+      <div class="ev-col">
+        <div class="ev-col-label evidence-label">⬛ Real-World Evidence</div>
+        <div class="ev-news-item">
+          <div class="ev-urgency high">Active</div>
+          <div class="ev-news-headline">Russia–Ukraine War (2022–Present): Largest European Land War Since WWII</div>
+          <div class="ev-news-meta">Ukraine / Russia · Feb 24, 2022–present</div>
+          <div class="ev-news-body">Over 10,000 civilian deaths documented (UN), 6+ million refugees, nuclear threat rhetoric at sustained levels. NATO's eastern flank mobilised. This conflict has fractured global food supply chains (Ukraine = "breadbasket of the world") and triggered widespread famine risks in East Africa and the Middle East — precisely the interconnected cascading pattern of Matt 24.</div>
+        </div>
+        <div class="ev-news-item">
+          <div class="ev-urgency high">Active</div>
+          <div class="ev-news-headline">Gaza War, Middle East Escalation & Armageddon Proximity Concerns</div>
+          <div class="ev-news-meta">Israel / Gaza · Oct 7, 2023–present</div>
+          <div class="ev-news-body">Over 40,000 Palestinian deaths (Hamas-run health ministry, unverified), and over 1,400 Israeli deaths on Oct 7. Iranian missile strikes on Israel (April & October 2024) — the first direct Iran–Israel exchange in history. Lebanon, Houthi attacks on Red Sea shipping, and the real possibility of a wider regional war involving nuclear powers. The "Euphrates dried up" text (Rev 16:12) echoes in the geopolitical importance of this exact region.</div>
+        </div>
+        <div class="ev-news-item">
+          <div class="ev-urgency medium">Watch</div>
+          <div class="ev-news-headline">Global Christian Persecution at Record Highs — Open Doors 2024</div>
+          <div class="ev-news-meta">Open Doors World Watch List · January 2024</div>
+          <div class="ev-news-body">365 million Christians face high levels of persecution globally — 1 in 7 Christians worldwide. 13 countries have reached "extreme persecution" levels, the highest category. 4,998 Christians killed for their faith in 2023. 14,766 churches attacked or closed. The Rev 13 death decree may still be future, but the trajectory of Christian persecution is accelerating, not decelerating.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 8: LATTER RAIN / THREE ANGELS GLOBAL REACH -->
+  <div class="ev-section">
+    <div class="ev-section-header">
+      <div class="ev-section-number">08</div>
+      <div class="ev-section-title-wrap">
+        <div class="ev-section-label">Chart Marker → "Latter Rain" / "Three Angels' Messages to All Nations"</div>
+        <div class="ev-section-title">SDA Global Mission & Gospel to All Nations</div>
+      </div>
+    </div>
+    <div class="ev-columns">
+      <div class="ev-col">
+        <div class="ev-col-label prophecy-label">▶ SDA Prophetic Position</div>
+        <p>Matthew 24:14 declares "this gospel of the kingdom will be proclaimed throughout the whole world as a testimony to all nations, and then the end will come." Revelation 14:6 specifically describes an angel proclaiming the "everlasting gospel" to "every nation, tribe, language, and people" — the Three Angels' Messages as the final form of that global proclamation before the Second Coming.</p>
+      </div>
+      <div class="ev-col">
+        <div class="ev-col-label scripture-label">✦ Biblical Text</div>
+        <div class="ev-scripture">"Then I saw another angel flying directly overhead, with an eternal gospel to proclaim to those who dwell on earth, to every nation and tribe and language and people."
+          <span class="ev-ref">— Rev 14:6 (ESV)</span>
+        </div>
+        <div class="ev-scripture">"And this gospel of the kingdom will be proclaimed throughout the whole world as a testimony to all nations, and then the end will come."
+          <span class="ev-ref">— Matt 24:14 (ESV)</span>
+        </div>
+      </div>
+      <div class="ev-col">
+        <div class="ev-col-label evidence-label">⬛ Real-World Evidence</div>
+        <div class="ev-news-item">
+          <div class="ev-urgency watch">Positive Convergence</div>
+          <div class="ev-news-headline">SDA Church: 22 Million Members, 215 Countries, Fastest Growing Protestant Denomination</div>
+          <div class="ev-news-meta">General Conference of SDA · 2023 Annual Statistical Report</div>
+          <div class="ev-news-body">From just 3,500 members in 1863, the SDA church has grown to over 22 million baptised members in 215 countries. The church operates 8,000+ schools, 900+ hospitals, and the world's largest Protestant media network (Hope Channel in 60+ languages). Sabbatarian Adventism is now present in more countries than any other religious tradition.</div>
+        </div>
+        <div class="ev-news-item">
+          <div class="ev-urgency watch">Positive Convergence</div>
+          <div class="ev-news-headline">Bible Now Available in 3,658 Languages — 97% of World Population Has Access</div>
+          <div class="ev-news-meta">Wycliffe Bible Translators · 2024</div>
+          <div class="ev-news-body">The complete Bible is available in 736 languages. The New Testament in 1,658 languages. Some Scripture in 3,658 languages total. Digital access via YouVersion Bible App: 750 million downloads across 1,600 languages. Matthew 24:14 is closer to technical fulfilment today than at any point in church history.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ev-summary-banner">
+    <div class="sb-label">Convergence Summary · March 2026</div>
+    <div class="sb-title">Eight Prophetic Markers — All Moving in the Predicted Direction</div>
+    <p style="font-size:0.85rem; opacity:0.8; max-width:700px; margin:0 auto; line-height:1.7;">None of the above constitutes proof that any specific event has definitively fulfilled SDA prophecy. What is remarkable is that <em>every single marker</em> on the chart has a corresponding real-world trajectory — moving in the direction the text predicts, at an accelerating rate, within a single generation. No prior generation has seen this confluence simultaneously.</p>
+    <div class="sb-grid">
+      <div class="sb-stat">
+        <div class="num">8/8</div>
+        <div class="desc">Prophetic markers with active real-world trajectories</div>
+      </div>
+      <div class="sb-stat">
+        <div class="num">5.4B</div>
+        <div class="desc">Internet users globally — "knowledge increased" (Dan 12:4)</div>
+      </div>
+      <div class="sb-stat">
+        <div class="num">1929</div>
+        <div class="desc">Year the SDA chart predicted "wound begins to heal" — Lateran Treaty confirmed it</div>
+      </div>
+      <div class="sb-stat">
+        <div class="num">2033</div>
+        <div class="desc">Vatican's stated target year for global visible Christian unity</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /tab-evidence -->
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+
+</body>
+</html>
