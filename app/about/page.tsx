@@ -1,10 +1,64 @@
 import type { Metadata } from "next";
+import JsonLd from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
-  title: "About | Plain Prophecy",
+  title: "About — Mission & Hermeneutical Principles",
   description:
-    "Plain Prophecy is a Christ-centred, denomination-neutral biblical prophecy resource. Our mission, hermeneutical principles, and what makes this site different.",
+    "Plain Prophecy is a Christ-centred, denomination-neutral biblical prophecy resource. Grounded in the Reformation consensus, Scripture-first methodology, and intellectual honesty. Our mission, principles, and what makes this site different.",
+  alternates: {
+    canonical: "https://plainprophecy.com/about",
+  },
+  openGraph: {
+    title: "About Plain Prophecy — Mission & Method",
+    description:
+      "Christ-centred, denomination-neutral biblical prophecy. Not SDA recruitment. Not sensationalism. Just Scripture and verifiable history.",
+    url: "https://plainprophecy.com/about",
+    type: "website",
+    images: [
+      {
+        url: "/og/og-default.png",
+        width: 1200,
+        height: 630,
+        alt: "Plain Prophecy — About",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Plain Prophecy — Mission & Method",
+    description: "Christ-centred, denomination-neutral. Not SDA recruitment. Not sensationalism. Just Scripture and verifiable history.",
+    images: ["/og/og-default.png"],
+  },
 };
+
+const aboutSchemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    name: "About Plain Prophecy",
+    url: "https://plainprophecy.com/about",
+    description:
+      "Plain Prophecy is a Christ-centred, denomination-neutral biblical prophecy resource grounded in the Reformation consensus and Scripture-first methodology.",
+    breadcrumb: {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://plainprophecy.com" },
+        { "@type": "ListItem", position: 2, name: "About", item: "https://plainprophecy.com/about" },
+      ],
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Plain Prophecy",
+    url: "https://plainprophecy.com",
+    logo: "https://plainprophecy.com/og/og-default.png",
+    description:
+      "A Christ-centred, denomination-neutral resource for understanding biblical prophecy rigorously — without sensationalism or denominational recruitment.",
+    foundingDate: "2024",
+    sameAs: [],
+  },
+];
 
 const principles = [
   {
@@ -31,8 +85,13 @@ const principles = [
 
 export default function AboutPage() {
   return (
-    <main style={{ maxWidth: 860, margin: "0 auto", padding: "3.5rem 2rem 5rem" }}>
+    <>
+      {aboutSchemas.map((schema, i) => (
+        <JsonLd key={i} schema={schema} />
+      ))}
+      <main style={{ maxWidth: 860, margin: "0 auto", padding: "3.5rem 2rem 5rem" }}>
       {/* Header */}
+
       <div style={{ borderBottom: "3px double var(--ink)", paddingBottom: "2rem", marginBottom: "3rem" }}>
         <div style={{ fontFamily: "var(--font-ibm-plex-mono)", fontSize: "0.65rem", letterSpacing: "0.25em", textTransform: "uppercase", color: "var(--neutral)", marginBottom: "0.75rem" }}>
           Mission
@@ -160,5 +219,7 @@ export default function AboutPage() {
         </div>
       </section>
     </main>
+    </>
   );
 }
+

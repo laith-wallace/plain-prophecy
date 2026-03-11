@@ -1,10 +1,52 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import JsonLd from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
-  title: "Plain Prophecy — Biblical Prophecy, Plain and Simple",
+  title: "Biblical Prophecy, Plain and Simple",
   description:
-    "A Christ-centred, rigorous resource for understanding biblical prophecy. Examination of Futurism vs Historicism through the Reformation tradition, history, and Scripture.",
+    "A Christ-centred, rigorous resource for understanding biblical prophecy. Discover the Reformation consensus on Daniel and Revelation — verified by history and Scripture.",
+  alternates: {
+    canonical: "https://plainprophecy.com",
+  },
+  openGraph: {
+    title: "Plain Prophecy — Biblical Prophecy, Plain and Simple",
+    description:
+      "Discover the Reformation consensus on Daniel and Revelation — Futurism vs Historicism, rigorously compared.",
+    url: "https://plainprophecy.com",
+    type: "website",
+    images: [
+      {
+        url: "/og/og-default.png",
+        width: 1200,
+        height: 630,
+        alt: "Plain Prophecy — Biblical Prophecy, Plain and Simple",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Plain Prophecy — Biblical Prophecy, Plain and Simple",
+    description: "Discover the Reformation consensus on Daniel and Revelation — rigorously compared.",
+    images: ["/og/og-default.png"],
+  },
+};
+
+const webSiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Plain Prophecy",
+  url: "https://plainprophecy.com",
+  description:
+    "A Christ-centred, rigorous resource for understanding biblical prophecy. Futurism vs Historicism compared through Scripture and history.",
+  potentialAction: {
+    "@type": "SearchAction",
+    target: {
+      "@type": "EntryPoint",
+      urlTemplate: "https://plainprophecy.com/compare?q={search_term_string}",
+    },
+    "query-input": "required name=search_term_string",
+  },
 };
 
 const features = [
@@ -58,7 +100,8 @@ const paths = [
 export default function HomePage() {
   return (
     <main>
-      {/* HERO */}
+      <JsonLd schema={webSiteSchema} />
+
       <section
         style={{
           background: "var(--ink)",
