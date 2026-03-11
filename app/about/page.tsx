@@ -4,14 +4,13 @@ import JsonLd from "@/components/seo/JsonLd";
 export const metadata: Metadata = {
   title: "About — Mission & Hermeneutical Principles",
   description:
-    "Plain Prophecy is a Christ-centred, denomination-neutral biblical prophecy resource. Grounded in the Reformation consensus, Scripture-first methodology, and intellectual honesty. Our mission, principles, and what makes this site different.",
+    "Plain Prophecy is a Christ-centred, biblical prophecy resource. Grounded in the Reformation consensus, Scripture-first methodology, and intellectual honesty. Our mission, principles, and what makes this site different.",
   alternates: {
     canonical: "https://plainprophecy.com/about",
   },
   openGraph: {
     title: "About Plain Prophecy — Mission & Method",
-    description:
-      "Christ-centred, denomination-neutral biblical prophecy. Not SDA recruitment. Not sensationalism. Just Scripture and verifiable history.",
+    description: "Christ-centred, biblical accurate and historical. Not sensationalism. Just Scripture and verifiable history.",
     url: "https://plainprophecy.com/about",
     type: "website",
     images: [
@@ -26,7 +25,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "About Plain Prophecy — Mission & Method",
-    description: "Christ-centred, denomination-neutral. Not SDA recruitment. Not sensationalism. Just Scripture and verifiable history.",
+    description: "Christ-centred, biblical accurate and historical. Not sensationalism. Just Scripture and verifiable history.",
     images: ["/og/og-default.png"],
   },
 };
@@ -38,7 +37,7 @@ const aboutSchemas = [
     name: "About Plain Prophecy",
     url: "https://plainprophecy.com/about",
     description:
-      "Plain Prophecy is a Christ-centred, denomination-neutral biblical prophecy resource grounded in the Reformation consensus and Scripture-first methodology.",
+      "Plain Prophecy is a Christ-centred, biblical prophecy resource grounded in the Reformation consensus and Scripture-first methodology.",
     breadcrumb: {
       "@type": "BreadcrumbList",
       itemListElement: [
@@ -54,7 +53,7 @@ const aboutSchemas = [
     url: "https://plainprophecy.com",
     logo: "https://plainprophecy.com/og/og-default.png",
     description:
-      "A Christ-centred, denomination-neutral resource for understanding biblical prophecy rigorously — without sensationalism or denominational recruitment.",
+      "A Christ-centred resource for understanding biblical prophecy rigorously — without sensationalism as the goal is to produce faithfulness not fear and a deeper love for Jesus Christ.",
     foundingDate: "2024",
     sameAs: [],
   },
@@ -109,7 +108,7 @@ export default function AboutPage() {
           About Plain Prophecy
         </h1>
         <p style={{ fontSize: "1rem", lineHeight: 1.75, color: "var(--neutral)", maxWidth: 640 }}>
-          A Christ-centred, denomination-neutral resource for Christians who want to understand biblical prophecy rigorously — without sensationalism, fear-mongering, or denominational recruitment.
+          A Christ-centred resource for understanding biblical prophecy rigorously — without sensationalism as the goal is to produce faithfulness not fear and a deeper love for Jesus Christ.
         </p>
       </div>
 
@@ -145,11 +144,10 @@ export default function AboutPage() {
         </h2>
         <ul style={{ display: "flex", flexDirection: "column", gap: "0.6rem", paddingLeft: "1.25rem" }}>
           {[
-            "Not SDA recruitment — the content stands or falls on evidence, not denominational affiliation",
-            "Not a fear platform — prophecy understood correctly produces watchfulness, not anxiety",
+            "Not a fear platform — prophecy understood correctly produces faithfulness, not anxiety",
             "Not sensationalist — we don't assign current world leaders to prophetic roles",
             "Not infallible — we acknowledge genuine scholarly debate wherever it exists",
-            "Not anti-Catholic as a person — the prophetic analysis applies to institutional systems, not individuals",
+            "Not people focused — the prophetic analysis applies to institutional systems, not individuals",
           ].map((item, i) => (
             <li key={i} style={{ fontSize: "0.87rem", lineHeight: 1.6, color: "#3a3530" }}>
               {item}
