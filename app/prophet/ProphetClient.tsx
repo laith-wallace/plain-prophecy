@@ -315,52 +315,107 @@ function SwipeCard({
   const drag = useRef({ active: false, startX: 0, currentX: 0 });
   const committed = useRef(false);
 
+  // Physics constants
+  const THRESHOLD_FRAC = 0.28;
+  const MAX_ROTATE = 13;    // degrees — hard cap
+  const PEAK_FRACTION = 0.2; // tilt peaks at 20% of threshold drag
+
   const applyTransform = useCallback((dx: number, flying?: "left" | "right") => {
     const card = cardRef.current;
     const overlay = overlayRef.current;
     const label = overlayLabelRef.current;
     if (!card || !overlay || !label) return;
 
+    const THRESHOLD = window.innerWidth * THRESHOLD_FRAC;
+
     if (flying) {
-      const flyX = flying === "right" ? window.innerWidth * 1.4 : -window.innerWidth * 1.4;
-      card.style.transform = `translateX(${flyX}px) rotate(${flying === "right" ? 20 : -20}deg)`;
+      // Fly-off: snap to release position first, then ease-out to off-screen.
+      // "Calculate the remaining curve using drag-release position."
+      const releaseX = drag.current.currentX - drag.current.startX;
+      const releaseRotate = flying === "right" ? MAX_ROTATE : -MAX_ROTATE;
+      const flyX = flying === "right"
+        ? window.innerWidth * 1.6
+        : -window.innerWidth * 1.6;
+      const flyRotate = flying === "right" ? MAX_ROTATE + 7 : -(MAX_ROTATE + 7);
+
+      card.style.transition = "none";
+      card.style.transform = `translateX(${releaseX}px) rotate(${releaseRotate}deg)`;
+      card.getBoundingClientRect(); // force reflow before applying transition
+
+      card.style.transition =
+        "transform 0.42s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.38s ease-out";
+      card.style.transform = `translateX(${flyX}px) rotate(${flyRotate}deg)`;
       card.classList.add("fly-off");
+
+      overlay.style.transition = "opacity 0.1s";
       overlay.style.opacity = "0.9";
       overlay.style.background =
-        flying === "right"
-          ? "rgba(26,109,60,0.75)"
-          : "rgba(192,57,43,0.65)";
+        flying === "right" ? "rgba(26,109,60,0.75)" : "rgba(192,57,43,0.65)";
       label.textContent = flying === "right" ? "✓ Fulfilled" : "? Not sure";
       return;
     }
 
-    const norm = dx / (window.innerWidth * 0.4);
-    const rotate = norm * 15;
-    const scale = 1 - Math.abs(norm) * 0.06;
+    // ── Drag phase ──
+    // Rotation reaches MAX_ROTATE at PEAK_FRACTION × THRESHOLD, then clamps.
+    // "The 13° forward tilt should reach its peak at 20% of drag length."
+    const absDx = Math.abs(dx);
+    const peakDx = THRESHOLD * PEAK_FRACTION;
+    const rotate = Math.sign(dx) * Math.min(absDx / peakDx, 1) * MAX_ROTATE;
+    const scale = 1 - Math.min(absDx / THRESHOLD, 1) * 0.04;
+
+    card.style.transition = "none";
     card.style.transform = `translateX(${dx}px) rotate(${rotate}deg) scale(${scale})`;
 
-    const overlayOpacity = Math.min(Math.abs(norm) * 1.8, 0.85);
+    const overlayOpacity = Math.min((absDx / THRESHOLD) * 1.6, 0.85);
     overlay.style.opacity = String(overlayOpacity);
-    if (dx > 0) {
-      overlay.style.background = "rgba(26,109,60,0.75)";
-      label.textContent = "✓ Fulfilled";
-    } else {
-      overlay.style.background = "rgba(192,57,43,0.65)";
-      label.textContent = "? Not sure";
-    }
-  }, []);
+    overlay.style.background =
+      dx > 0 ? "rgba(26,109,60,0.75)" : "rgba(192,57,43,0.65)";
+    label.textContent = dx > 0 ? "✓ Fulfilled" : "? Not sure";
+  }, [THRESHOLD_FRAC, MAX_ROTATE, PEAK_FRACTION]);
 
-  const resetTransform = useCallback(() => {
+  // Spring snap-back — bounce intensity proportional to drag distance.
+  // "Bounce level at the bottom should be proportional to when the drag was released."
+  const snapBack = useCallback((releaseDx: number) => {
     const card = cardRef.current;
     const overlay = overlayRef.current;
     if (!card || !overlay) return;
-    card.classList.add("snap-back");
-    card.style.transform = "translateX(0) rotate(0deg) scale(1)";
+
+    const THRESHOLD = window.innerWidth * THRESHOLD_FRAC;
+    const dragFraction = Math.min(Math.abs(releaseDx) / THRESHOLD, 1);
+    const releaseRotate = Math.sign(releaseDx) * dragFraction * MAX_ROTATE;
+    // Overshoot in the opposite direction, scaled to drag distance
+    const overshootX = -Math.sign(releaseDx) * dragFraction * 14;
+    const overshootRotate = -Math.sign(releaseDx) * dragFraction * 2.5;
+
+    // Use Web Animations API for frame-accurate spring curve
+    card.animate(
+      [
+        {
+          transform: `translateX(${releaseDx}px) rotate(${releaseRotate}deg) scale(${1 - dragFraction * 0.04})`,
+        },
+        {
+          transform: `translateX(${overshootX}px) rotate(${overshootRotate}deg) scale(1.008)`,
+          offset: 0.65,
+        },
+        { transform: "translateX(0) rotate(0deg) scale(1)" },
+      ],
+      {
+        duration: 360 + dragFraction * 220, // bigger drag → slightly longer settle
+        easing: "cubic-bezier(0.34, 1.56, 0.64, 1)", // spring overshoot
+        fill: "forwards",
+      }
+    );
+
+    overlay.style.transition = "opacity 0.22s ease-out";
     overlay.style.opacity = "0";
+
     setTimeout(() => {
-      card.classList.remove("snap-back");
-    }, 400);
-  }, []);
+      if (card) {
+        card.style.transform = "";
+        card.getAnimations().forEach((a) => a.cancel());
+      }
+    }, 640);
+  }, [THRESHOLD_FRAC, MAX_ROTATE]);
 
   const commitSwipe = useCallback(
     (dir: "left" | "right") => {
@@ -370,7 +425,7 @@ function SwipeCard({
       applyTransform(0, dir);
       setTimeout(() => {
         onSwipeCommit(dir);
-      }, 380);
+      }, 430);
     },
     [applyTransform, onSwipeCommit, onHintUsed]
   );
@@ -380,8 +435,9 @@ function SwipeCard({
       if (isNext || committed.current) return;
       e.currentTarget.setPointerCapture(e.pointerId);
       drag.current = { active: true, startX: e.clientX, currentX: e.clientX };
+      // Cancel any in-progress snap-back animation
       const card = cardRef.current;
-      if (card) card.classList.remove("snap-back");
+      if (card) card.getAnimations().forEach((a) => a.cancel());
     },
     [isNext]
   );
@@ -400,13 +456,12 @@ function SwipeCard({
     if (!drag.current.active || committed.current) return;
     drag.current.active = false;
     const dx = drag.current.currentX - drag.current.startX;
-    const threshold = window.innerWidth * 0.28;
-    if (Math.abs(dx) > threshold) {
+    if (Math.abs(dx) > window.innerWidth * THRESHOLD_FRAC) {
       commitSwipe(dx > 0 ? "right" : "left");
     } else {
-      resetTransform();
+      snapBack(dx);
     }
-  }, [commitSwipe, resetTransform]);
+  }, [commitSwipe, snapBack, THRESHOLD_FRAC]);
 
   if (isNext) {
     return (
