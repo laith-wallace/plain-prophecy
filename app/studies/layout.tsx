@@ -9,9 +9,13 @@ export default function StudiesShellLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  // Index page: sidebar collapsed by default. Lesson pages: open.
   const isIndex = pathname === "/studies";
   return (
-    <StudiesLayout defaultSidebarOpen={!isIndex}>{children}</StudiesLayout>
+    <StudiesLayout
+      defaultSidebarOpen={!isIndex}
+      collapsibleMode={isIndex ? "offcanvas" : "icon"}
+    >
+      {children}
+    </StudiesLayout>
   );
 }

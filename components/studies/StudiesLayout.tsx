@@ -13,11 +13,14 @@ import {
   SidebarTrigger,
   SidebarMenu,
   SidebarMenuItem,
+  SidebarMenuButton,
+  useSidebar,
 } from "@/components/ui/sidebar";
 
 // ── Inner nav — inside the SidebarProvider tree
 function StudiesNav() {
   const pathname = usePathname();
+  const { open, toggleSidebar } = useSidebar();
   const [expandedBooks, setExpandedBooks] = useState<string[]>(
     studyBooks.map((b) => b.slug)
   );
@@ -28,15 +31,33 @@ function StudiesNav() {
     );
   };
 
+  /** If sidebar is collapsed (icon rail), clicking a book icon expands the sidebar.
+   *  If already open, it toggles the book section as normal. */
+  const handleBookClick = (slug: string) => {
+    if (!open) {
+      toggleSidebar();
+      // Ensure the clicked book is expanded when the sidebar opens
+      setExpandedBooks((prev) =>
+        prev.includes(slug) ? prev : [...prev, slug]
+      );
+    } else {
+      toggleBook(slug);
+    }
+  };
+
   return (
     <>
       <SidebarHeader className="studies-sb-header">
-        <div className="studies-sb-brand">
-          <span className="studies-sb-eyebrow">Plain Prophecy</span>
-          <span className="studies-sb-title">Bible Books</span>
+        {/* In expanded mode: brand + trigger side by side */}
+        <div className="studies-sb-brand-row">
+          <div className="studies-sb-brand">
+            <span className="studies-sb-eyebrow">Plain Prophecy</span>
+            <span className="studies-sb-title">Bible Books</span>
+          </div>
+          <SidebarTrigger className="studies-sb-trigger" aria-label="Toggle sidebar" />
         </div>
-        {/* Notion-style collapse trigger */}
-        <SidebarTrigger className="studies-sb-trigger" aria-label="Toggle sidebar" />
+        {/* In collapsed icon mode: just the trigger, centred */}
+        <SidebarTrigger className="studies-sb-trigger-icon-only" aria-label="Toggle sidebar" />
       </SidebarHeader>
 
       <SidebarContent className="studies-sb-content">
@@ -46,33 +67,40 @@ function StudiesNav() {
             const bookActive = pathname.startsWith(`/studies/${book.slug}`);
 
             return (
-              <div key={book.slug} className="studies-book-group">
-                {/* Book header */}
-                <button
-                  className={`studies-book-toggle ${bookActive ? "studies-book-toggle--active" : ""}`}
-                  onClick={() => toggleBook(book.slug)}
-                  aria-expanded={isExpanded}
-                >
-                  <span className="studies-book-icon">{book.icon}</span>
-                  <span className="studies-book-name">{book.title}</span>
-                  <span className={`studies-book-chevron ${isExpanded ? "studies-book-chevron--open" : ""}`}>
-                    ›
-                  </span>
-                </button>
+              <div key={book.slug} className="studies-sb-book-section">
+                {/* Book toggle — shows as icon in collapsed mode */}
+                <SidebarMenu>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton
+                      isActive={bookActive}
+                      tooltip={book.title}
+                      className="studies-book-btn"
+                      onClick={() => handleBookClick(book.slug)}
+                    >
+                      {/* Icon slot — visible in both expanded and collapsed */}
+                      <span className="studies-book-icon-24" aria-hidden="true">{book.icon}</span>
+                      {/* Text — hidden in collapsed icon mode via shadcn's truncate */}
+                      <span className="studies-book-label">
+                        {book.title}
+                        <span className={`studies-book-chevron ${isExpanded ? "studies-book-chevron--open" : ""}`}>›</span>
+                      </span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                </SidebarMenu>
 
-                {/* Lesson links */}
+                {/* Lesson links — hidden in collapsed mode */}
                 {isExpanded && (
                   <SidebarMenu className="studies-lessons-list">
                     {book.lessons.map((lesson) => {
                       const href = `/studies/${book.slug}/${lesson.slug}`;
                       const isActive = pathname === href;
                       return (
-                        <SidebarMenuItem key={lesson.slug}>
+                        <SidebarMenuItem key={lesson.slug} className="studies-lesson-item">
                           <Link
                             href={href}
                             className={`studies-lesson-link ${isActive ? "studies-lesson-link--active" : ""}`}
                           >
-                            <span className="studies-lesson-dot">·</span>
+                            <span className="studies-lesson-dot" aria-hidden="true">·</span>
                             <span>{lesson.title}</span>
                           </Link>
                         </SidebarMenuItem>
@@ -97,15 +125,21 @@ function StudiesNav() {
 interface StudiesLayoutProps {
   children: React.ReactNode;
   defaultSidebarOpen?: boolean;
+  /** "icon" for lesson pages (collapses to 56px icon rail), "offcanvas" for index (slides fully off) */
+  collapsibleMode?: "icon" | "offcanvas";
 }
 
 export default function StudiesLayout({
   children,
   defaultSidebarOpen = true,
+  collapsibleMode = "icon",
 }: StudiesLayoutProps) {
   return (
     <SidebarProvider defaultOpen={defaultSidebarOpen} className="studies-root">
-      <Sidebar className="studies-sidebar-shadcn" collapsible="offcanvas">
+      <Sidebar
+        className="studies-sidebar-shadcn"
+        collapsible={collapsibleMode}
+      >
         <StudiesNav />
       </Sidebar>
 

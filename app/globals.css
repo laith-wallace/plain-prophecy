@@ -3931,7 +3931,7 @@ body {
    STUDIES — shadcn Sidebar integration + filter
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* Override shadcn sidebar CSS vars to match our dark aesthetic for study pages */
+/* Override shadcn sidebar CSS vars to match our aesthetic */
 .studies-root {
   --sidebar-background: var(--cream-mid, #f6f3ee);
   --sidebar-foreground: var(--ink, #1a1714);
@@ -3941,6 +3941,8 @@ body {
   --sidebar-primary: var(--sda-primary, #1a3d2b);
   --sidebar-primary-foreground: #fff;
   --sidebar-ring: var(--sda-accent, #c9a84c);
+  /* Icon rail width — 56px */
+  --sidebar-width-icon: 56px;
 }
 
 /* Override SidebarProvider — it uses flex row; keep our full-height layout */
@@ -3963,14 +3965,37 @@ body {
 }
 
 
-/* Sidebar header row — brand + trigger button */
+/* Sidebar header row (expanded mode): brand + trigger */
 .studies-sb-header {
+  padding: 1.25rem 1.25rem 0.75rem !important;
+  border-bottom: 1px solid var(--divider, #d9d4cd);
+  overflow: hidden;
+}
+
+/* In expanded mode: brand+trigger row visible, icon-only trigger hidden */
+.studies-sb-brand-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.5rem 1.25rem 1rem !important;
-  border-bottom: 1px solid var(--divider, #d9d4cd);
+  gap: 0.5rem;
 }
+
+/* Icon-only trigger — only visible in collapsed (icon) mode */
+.studies-sb-trigger-icon-only {
+  display: none;
+  color: var(--neutral, #8a8078) !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0.3rem !important;
+  border-radius: 6px !important;
+  transition: background 0.15s, color 0.15s !important;
+  margin: 0 auto;
+}
+
+/* When sidebar is in icon (collapsed) mode:
+   hide the brand row, show the icon-only trigger */
+[data-collapsible="icon"] .studies-sb-brand-row { display: none !important; }
+[data-collapsible="icon"] .studies-sb-trigger-icon-only { display: flex !important; }
 
 .studies-sb-brand {
   display: flex;
@@ -3993,7 +4018,7 @@ body {
   color: var(--ink, #1a1714);
 }
 
-/* Notion-style trigger icon */
+/* Trigger in expanded mode */
 .studies-sb-trigger {
   color: var(--neutral, #8a8078) !important;
   background: transparent !important;
@@ -4002,7 +4027,8 @@ body {
   border-radius: 6px !important;
   transition: background 0.15s, color 0.15s !important;
 }
-.studies-sb-trigger:hover {
+.studies-sb-trigger:hover,
+.studies-sb-trigger-icon-only:hover {
   background: rgba(0,0,0,0.06) !important;
   color: var(--ink, #1a1714) !important;
 }
@@ -4012,15 +4038,75 @@ body {
   padding: 0.5rem 0 !important;
 }
 
-/* Group label (uses our existing .studies-book-toggle classes) */
-.studies-sb-group [data-sidebar="group-label"] {
-  padding: 0 !important;
+/* Book section wrapper */
+.studies-sb-book-section {
+  margin-bottom: 0.25rem;
 }
 
-/* Footer */
+/* Book button: emoji icon + label */
+.studies-book-btn {
+  width: 100%;
+  display: flex !important;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0.75rem !important;
+  border-radius: 6px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  text-align: left;
+  transition: background 0.15s;
+}
+.studies-book-btn:hover {
+  background: rgba(0,0,0,0.05);
+}
+
+/* The 24x24 emoji icon — always visible in both modes */
+.studies-book-icon-24 {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  font-size: 18px;
+  line-height: 1;
+  flex-shrink: 0;
+  border-radius: 4px;
+}
+
+/* Book label + chevron — hidden in icon mode by shadcn's span:last-child truncate */
+.studies-book-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
+  font-family: var(--font-ibm-plex-sans), sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink, #1a1714);
+  letter-spacing: 0.01em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.studies-book-chevron {
+  font-size: 1rem;
+  color: var(--neutral, #8a8078);
+  transition: transform 0.2s;
+  margin-left: 0.25rem;
+}
+.studies-book-chevron--open {
+  transform: rotate(90deg);
+}
+
+/* Footer — hide text in collapsed mode */
 .studies-sb-footer {
   padding: 1rem 1.25rem 1.5rem !important;
   border-top: 1px solid var(--divider, #d9d4cd) !important;
+}
+[data-collapsible="icon"] .studies-sidebar-footer-text {
+  display: none !important;
 }
 
 /* Main content area — smooth width transition when sidebar toggles */
@@ -4033,10 +4119,59 @@ body {
   padding: 3rem 2.5rem 5rem;
 }
 
-/* When sidebar collapses, content takes full width */
+/* When sidebar collapses (offcanvas: fully hidden) */
 [data-sidebar="provider"][data-state="collapsed"] .studies-content--with-sidebar {
   padding: 3rem 3rem 5rem;
 }
+
+/* ── Icon-rail: Tailwind v3 override ────────────────────────────────────────
+   shadcn's icon mode uses v4 class syntax (w-(--sidebar-width-icon)) that
+   Tailwind v3 can't process. We replicate it here with plain CSS selectors.
+   data-collapsible="icon" is set on [data-slot="sidebar"] when collapsed.    */
+
+/* 1. Shrink the gap placeholder to 56px */
+[data-slot="sidebar"][data-collapsible="icon"] [data-slot="sidebar-gap"] {
+  width: 56px !important;
+  transition: width 0.2s ease-linear;
+}
+
+/* 2. Shrink the fixed panel to 56px */
+[data-slot="sidebar"][data-collapsible="icon"] .studies-sidebar-shadcn {
+  width: 56px !important;
+  transition: width 0.2s ease-linear;
+}
+
+/* 3. Hide the book label text + lesson links in icon mode */
+[data-slot="sidebar"][data-collapsible="icon"] .studies-book-label,
+[data-slot="sidebar"][data-collapsible="icon"] .studies-lessons-list,
+[data-slot="sidebar"][data-collapsible="icon"] .studies-sidebar-footer-text {
+  display: none !important;
+}
+
+/* 4. Centre the emoji icon within the 56px rail button */
+[data-slot="sidebar"][data-collapsible="icon"] .studies-book-btn {
+  justify-content: center !important;
+  padding: 0.5rem !important;
+}
+
+/* 5. Sidebar header in icon mode: hide brand row, show icon-only trigger centred */
+[data-slot="sidebar"][data-collapsible="icon"] .studies-sb-brand-row {
+  display: none !important;
+}
+[data-slot="sidebar"][data-collapsible="icon"] .studies-sb-trigger-icon-only {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+/* 6. Footer padding tighter in icon mode */
+[data-slot="sidebar"][data-collapsible="icon"] .studies-sb-footer {
+  padding: 0.75rem 0.5rem !important;
+  display: flex;
+  justify-content: center;
+}
+
 
 /* ── Index page: si-root + dark bg override ───────────────────────────────── */
 /* Override cream background when the card index is active */
