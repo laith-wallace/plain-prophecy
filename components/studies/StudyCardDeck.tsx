@@ -11,21 +11,24 @@ interface FlatLesson {
   book: StudyBook;
 }
 
-function buildFlatLessons(): FlatLesson[] {
-  return studyBooks.flatMap((book) =>
-    book.lessons.map((lesson) => ({ lesson, book }))
-  );
+function buildFlatLessons(bookFilter: string): FlatLesson[] {
+  return studyBooks
+    .filter((book) => bookFilter === "all" || book.slug === bookFilter)
+    .flatMap((book) => book.lessons.map((lesson) => ({ lesson, book })));
 }
-
-const ALL_LESSONS = buildFlatLessons();
-const TOTAL = ALL_LESSONS.length;
 
 // Wrap index for infinite loop
 function wrap(index: number, total: number): number {
   return ((index % total) + total) % total;
 }
 
-export default function StudyCardDeck() {
+interface StudyCardDeckProps {
+  bookFilter?: string;
+}
+
+export default function StudyCardDeck({ bookFilter = "all" }: StudyCardDeckProps) {
+  const lessons = buildFlatLessons(bookFilter);
+  const TOTAL = lessons.length;
   const [activeIndex, setActiveIndex] = useState(0);
   const [flippedIndex, setFlippedIndex] = useState<number | null>(null);
   const [dragOffset, setDragOffset] = useState(0);
@@ -52,13 +55,19 @@ export default function StudyCardDeck() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeIndex, flippedIndex]);
 
+  // Reset to first card when filter changes
+  useEffect(() => {
+    setActiveIndex(0);
+    setFlippedIndex(null);
+  }, [bookFilter]);
+
   const goTo = useCallback(
     (index: number) => {
-      if (isAnimating) return;
+      if (isAnimating || TOTAL === 0) return;
       setFlippedIndex(null);
       setActiveIndex(wrap(index, TOTAL));
     },
-    [isAnimating]
+    [isAnimating, TOTAL]
   );
 
   // ── Drag handlers ─────────────────────────────────────────────────────────
@@ -100,8 +109,15 @@ export default function StudyCardDeck() {
     }
   }
 
+  if (TOTAL === 0) {
+    return (
+      <div className="scd-root">
+        <div className="scd-empty">No studies in this book yet.</div>
+      </div>
+    );
+  }
+
   // ── Card rendering window ─────────────────────────────────────────────────
-  // Visible slots: prev(-1), active(0), next(+1), far-next(+2)
   const slots = [
     { slot: -1, lessonIndex: wrap(activeIndex - 1, TOTAL) },
     { slot: 0,  lessonIndex: wrap(activeIndex,     TOTAL) },
@@ -109,9 +125,7 @@ export default function StudyCardDeck() {
     { slot: 2,  lessonIndex: wrap(activeIndex + 2, TOTAL) },
   ];
 
-  // Card width in px (approximated — CSS uses min(360px, 82vw))
   const cardW = typeof window !== "undefined" ? Math.min(360, window.innerWidth * 0.82) : 320;
-  // Gap between card edges
   const GAP = 18;
 
   const tilt =
@@ -129,7 +143,7 @@ export default function StudyCardDeck() {
         onPointerUp={handlePointerUp}
       >
         {slots.map(({ slot, lessonIndex }) => {
-          const { lesson, book } = ALL_LESSONS[lessonIndex];
+          const { lesson, book } = lessons[lessonIndex];
           const meta = getCardMeta(lesson.slug);
           const isActive = slot === 0;
           const isFlipped = flippedIndex === lessonIndex;
@@ -145,7 +159,6 @@ export default function StudyCardDeck() {
           else if (slot === 2) { scale = 0.78; opacity = 0.25; }
 
           // Apply live drag to active card + shift neighbours proportionally
-          const dragFrac = isAnimating ? 0 : dragOffset / cardW;
           const shiftX = isActive ? dragOffset : slot !== -1 ? -dragOffset * 0.25 : 0;
           const totalX = baseX + shiftX;
           const rotate = isActive ? tilt : 0;
@@ -178,7 +191,7 @@ export default function StudyCardDeck() {
 
       {/* Dot indicators */}
       <div className="scd-dots" aria-label="Study card position">
-        {ALL_LESSONS.map((_, i) => (
+        {lessons.map((_, i) => (
           <button
             key={i}
             className={`scd-dot ${i === wrap(activeIndex, TOTAL) ? "scd-dot--active" : ""}`}

@@ -1,3 +1,6 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import StudiesLayout from "@/components/studies/StudiesLayout";
 
 export default function StudiesShellLayout({
@@ -5,5 +8,10 @@ export default function StudiesShellLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <StudiesLayout>{children}</StudiesLayout>;
+  const pathname = usePathname();
+  // Index page: sidebar collapsed by default. Lesson pages: open.
+  const isIndex = pathname === "/studies";
+  return (
+    <StudiesLayout defaultSidebarOpen={!isIndex}>{children}</StudiesLayout>
+  );
 }

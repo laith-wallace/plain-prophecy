@@ -5,10 +5,18 @@ import Link from "next/link";
 import { studyBooks } from "@/data/studies";
 import { getCardMeta } from "@/data/studyCardMeta";
 
-export default function StudyListView() {
+interface StudyListViewProps {
+  bookFilter?: string;
+}
+
+export default function StudyListView({ bookFilter = "all" }: StudyListViewProps) {
+  const filtered = studyBooks.filter(
+    (book) => bookFilter === "all" || book.slug === bookFilter
+  );
+
   return (
     <div className="slv-root">
-      {studyBooks.map((book) => (
+      {filtered.map((book) => (
         <div key={book.slug} className="slv-book-group">
           <div className="slv-book-header">
             <span className="slv-book-icon">{book.icon}</span>
@@ -21,7 +29,6 @@ export default function StudyListView() {
               return (
                 <li key={lesson.slug}>
                   <Link href={href} className="slv-row">
-                    {/* Emoji thumbnail */}
                     <div
                       className="slv-thumb"
                       style={{
@@ -31,20 +38,14 @@ export default function StudyListView() {
                     >
                       {meta.emoji}
                     </div>
-
-                    {/* Info */}
                     <div className="slv-info">
                       <div className="slv-row-top">
                         <span className="slv-lesson-title">{lesson.title}</span>
-                        {meta.isNew && (
-                          <span className="slv-badge--new">New</span>
-                        )}
+                        {meta.isNew && <span className="slv-badge--new">New</span>}
                       </div>
                       <p className="slv-lesson-desc">{meta.shortDescription}</p>
                       <span className="slv-ref">{lesson.scriptureRef}</span>
                     </div>
-
-                    {/* Arrow */}
                     <span className="slv-arrow" aria-hidden="true">›</span>
                   </Link>
                 </li>

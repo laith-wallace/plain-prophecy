@@ -1,5 +1,4 @@
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
+/* shadcn CSS vars loaded below — tw-animate-css and shadcn/tailwind.css imports removed (Tailwind v3 incompatible) */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -3927,16 +3926,229 @@ body {
         --sidebar-border: oklch(1 0 0 / 10%);
         --sidebar-ring: oklch(0.556 0 0);
     }
-  .theme {
-        --font-sans: var(--font-sans);
-    }
-  * {
-    @apply border-border outline-ring/50;
-    }
-  body {
-    @apply bg-background text-foreground;
-    }
-  html {
-    @apply font-sans;
-    }
+}
+/* ═══════════════════════════════════════════════════════════════════════════
+   STUDIES — shadcn Sidebar integration + filter
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Override shadcn sidebar CSS vars to match our dark aesthetic for study pages */
+.studies-root {
+  --sidebar-background: var(--cream-mid, #f6f3ee);
+  --sidebar-foreground: var(--ink, #1a1714);
+  --sidebar-border: var(--divider, #d9d4cd);
+  --sidebar-accent: rgba(0,0,0,0.05);
+  --sidebar-accent-foreground: var(--ink, #1a1714);
+  --sidebar-primary: var(--sda-primary, #1a3d2b);
+  --sidebar-primary-foreground: #fff;
+  --sidebar-ring: var(--sda-accent, #c9a84c);
+}
+
+/* Override SidebarProvider — it uses flex row; keep our full-height layout */
+.studies-root[data-sidebar="provider"] {
+  min-height: calc(100vh - 56px) !important;
+  flex-direction: row !important;
+}
+
+/* Sidebar panel — className lands on data-slot="sidebar-container" (the fixed element).
+   Override inset-y-0 (top:0 bottom:0) to start below the 56px sticky SiteNav. */
+.studies-sidebar-shadcn {
+  border-right: 1px solid var(--divider, #d9d4cd) !important;
+  top: 56px !important;
+  height: calc(100svh - 56px) !important;
+}
+
+/* SidebarProvider wrapper — fill exactly the viewport below the nav */
+.studies-root {
+  min-height: calc(100svh - 56px);
+}
+
+
+/* Sidebar header row — brand + trigger button */
+.studies-sb-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 1.25rem 1rem !important;
+  border-bottom: 1px solid var(--divider, #d9d4cd);
+}
+
+.studies-sb-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.studies-sb-eyebrow {
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--neutral, #8a8078);
+}
+
+.studies-sb-title {
+  font-family: var(--font-playfair), serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink, #1a1714);
+}
+
+/* Notion-style trigger icon */
+.studies-sb-trigger {
+  color: var(--neutral, #8a8078) !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0.3rem !important;
+  border-radius: 6px !important;
+  transition: background 0.15s, color 0.15s !important;
+}
+.studies-sb-trigger:hover {
+  background: rgba(0,0,0,0.06) !important;
+  color: var(--ink, #1a1714) !important;
+}
+
+/* Sidebar content scroll area */
+.studies-sb-content {
+  padding: 0.5rem 0 !important;
+}
+
+/* Group label (uses our existing .studies-book-toggle classes) */
+.studies-sb-group [data-sidebar="group-label"] {
+  padding: 0 !important;
+}
+
+/* Footer */
+.studies-sb-footer {
+  padding: 1rem 1.25rem 1.5rem !important;
+  border-top: 1px solid var(--divider, #d9d4cd) !important;
+}
+
+/* Main content area — smooth width transition when sidebar toggles */
+.studies-content--with-sidebar {
+  flex: 1;
+  min-width: 0;
+  background: var(--paper, #faf8f4);
+  transition: width 0.25s ease;
+  overflow-y: auto;
+  padding: 3rem 2.5rem 5rem;
+}
+
+/* When sidebar collapses, content takes full width */
+[data-sidebar="provider"][data-state="collapsed"] .studies-content--with-sidebar {
+  padding: 3rem 3rem 5rem;
+}
+
+/* ── Index page: si-root + dark bg override ───────────────────────────────── */
+/* Override cream background when the card index is active */
+[data-sidebar="provider"]:has(.si-root) .studies-content--with-sidebar {
+  background: #05050a;
+  padding: 0;
+}
+
+/* Header layout: left group (trigger + title) and right group (filter + toggle) */
+.si-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 1.5rem 1.25rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.si-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Trigger on the index page — white/translucent since bg is dark */
+.si-sidebar-trigger {
+  color: rgba(255,255,255,0.5) !important;
+  background: rgba(255,255,255,0.06) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: 8px !important;
+  padding: 0.3rem !important;
+  transition: background 0.15s, color 0.15s !important;
+}
+.si-sidebar-trigger:hover {
+  background: rgba(255,255,255,0.12) !important;
+  color: #fff !important;
+}
+
+.si-header-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ── Book filter dropdown ─────────────────────────────────────────────────── */
+.si-filter-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.si-filter {
+  appearance: none;
+  -webkit-appearance: none;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.85);
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.42rem 2rem 0.42rem 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  outline: none;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.si-filter:hover {
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.22);
+}
+
+.si-filter:focus {
+  border-color: rgba(255,255,255,0.35);
+}
+
+.si-filter option {
+  background: #1a1714;
+  color: #fff;
+  font-size: 0.75rem;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.si-filter-chevron {
+  position: absolute;
+  right: 0.55rem;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.45);
+  pointer-events: none;
+  transform: rotate(90deg);
+  line-height: 1;
+}
+
+/* ── Empty state ─────────────────────────────────────────────────────────── */
+.scd-empty {
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.35);
+  text-align: center;
+  padding: 4rem 1.5rem;
+}
+
+/* ── Lesson page responsive ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .studies-content--with-sidebar {
+    padding: 2rem 1.25rem 5rem;
+  }
+
+  [data-sidebar="provider"][data-state="collapsed"] .studies-content--with-sidebar {
+    padding: 2rem 1.25rem 5rem;
+  }
 }

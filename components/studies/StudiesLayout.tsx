@@ -1,20 +1,26 @@
 "use client";
 
+import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
 import { studyBooks } from "@/data/studies";
+import {
+  SidebarProvider,
+  Sidebar,
+  SidebarContent,
+  SidebarHeader,
+  SidebarFooter,
+  SidebarTrigger,
+  SidebarMenu,
+  SidebarMenuItem,
+} from "@/components/ui/sidebar";
 
-export default function StudiesLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+// ── Inner nav — inside the SidebarProvider tree
+function StudiesNav() {
   const pathname = usePathname();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [expandedBooks, setExpandedBooks] = useState<string[]>([
-    ...studyBooks.map((b) => b.slug),
-  ]);
+  const [expandedBooks, setExpandedBooks] = useState<string[]>(
+    studyBooks.map((b) => b.slug)
+  );
 
   const toggleBook = (slug: string) => {
     setExpandedBooks((prev) =>
@@ -23,115 +29,89 @@ export default function StudiesLayout({
   };
 
   return (
-    <div className="studies-root">
-      {/* Mobile top bar */}
-      <div className="studies-mobile-bar">
-        <button
-          className="studies-sidebar-toggle"
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-          aria-label="Toggle study navigation"
-        >
-          <span>{sidebarOpen ? "✕" : "☰"}</span>
-          <span className="studies-mobile-label">Studies</span>
-        </button>
+    <>
+      <SidebarHeader className="studies-sb-header">
+        <div className="studies-sb-brand">
+          <span className="studies-sb-eyebrow">Plain Prophecy</span>
+          <span className="studies-sb-title">Bible Books</span>
+        </div>
+        {/* Notion-style collapse trigger */}
+        <SidebarTrigger className="studies-sb-trigger" aria-label="Toggle sidebar" />
+      </SidebarHeader>
 
-        {/* Active lesson breadcrumb on mobile */}
-        <span className="studies-mobile-crumb">
-          {studyBooks
-            .flatMap((b) =>
-              b.lessons.map((l) => ({
-                href: `/studies/${b.slug}/${l.slug}`,
-                title: l.title,
-                bookTitle: b.title,
-              }))
-            )
-            .find((l) => l.href === pathname)?.title ?? "Select a study"}
-        </span>
-      </div>
+      <SidebarContent className="studies-sb-content">
+        <nav className="studies-nav">
+          {studyBooks.map((book) => {
+            const isExpanded = expandedBooks.includes(book.slug);
+            const bookActive = pathname.startsWith(`/studies/${book.slug}`);
 
-      <div className="studies-shell">
-        {/* Sidebar */}
-        <aside
-          className={`studies-sidebar ${sidebarOpen ? "studies-sidebar--open" : ""}`}
-        >
-          <div className="studies-sidebar-inner">
-            {/* Header */}
-            <div className="studies-sidebar-header">
-              <div className="studies-sidebar-eyebrow">Studies</div>
-              <div className="studies-sidebar-title">Bible Books</div>
-            </div>
+            return (
+              <div key={book.slug} className="studies-book-group">
+                {/* Book header */}
+                <button
+                  className={`studies-book-toggle ${bookActive ? "studies-book-toggle--active" : ""}`}
+                  onClick={() => toggleBook(book.slug)}
+                  aria-expanded={isExpanded}
+                >
+                  <span className="studies-book-icon">{book.icon}</span>
+                  <span className="studies-book-name">{book.title}</span>
+                  <span className={`studies-book-chevron ${isExpanded ? "studies-book-chevron--open" : ""}`}>
+                    ›
+                  </span>
+                </button>
 
-            {/* Book navigation */}
-            <nav className="studies-nav">
-              {studyBooks.map((book) => {
-                const isExpanded = expandedBooks.includes(book.slug);
-                const bookActive = pathname.startsWith(`/studies/${book.slug}`);
-
-                return (
-                  <div key={book.slug} className="studies-book-group">
-                    {/* Book header (collapsible) */}
-                    <button
-                      className={`studies-book-toggle ${bookActive ? "studies-book-toggle--active" : ""}`}
-                      onClick={() => toggleBook(book.slug)}
-                      aria-expanded={isExpanded}
-                    >
-                      <span className="studies-book-icon">{book.icon}</span>
-                      <span className="studies-book-name">{book.title}</span>
-                      <span
-                        className={`studies-book-chevron ${isExpanded ? "studies-book-chevron--open" : ""}`}
-                      >
-                        ›
-                      </span>
-                    </button>
-
-                    {/* Lessons list */}
-                    {isExpanded && (
-                      <ul className="studies-lessons-list">
-                        {book.lessons.map((lesson) => {
-                          const href = `/studies/${book.slug}/${lesson.slug}`;
-                          const isActive = pathname === href;
-
-                          return (
-                            <li key={lesson.slug}>
-                              <Link
-                                href={href}
-                                className={`studies-lesson-link ${isActive ? "studies-lesson-link--active" : ""}`}
-                                onClick={() => setSidebarOpen(false)}
-                              >
-                                <span className="studies-lesson-dot">·</span>
-                                <span>{lesson.title}</span>
-                              </Link>
-                            </li>
-                          );
-                        })}
-                      </ul>
-                    )}
-                  </div>
-                );
-              })}
-            </nav>
-
-            {/* Footer note */}
-            <div className="studies-sidebar-footer">
-              <div className="studies-sidebar-footer-text">
-                More books coming soon
+                {/* Lesson links */}
+                {isExpanded && (
+                  <SidebarMenu className="studies-lessons-list">
+                    {book.lessons.map((lesson) => {
+                      const href = `/studies/${book.slug}/${lesson.slug}`;
+                      const isActive = pathname === href;
+                      return (
+                        <SidebarMenuItem key={lesson.slug}>
+                          <Link
+                            href={href}
+                            className={`studies-lesson-link ${isActive ? "studies-lesson-link--active" : ""}`}
+                          >
+                            <span className="studies-lesson-dot">·</span>
+                            <span>{lesson.title}</span>
+                          </Link>
+                        </SidebarMenuItem>
+                      );
+                    })}
+                  </SidebarMenu>
+                )}
               </div>
-            </div>
-          </div>
-        </aside>
+            );
+          })}
+        </nav>
+      </SidebarContent>
 
-        {/* Overlay for mobile */}
-        {sidebarOpen && (
-          <div
-            className="studies-overlay"
-            onClick={() => setSidebarOpen(false)}
-            aria-hidden="true"
-          />
-        )}
+      <SidebarFooter className="studies-sb-footer">
+        <span className="studies-sidebar-footer-text">More books coming soon</span>
+      </SidebarFooter>
+    </>
+  );
+}
 
-        {/* Main content */}
-        <main className="studies-content">{children}</main>
-      </div>
-    </div>
+// ── Main layout
+interface StudiesLayoutProps {
+  children: React.ReactNode;
+  defaultSidebarOpen?: boolean;
+}
+
+export default function StudiesLayout({
+  children,
+  defaultSidebarOpen = true,
+}: StudiesLayoutProps) {
+  return (
+    <SidebarProvider defaultOpen={defaultSidebarOpen} className="studies-root">
+      <Sidebar className="studies-sidebar-shadcn" collapsible="offcanvas">
+        <StudiesNav />
+      </Sidebar>
+
+      <main className="studies-content studies-content--with-sidebar">
+        {children}
+      </main>
+    </SidebarProvider>
   );
 }
