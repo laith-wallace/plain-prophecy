@@ -51,8 +51,8 @@ Redesign the Studies index page (`app/learn/page.tsx`) from a static list into a
 
 - Two icon buttons in the top-right of the page header: grid icon (card view) and list icon (list view)
 - Active state: filled icon, slightly higher opacity
-- Default view: **Card View** on mobile, **List View** on desktop (use `useMediaQuery` or CSS)
-- Persist preference in `localStorage` key `"pp-studies-view"`
+- Default view: **Card View on all screen sizes** — this is the product differentiator for a mobile-first, 16–24 audience
+- Persist preference in `localStorage` key `"pp-studies-view"` (allows power users to switch to list and have it remembered)
 
 ---
 
@@ -236,31 +236,43 @@ The tabs sit between the study intro and the main article body, so users can gra
 
 ## Data Schema (Convex)
 
-### `studies` table (extend existing if present)
+> **⚠️ CRITICAL INSTRUCTION FOR CLAUDE CODE:**  
+> Before creating any new Convex tables, read the existing `studyCourses` and `studyLessons` schemas in full.  
+> - **`studyCourses`** maps to what this spec calls `studies` — extend it with the new fields below, do NOT create a new `studies` table.  
+> - **`studyLessons`** maps to the MDX lesson content.  
+> - Only **`studyResources`** is a genuinely new table to be created.  
+> Inspect both tables in `convex/schema.ts` first, then propose the minimal additive changes needed.
+
+### `studyCourses` table — **EXTEND, do not recreate**
+
+The existing `studyCourses` table already has `slug`, `title`, `description`, `reference`, `sortOrder`, and `published` (or similar). Add only the fields that don't exist yet:
 
 ```typescript
-defineTable({
-  // Existing fields
-  slug: v.string(),
-  title: v.string(),
-  shortDescription: v.string(),
-  reference: v.string(),         // "Dan 2", "Rev 12"
-  number: v.number(),            // canonical sort order
-  published: v.boolean(),
-
-  // New fields
-  accentColor: v.string(),       // hex, card bg tint
-  image: v.string(),             // path or CDN URL
-  downloadCount: v.number(),     // total downloads tracked
-  isNew: v.optional(v.boolean()),
-})
+// Fields to ADD to the existing studyCourses table definition:
+accentColor: v.string(),        // hex, card bg tint  e.g. "#1a1040"
+image: v.string(),              // emoji placeholder for now; swap for CDN URL when assets arrive
+                                // e.g. "🗿" (Daniel 2), "🦁" (Daniel 7), "🐏" (Daniel 8)
+downloadCount: v.number(),      // seeded manually to 0 pre-launch; increment via mutation on PDF download
+isNew: v.optional(v.boolean()), // show "New" badge
 ```
 
-### `studyResources` table (new)
+**Emoji placeholders per study (use until illustrations are ready):**
+| Study | Reference | Emoji | Accent Color |
+|---|---|---|---|
+| Daniel's Dream | Dan 2 | 🗿 | `#1a1040` |
+| Four Beasts | Dan 7 | 🦁 | `#2d0f0f` |
+| The Ram & Goat | Dan 8 | 🐏 | `#0f2d2d` |
+| Seventy Weeks | Dan 9 | ⏳ | `#2d2000` |
+| Time of the End | Dan 12 | 🌅 | `#1a0a2d` |
+| Woman & Dragon | Rev 12 | 🐉 | `#1a0a1a` |
+
+Leave the `image` field in the schema as `v.string()` so it can accept a URL with no migration when illustrations arrive.
+
+### `studyResources` table — **NEW**
 
 ```typescript
 defineTable({
-  studyId: v.id("studies"),
+  studyId: v.id("studyCourses"),   // ← references studyCourses, not a "studies" table
   type: v.union(
     v.literal("listen"),
     v.literal("link"),
@@ -285,6 +297,15 @@ defineTable({
   sortOrder: v.optional(v.number()),
 })
 ```
+
+### Seed data for resources (placeholder, manually curated later)
+
+Seed each study with 1–2 real, relevant resources. Mark clearly as placeholders. Examples:
+- **Daniel 2** → Doug Batchelor "The Image of the Ages" (YouTube, Amazing Facts)
+- **Daniel 7** → 3ABN "Daniel's Four Beasts" series
+- **Daniel 9** → Amazing Facts Study Guide "God Drew the Plans"
+
+Add a `disclaimer` field shown once at the top of the Listen tab: *"For educational purposes only; inclusion does not imply full doctrinal endorsement."*
 
 If Convex isn't available at build time, seed this data as JSON in `/data/studyResources.ts` and import it as a fallback.
 
@@ -348,11 +369,13 @@ data/
 
 ## Responsive Behaviour
 
-| Breakpoint | Card View | List View |
+| Breakpoint | Card View (default) | List View |
 |---|---|---|
 | Mobile < 768px | Full-width cards, single column | Full-width list |
 | Tablet 768–1024px | Cards at 70% width, centred | Two-column list |
-| Desktop > 1024px | Default to list view; card view at 400px width, centred | Three-column grid |
+| Desktop > 1024px | Cards at 400px width, centred | Three-column grid |
+
+> **Card view is the default on all breakpoints.** The card experience is the product differentiator. List view is available as a preference toggle for power users — do not default to it at any screen size.
 
 ---
 
@@ -391,10 +414,12 @@ data/
 
 ---
 
-## Open Questions
+## Resolved Decisions
 
-- [ ] Are the study images pre-existing or do they need to be created? If creating, should they be AI-generated illustrations or commissioned art?
-- [ ] Should download count be real (tracked via Convex mutation on PDF download) or seeded as static numbers to start?
-- [ ] Is there a Convex schema already in place for `studies`? If so, share the current schema before extending.
-- [ ] Who curates the Listen/Links/Downloads resources — is this an admin panel task or manually added via Convex dashboard for now?
-- [ ] Should the card view be the default on all screen sizes, or only mobile?
+| Question | Decision |
+|---|---|
+| **Images** | Use emojis as consistent per-study placeholders now (see emoji table above). Leave `image: v.string()` in schema ready to accept a CDN URL when illustrations are commissioned. |
+| **Download count** | Store `downloadCount: v.number()` in `studyCourses` from day one. Seed as `0` pre-launch. Wire a Convex mutation that increments on each PDF download click when ready. |
+| **Existing Convex schema** | Extend `studyCourses` (= this spec's "studies"). Do NOT create a new table. Inspect `studyCourses` and `studyLessons` before touching anything. |
+| **Resource curation** | Seed 1–2 real, relevant resources per study (YouTube/Spotify placeholder links found via research — see seed examples above). Manually curated via Convex dashboard for now; no admin panel needed in v1. |
+| **Card view default** | **Card view on all screen sizes.** Audience is 16–24, primarily mobile. The card experience is the product differentiator. List view available as a toggle preference. |
