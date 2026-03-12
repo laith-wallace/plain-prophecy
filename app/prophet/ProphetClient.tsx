@@ -401,7 +401,7 @@ function SwipeCard({
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       onPointerCancel={handlePointerUp}
-      onClick={(e) => {
+      onClick={() => {
         // Only open reveal on simple tap (no drag)
         const totalDrag = Math.abs(drag.current.currentX - drag.current.startX);
         if (totalDrag < 8) onReveal();
@@ -493,7 +493,7 @@ export default function ProphetClient() {
   const hideHints = useCallback(() => setHintsVisible(false), []);
 
   const handleSwipeCommit = useCallback(
-    (dir: "left" | "right") => {
+    () => {
       const prophecy = prophecies[currentIndex];
       setCompleted((prev) =>
         prev.includes(prophecy.id) ? prev : [...prev, prophecy.id]
@@ -648,7 +648,7 @@ export default function ProphetClient() {
               key={`next-${nextProphecy.id}`}
               prophecy={nextProphecy}
               isNext={true}
-              onSwipeCommit={(_dir: "left" | "right") => {}}
+              onSwipeCommit={() => {}}
               onReveal={() => {}}
               onHintUsed={() => {}}
             />

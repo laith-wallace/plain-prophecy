@@ -40,6 +40,18 @@
       "namedRegex": "^/compare(?:/)?$"
     },
     {
+      "page": "/favicon.ico",
+      "regex": "^/favicon\\.ico(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/favicon\\.ico(?:/)?$"
+    },
+    {
+      "page": "/prophet",
+      "regex": "^/prophet(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/prophet(?:/)?$"
+    },
+    {
       "page": "/robots.txt",
       "regex": "^/robots\\.txt(?:/)?$",
       "routeKeys": {},
