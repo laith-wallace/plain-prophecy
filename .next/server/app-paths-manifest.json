@@ -1,9 +1,12 @@
 {
-  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/robots.txt/route": "app/robots.txt/route.js",
   "/_not-found/page": "app/_not-found/page.js",
+  "/sitemap.xml/route": "app/sitemap.xml/route.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
   "/prophet/page": "app/prophet/page.js",
-  "/page": "app/page.js",
   "/compare/page": "app/compare/page.js",
-  "/studies/[book]/[lesson]/page": "app/studies/[book]/[lesson]/page.js",
-  "/studies/page": "app/studies/page.js"
+  "/about/page": "app/about/page.js",
+  "/page": "app/page.js",
+  "/studies/page": "app/studies/page.js",
+  "/studies/[book]/[lesson]/page": "app/studies/[book]/[lesson]/page.js"
 }

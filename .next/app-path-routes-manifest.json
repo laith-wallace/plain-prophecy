@@ -1,0 +1,12 @@
+{
+  "/robots.txt/route": "/robots.txt",
+  "/_not-found/page": "/_not-found",
+  "/sitemap.xml/route": "/sitemap.xml",
+  "/favicon.ico/route": "/favicon.ico",
+  "/prophet/page": "/prophet",
+  "/compare/page": "/compare",
+  "/about/page": "/about",
+  "/page": "/",
+  "/studies/page": "/studies",
+  "/studies/[book]/[lesson]/page": "/studies/[book]/[lesson]"
+}

@@ -3162,3 +3162,24 @@ body {
     justify-content: space-between;
   }
 }
+
+/* ── Scroll Hero: static / mobile variant ─────────────────────────────── */
+.scroll-hero-static {
+  position: relative;
+  height: 85vh;
+  min-height: 520px;
+  background: #000;
+}
+.scroll-hero-static .scroll-hero-sticky {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+}
+/* Ensure content is always visible in static mode */
+.scroll-hero-content--static .scroll-hero-headline,
+.scroll-hero-content--static .scroll-hero-sub,
+.scroll-hero-content--static .scroll-hero-cta {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  transition: none;
+}

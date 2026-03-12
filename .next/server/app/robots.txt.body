@@ -1,0 +1,7 @@
+User-Agent: *
+Allow: /
+Disallow: /_next/
+Disallow: /api/
+
+Host: https://plainprophecy.com
+Sitemap: https://plainprophecy.com/sitemap.xml

@@ -11,15 +11,25 @@ export default function ScrollHeroVideo() {
   const sublineRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLAnchorElement>(null);
   const hintRef = useRef<HTMLDivElement>(null);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  // Whether to use the static (non-scroll-scrub) path
+  const [useStatic, setUseStatic] = useState(false);
 
   useEffect(() => {
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setPrefersReducedMotion(motionQuery.matches);
+    // Also use static on mobile (< 768px) or touch devices — video scrubbing
+    // is unreliable on iOS Safari / Android Chrome without user gesture
+    const isMobile =
+      window.innerWidth < 768 || navigator.maxTouchPoints > 0;
+
+    if (motionQuery.matches || isMobile) {
+      setUseStatic(true);
+      return;
+    }
 
     const video = videoRef.current;
     const wrapper = wrapperRef.current;
-    if (!video || !wrapper || motionQuery.matches) return;
+    if (!video || !wrapper) return;
 
     video.pause();
     video.currentTime = 0;
@@ -37,26 +47,15 @@ export default function ScrollHeroVideo() {
         video.currentTime = progress * video.duration;
       }
 
-      // Widened visibility window for better readability
       const visible = progress > 0.1 && progress < 0.9;
       [headlineRef.current, sublineRef.current, ctaRef.current].forEach((el) => {
         if (!el) return;
-        if (visible) {
-          el.classList.add("scroll-hero-visible");
-        } else {
-          el.classList.remove("scroll-hero-visible");
-        }
+        el.classList.toggle("scroll-hero-visible", visible);
       });
 
-      // Fade out hint after initial scroll
       if (hintRef.current) {
-        if (progress > 0.05) {
-          hintRef.current.style.opacity = "0";
-          hintRef.current.style.pointerEvents = "none";
-        } else {
-          hintRef.current.style.opacity = "1";
-          hintRef.current.style.pointerEvents = "auto";
-        }
+        hintRef.current.style.opacity = progress > 0.05 ? "0" : "1";
+        hintRef.current.style.pointerEvents = progress > 0.05 ? "none" : "auto";
       }
     }
 
@@ -82,20 +81,21 @@ export default function ScrollHeroVideo() {
     };
   }, []);
 
-  if (prefersReducedMotion) {
+  // ── Static / mobile / reduced-motion version ─────────────────────────────
+  if (useStatic) {
     return (
       <section className="scroll-hero-static" aria-label="Daniel prophecy preview">
         <div className="scroll-hero-sticky">
-           <Image 
-            src="/videos/beast-poster.jpg" 
-            alt="Daniel's Prophetic Beasts" 
-            width={1920}
-            height={1080}
-            className="scroll-hero-video object-cover"
+          <Image
+            src="/videos/beast-poster.jpg"
+            alt="Daniel's Prophetic Beasts"
+            fill
+            className="object-cover"
+            style={{ objectFit: "cover" }}
             priority
           />
           <div className="scroll-hero-overlay-bg" />
-          <div className="scroll-hero-content scroll-hero-visible-static">
+          <div className="scroll-hero-content scroll-hero-content--static">
             <div className="scroll-hero-eyebrow">The Prophecies of Daniel</div>
             <h2 className="scroll-hero-headline scroll-hero-visible">
               Eight Prophecies.
@@ -116,10 +116,11 @@ export default function ScrollHeroVideo() {
     );
   }
 
+  // ── Desktop scroll-scrub version ─────────────────────────────────────────
   return (
-    <section 
-      ref={wrapperRef} 
-      className="scroll-hero-wrapper" 
+    <section
+      ref={wrapperRef}
+      className="scroll-hero-wrapper"
       aria-label="Scroll-driven Daniel prophecy preview"
     >
       <div className="scroll-hero-sticky">
@@ -147,11 +148,7 @@ export default function ScrollHeroVideo() {
             <br />
             See how Scripture and archaeology converge on Christ.
           </p>
-          <Link
-            href="/prophet"
-            ref={ctaRef}
-            className="scroll-hero-cta"
-          >
+          <Link href="/prophet" ref={ctaRef} className="scroll-hero-cta">
             Explore the Prophecies →
           </Link>
         </div>
