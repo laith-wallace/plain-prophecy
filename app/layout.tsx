@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
-import { Playfair_Display, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
+import { Playfair_Display, IBM_Plex_Sans, IBM_Plex_Mono, Geist } from "next/font/google";
 import "./globals.css";
 import SiteNav from "@/components/layout/SiteNav";
 import SiteFooter from "@/components/layout/SiteFooter";
 import { ConvexClientProvider } from "@/components/providers/ConvexClientProvider";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -99,7 +102,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${ibmPlexSans.variable} ${ibmPlexMono.variable}`}
+      className={cn(playfair.variable, ibmPlexSans.variable, ibmPlexMono.variable, "font-sans", geist.variable)}
     >
       <body className="antialiased">
         <ConvexClientProvider>
