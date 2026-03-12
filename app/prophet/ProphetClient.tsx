@@ -1,17 +1,39 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState, useCallback } from "react";
-import { prophecies, type Prophecy } from "@/data/prophecies";
+import { useEffect, useRef, useState, useCallback, useMemo } from "react";
+import { useQuery } from "convex/react";
+import { api } from "../../convex/_generated/api";
+
+// ─── Types ──────────────────────────────────────────────────────────────────
+
+export type Prophecy = {
+  id: string;
+  idStr: string;
+  number: number;
+  title: string;
+  subtitle: string;
+  symbol: string;
+  scripture: string;
+  connections: string[];
+  reveal: {
+    what: string;
+    history: string;
+    christ: string;
+  };
+  published: boolean;
+};
 
 // ─── Connection Web Canvas ───────────────────────────────────────────────────
 
 function ConnectionWeb({
   completed,
   onClose,
+  prophecies,
 }: {
   completed: string[];
   onClose: () => void;
+  prophecies: Prophecy[];
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -158,7 +180,7 @@ function ConnectionWeb({
     ctx.textBaseline = "top";
     ctx.fillStyle = "rgba(232,160,32,0.9)";
     ctx.fillText("CHRIST", cx, cy + 28);
-  }, [completed]);
+  }, [completed, prophecies]);
 
   return (
     <div className="map-backdrop" onClick={onClose}>
@@ -208,12 +230,14 @@ function RevealPanel({
   onClose,
   onNext,
   isLast,
+  totalProphecies,
 }: {
   prophecy: Prophecy | null;
   isOpen: boolean;
   onClose: () => void;
   onNext: () => void;
   isLast: boolean;
+  totalProphecies: number;
 }) {
   if (!prophecy) return null;
 
@@ -233,7 +257,7 @@ function RevealPanel({
 
         <div className="reveal-panel-header">
           <div className="reveal-card-label">
-            Prophecy {prophecy.number} of {prophecies.length}
+            Prophecy {prophecy.number} of {totalProphecies}
           </div>
           <div className="reveal-card-title">{prophecy.title}</div>
           <div className="reveal-card-scripture">{prophecy.scripture}</div>
@@ -275,12 +299,14 @@ function SwipeCard({
   onSwipeCommit,
   onReveal,
   onHintUsed,
+  totalProphecies,
 }: {
   prophecy: Prophecy;
   isNext: boolean;
   onSwipeCommit: (dir: "left" | "right") => void;
   onReveal: () => void;
   onHintUsed: () => void;
+  totalProphecies: number;
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -415,7 +441,7 @@ function SwipeCard({
         <div ref={overlayLabelRef} className="overlay-label" />
       </div>
       <div className="swipe-card-inner">
-        <div className="card-number">Prophecy {prophecy.number} of {prophecies.length}</div>
+        <div className="card-number">Prophecy {prophecy.number} of {totalProphecies}</div>
         <div className="card-symbol">{prophecy.symbol}</div>
         <div className="card-title">{prophecy.title}</div>
         <div className="card-subtitle">{prophecy.subtitle}</div>
@@ -431,16 +457,18 @@ function CompletionScreen({
   completed,
   onRestart,
   onShowMap,
+  totalProphecies,
 }: {
   completed: string[];
   onRestart: () => void;
   onShowMap: () => void;
+  totalProphecies: number;
 }) {
   return (
     <div className="completion-screen">
       <div className="completion-symbol">✝</div>
       <div className="completion-overline">
-        {completed.length} of {prophecies.length} revealed
+        {completed.length} of {totalProphecies} revealed
       </div>
       <h1 className="completion-title">
         One story.{" "}
@@ -478,6 +506,7 @@ function CompletionScreen({
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export default function ProphetClient() {
+  const fetchedProphecies = useQuery(api.prophecies.getAll);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [completed, setCompleted] = useState<string[]>([]);
   const [revealCard, setRevealCard] = useState<Prophecy | null>(null);
@@ -486,7 +515,17 @@ export default function ProphetClient() {
   const [hintsVisible, setHintsVisible] = useState(true);
   const [cardKey, setCardKey] = useState(0); // forces card remount after swipe
 
-  const done = currentIndex >= prophecies.length;
+  // Map idStr to id for UI compatibility
+  const prophecies: Prophecy[] = useMemo(() => {
+    if (!fetchedProphecies) return [];
+    return fetchedProphecies.map((p) => ({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ...(p as any),
+      id: p.idStr,
+    }));
+  }, [fetchedProphecies]);
+
+  const done = currentIndex >= prophecies.length && prophecies.length > 0;
   const currentProphecy = prophecies[currentIndex];
   const nextProphecy = prophecies[currentIndex + 1];
 
@@ -495,6 +534,7 @@ export default function ProphetClient() {
   const handleSwipeCommit = useCallback(
     () => {
       const prophecy = prophecies[currentIndex];
+      if (!prophecy) return;
       setCompleted((prev) =>
         prev.includes(prophecy.id) ? prev : [...prev, prophecy.id]
       );
@@ -506,7 +546,7 @@ export default function ProphetClient() {
         setCurrentIndex((i) => i + 1);
       }, 60);
     },
-    [currentIndex]
+    [currentIndex, prophecies]
   );
 
   const handleReveal = useCallback(() => {
@@ -536,7 +576,7 @@ export default function ProphetClient() {
       }
       return i;
     });
-  }, [revealCard]);
+  }, [revealCard, prophecies]);
 
   const handleRestart = useCallback(() => {
     setCurrentIndex(0);
@@ -550,23 +590,10 @@ export default function ProphetClient() {
 
   // Keyboard support
   useEffect(() => {
+    if (!prophecies.length) return;
     const handler = (e: KeyboardEvent) => {
       if (revealOpen || done) return;
-      if (e.key === "ArrowRight") {
-        hideHints();
-        // Trigger right swipe programmatically — just call the commit
-        const prophecy = prophecies[currentIndex];
-        if (!prophecy) return;
-        setCompleted((prev) =>
-          prev.includes(prophecy.id) ? prev : [...prev, prophecy.id]
-        );
-        setTimeout(() => {
-          setRevealCard(prophecy);
-          setRevealOpen(true);
-          setCardKey((k) => k + 1);
-          setCurrentIndex((i) => i + 1);
-        }, 60);
-      } else if (e.key === "ArrowLeft") {
+      if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
         hideHints();
         const prophecy = prophecies[currentIndex];
         if (!prophecy) return;
@@ -586,7 +613,16 @@ export default function ProphetClient() {
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, [currentIndex, revealOpen, done, hideHints, handleReveal]);
+  }, [currentIndex, revealOpen, done, hideHints, handleReveal, prophecies]);
+
+  // Loading state
+  if (fetchedProphecies === undefined) {
+    return (
+      <div className="prophet-layout loading">
+        <div className="loading-spinner">Loading Prophecies...</div>
+      </div>
+    );
+  }
 
   if (done) {
     return (
@@ -595,11 +631,13 @@ export default function ProphetClient() {
           completed={completed}
           onRestart={handleRestart}
           onShowMap={() => setShowMap(true)}
+          totalProphecies={prophecies.length}
         />
         {showMap && (
           <ConnectionWeb
             completed={completed}
             onClose={() => setShowMap(false)}
+            prophecies={prophecies}
           />
         )}
       </>
@@ -651,18 +689,22 @@ export default function ProphetClient() {
               onSwipeCommit={() => {}}
               onReveal={() => {}}
               onHintUsed={() => {}}
+              totalProphecies={prophecies.length}
             />
           )}
 
           {/* Current card (top) */}
-          <SwipeCard
-            key={`card-${currentProphecy.id}-${cardKey}`}
-            prophecy={currentProphecy}
-            isNext={false}
-            onSwipeCommit={handleSwipeCommit}
-            onReveal={handleReveal}
-            onHintUsed={hideHints}
-          />
+          {currentProphecy && (
+            <SwipeCard
+              key={`card-${currentProphecy.id}-${cardKey}`}
+              prophecy={currentProphecy}
+              isNext={false}
+              onSwipeCommit={handleSwipeCommit}
+              onReveal={handleReveal}
+              onHintUsed={hideHints}
+              totalProphecies={prophecies.length}
+            />
+          )}
         </div>
 
         {/* Swipe hints */}
@@ -695,6 +737,7 @@ export default function ProphetClient() {
         onClose={handleRevealClose}
         onNext={handleRevealNext}
         isLast={currentIndex >= prophecies.length}
+        totalProphecies={prophecies.length}
       />
 
       {/* Connection Web Map */}
@@ -702,6 +745,7 @@ export default function ProphetClient() {
         <ConnectionWeb
           completed={completed}
           onClose={() => setShowMap(false)}
+          prophecies={prophecies}
         />
       )}
     </div>

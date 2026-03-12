@@ -3,6 +3,7 @@ import { Playfair_Display, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google
 import "./globals.css";
 import SiteNav from "@/components/layout/SiteNav";
 import SiteFooter from "@/components/layout/SiteFooter";
+import { ConvexClientProvider } from "@/components/providers/ConvexClientProvider";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -100,10 +101,12 @@ export default function RootLayout({
       lang="en"
       className={`${playfair.variable} ${ibmPlexSans.variable} ${ibmPlexMono.variable}`}
     >
-      <body>
-        <SiteNav />
-        {children}
-        <SiteFooter />
+      <body className="antialiased">
+        <ConvexClientProvider>
+          <SiteNav />
+          {children}
+          <SiteFooter />
+        </ConvexClientProvider>
       </body>
     </html>
   );

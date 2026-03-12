@@ -1,6 +1,20 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import JsonLd from "@/components/seo/JsonLd";
+import HomeAnimations from "@/components/home/HomeAnimations";
+import ScrollHeroVideo from "@/components/home/ScrollHeroVideo";
+import { 
+  IconScroll, 
+  IconHourglass, 
+  IconCloud, 
+  IconLion, 
+  IconStatue, 
+  IconSeal,
+  IconSeedling,
+  IconScales,
+  IconNewspaper,
+  IconTarget
+} from "@/components/icons/HeroIcons";
 
 export const metadata: Metadata = {
   title: "Biblical Prophecy, Plain and Simple",
@@ -27,7 +41,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Plain Prophecy — Biblical Prophecy, Plain and Simple",
-    description: "Discover the Reformation consensus on Daniel and Revelation — rigorously compared.",
+    description:
+      "Discover the Reformation consensus on Daniel and Revelation — rigorously compared.",
     images: ["/og/og-default.png"],
   },
 };
@@ -43,384 +58,329 @@ const webSiteSchema = {
     "@type": "SearchAction",
     target: {
       "@type": "EntryPoint",
-      urlTemplate: "https://plainprophecy.com/compare?q={search_term_string}",
+      urlTemplate:
+        "https://plainprophecy.com/compare?q={search_term_string}",
     },
     "query-input": "required name=search_term_string",
   },
 };
 
-const features = [
+// ── DATA ──────────────────────────────────────────────────────────────────────
+
+const prophecyCards = [
   {
-    icon: "📜",
+    icon: IconScroll,
     title: "Daniel's 70 Weeks",
-    subtitle: "Verified to the Year",
-    desc: "457 BC → 27 AD → 31 AD → 34 AD. Every data point in Daniel 9 is confirmed by independent archaeology and secular chronology. No other prophetic system matches this precision.",
+    hook: "Predicted the exact year of Christ's baptism — 500 years in advance.",
     ref: "Dan 9:24–27",
+    color: "#c8a96e",
   },
   {
-    icon: "⏳",
+    icon: IconHourglass,
     title: "The 1,260 Years",
-    subtitle: "Verified to the Decade",
-    desc: "Six independent Bible texts point to the same period. Applied historically: 538 AD (Justinian) to 1798 AD (Napoleon captures the Pope) = exactly 1,260 years. This is not coincidence.",
-    ref: "Dan 7:25 · Rev 12:6, 14 · Rev 13:5",
+    hook: "Six Bible texts. One period. 538–1798 AD — verified to the decade.",
+    ref: "Dan 7:25 · Rev 12:6",
+    color: "#8b7355",
   },
   {
-    icon: "☁",
+    icon: IconCloud,
     title: "The Second Coming",
-    subtitle: "One Event — Every Eye Sees",
-    desc: "\"Every eye shall see Him\" (Rev 1:7). \"The Lord himself shall descend with a shout\" (1 Thess 4:16). Scripture describes one visible, glorious, audible return of Christ — not two secret/public stages invented in 1830.",
-    ref: "Rev 1:7 · 1 Thess 4:16–17",
+    hook: "Not two events. One visible, audible, glorious return — every eye sees Him.",
+    ref: "Rev 1:7 · 1 Thess 4:16",
+    color: "#6b9eb5",
+  },
+  {
+    icon: IconLion,
+    title: "The Antichrist",
+    hook: "Identified from Scripture alone by Luther, Calvin, and every Reformer.",
+    ref: "Dan 7:8 · 2 Thess 2:3",
+    color: "#b5756b",
+  },
+  {
+    icon: IconStatue,
+    title: "Daniel 2 — The Image",
+    hook: "Four kingdoms, then God's. History confirmed every limb of the statue.",
+    ref: "Dan 2:31–45",
+    color: "#7b8c6e",
+  },
+  {
+    icon: IconSeal,
+    title: "The Mark of the Beast",
+    hook: "Identified in history. Not a chip — a mark of allegiance in worship.",
+    ref: "Rev 13:16–17",
+    color: "#9b6eb5",
   },
 ];
 
-const paths = [
+const timelineNodes = [
+  { year: "457 BC", label: "Ezra's Decree", ref: "Dan 9:25" },
+  { year: "27 AD", label: "Messiah Anointed", ref: "Luke 3:21" },
+  { year: "31 AD", label: "The Cross", ref: "Dan 9:26" },
+  { year: "538 AD", label: "Papal Supremacy", ref: "Dan 7:25" },
+  { year: "1798 AD", label: "Napoleon Ends It", ref: "Rev 13:3" },
+  { year: "Today", label: "Signs Multiplying", ref: "Matt 24:14" },
+];
+
+const learningPaths = [
   {
-    label: "I'm new to this",
-    desc: "Start with the side-by-side timeline — see both prophetic frameworks laid out from Scripture.",
+    icon: IconSeedling,
+    label: "I'm new to prophecy",
+    desc: "See both prophetic frameworks side-by-side in 5 minutes.",
     href: "/compare",
-    cta: "View Timelines →",
-    accent: "var(--sda-primary)",
+    cta: "Compare the Frameworks →",
+    accent: "var(--sda-accent)",
   },
   {
+    icon: IconScales,
     label: "I know Futurism",
-    desc: "Go straight to the accuracy scoring — 10 criteria, evaluated against the same evidentiary standard.",
-    href: "/compare",
-    cta: "See Scoring →",
+    desc: "10 criteria. Same evidential standard. See which system wins.",
+    href: "/compare#scoring",
+    cta: "See the Evidence Scores →",
     accent: "var(--futurist-primary)",
   },
   {
-    label: "Show me the evidence",
-    desc: "See six prophetic signs in active fulfilment today — verified by mainstream news sources.",
-    href: "/compare",
-    cta: "View Evidence →",
+    icon: IconNewspaper,
+    label: "Show me evidence",
+    desc: "Six prophetic signs in active fulfilment — verified by mainstream news.",
+    href: "/compare#evidence",
+    cta: "View the Evidence →",
     accent: "#8b4513",
   },
   {
+    icon: IconTarget,
     label: "Learn by doing",
-    desc: "Swipe through 8 Daniel prophecies — commit to an answer before the reveal, then see how history and Scripture converge on Christ.",
+    desc: "Swipe through 8 Daniel prophecies. Commit to an answer, then see history converge.",
     href: "/prophet",
-    cta: "Start Prophet →",
-    accent: "var(--sda-accent)",
+    cta: "Start the Prophecies →",
+    accent: "var(--sda-primary)",
   },
 ];
 
+const reformers = ["Luther", "Calvin", "Newton", "Wesley"];
+
+// ── PAGE ──────────────────────────────────────────────────────────────────────
+
 export default function HomePage() {
   return (
-    <main>
+    <main className="home-page">
       <JsonLd schema={webSiteSchema} />
+      <HomeAnimations />
 
-      <section
-        style={{
-          background: "var(--ink)",
-          color: "var(--paper)",
-          padding: "5rem 2rem 4rem",
-          textAlign: "center",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        {/* Decorative rule */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1rem", marginBottom: "1.5rem" }}>
-          <div style={{ height: 1, width: 60, background: "var(--sda-accent)", opacity: 0.5 }} />
-          <div style={{ fontFamily: "var(--font-ibm-plex-mono)", fontSize: "0.62rem", letterSpacing: "0.3em", textTransform: "uppercase", opacity: 0.5 }}>
-            Plain Prophecy
-          </div>
-          <div style={{ height: 1, width: 60, background: "var(--sda-accent)", opacity: 0.5 }} />
+      {/* ── SECTION 1: HERO ─────────────────────────────────────────────── */}
+      <section className="hero-section">
+        {/* Animated star/particle background */}
+        <div className="hero-bg" aria-hidden="true">
+          <div className="hero-stars" />
         </div>
 
-        <h1
-          style={{
-            fontFamily: "var(--font-playfair)",
-            fontSize: "clamp(2.2rem, 6vw, 4rem)",
-            fontWeight: 900,
-            lineHeight: 1.1,
-            letterSpacing: "-0.02em",
-            maxWidth: 800,
-            margin: "0 auto 1.25rem",
-          }}
-        >
-          Biblical Prophecy.
+        {/* Decorative eyebrow */}
+        <div className="hero-eyebrow" data-hero-fade="200">
+          <div className="hero-rule" />
+          <span>Plain Prophecy</span>
+          <div className="hero-rule" />
+        </div>
+
+        {/* Main headline — two lines animate in via data-hero-line */}
+        <h1 className="hero-headline">
+          <span className="hero-line" data-hero-line="300">Biblical Prophecy.</span>
           <br />
-          <span style={{ color: "var(--sda-accent)" }}>Plain and Simple.</span>
+          <span className="hero-line hero-accent" data-hero-line="500">Plain and Simple.</span>
         </h1>
 
-        <p
-          style={{
-            fontSize: "clamp(0.95rem, 2vw, 1.1rem)",
-            maxWidth: 600,
-            margin: "0 auto 2.5rem",
-            lineHeight: 1.7,
-            opacity: 0.75,
-          }}
-        >
-          What the Reformers believed — rigorously examined. Every prophetic
-          anchor verified against history. Christ at the centre of every timeline.
+        {/* Subheadline - One thought per line rhythm */}
+        <p className="hero-sub" data-hero-fade="900">
+          What the Reformers believed. 
+          <br className="hero-sub-br" />
+          Rigorously examined. 
+          <br className="hero-sub-br" />
+          Christ at the centre.
         </p>
 
-        <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
-          <Link
-            href="/compare"
-            style={{
-              display: "inline-block",
-              background: "var(--sda-accent)",
-              color: "var(--ink)",
-              fontFamily: "var(--font-ibm-plex-mono)",
-              fontSize: "0.75rem",
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-              padding: "0.85rem 2rem",
-              textDecoration: "none",
-              fontWeight: 600,
-              transition: "opacity 0.2s",
-            }}
-          >
+        {/* CTAs */}
+        <div className="hero-ctas" data-hero-fade="1100">
+          <Link href="/compare" className="btn-primary">
             Start Comparing →
           </Link>
-          <Link
-            href="/about"
-            style={{
-              display: "inline-block",
-              border: "1px solid rgba(255,255,255,0.3)",
-              color: "var(--paper)",
-              fontFamily: "var(--font-ibm-plex-mono)",
-              fontSize: "0.75rem",
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-              padding: "0.85rem 2rem",
-              textDecoration: "none",
-              transition: "border-color 0.2s",
-            }}
-          >
+          <Link href="/about" className="btn-ghost">
             Our Mission
           </Link>
         </div>
 
-        {/* Scripture anchor */}
-        <div
-          style={{
-            marginTop: "3.5rem",
-            paddingTop: "2rem",
-            borderTop: "1px solid rgba(255,255,255,0.1)",
-            maxWidth: 600,
-            margin: "3.5rem auto 0",
-          }}
-        >
-          <blockquote
-            style={{
-              fontFamily: "var(--font-playfair)",
-              fontSize: "clamp(1rem, 2vw, 1.2rem)",
-              fontStyle: "italic",
-              lineHeight: 1.6,
-              opacity: 0.8,
-            }}
-          >
-            &ldquo;Seal not the sayings of the prophecy of this book: for the time is at hand.&rdquo;
+        {/* Scripture badge */}
+        <div className="hero-scripture" data-hero-fade="1400">
+          <blockquote className="hero-quote">
+            &ldquo;Seal not the sayings of the prophecy of this book: for the
+            time is at hand.&rdquo;
           </blockquote>
-          <cite
-            style={{
-              display: "block",
-              fontFamily: "var(--font-ibm-plex-mono)",
-              fontSize: "0.65rem",
-              letterSpacing: "0.15em",
-              textTransform: "uppercase",
-              opacity: 0.5,
-              marginTop: "0.75rem",
-            }}
-          >
-            Revelation 22:10
-          </cite>
+          <cite className="hero-cite">Revelation 22:10</cite>
+        </div>
+
+        {/* Scroll hint */}
+        <div className="hero-scroll-hint" aria-hidden="true">
+          <div className="scroll-chevron" />
         </div>
       </section>
 
-      {/* WHY IT MATTERS — 3 columns */}
-      <section style={{ maxWidth: 1200, margin: "0 auto", padding: "4rem 2rem" }}>
-        <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
-          <div style={{ fontFamily: "var(--font-ibm-plex-mono)", fontSize: "0.65rem", letterSpacing: "0.25em", textTransform: "uppercase", color: "var(--neutral)", marginBottom: "0.5rem" }}>
-            Evidence
+      {/* ── SECTION 2: PROPHECY SHOWCASE ──────────────────────────────────── */}
+      <section className="prophecy-section">
+        <div className="section-inner">
+          <div className="section-header" data-animate data-animate-delay="0">
+            <div className="section-eyebrow">The Prophecies</div>
+            <h2 className="section-title">Six Anchors in Scripture and History</h2>
+            <p className="section-subtitle">
+              Each prophecy is a precision instrument — verified by independent
+              archaeology, secular chronology, and the fulfilment of centuries.
+            </p>
           </div>
-          <h2 style={{ fontFamily: "var(--font-playfair)", fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 900, letterSpacing: "-0.02em" }}>
-            Why the Historicist Framework Stands
-          </h2>
-        </div>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-            gap: "1.5rem",
-          }}
-        >
-          {features.map((f, i) => (
-            <div
-              key={i}
-              style={{
-                border: "2px solid var(--ink)",
-                overflow: "hidden",
-              }}
-            >
+          {/* Mobile: horizontal scroll. Desktop: 3-col grid */}
+          <div className="prophecy-grid">
+            {prophecyCards.map((card, i) => {
+              const Icon = card.icon;
+              return (
+                <Link
+                  key={card.title}
+                  href="/compare"
+                  className="prophecy-card hover-spring"
+                  data-animate
+                  data-animate-delay={String(i * 80)}
+                  style={{ "--card-accent": card.color } as React.CSSProperties}
+                >
+                  <div className="prophecy-card-icon">
+                    <Icon className="icon-svg" />
+                  </div>
+                  <div className="prophecy-card-body">
+                    <h3 className="prophecy-card-title">{card.title}</h3>
+                    <p className="prophecy-card-hook">{card.hook}</p>
+                    <div className="prophecy-card-ref">{card.ref}</div>
+                  </div>
+                  <div className="prophecy-card-arrow" aria-hidden="true">→</div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ── SECTION 3: TIMELINE TEASER ────────────────────────────────────── */}
+      <section className="timeline-section">
+        <div className="section-inner">
+          <div className="section-header" data-animate>
+            <div className="section-eyebrow">The Prophetic Record</div>
+            <h2 className="section-title">History Locked in Advance</h2>
+          </div>
+
+          <div className="timeline-track" role="list">
+            {timelineNodes.map((node, i) => (
               <div
-                style={{
-                  background: "var(--ink)",
-                  color: "var(--paper)",
-                  padding: "1.25rem",
-                  display: "flex",
-                  gap: "0.75rem",
-                  alignItems: "flex-start",
-                }}
+                key={node.year}
+                className="timeline-node"
+                role="listitem"
+                data-animate
+                data-animate-delay={String(i * 120)}
               >
-                <span style={{ fontSize: "1.5rem", lineHeight: 1 }}>{f.icon}</span>
-                <div>
-                  <div
-                    style={{
-                      fontFamily: "var(--font-ibm-plex-mono)",
-                      fontSize: "0.6rem",
-                      letterSpacing: "0.2em",
-                      textTransform: "uppercase",
-                      opacity: 0.5,
-                      marginBottom: "0.2rem",
-                    }}
-                  >
-                    {f.subtitle}
-                  </div>
-                  <div
-                    style={{
-                      fontFamily: "var(--font-playfair)",
-                      fontSize: "1.05rem",
-                      fontWeight: 700,
-                    }}
-                  >
-                    {f.title}
-                  </div>
-                </div>
+                <div className="timeline-dot" />
+                {i < timelineNodes.length - 1 && (
+                  <div className="timeline-line" />
+                )}
+                <div className="timeline-year">{node.year}</div>
+                <div className="timeline-label">{node.label}</div>
+                <div className="timeline-ref">{node.ref}</div>
               </div>
-              <div style={{ padding: "1.25rem" }}>
-                <p style={{ fontSize: "0.85rem", lineHeight: 1.65, color: "#3a3530", marginBottom: "0.75rem" }}>{f.desc}</p>
-                <div
-                  style={{
-                    fontFamily: "var(--font-ibm-plex-mono)",
-                    fontSize: "0.65rem",
-                    color: "var(--neutral)",
-                    opacity: 0.8,
-                  }}
-                >
-                  {f.ref}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* START HERE — learning paths */}
-      <section
-        style={{
-          background: "var(--cream-mid)",
-          borderTop: "2px solid var(--divider)",
-          borderBottom: "2px solid var(--divider)",
-          padding: "4rem 2rem",
-        }}
-      >
-        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
-            <div style={{ fontFamily: "var(--font-ibm-plex-mono)", fontSize: "0.65rem", letterSpacing: "0.25em", textTransform: "uppercase", color: "var(--neutral)", marginBottom: "0.5rem" }}>
-              Where to Begin
-            </div>
-            <h2 style={{ fontFamily: "var(--font-playfair)", fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 900, letterSpacing: "-0.02em" }}>
-              Start Here
-            </h2>
-          </div>
-
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1.25rem" }}>
-            {paths.map((p, i) => (
-              <Link
-                key={i}
-                href={p.href}
-                style={{
-                  border: "2px solid var(--ink)",
-                  background: "var(--paper)",
-                  padding: "1.5rem",
-                  textDecoration: "none",
-                  color: "var(--ink)",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "0.5rem",
-                  transition: "transform 0.15s, box-shadow 0.15s",
-                }}
-              >
-                <div
-                  style={{
-                    fontFamily: "var(--font-ibm-plex-mono)",
-                    fontSize: "0.68rem",
-                    letterSpacing: "0.1em",
-                    textTransform: "uppercase",
-                    color: p.accent,
-                    fontWeight: 600,
-                  }}
-                >
-                  {p.label}
-                </div>
-                <p style={{ fontSize: "0.85rem", lineHeight: 1.6, color: "#3a3530", flex: 1 }}>{p.desc}</p>
-                <div
-                  style={{
-                    fontFamily: "var(--font-ibm-plex-mono)",
-                    fontSize: "0.7rem",
-                    fontWeight: 600,
-                    color: p.accent,
-                    marginTop: "0.5rem",
-                  }}
-                >
-                  {p.cta}
-                </div>
-              </Link>
             ))}
           </div>
+
+          <div className="timeline-cta" data-animate>
+            <Link href="/compare" className="btn-outline">
+              See the Full Timeline →
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* CALL TO ACTION */}
-      <section
-        style={{
-          background: "var(--sda-primary)",
-          color: "white",
-          padding: "3.5rem 2rem",
-          textAlign: "center",
-        }}
-      >
-        <div style={{ maxWidth: 700, margin: "0 auto" }}>
-          <div style={{ fontFamily: "var(--font-ibm-plex-mono)", fontSize: "0.62rem", letterSpacing: "0.25em", textTransform: "uppercase", opacity: 0.6, marginBottom: "0.75rem" }}>
+      {/* ── SECTION 4: SCROLL HERO VIDEO ──────────────────────────────────── */}
+      <ScrollHeroVideo />
+
+      {/* ── SECTION 5: LEARNING PATHS ─────────────────────────────────────── */}
+      <section className="paths-section">
+        <div className="section-inner">
+          <div className="section-header" data-animate>
+            <div className="section-eyebrow">Where to Begin</div>
+            <h2 className="section-title">Start Here</h2>
+          </div>
+
+          <div className="paths-grid">
+            {learningPaths.map((path, i) => {
+              const Icon = path.icon;
+              return (
+                <Link
+                  key={path.label}
+                  href={path.href}
+                  className="path-card hover-spring"
+                  data-animate
+                  data-animate-delay={String(i * 80)}
+                  style={{ "--path-accent": path.accent } as React.CSSProperties}
+                >
+                  <div className="path-icon">
+                    <Icon className="icon-svg" />
+                  </div>
+                  <div className="path-label">{path.label}</div>
+                  <p className="path-desc">{path.desc}</p>
+                  <div className="path-cta" aria-hidden="true">{path.cta}</div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ── SECTION 6: REFORMERS BANNER ───────────────────────────────────── */}
+      <section className="reformers-section">
+        {/* Typographic watermark texture */}
+        <div className="reformers-watermark" aria-hidden="true">
+          {reformers.map((name) => (
+            <span key={name} className="reformers-name">
+              {name}
+            </span>
+          ))}
+        </div>
+
+        <div className="reformers-content" data-animate>
+          <div className="section-eyebrow reformers-eyebrow">
             The Reformation Consensus
           </div>
-          <h2
-            style={{
-              fontFamily: "var(--font-playfair)",
-              fontSize: "clamp(1.4rem, 3vw, 2rem)",
-              fontWeight: 900,
-              marginBottom: "1rem",
-              lineHeight: 1.2,
-            }}
-          >
+          <h2 className="reformers-title">
             Luther, Calvin, Newton, and Wesley All Agreed
           </h2>
-          <p style={{ fontSize: "0.9rem", lineHeight: 1.7, opacity: 0.85, marginBottom: "2rem" }}>
-            The Historicist reading of Daniel and Revelation was the dominant Protestant position for 300 years. Evangelical futurism is a 19th-century innovation with Counter-Reformation origins. The evidence is not close.
+          <p className="reformers-body">
+            The Historicist reading of Daniel and Revelation was the dominant 
+            Protestant position for 300 years — a legacy of rigorous scholarship 
+            and Christ-centred clarity.
           </p>
-          <Link
-            href="/compare"
-            style={{
-              display: "inline-block",
-              background: "var(--sda-accent)",
-              color: "var(--ink)",
-              fontFamily: "var(--font-ibm-plex-mono)",
-              fontSize: "0.75rem",
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-              padding: "0.85rem 2rem",
-              textDecoration: "none",
-              fontWeight: 600,
-            }}
-          >
+          <Link href="/compare" className="btn-accent">
             See the Full Comparison →
           </Link>
+        </div>
+      </section>
+
+      {/* ── SECTION 7: SCRIPTURE CLOSER ───────────────────────────────────── */}
+      <section className="closer-section">
+        <div className="closer-inner" data-animate>
+          <div className="closer-rule" aria-hidden="true" />
+          <blockquote className="closer-quote">
+            &ldquo;He that hath an ear, let him hear what the Spirit saith
+            unto the churches.&rdquo;
+          </blockquote>
+          <cite className="closer-cite">Revelation 2:7</cite>
+          <div className="closer-rule" aria-hidden="true" />
+          <div className="closer-links">
+            <Link href="/compare" className="closer-link">
+              Explore Prophecy →
+            </Link>
+            <Link href="/prophet" className="closer-link">
+              Take the Quiz →
+            </Link>
+          </div>
         </div>
       </section>
     </main>

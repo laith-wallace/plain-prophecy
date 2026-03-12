@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
-import { futuristTimeline, sdaTimeline } from "@/data/timelines";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 import {
   scoringCriteria,
   scoringMethodology,
@@ -13,6 +14,8 @@ type Tab = "timelines" | "scoring" | "pillars" | "evidence";
 
 export default function CompareClient() {
   const [activeTab, setActiveTab] = useState<Tab>("timelines");
+  const futuristData = useQuery(api.timelines.getTimeline, { type: "futurist" });
+  const sdaData = useQuery(api.timelines.getTimeline, { type: "sda" });
 
   // Progress bar + scroll-to-top
   useEffect(() => {
@@ -100,17 +103,21 @@ export default function CompareClient() {
                   <span className="origin">Origins: J.N. Darby (1830s), C.I. Scofield, Hal Lindsey, Tim LaHaye</span>
                 </div>
                 <div>
-                  {futuristTimeline.map((era, i) => (
-                    <div className="era-block" key={i}>
-                      <div className="era-date futurist-date">{era.date}</div>
-                      <div className="era-content">
-                        <div className={`badge ${era.badge}`}>{era.badge === 'fulfilled' ? 'Fulfilled' : era.badge === 'future' ? 'Future' : era.badge === 'present' ? 'Present (Parenthesis)' : 'Historical'}</div>
-                        <h3>{era.title}</h3>
-                        <p className="era-desc">{era.desc}</p>
-                        <p className="era-ref">{era.refs}</p>
+                  {!futuristData ? (
+                    <div className="era-block loading">Loading timeline...</div>
+                  ) : (
+                    futuristData.map((era, i) => (
+                      <div className="era-block" key={i}>
+                        <div className="era-date futurist-date">{era.date}</div>
+                        <div className="era-content">
+                          <div className={`badge ${era.badge}`}>{era.badge === 'fulfilled' ? 'Fulfilled' : era.badge === 'future' ? 'Future' : era.badge === 'present' ? 'Present (Parenthesis)' : 'Historical'}</div>
+                          <h3>{era.title}</h3>
+                          <p className="era-desc">{era.desc}</p>
+                          <p className="era-ref">{era.refs}</p>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))
+                  )}
                 </div>
               </div>
 
@@ -122,17 +129,21 @@ export default function CompareClient() {
                   <span className="origin">Origins: Reformation (Luther, Calvin, Newton), Miller Movement, SDA pioneers (1844–present)</span>
                 </div>
                 <div>
-                  {sdaTimeline.map((era, i) => (
-                    <div className="era-block" key={i}>
-                      <div className="era-date sda-date">{era.date}</div>
-                      <div className="era-content">
-                        <div className={`badge ${era.badge}`}>{era.badge === 'fulfilled' ? 'Historically Verified' : era.badge === 'historical' ? 'Historically Identified' : era.badge === 'present' ? 'Present Truth' : 'Future'}</div>
-                        <h3>{era.title}</h3>
-                        <p className="era-desc">{era.desc}</p>
-                        <p className="era-ref">{era.refs}</p>
+                  {!sdaData ? (
+                    <div className="era-block loading">Loading timeline...</div>
+                  ) : (
+                    sdaData.map((era, i) => (
+                      <div className="era-block" key={i}>
+                        <div className="era-date sda-date">{era.date}</div>
+                        <div className="era-content">
+                          <div className={`badge ${era.badge}`}>{era.badge === 'fulfilled' ? 'Historically Verified' : era.badge === 'historical' ? 'Historically Identified' : era.badge === 'present' ? 'Present Truth' : 'Future'}</div>
+                          <h3>{era.title}</h3>
+                          <p className="era-desc">{era.desc}</p>
+                          <p className="era-ref">{era.refs}</p>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))
+                  )}
                 </div>
               </div>
             </div>
