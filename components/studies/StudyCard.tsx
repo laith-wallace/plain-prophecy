@@ -33,7 +33,7 @@ export default function StudyCard({
         aria-label={isFlipped ? `${lesson.title} details` : `${lesson.title} — tap to explore`}
       >
         {/* Front */}
-        <div className="sc-face sc-face--front" onClick={onFlip}>
+        <div className="sc-face sc-face--front">
           <StudyCardFront lesson={lesson} meta={meta} />
         </div>
 

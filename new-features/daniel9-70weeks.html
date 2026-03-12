@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daniel 9 — 70 Weeks: The Year Jesus Was Predicted</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold:       #C9A84C;
+    --gold-light: #F0D080;
+    --silver:     #A8B8C8;
+    --bg:         #08080F;
+    --panel:      rgba(255,255,255,0.04);
+    --border:     rgba(255,255,255,0.08);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--bg);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── Starfield ── */
+  .stars {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background:
+      radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 80% 10%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 50% 70%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 10% 80%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 60%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 35% 15%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 65% 85%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 45% 45%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(2px 2px at 75% 35%, rgba(201,168,76,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 55%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 15% 20%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 55% 25%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 85% 75%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 5% 50%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 95% 20%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 30% 65%, rgba(255,255,255,0.35) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 50%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 42% 88%, rgba(201,168,76,0.25) 0%, transparent 100%);
+  }
+
+  /* ── Header ── */
+  header {
+    position: relative; z-index: 10;
+    padding: 48px 24px 0;
+    text-align: center;
+  }
+
+  .eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(28px, 6vw, 52px);
+    font-weight: 900;
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: 16px;
+  }
+
+  h1 span { color: var(--gold); }
+
+  .subtitle {
+    font-size: 15px; font-weight: 300;
+    color: rgba(255,255,255,0.55);
+    max-width: 500px; margin: 0 auto 8px;
+    line-height: 1.6;
+  }
+
+  .scripture-ref {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    color: var(--gold);
+    opacity: 0.7;
+    letter-spacing: 0.1em;
+    margin-bottom: 40px;
+  }
+
+  /* ── Equation block ── */
+  .equation-wrap {
+    position: relative; z-index: 10;
+    max-width: 680px;
+    margin: 0 auto 24px;
+    padding: 0 20px;
+  }
+
+  .equation-inner {
+    background: rgba(201,168,76,0.06);
+    border: 1px solid rgba(201,168,76,0.22);
+    border-radius: 18px;
+    padding: 22px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .eq-cell {
+    text-align: center;
+    flex: 1;
+  }
+
+  .eq-label {
+    font-size: 9px; font-weight: 700;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 7px;
+  }
+
+  .eq-value {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(22px, 4vw, 34px);
+    font-weight: 700;
+    color: var(--gold-light);
+    line-height: 1;
+    margin-bottom: 5px;
+  }
+
+  .eq-sub {
+    font-size: 10px;
+    color: rgba(255,255,255,0.3);
+    line-height: 1.4;
+  }
+
+  .eq-verified {
+    font-size: 10px; font-weight: 600;
+    color: #68C87A;
+    letter-spacing: 0.08em;
+    margin-top: 4px;
+  }
+
+  .eq-operator {
+    font-family: 'Cinzel', serif;
+    font-size: 26px;
+    color: rgba(255,255,255,0.2);
+    flex-shrink: 0;
+    padding: 0 8px;
+    margin-bottom: 14px;
+  }
+
+  /* ── Principle note ── */
+  .principle-wrap {
+    position: relative; z-index: 10;
+    max-width: 680px;
+    margin: 0 auto 36px;
+    padding: 0 20px;
+  }
+
+  .principle-inner {
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 14px 18px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .principle-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    opacity: 0.7;
+  }
+
+  .principle-text {
+    font-size: 12px; line-height: 1.65;
+    color: rgba(255,255,255,0.38);
+  }
+
+  .principle-text strong {
+    color: rgba(255,255,255,0.58);
+    font-weight: 600;
+  }
+
+  /* ── Timeline section ── */
+  .timeline-section {
+    position: relative; z-index: 10;
+    margin-bottom: 8px;
+  }
+
+  .timeline-label {
+    text-align: center;
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 12px;
+  }
+
+  .timeline-scroll-outer {
+    overflow-x: auto;
+    padding: 4px 20px 8px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold) rgba(255,255,255,0.05);
+  }
+  .timeline-scroll-outer::-webkit-scrollbar { height: 3px; }
+  .timeline-scroll-outer::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+  .timeline-scroll-outer::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+  .mobile-tap-hint {
+    text-align: center;
+    font-size: 12px;
+    color: rgba(255,255,255,0.28);
+    margin-top: 10px;
+  }
+
+  @media (min-width: 900px) { .mobile-tap-hint { display: none; } }
+
+  /* SVG segment interactive states */
+  .seg-group {
+    cursor: pointer;
+  }
+  .seg-group .seg-bar {
+    transition: filter 0.25s ease, opacity 0.25s ease;
+  }
+  .seg-group:hover .seg-bar {
+    filter: brightness(1.25);
+  }
+  .seg-group.seg-active .seg-bar {
+    filter: brightness(1.45) drop-shadow(0 0 10px rgba(201,168,76,0.7));
+  }
+  .seg-group.seg-dimmed .seg-bar {
+    opacity: 0.18;
+    filter: saturate(0.15);
+  }
+  .seg-group.seg-dimmed .seg-label-text { opacity: 0.15; }
+  .seg-group.seg-active .seg-label-text { opacity: 1; }
+
+  /* Milestone states */
+  .mil-group {
+    cursor: pointer;
+  }
+  .mil-group .mil-circle,
+  .mil-group .mil-line,
+  .mil-group .mil-label {
+    transition: opacity 0.25s ease, filter 0.25s ease;
+  }
+  .mil-group:hover .mil-circle { filter: brightness(1.4); }
+  .mil-group.seg-active .mil-circle {
+    filter: brightness(1.5) drop-shadow(0 0 14px rgba(240,208,128,0.8));
+  }
+  .mil-group.seg-dimmed .mil-circle,
+  .mil-group.seg-dimmed .mil-line,
+  .mil-group.seg-dimmed .mil-label { opacity: 0.15; }
+
+  /* ── Nav dots ── */
+  .nav-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 16px 0 8px;
+    position: relative; z-index: 10;
+  }
+
+  .nav-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: transparent;
+  }
+
+  .nav-dot.active {
+    background: var(--gold);
+    border-color: var(--gold);
+    transform: scale(1.2);
+  }
+
+  /* ── Main cards area ── */
+  .main {
+    position: relative; z-index: 10;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 8px 16px 80px;
+  }
+
+  /* Progress strip */
+  .progress-strip {
+    height: 2px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 1px;
+    margin-bottom: 28px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 1px;
+    transition: width 0.5s ease;
+  }
+
+  /* Detail cards — identical to daniel2.html */
+  .detail-card {
+    display: none;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .detail-card.visible {
+    display: block;
+    animation: fadeSlideIn 0.3s ease forwards;
+  }
+
+  .detail-header {
+    padding: 24px 24px 20px;
+    position: relative;
+  }
+
+  .detail-era {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 6px;
+    opacity: 0.7;
+  }
+
+  .detail-kingdom {
+    font-family: 'Cinzel', serif;
+    font-size: 26px; font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+
+  .detail-dates {
+    font-size: 12px;
+    opacity: 0.6;
+    font-weight: 300;
+  }
+
+  .detail-material-badge {
+    position: absolute;
+    top: 24px; right: 24px;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid currentColor;
+    opacity: 0.7;
+  }
+
+  .detail-body { padding: 0 24px 24px; }
+
+  .section-block { margin-bottom: 20px; }
+
+  .section-label {
+    font-size: 9px; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 8px;
+  }
+
+  .section-text {
+    font-size: 14px; line-height: 1.7;
+    color: rgba(255,255,255,0.8);
+  }
+
+  .christ-block {
+    background: rgba(255,255,255,0.05);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 12px 12px 0;
+    padding: 14px 16px;
+  }
+
+  .christ-label {
+    font-size: 9px; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .christ-text {
+    font-size: 14px; line-height: 1.7;
+    color: rgba(255,255,255,0.85);
+  }
+
+  /* ── Closing ── */
+  .closing {
+    position: relative; z-index: 10;
+    text-align: center;
+    padding: 0 24px 60px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .closing-verse {
+    font-family: 'Cinzel', serif;
+    font-size: 15px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.85;
+    font-style: italic;
+    margin-bottom: 8px;
+  }
+
+  .closing-ref {
+    font-size: 12px;
+    color: var(--gold);
+    opacity: 0.7;
+    letter-spacing: 0.1em;
+  }
+
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="stars"></div>
+
+<!-- ── Header ── -->
+<header>
+  <div class="eyebrow">Daniel 9 · Written 537 BC</div>
+  <h1>The Prophecy That <span>Named the Year</span></h1>
+  <p class="subtitle">Daniel received a countdown. It began with a Persian decree. It ended at a river in Judea. The gap between them: exactly 483 years.</p>
+  <div class="scripture-ref">Daniel 9:24–27</div>
+</header>
+
+<!-- ── Mathematical equation ── -->
+<div class="equation-wrap">
+  <div class="equation-inner">
+    <div class="eq-cell">
+      <div class="eq-label">The Decree</div>
+      <div class="eq-value">457 BC</div>
+      <div class="eq-sub">Artaxerxes commands<br>Jerusalem restored</div>
+    </div>
+    <div class="eq-operator">+</div>
+    <div class="eq-cell">
+      <div class="eq-label">69 Weeks</div>
+      <div class="eq-value">483 yrs</div>
+      <div class="eq-sub">One day = one year<br>(Ezekiel 4:6)</div>
+    </div>
+    <div class="eq-operator">=</div>
+    <div class="eq-cell">
+      <div class="eq-label">The Messiah</div>
+      <div class="eq-value">AD 27</div>
+      <div class="eq-sub">Jesus baptised<br>in the Jordan</div>
+      <div class="eq-verified">✓ HISTORICALLY VERIFIED</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Day-year principle note ── -->
+<div class="principle-wrap">
+  <div class="principle-inner">
+    <div class="principle-icon">📜</div>
+    <div class="principle-text">
+      <strong>Why weeks of years?</strong> The Hebrew word <em>shabuim</em> means "sevens" — units of seven. Daniel uses it the same way we use "decade" for ten years. The day-year principle is established in Numbers 14:34 and Ezekiel 4:6: one prophetic day represents one literal year. 70 sevens = 490 years. This is the only reading that produces a historically verifiable result.
+    </div>
+  </div>
+</div>
+
+<!-- ── Timeline ── -->
+<div class="timeline-section">
+  <div class="timeline-label">Tap a segment to explore</div>
+
+  <div class="timeline-scroll-outer">
+    <!--
+      SVG Coordinates:
+        x0=65   (457 BC — Decree)
+        x1=185  (408 BC — Jerusalem rebuilt, end of 7 wks)
+        x2=490  (AD 27  — Messiah anointed, end of 69 wks)
+        x3=620  (AD 31  — Crucifixion, midpoint final wk)
+        x4=750  (AD 34  — Gospel to Gentiles, end of 70 wks)
+
+      Bar: y=170, h=22
+      Brackets above: y=95–135
+      Year labels below: y=210–275
+    -->
+    <svg id="timeline-svg" viewBox="0 0 820 300" width="820" height="300"
+         xmlns="http://www.w3.org/2000/svg" style="display:block;">
+      <defs>
+        <linearGradient id="g-seven" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" style="stop-color:#C9A84C"/>
+          <stop offset="100%" style="stop-color:#A07830"/>
+        </linearGradient>
+        <linearGradient id="g-sixtytwo" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" style="stop-color:#3A6080"/>
+          <stop offset="100%" style="stop-color:#4A7898"/>
+        </linearGradient>
+        <linearGradient id="g-finalA" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" style="stop-color:#F0C840"/>
+          <stop offset="100%" style="stop-color:#C9A84C"/>
+        </linearGradient>
+        <linearGradient id="g-finalB" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" style="stop-color:#C9A84C"/>
+          <stop offset="100%" style="stop-color:#A08040"/>
+        </linearGradient>
+        <filter id="f-glow">
+          <feGaussianBlur stdDeviation="3" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="f-glow-lg">
+          <feGaussianBlur stdDeviation="6" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- ════ STATIC BRACKETS ════ -->
+
+      <!-- Grand bracket: 69 Weeks (x0 → x2) -->
+      <path d="M65,95 L65,85 L490,85 L490,95"
+            fill="none" stroke="rgba(201,168,76,0.35)" stroke-width="1.5"/>
+      <line x1="65" y1="85" x2="490" y2="85"
+            stroke="rgba(201,168,76,0.12)" stroke-width="1" stroke-dasharray="5,5"/>
+      <text x="277" y="78" text-anchor="middle"
+            fill="rgba(201,168,76,0.65)" font-size="10" font-family="Inter"
+            font-weight="600" letter-spacing="2">
+        69 WEEKS · 483 PROPHETIC YEARS
+      </text>
+
+      <!-- Sub-bracket: 7 Weeks -->
+      <path d="M65,125 L65,118 L185,118 L185,125"
+            fill="none" stroke="rgba(201,168,76,0.45)" stroke-width="1.2"/>
+      <text x="125" y="113" text-anchor="middle"
+            fill="rgba(201,168,76,0.75)" font-size="9" font-family="Inter"
+            font-weight="600" letter-spacing="1.5">
+        7 WKS
+      </text>
+
+      <!-- Sub-bracket: 62 Weeks -->
+      <path d="M185,125 L185,118 L490,118 L490,125"
+            fill="none" stroke="rgba(90,150,190,0.45)" stroke-width="1.2"/>
+      <text x="337" y="113" text-anchor="middle"
+            fill="rgba(140,190,220,0.75)" font-size="9" font-family="Inter"
+            font-weight="600" letter-spacing="1.5">
+        62 WEEKS
+      </text>
+
+      <!-- Sub-bracket: Final Week -->
+      <path d="M490,125 L490,118 L750,118 L750,125"
+            fill="none" stroke="rgba(201,168,76,0.45)" stroke-width="1.2"/>
+      <text x="620" y="113" text-anchor="middle"
+            fill="rgba(201,168,76,0.75)" font-size="9" font-family="Inter"
+            font-weight="600" letter-spacing="1.5">
+        70TH WEEK
+      </text>
+
+      <!-- Divider line at midpoint of final week (AD 31) -->
+      <line x1="620" y1="130" x2="620" y2="170"
+            stroke="rgba(255,255,255,0.12)" stroke-width="1" stroke-dasharray="3,3"/>
+
+      <!-- ════ INTERACTIVE SEGMENTS ════ -->
+
+      <!-- 7 Weeks (x0=65 → x1=185) -->
+      <g class="seg-group seg-active" id="grp-seven"
+         onclick="selectSeg('seven')" style="cursor:pointer;">
+        <rect class="seg-bar" x="65" y="170" width="120" height="22" rx="3"
+              fill="url(#g-seven)"/>
+        <text class="seg-label-text" x="125" y="185" text-anchor="middle"
+              fill="rgba(0,0,0,0.55)" font-size="8" font-family="Inter"
+              font-weight="700" letter-spacing="1.2">49 YRS</text>
+        <!-- Invisible hit area -->
+        <rect x="65" y="130" width="120" height="62" fill="transparent"/>
+      </g>
+
+      <!-- 62 Weeks (x1=185 → x2=490) -->
+      <g class="seg-group" id="grp-sixtytwo"
+         onclick="selectSeg('sixtytwo')" style="cursor:pointer;">
+        <rect class="seg-bar" x="185" y="170" width="305" height="22" rx="3"
+              fill="url(#g-sixtytwo)" opacity="0.9"/>
+        <text class="seg-label-text" x="337" y="185" text-anchor="middle"
+              fill="rgba(255,255,255,0.4)" font-size="8" font-family="Inter"
+              font-weight="700" letter-spacing="2">434 YEARS</text>
+        <rect x="185" y="130" width="305" height="62" fill="transparent"/>
+      </g>
+
+      <!-- Final Week A — Baptism to Cross (x2=490 → x3=620) -->
+      <g class="seg-group" id="grp-messiah"
+         onclick="selectSeg('messiah')" style="cursor:pointer;">
+        <rect class="seg-bar" x="490" y="170" width="130" height="22" rx="3"
+              fill="url(#g-finalA)"/>
+        <text class="seg-label-text" x="555" y="185" text-anchor="middle"
+              fill="rgba(0,0,0,0.5)" font-size="8" font-family="Inter"
+              font-weight="700" letter-spacing="1">3.5 YRS</text>
+        <rect x="490" y="130" width="130" height="62" fill="transparent"/>
+      </g>
+
+      <!-- Final Week B — Cross to Gentiles (x3=620 → x4=750) -->
+      <g class="seg-group" id="grp-fulfilled"
+         onclick="selectSeg('fulfilled')" style="cursor:pointer;">
+        <rect class="seg-bar" x="620" y="170" width="130" height="22" rx="3"
+              fill="url(#g-finalB)" opacity="0.8"/>
+        <text class="seg-label-text" x="685" y="185" text-anchor="middle"
+              fill="rgba(0,0,0,0.45)" font-size="8" font-family="Inter"
+              font-weight="700" letter-spacing="1">3.5 YRS</text>
+        <rect x="620" y="130" width="130" height="62" fill="transparent"/>
+      </g>
+
+      <!-- ════ MILESTONE MARKERS ════ -->
+
+      <!-- 457 BC — Decree (part of both decree card AND context for seven) -->
+      <g class="mil-group" id="mil-decree"
+         onclick="selectSeg('decree')" style="cursor:pointer;">
+        <line class="mil-line" x1="65" y1="130" x2="65" y2="215"
+              stroke="rgba(201,168,76,0.55)" stroke-width="1.5"/>
+        <circle class="mil-circle" cx="65" cy="215" r="7"
+                fill="#C9A84C" opacity="0.9"/>
+        <circle class="mil-circle" cx="65" cy="215" r="3.5"
+                fill="#F0D080"/>
+        <text class="mil-label" x="65" y="235" text-anchor="middle"
+              fill="rgba(201,168,76,0.9)" font-size="11" font-family="Cinzel"
+              font-weight="600">457 BC</text>
+        <text class="mil-label" x="65" y="251" text-anchor="middle"
+              fill="rgba(255,255,255,0.38)" font-size="9" font-family="Inter">Decree</text>
+        <rect x="40" y="130" width="50" height="130" fill="transparent"/>
+      </g>
+
+      <!-- 408 BC — Jerusalem rebuilt (static, belongs to seven group) -->
+      <g id="mil-408" style="pointer-events:none;">
+        <line x1="185" y1="170" x2="185" y2="215"
+              stroke="rgba(201,168,76,0.25)" stroke-width="1" stroke-dasharray="3,3"/>
+        <circle cx="185" cy="215" r="4" fill="rgba(201,168,76,0.35)"/>
+        <text x="185" y="232" text-anchor="middle"
+              fill="rgba(201,168,76,0.45)" font-size="10" font-family="Cinzel">408 BC</text>
+        <text x="185" y="247" text-anchor="middle"
+              fill="rgba(255,255,255,0.25)" font-size="9" font-family="Inter">City rebuilt</text>
+      </g>
+
+      <!-- AD 27 — The Anointed One (THE moment) -->
+      <g class="mil-group" id="mil-ad27"
+         onclick="selectSeg('messiah')" style="cursor:pointer;">
+        <!-- Radiant rings -->
+        <circle class="mil-circle" cx="490" cy="215" r="20"
+                fill="none" stroke="rgba(240,208,128,0.1)" stroke-width="1"/>
+        <circle class="mil-circle" cx="490" cy="215" r="14"
+                fill="none" stroke="rgba(240,208,128,0.18)" stroke-width="1"/>
+        <!-- Line up to 69-week bracket -->
+        <line class="mil-line" x1="490" y1="85" x2="490" y2="195"
+              stroke="rgba(240,208,128,0.45)" stroke-width="1.5"/>
+        <!-- Main circle -->
+        <circle class="mil-circle" cx="490" cy="215" r="10"
+                fill="#C9A84C"/>
+        <circle class="mil-circle" cx="490" cy="215" r="6"
+                fill="#F0D080"/>
+        <circle class="mil-circle" cx="490" cy="215" r="2.5"
+                fill="#fff" opacity="0.9"/>
+        <text class="mil-label" x="490" y="238" text-anchor="middle"
+              fill="#F0D080" font-size="12" font-family="Cinzel" font-weight="700">AD 27</text>
+        <text class="mil-label" x="490" y="253" text-anchor="middle"
+              fill="rgba(255,255,255,0.45)" font-size="9" font-family="Inter">Jesus anointed</text>
+        <text class="mil-label" x="490" y="267" text-anchor="middle"
+              fill="rgba(201,168,76,0.65)" font-size="9" font-family="Inter"
+              font-weight="600">483 yrs fulfilled ✓</text>
+        <rect x="465" y="85" width="50" height="192" fill="transparent"/>
+      </g>
+
+      <!-- AD 31 — Crucifixion -->
+      <g class="mil-group" id="mil-ad31"
+         onclick="selectSeg('fulfilled')" style="cursor:pointer;">
+        <line class="mil-line" x1="620" y1="130" x2="620" y2="215"
+              stroke="rgba(201,168,76,0.4)" stroke-width="1.5"/>
+        <circle class="mil-circle" cx="620" cy="215" r="7"
+                fill="rgba(201,168,76,0.6)"/>
+        <circle class="mil-circle" cx="620" cy="215" r="3.5"
+                fill="#C9A84C"/>
+        <text class="mil-label" x="620" y="235" text-anchor="middle"
+              fill="rgba(201,168,76,0.8)" font-size="11" font-family="Cinzel"
+              font-weight="600">AD 31</text>
+        <text class="mil-label" x="620" y="251" text-anchor="middle"
+              fill="rgba(255,255,255,0.35)" font-size="9" font-family="Inter">Crucifixion</text>
+        <text class="mil-label" x="620" y="265" text-anchor="middle"
+              fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter">"Cut off"</text>
+        <rect x="596" y="130" width="48" height="142" fill="transparent"/>
+      </g>
+
+      <!-- AD 34 — Gospel to Gentiles -->
+      <g class="mil-group" id="mil-ad34"
+         onclick="selectSeg('fulfilled')" style="cursor:pointer;">
+        <line class="mil-line" x1="750" y1="130" x2="750" y2="215"
+              stroke="rgba(201,168,76,0.35)" stroke-width="1.5"/>
+        <circle class="mil-circle" cx="750" cy="215" r="7"
+                fill="rgba(201,168,76,0.4)"/>
+        <circle class="mil-circle" cx="750" cy="215" r="3.5"
+                fill="rgba(201,168,76,0.7)"/>
+        <text class="mil-label" x="750" y="235" text-anchor="middle"
+              fill="rgba(201,168,76,0.7)" font-size="11" font-family="Cinzel"
+              font-weight="600">AD 34</text>
+        <text class="mil-label" x="750" y="251" text-anchor="middle"
+              fill="rgba(255,255,255,0.3)" font-size="9" font-family="Inter">Stephen stoned</text>
+        <text class="mil-label" x="750" y="265" text-anchor="middle"
+              fill="rgba(255,255,255,0.25)" font-size="9" font-family="Inter">Gospel to world</text>
+        <rect x="726" y="130" width="48" height="142" fill="transparent"/>
+      </g>
+
+      <!-- ════ BOTTOM TOTAL BRACKET ════ -->
+      <path d="M65,287 L65,293 L750,293 L750,287"
+            fill="none" stroke="rgba(201,168,76,0.16)" stroke-width="1.2"/>
+      <text x="407" y="300" text-anchor="middle"
+            fill="rgba(201,168,76,0.3)" font-size="9" font-family="Inter"
+            font-weight="600" letter-spacing="2">
+        70 WEEKS · 490 PROPHETIC YEARS TOTAL
+      </text>
+    </svg>
+  </div>
+
+  <div class="mobile-tap-hint">↑ Tap a segment or date marker ↑</div>
+</div>
+
+<!-- ── Nav dots ── -->
+<div class="nav-dots">
+  <div class="nav-dot active" data-s="decree"    onclick="selectSeg('decree')"></div>
+  <div class="nav-dot"        data-s="seven"     onclick="selectSeg('seven')"></div>
+  <div class="nav-dot"        data-s="sixtytwo"  onclick="selectSeg('sixtytwo')"></div>
+  <div class="nav-dot"        data-s="messiah"   onclick="selectSeg('messiah')"></div>
+  <div class="nav-dot"        data-s="fulfilled" onclick="selectSeg('fulfilled')"></div>
+</div>
+
+<!-- ── Detail cards ── -->
+<div class="main">
+
+  <div class="progress-strip">
+    <div class="progress-fill" id="progress-fill" style="width:20%"></div>
+  </div>
+
+  <!-- ─ DECREE ─ -->
+  <div class="detail-card visible" id="card-decree"
+       style="background: linear-gradient(160deg, #2A1F00 0%, #0F0C00 100%);">
+    <div class="detail-header">
+      <div class="detail-era" style="color:#C9A84C">The Starting Point</div>
+      <div class="detail-kingdom" style="color:#F0D080">The Decree of Artaxerxes</div>
+      <div class="detail-dates">457 BC · Ezra 7:11–26</div>
+      <div class="detail-material-badge" style="color:#C9A84C">457 BC</div>
+    </div>
+    <div class="detail-body">
+      <div class="section-block">
+        <div class="section-label">The Prophecy</div>
+        <p class="section-text">"From the going out of the word to restore and build Jerusalem to the coming of an anointed one, a prince, there shall be seven weeks, then sixty-two weeks." The clock doesn't start at a vision or a prayer — it starts at a royal command. Daniel 9:25.</p>
+      </div>
+      <div class="section-block">
+        <div class="section-label">History Confirms</div>
+        <p class="section-text">Three decrees were made concerning Jerusalem. Cyrus issued one. Darius confirmed it. But only Artaxerxes' decree — issued in the seventh year of his reign — granted authority to restore full civil and judicial government (Ezra 7:11–26). Secular historians independently date this decree to 457 BC. Ezra himself arrived in Jerusalem that same year with the king's full authority behind him.</p>
+      </div>
+      <div class="christ-block">
+        <div class="christ-label">✦ Christ at the Centre</div>
+        <p class="christ-text">A pagan Persian king, moved by a God he didn't fully know, issued a decree that started a 483-year countdown. It would end the moment a carpenter's son stepped into the Jordan River. God didn't need a prophet or a priest to set the clock — he used an empire.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─ SEVEN WEEKS ─ -->
+  <div class="detail-card" id="card-seven"
+       style="background: linear-gradient(160deg, #1A1200 0%, #0A0800 100%);">
+    <div class="detail-header">
+      <div class="detail-era" style="color:#C9A84C">7 Weeks · 49 Years</div>
+      <div class="detail-kingdom" style="color:#F0D080">Jerusalem Rebuilt</div>
+      <div class="detail-dates">457 BC → 408 BC</div>
+      <div class="detail-material-badge" style="color:#C9A84C">49 Years</div>
+    </div>
+    <div class="detail-body">
+      <div class="section-block">
+        <div class="section-label">The Prophecy</div>
+        <p class="section-text">The first segment — seven weeks — covers the rebuilding of Jerusalem "with streets and a moat, but in a troubled time." The city would be restored. But not easily. Daniel 9:25.</p>
+      </div>
+      <div class="section-block">
+        <div class="section-label">History Confirms</div>
+        <p class="section-text">Ezra and Nehemiah document exactly this era — the workers built with trowels in one hand and weapons in the other (Nehemiah 4:17). Surrounding nations filed legal complaints, organised military threats, and attempted to assassinate Nehemiah personally. Through all of it, the city was rebuilt. Nehemiah completed the walls in 445 BC. By 408 BC, the prophetic first segment was complete, and the long silence began.</p>
+      </div>
+      <div class="christ-block">
+        <div class="christ-label">✦ Christ at the Centre</div>
+        <p class="christ-text">The stones Nehemiah's workers laid under threat of violence were the same streets Jesus would walk 400 years later. Every rebuilt gate, every restored wall was preparation — God building the city where the triumphal entry would happen, where the last supper would take place, where the cross would stand.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─ 62 WEEKS ─ -->
+  <div class="detail-card" id="card-sixtytwo"
+       style="background: linear-gradient(160deg, #050D18 0%, #020608 100%);">
+    <div class="detail-header">
+      <div class="detail-era" style="color:#A8B8C8">62 Weeks · 434 Years</div>
+      <div class="detail-kingdom" style="color:#C8D8E8">The Long Silence</div>
+      <div class="detail-dates">408 BC → AD 27</div>
+      <div class="detail-material-badge" style="color:#A8B8C8">434 Years</div>
+    </div>
+    <div class="detail-body">
+      <div class="section-block">
+        <div class="section-label">The Prophecy</div>
+        <p class="section-text">"And after the sixty-two weeks, an anointed one shall be cut off and shall have nothing." The long wait. Four centuries of prophetic silence. Then — on schedule — the Anointed One. Daniel 9:26.</p>
+      </div>
+      <div class="section-block">
+        <div class="section-label">History Confirms</div>
+        <p class="section-text">Between Malachi and Matthew there are 400 years with no prophet, no revelation, no word from God. Persia gives way to Greece. Alexander marches. Four generals split his empire. The Seleucids and Ptolemies war over Judea. Antiochus Epiphanes defiles the temple. Rome rises and occupies the land. Then, in AD 27 — exactly 434 years after 408 BC — a man from Nazareth walks out of Galilee. Luke is careful to give us the date: the fifteenth year of Tiberius Caesar (Luke 3:1).</p>
+      </div>
+      <div class="christ-block">
+        <div class="christ-label">✦ Christ at the Centre</div>
+        <p class="christ-text">Jesus didn't arrive approximately on time. He arrived on schedule. When he stepped out of the water at his baptism and said "The time is fulfilled" (Mark 1:15), that wasn't a vague claim. It was a direct announcement to anyone who knew their Daniel: 483 years just ended. The Messiah is here.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─ MESSIAH ─ -->
+  <div class="detail-card" id="card-messiah"
+       style="background: linear-gradient(160deg, #2A1F00 0%, #0F0C00 100%);">
+    <div class="detail-header">
+      <div class="detail-era" style="color:#F0D080">483 Years Fulfilled</div>
+      <div class="detail-kingdom" style="color:#F0D080">The Anointed One Arrives</div>
+      <div class="detail-dates">AD 27 — Jesus Baptised · First Half of Final Week</div>
+      <div class="detail-material-badge" style="color:#F0D080">AD 27</div>
+    </div>
+    <div class="detail-body">
+      <div class="section-block">
+        <div class="section-label">The Prophecy</div>
+        <p class="section-text">"Until Messiah the Prince." The word "Messiah" in Hebrew means Anointed One. So does "Christ" in Greek — Christos. The 69 weeks (483 years) pointed to a specific moment: the arrival and anointing of this person. Daniel 9:25.</p>
+      </div>
+      <div class="section-block">
+        <div class="section-label">History Confirms</div>
+        <p class="section-text">Luke 3:1–22 is one of the most historically anchored passages in the New Testament. The fifteenth year of Tiberius Caesar places Jesus' baptism firmly in AD 27. At that moment, the Holy Spirit descended on Jesus physically — a literal anointing — and a voice from heaven declared him God's Son. He immediately announced: "The time is fulfilled, and the kingdom of God is at hand." (Mark 1:15). The 483-year countdown from 457 BC ends in AD 27. Not approximately. Exactly, accounting for the lack of a year zero.</p>
+      </div>
+      <div class="christ-block">
+        <div class="christ-label">✦ Christ at the Centre</div>
+        <p class="christ-text">"Christ" is not Jesus' last name — it's his title. The Anointed One. When the Spirit descended at the Jordan, he was being anointed exactly as Daniel had predicted, exactly when Daniel had predicted it. Six centuries of prophecy compressed into one river, one dove, one voice from heaven.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─ FULFILLED ─ -->
+  <div class="detail-card" id="card-fulfilled"
+       style="background: linear-gradient(160deg, #1A0900 0%, #080500 100%);">
+    <div class="detail-header">
+      <div class="detail-era" style="color:#C9A84C">The Final Week · AD 27–34</div>
+      <div class="detail-kingdom" style="color:#F0D080">Covenant Confirmed</div>
+      <div class="detail-dates">Cross (AD 31) · Gospel to Gentiles (AD 34)</div>
+      <div class="detail-material-badge" style="color:#C9A84C">7 Years</div>
+    </div>
+    <div class="detail-body">
+      <div class="section-block">
+        <div class="section-label">The Prophecy</div>
+        <p class="section-text">"He shall confirm the covenant with many for one week, and in the middle of the week he shall put an end to sacrifice and offering." The Messiah would confirm the covenant for a full seven years — and be cut off at the midpoint. Daniel 9:27.</p>
+      </div>
+      <div class="section-block">
+        <div class="section-label">History Confirms</div>
+        <p class="section-text">Jesus ministered for exactly 3.5 years before his crucifixion in AD 31 — the mathematical midpoint of the 70th week. The moment he died, the temple curtain tore from top to bottom (Matthew 27:51): a sign that the sacrificial system was finished. Three and a half years later, in AD 34, Stephen became the first Christian martyr (Acts 7). The persecution that followed scattered believers throughout Judea and Samaria — fulfilling Acts 1:8 and closing the 490-year covenant period with the Gospel going to the Gentile world.</p>
+      </div>
+      <div class="christ-block">
+        <div class="christ-label">✦ Christ at the Centre</div>
+        <p class="christ-text">"He shall put an end to sacrifice and offering." Every animal on every altar, from Abel to the temple, had been pointing forward. In AD 31, the thing they were all pointing at arrived. The curtain didn't tear by accident — it was torn from top to bottom, heaven's way of saying: this is finished. He is the offering. There is nothing left to add.</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- ── Closing ── -->
+<div class="closing">
+  <p class="closing-verse">"Seventy weeks are decreed about your people and your holy city, to finish the transgression, to put an end to sin, and to atone for iniquity, to bring in everlasting righteousness..."</p>
+  <div class="closing-ref">Daniel 9:24</div>
+</div>
+
+<script>
+  const segs = ['decree','seven','sixtytwo','messiah','fulfilled'];
+
+  // SVG groups to dim/activate
+  // seg group IDs: grp-{seg}
+  // milestone group IDs and which seg they belong to
+  const milMap = {
+    'mil-decree':  'decree',
+    'mil-ad27':    'messiah',
+    'mil-ad31':    'fulfilled',
+    'mil-ad34':    'fulfilled'
+  };
+
+  let current = 'decree';
+
+  function selectSeg(s) {
+    if (!segs.includes(s)) return;
+    current = s;
+
+    // ── Segment bars ──
+    segs.forEach(seg => {
+      const grp = document.getElementById('grp-' + seg);
+      if (!grp) return;
+      grp.classList.remove('seg-active', 'seg-dimmed');
+      grp.classList.add(seg === s ? 'seg-active' : 'seg-dimmed');
+    });
+
+    // ── Milestones ──
+    Object.entries(milMap).forEach(([milId, milSeg]) => {
+      const el = document.getElementById(milId);
+      if (!el) return;
+      el.classList.remove('seg-active', 'seg-dimmed');
+      el.classList.add(milSeg === s ? 'seg-active' : 'seg-dimmed');
+    });
+
+    // ── Detail cards ──
+    segs.forEach(seg => {
+      const card = document.getElementById('card-' + seg);
+      if (card) card.classList.remove('visible');
+    });
+    const activeCard = document.getElementById('card-' + s);
+    if (activeCard) {
+      activeCard.classList.add('visible');
+      if (window.innerWidth < 768) {
+        setTimeout(() => {
+          activeCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+      }
+    }
+
+    // ── Nav dots ──
+    document.querySelectorAll('.nav-dot').forEach(dot => {
+      dot.classList.toggle('active', dot.dataset.s === s);
+    });
+
+    // ── Progress bar ──
+    const idx = segs.indexOf(s);
+    document.getElementById('progress-fill').style.width =
+      ((idx + 1) / segs.length * 100) + '%';
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', e => {
+    const idx = segs.indexOf(current);
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      selectSeg(segs[(idx + 1) % segs.length]);
+    }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      selectSeg(segs[(idx - 1 + segs.length) % segs.length]);
+    }
+  });
+
+  // Init
+  selectSeg('decree');
+</script>
+</body>
+</html>

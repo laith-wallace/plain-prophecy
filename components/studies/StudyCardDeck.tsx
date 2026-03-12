@@ -22,6 +22,13 @@ function wrap(index: number, total: number): number {
   return ((index % total) + total) % total;
 }
 
+// Responsive card width — matches CSS: min(360px, 82vw) | min(320px, 92vw) on phones
+function getCardWidth(): number {
+  if (typeof window === "undefined") return 320;
+  const vw = window.innerWidth;
+  return vw <= 480 ? Math.min(320, vw * 0.92) : Math.min(360, vw * 0.82);
+}
+
 interface StudyCardDeckProps {
   bookFilter?: string;
 }
@@ -33,10 +40,12 @@ export default function StudyCardDeck({ bookFilter = "all" }: StudyCardDeckProps
   const [flippedIndex, setFlippedIndex] = useState<number | null>(null);
   const [dragOffset, setDragOffset] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [cardW, setCardW] = useState(getCardWidth);
 
   const isDragging = useRef(false);
   const startX = useRef(0);
   const deckRef = useRef<HTMLDivElement>(null);
+
 
   // Keyboard navigation
   useEffect(() => {
@@ -60,6 +69,13 @@ export default function StudyCardDeck({ bookFilter = "all" }: StudyCardDeckProps
     setActiveIndex(0);
     setFlippedIndex(null);
   }, [bookFilter]);
+
+  // Keep cardW in sync with window size (phone rotation, etc.)
+  useEffect(() => {
+    const onResize = () => setCardW(getCardWidth());
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   const goTo = useCallback(
     (index: number) => {
@@ -101,8 +117,10 @@ export default function StudyCardDeck({ bookFilter = "all" }: StudyCardDeckProps
         setIsAnimating(false);
       }, 260);
     } else if (Math.abs(delta) < 6) {
-      // Tap — handled by card's own onClick
+      // Tap — setPointerCapture swallows the click event so we flip directly here
       setDragOffset(0);
+      const activeLessonIdx = wrap(activeIndex, TOTAL);
+      setFlippedIndex((prev) => (prev === activeLessonIdx ? null : activeLessonIdx));
     } else {
       // Snap back
       setDragOffset(0);
@@ -125,7 +143,6 @@ export default function StudyCardDeck({ bookFilter = "all" }: StudyCardDeckProps
     { slot: 2,  lessonIndex: wrap(activeIndex + 2, TOTAL) },
   ];
 
-  const cardW = typeof window !== "undefined" ? Math.min(360, window.innerWidth * 0.82) : 320;
   const GAP = 18;
 
   const tilt =

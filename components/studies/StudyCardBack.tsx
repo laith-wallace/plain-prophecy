@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import { RotateCcw } from "lucide-react";
 import type { StudyLesson } from "@/data/studies";
 import type { StudyCardMeta } from "@/data/studyCardMeta";
 
@@ -24,8 +25,13 @@ export default function StudyCardBack({ lesson, meta, studyHref, onClose }: Prop
       <div className="scf-noise" aria-hidden="true" />
 
       {/* Close button */}
-      <button className="scb-close" onClick={onClose} aria-label="Close card details">
-        ✕
+      <button
+        className="scb-close"
+        onClick={onClose}
+        onPointerDown={(e) => e.stopPropagation()}
+        aria-label="Flip card back"
+      >
+        <RotateCcw size={14} strokeWidth={2} />
       </button>
 
       {/* Header */}

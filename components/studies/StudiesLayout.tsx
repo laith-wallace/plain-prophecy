@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { studyBooks } from "@/data/studies";
 import {
   SidebarProvider,
@@ -20,6 +20,7 @@ import {
 // ── Inner nav — inside the SidebarProvider tree
 function StudiesNav() {
   const pathname = usePathname();
+  const router = useRouter();
   const { open, toggleSidebar } = useSidebar();
   const [expandedBooks, setExpandedBooks] = useState<string[]>(
     studyBooks.map((b) => b.slug)
@@ -115,8 +116,22 @@ function StudiesNav() {
       </SidebarContent>
 
       <SidebarFooter className="studies-sb-footer">
-        <span className="studies-sidebar-footer-text">More books coming soon</span>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              tooltip="Studies Home"
+              isActive={pathname === "/studies"}
+              className="studies-book-btn"
+              onClick={() => router.push("/studies")}
+            >
+              <span className="studies-book-icon-24" aria-hidden="true">🏠</span>
+              <span className="studies-book-label studies-sidebar-footer-text">Studies Home</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+        <span className="studies-sb-coming-soon studies-sidebar-footer-text">More books coming soon</span>
       </SidebarFooter>
+
     </>
   );
 }

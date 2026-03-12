@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daniel 2 — The Statue That Mapped History</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold:    #C9A84C;
+    --gold-light: #F0D080;
+    --silver:  #A8B8C8;
+    --bronze:  #A0673A;
+    --iron:    #6A7A8A;
+    --clay:    #8A6A5A;
+    --stone:   #E8E0D0;
+    --bg:      #08080F;
+    --panel:   rgba(255,255,255,0.04);
+    --border:  rgba(255,255,255,0.08);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--bg);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── Starfield canvas ── */
+  #starfield {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  }
+  .stars { display: none; }
+
+  /* ── Header ── */
+  header {
+    position: relative; z-index: 10;
+    padding: 48px 24px 0;
+    text-align: center;
+  }
+
+  .eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(28px, 6vw, 52px);
+    font-weight: 900;
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: 16px;
+  }
+
+  h1 span { color: var(--gold); }
+
+  .subtitle {
+    font-size: 15px; font-weight: 300;
+    color: rgba(255,255,255,0.55);
+    max-width: 480px; margin: 0 auto 8px;
+    line-height: 1.6;
+  }
+
+  .scripture-ref {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    color: var(--gold);
+    opacity: 0.7;
+    letter-spacing: 0.1em;
+    margin-bottom: 40px;
+  }
+
+  /* ── Main layout ── */
+  .main {
+    position: relative; z-index: 10;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 16px 80px;
+  }
+
+  @media (min-width: 768px) {
+    .main {
+      grid-template-columns: 340px 1fr;
+      gap: 40px;
+      align-items: start;
+      padding: 0 32px 80px;
+    }
+  }
+
+  /* ── Statue column ── */
+  .statue-col {
+    position: relative;
+  }
+
+  @media (min-width: 768px) {
+    .statue-col { position: sticky; top: 24px; }
+  }
+
+  .statue-label {
+    text-align: center;
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 16px;
+  }
+
+  .statue-wrap {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* SVG statue sections — clickable */
+  .statue-section {
+    cursor: pointer;
+    transition: filter 0.2s ease, opacity 0.2s ease;
+  }
+  .statue-section:hover { filter: brightness(1.3); }
+  .statue-section.active { filter: brightness(1.4) drop-shadow(0 0 12px currentColor); }
+  .statue-section.dimmed { opacity: 0.35; filter: saturate(0.4); }
+
+  /* Glow pulse on active */
+  @keyframes glow-pulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+
+  .stone-section {
+    cursor: pointer;
+    transition: filter 0.2s ease, opacity 0.2s ease;
+  }
+  .stone-section:hover { filter: brightness(1.2); }
+  .stone-section.active { filter: brightness(1.3) drop-shadow(0 0 16px rgba(232,224,208,0.8)); }
+  .stone-section.dimmed { opacity: 0.35; filter: saturate(0.4); }
+
+  /* ── Info panel column ── */
+  .info-col {
+    padding-top: 8px;
+  }
+
+  .prompt-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .prompt-icon { font-size: 32px; margin-bottom: 10px; }
+  .prompt-text {
+    font-size: 14px; color: rgba(255,255,255,0.5);
+    line-height: 1.6;
+  }
+  .prompt-hint {
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--gold);
+    opacity: 0.7;
+    letter-spacing: 0.05em;
+  }
+
+  /* Kingdom detail card */
+  .detail-card {
+    display: none;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .detail-card.visible { display: block; }
+
+  .detail-header {
+    padding: 24px 24px 20px;
+    position: relative;
+  }
+
+  .detail-era {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 6px;
+    opacity: 0.7;
+  }
+
+  .detail-kingdom {
+    font-family: 'Cinzel', serif;
+    font-size: 26px; font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+
+  .detail-dates {
+    font-size: 12px;
+    opacity: 0.6;
+    font-weight: 300;
+  }
+
+  .detail-material-badge {
+    position: absolute;
+    top: 24px; right: 24px;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid currentColor;
+    opacity: 0.7;
+  }
+
+  .detail-body { padding: 0 24px 24px; }
+
+  .section-block {
+    margin-bottom: 20px;
+  }
+
+  .section-label {
+    font-size: 9px; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 8px;
+  }
+
+  .section-text {
+    font-size: 14px; line-height: 1.7;
+    color: rgba(255,255,255,0.8);
+  }
+
+  .christ-block {
+    background: rgba(255,255,255,0.05);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 12px 12px 0;
+    padding: 14px 16px;
+  }
+
+  .christ-label {
+    font-size: 9px; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .christ-text {
+    font-size: 14px; line-height: 1.7;
+    color: rgba(255,255,255,0.85);
+  }
+
+  /* Nav dots */
+  .nav-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 24px;
+    padding-bottom: 8px;
+  }
+
+  .nav-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: transparent;
+  }
+
+  .nav-dot.active {
+    background: var(--gold);
+    border-color: var(--gold);
+    transform: scale(1.2);
+  }
+
+  /* Progress strip */
+  .progress-strip {
+    height: 2px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 1px;
+    margin-bottom: 32px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 1px;
+    transition: width 0.5s ease;
+  }
+
+  /* Bottom scripture */
+  .closing {
+    position: relative; z-index: 10;
+    text-align: center;
+    padding: 0 24px 60px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .closing-verse {
+    font-family: 'Cinzel', serif;
+    font-size: 16px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.8;
+    font-style: italic;
+    margin-bottom: 8px;
+  }
+
+  .closing-ref {
+    font-size: 12px;
+    color: var(--gold);
+    opacity: 0.7;
+    letter-spacing: 0.1em;
+  }
+
+  /* Animations */
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .detail-card.visible {
+    animation: fadeSlideIn 0.3s ease forwards;
+  }
+
+  /* Scroll entrance */
+  .reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .reveal.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Mobile tap hint */
+  .mobile-hint {
+    text-align: center;
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    margin-top: 12px;
+    margin-bottom: 24px;
+  }
+
+  @media (min-width: 768px) { .mobile-hint { display: none; } }
+
+  /* ── Kingdom counter ── */
+  .kingdom-counter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    position: relative; z-index: 10;
+  }
+  .counter-chip {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    opacity: 0.75;
+    background: rgba(201,168,76,0.08);
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 4px 12px;
+    border-radius: 20px;
+    text-transform: uppercase;
+  }
+
+  /* ── Nav arrows ── */
+  .nav-arrows {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 16px;
+    position: relative; z-index: 10;
+  }
+  .nav-btn {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.04);
+    color: rgba(255,255,255,0.55);
+    font-size: 18px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s ease;
+    line-height: 1;
+  }
+  .nav-btn:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(201,168,76,0.08);
+  }
+
+  /* ── Verse spotlight ── */
+  .verse-spotlight {
+    margin-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding-top: 16px;
+  }
+  .verse-spotlight-label {
+    font-size: 9px; font-weight: 700;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.6;
+    margin-bottom: 8px;
+  }
+  .verse-spotlight-text {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.75;
+    font-style: italic;
+  }
+  .verse-spotlight-ref {
+    margin-top: 6px;
+    font-size: 11px;
+    color: var(--gold);
+    opacity: 0.7;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── SVG glow ring ── */
+  @keyframes ring-pulse {
+    0%, 100% { opacity: 0.5; r: 8px; }
+    50%       { opacity: 1;   r: 12px; }
+  }
+  .glow-ring {
+    pointer-events: none;
+    fill: none;
+    stroke: var(--gold);
+    stroke-width: 2;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .glow-ring.visible {
+    opacity: 1;
+    animation: ring-pulse 2s ease-in-out infinite;
+  }
+</style>
+</head>
+<body>
+
+<!-- STARFIELD: animated canvas background -->
+<canvas id="starfield"></canvas>
+
+<!-- ── HEADER: edit the eyebrow, h1, subtitle, and scripture-ref here ── -->
+<header class="reveal">
+  <div class="eyebrow">Daniel 2 · 600 BC</div>
+  <h1>The Dream That <span>Mapped History</span></h1>
+  <p class="subtitle">A Babylonian king dreams of a statue. Daniel interprets it. Six centuries later — the entire sequence had come true.</p>
+  <div class="scripture-ref">Daniel 2:31–45</div>
+</header>
+
+<div class="main">
+
+  <!-- STATUE COLUMN -->
+  <div class="statue-col">
+    <!-- Kingdom counter chip -->
+    <div class="kingdom-counter">
+      <span class="counter-chip" id="kingdom-counter">1 of 6 · Babylon</span>
+    </div>
+    <div class="statue-label">Tap each section</div>
+    <div class="statue-wrap">
+      <svg id="statue-svg" viewBox="0 0 280 640" width="280" height="640" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- Gold gradient -->
+          <linearGradient id="grad-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#F0D080"/>
+            <stop offset="40%" style="stop-color:#C9A84C"/>
+            <stop offset="100%" style="stop-color:#8A6A20"/>
+          </linearGradient>
+          <!-- Silver gradient -->
+          <linearGradient id="grad-silver" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#D8E8F0"/>
+            <stop offset="50%" style="stop-color:#A8B8C8"/>
+            <stop offset="100%" style="stop-color:#687888"/>
+          </linearGradient>
+          <!-- Bronze gradient -->
+          <linearGradient id="grad-bronze" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#C88050"/>
+            <stop offset="50%" style="stop-color:#A0673A"/>
+            <stop offset="100%" style="stop-color:#603820"/>
+          </linearGradient>
+          <!-- Iron gradient -->
+          <linearGradient id="grad-iron" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#8A9AAA"/>
+            <stop offset="50%" style="stop-color:#5A6A7A"/>
+            <stop offset="100%" style="stop-color:#3A4A5A"/>
+          </linearGradient>
+          <!-- Iron-clay gradient -->
+          <linearGradient id="grad-clay" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#8A9AAA"/>
+            <stop offset="35%" style="stop-color:#7A6A5A"/>
+            <stop offset="70%" style="stop-color:#5A6A7A"/>
+            <stop offset="100%" style="stop-color:#8A7060"/>
+          </linearGradient>
+          <!-- Stone gradient -->
+          <linearGradient id="grad-stone" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#FFFFFF"/>
+            <stop offset="50%" style="stop-color:#E8E0D0"/>
+            <stop offset="100%" style="stop-color:#C0B8A8"/>
+          </linearGradient>
+          <!-- Glow filter -->
+          <filter id="glow-gold">
+            <feGaussianBlur stdDeviation="4" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="glow-stone">
+            <feGaussianBlur stdDeviation="6" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- STONE (background, below feet) -->
+        <g class="stone-section" id="sec-stone" data-kingdom="stone" onclick="selectKingdom('stone')">
+          <!-- Rolling stone -->
+          <ellipse cx="60" cy="595" rx="50" ry="28" fill="url(#grad-stone)" opacity="0.9"/>
+          <ellipse cx="60" cy="588" rx="44" ry="22" fill="url(#grad-stone)"/>
+          <text x="60" y="594" text-anchor="middle" fill="rgba(0,0,0,0.5)" font-size="9" font-family="Cinzel" font-weight="600" letter-spacing="1">STONE</text>
+          <!-- Trail lines suggesting motion -->
+          <line x1="112" y1="580" x2="130" y2="575" stroke="rgba(232,224,208,0.3)" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <line x1="112" y1="590" x2="135" y2="587" stroke="rgba(232,224,208,0.2)" stroke-width="1" stroke-dasharray="3,4"/>
+          <line x1="112" y1="599" x2="128" y2="599" stroke="rgba(232,224,208,0.15)" stroke-width="1" stroke-dasharray="3,4"/>
+        </g>
+
+        <!-- HEAD (Gold - Babylon) -->
+        <g class="statue-section" id="sec-gold" data-kingdom="gold" onclick="selectKingdom('gold')">
+          <!-- Neck -->
+          <rect x="122" y="94" width="36" height="16" rx="4" fill="url(#grad-gold)"/>
+          <!-- Head oval -->
+          <ellipse cx="140" cy="68" rx="42" ry="50" fill="url(#grad-gold)"/>
+          <!-- Crown -->
+          <path d="M98,40 L108,18 L118,34 L128,12 L140,30 L152,12 L162,34 L172,18 L182,40 Z" fill="url(#grad-gold)"/>
+          <!-- Face features -->
+          <ellipse cx="126" cy="62" rx="7" ry="8" fill="rgba(0,0,0,0.2)"/>
+          <ellipse cx="154" cy="62" rx="7" ry="8" fill="rgba(0,0,0,0.2)"/>
+          <path d="M130,82 Q140,90 150,82" fill="none" stroke="rgba(0,0,0,0.25)" stroke-width="2" stroke-linecap="round"/>
+          <!-- Beard -->
+          <path d="M110,80 Q140,120 170,80 L166,110 Q140,140 114,110 Z" fill="url(#grad-gold)" opacity="0.8"/>
+          <!-- Highlight -->
+          <ellipse cx="128" cy="50" rx="10" ry="8" fill="rgba(255,255,255,0.2)" transform="rotate(-20 128 50)"/>
+        </g>
+
+        <!-- CHEST (Silver - Medo-Persia) -->
+        <g class="statue-section" id="sec-silver" data-kingdom="silver" onclick="selectKingdom('silver')">
+          <!-- Torso -->
+          <path d="M100,110 L80,200 L200,200 L180,110 Z" fill="url(#grad-silver)"/>
+          <!-- Left arm -->
+          <path d="M100,115 L70,125 L60,180 L85,185 L95,140 L108,130 Z" fill="url(#grad-silver)"/>
+          <!-- Right arm -->
+          <path d="M180,115 L210,125 L220,180 L195,185 L185,140 L172,130 Z" fill="url(#grad-silver)"/>
+          <!-- Chest highlight -->
+          <ellipse cx="140" cy="148" rx="25" ry="22" fill="rgba(255,255,255,0.12)" transform="rotate(-5 140 148)"/>
+          <!-- Collar line -->
+          <path d="M108,113 Q140,128 172,113" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+        </g>
+
+        <!-- BELLY & THIGHS (Bronze - Greece) -->
+        <g class="statue-section" id="sec-bronze" data-kingdom="bronze" onclick="selectKingdom('bronze')">
+          <!-- Abdomen -->
+          <path d="M80,200 L84,290 L196,290 L200,200 Z" fill="url(#grad-bronze)"/>
+          <!-- Left thigh -->
+          <path d="M84,285 L74,390 L118,390 L126,285 Z" fill="url(#grad-bronze)"/>
+          <!-- Right thigh -->
+          <path d="M154,285 L162,390 L206,390 L196,285 Z" fill="url(#grad-bronze)"/>
+          <!-- Belt/waist accent -->
+          <path d="M80,200 L200,200 L200,215 L80,215 Z" fill="rgba(0,0,0,0.15)" rx="2"/>
+          <!-- Highlight -->
+          <ellipse cx="140" cy="240" rx="30" ry="20" fill="rgba(255,255,255,0.08)"/>
+        </g>
+
+        <!-- LEGS (Iron - Rome) -->
+        <g class="statue-section" id="sec-iron" data-kingdom="iron" onclick="selectKingdom('iron')">
+          <!-- Left leg -->
+          <path d="M74,390 L66,490 L110,490 L118,390 Z" fill="url(#grad-iron)"/>
+          <!-- Right leg -->
+          <path d="M162,390 L170,490 L214,490 L206,390 Z" fill="url(#grad-iron)"/>
+          <!-- Knee detail left -->
+          <ellipse cx="92" cy="425" rx="16" ry="12" fill="rgba(255,255,255,0.08)"/>
+          <!-- Knee detail right -->
+          <ellipse cx="188" cy="425" rx="16" ry="12" fill="rgba(255,255,255,0.08)"/>
+        </g>
+
+        <!-- FEET (Iron/Clay - Divided Europe) -->
+        <g class="statue-section" id="sec-clay" data-kingdom="clay" onclick="selectKingdom('clay')">
+          <!-- Left foot/ankle -->
+          <path d="M66,490 L58,555 L112,555 L110,490 Z" fill="url(#grad-clay)"/>
+          <!-- Foot extension left -->
+          <path d="M52,540 L52,568 L118,568 L112,548 Z" rx="6" fill="url(#grad-clay)"/>
+          <!-- Right foot/ankle -->
+          <path d="M170,490 L168,548 L234,568 L228,540 Z" fill="url(#grad-clay)"/>
+          <path d="M168,490 L214,490 L222,555 L168,555 Z" fill="url(#grad-clay)"/>
+          <!-- Clay patches (cracks/mottled) -->
+          <circle cx="78" cy="520" r="6" fill="rgba(138,106,90,0.6)"/>
+          <circle cx="96" cy="535" r="4" fill="rgba(90,106,122,0.5)"/>
+          <circle cx="185" cy="512" r="5" fill="rgba(138,106,90,0.6)"/>
+          <circle cx="200" cy="530" r="7" fill="rgba(90,106,122,0.4)"/>
+          <circle cx="72" cy="548" r="5" fill="rgba(138,106,90,0.5)"/>
+          <!-- Crack lines -->
+          <path d="M85,490 L78,540 M100,492 L95,545 M188,493 L194,542 M205,490 L210,538" stroke="rgba(0,0,0,0.3)" stroke-width="1.2" fill="none"/>
+        </g>
+
+        <!-- Section labels on statue -->
+        <text x="140" y="65" text-anchor="middle" fill="rgba(0,0,0,0.4)" font-size="8" font-family="Inter" font-weight="600" letter-spacing="1.5">GOLD</text>
+
+      </svg>
+    </div>
+
+    <div class="mobile-hint">↑ Tap any part of the statue ↑</div>
+
+    <!-- Nav dots -->
+    <div class="nav-dots">
+      <div class="nav-dot active" data-k="gold" onclick="selectKingdom('gold')"></div>
+      <div class="nav-dot" data-k="silver" onclick="selectKingdom('silver')"></div>
+      <div class="nav-dot" data-k="bronze" onclick="selectKingdom('bronze')"></div>
+      <div class="nav-dot" data-k="iron" onclick="selectKingdom('iron')"></div>
+      <div class="nav-dot" data-k="clay" onclick="selectKingdom('clay')"></div>
+      <div class="nav-dot" data-k="stone" onclick="selectKingdom('stone')"></div>
+    </div>
+
+    <!-- Prev / Next navigation arrows -->
+    <div class="nav-arrows">
+      <button class="nav-btn" id="btn-prev" onclick="stepKingdom(-1)" title="Previous">&#8592;</button>
+      <button class="nav-btn" id="btn-next" onclick="stepKingdom(1)"  title="Next">&#8594;</button>
+    </div>
+  </div>
+
+  <!-- INFO COLUMN -->
+  <div class="info-col">
+
+    <div class="progress-strip">
+      <div class="progress-fill" id="progress-fill" style="width:16.6%"></div>
+    </div>
+
+    <!-- Prompt card (shown when nothing selected on desktop) -->
+    <div class="prompt-card" id="prompt-card">
+      <div class="prompt-icon">🏛</div>
+      <p class="prompt-text">Nebuchadnezzar saw a colossal statue in his dream. Each material was different. Each one represented something real.</p>
+      <p class="prompt-hint">Select a section of the statue to begin →</p>
+    </div>
+
+    <!-- GOLD / BABYLON -->
+    <div class="detail-card visible" id="card-gold" style="background: linear-gradient(160deg, #2A1F00 0%, #0F0C00 100%);">
+      <div class="detail-header">
+        <div class="detail-era" style="color:#C9A84C">The Head</div>
+        <div class="detail-kingdom" style="color:#F0D080">Babylon</div>
+        <div class="detail-dates">605 – 539 BC</div>
+        <div class="detail-material-badge" style="color:#C9A84C">Gold</div>
+      </div>
+      <div class="detail-body">
+        <div class="section-block">
+          <div class="section-label">The Prophecy</div>
+          <p class="section-text">"You are the head of gold." Daniel told Nebuchadnezzar directly — his empire was the first kingdom represented in the dream. Babylon stood alone at the top, the most glorious of all the kingdoms to follow. <em>(Daniel 2:38)</em></p>
+        </div>
+        <div class="section-block">
+          <div class="section-label">History Confirms</div>
+          <p class="section-text">Babylon under Nebuchadnezzar was the dominant world empire from 605–539 BC. Herodotus wrote of its astounding wealth — gold-covered temples, gold statues, palaces lined with gold. The Ishtar Gate remains one of the wonders of the ancient world. Babylon fell exactly as Daniel described: in a single night, to the Medes and Persians (Daniel 5).</p>
+        </div>
+        <div class="christ-block">
+          <div class="christ-label">✦ Christ at the Centre</div>
+          <p class="christ-text">Daniel himself was brought to Babylon as a captive teenager. The God who ruled over Nebuchadnezzar's golden empire was already preserving the line that would lead to Christ — and giving Daniel the wisdom to interpret what no one else could see.</p>
+        </div>
+        <!-- VERSE SPOTLIGHT: edit the quote and reference here -->
+        <div class="verse-spotlight">
+          <div class="verse-spotlight-label">Key Verse</div>
+          <div class="verse-spotlight-text">"You are the head of gold."</div>
+          <div class="verse-spotlight-ref">Daniel 2:38</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SILVER / MEDO-PERSIA -->
+    <div class="detail-card" id="card-silver" style="background: linear-gradient(160deg, #0D1A22 0%, #060E14 100%);">
+      <div class="detail-header">
+        <div class="detail-era" style="color:#A8B8C8">The Chest &amp; Arms</div>
+        <div class="detail-kingdom" style="color:#D0E0F0">Medo-Persia</div>
+        <div class="detail-dates">539 – 331 BC</div>
+        <div class="detail-material-badge" style="color:#A8B8C8">Silver</div>
+      </div>
+      <div class="detail-body">
+        <div class="section-block">
+          <div class="section-label">The Prophecy</div>
+          <p class="section-text">"After you shall arise another kingdom inferior to yours." The two arms point to the dual nature of this empire — Medes and Persians ruling together. Silver is valuable but less so than gold: the empire was vast but more bureaucratic, more diffuse. <em>(Daniel 2:39)</em></p>
+        </div>
+        <div class="section-block">
+          <div class="section-label">History Confirms</div>
+          <p class="section-text">Cyrus the Great of Persia conquered Babylon in 539 BC — the very night of Belshazzar's feast (Daniel 5). The Medo-Persian empire stretched from India to Ethiopia, with 127 provinces. Notably, Cyrus immediately freed the Jewish captives and financed the rebuilding of Jerusalem's temple. The two-armed nature of the empire perfectly maps to its dual Medo-Persian leadership.</p>
+        </div>
+        <div class="christ-block">
+          <div class="christ-label">✦ Christ at the Centre</div>
+          <p class="christ-text">It was under Medo-Persian authority that the decree went out to restore Jerusalem — starting the prophetic 70-Week countdown that would end at the exact year of Jesus' baptism (Ezra 7; Daniel 9). Cyrus is even named by Isaiah 150 years before he was born as God's instrument for this. <em>(Isaiah 44:28)</em></p>
+        </div>
+        <div class="verse-spotlight">
+          <div class="verse-spotlight-label">Key Verse</div>
+          <div class="verse-spotlight-text">"After you shall arise another kingdom inferior to yours."</div>
+          <div class="verse-spotlight-ref">Daniel 2:39</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BRONZE / GREECE -->
+    <div class="detail-card" id="card-bronze" style="background: linear-gradient(160deg, #1A0F05 0%, #0A0602 100%);">
+      <div class="detail-header">
+        <div class="detail-era" style="color:#C0885A">Belly &amp; Thighs</div>
+        <div class="detail-kingdom" style="color:#E0A870">Greece</div>
+        <div class="detail-dates">331 – 168 BC</div>
+        <div class="detail-material-badge" style="color:#C0885A">Bronze</div>
+      </div>
+      <div class="detail-body">
+        <div class="section-block">
+          <div class="section-label">The Prophecy</div>
+          <p class="section-text">"A third kingdom of bronze, which shall rule over all the earth." Bronze was the metal of Greek warfare — their soldiers wore it into battle. The thighs suggest speed and power. This empire would be characterised by conquest across the known world. <em>(Daniel 2:39)</em></p>
+        </div>
+        <div class="section-block">
+          <div class="section-label">History Confirms</div>
+          <p class="section-text">Alexander the Great conquered Persia by 331 BC at just 25 years old. He marched an army from Greece to India in a decade — the fastest territorial expansion in ancient history. His soldiers famously wore bronze armour. After his death in 323 BC, his empire split among four generals, exactly mirroring the imagery in Daniel 8. Greece dominated Judea, forcing Hellenistic culture on the Jewish people.</p>
+        </div>
+        <div class="christ-block">
+          <div class="christ-label">✦ Christ at the Centre</div>
+          <p class="christ-text">Greek conquest spread one common language — Koine Greek — across the entire known world. This was the language the New Testament would be written in, and the Septuagint (the Greek Old Testament) would be translated into. God used the Greek empire to prepare the communication network for the Gospel.</p>
+        </div>
+        <div class="verse-spotlight">
+          <div class="verse-spotlight-label">Key Verse</div>
+          <div class="verse-spotlight-text">"A third kingdom of bronze, which shall rule over all the earth."</div>
+          <div class="verse-spotlight-ref">Daniel 2:39</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- IRON / ROME -->
+    <div class="detail-card" id="card-iron" style="background: linear-gradient(160deg, #0A1018 0%, #040608 100%);">
+      <div class="detail-header">
+        <div class="detail-era" style="color:#8A9AAA">The Legs</div>
+        <div class="detail-kingdom" style="color:#B0C0D0">Rome</div>
+        <div class="detail-dates">168 BC – 476 AD</div>
+        <div class="detail-material-badge" style="color:#8A9AAA">Iron</div>
+      </div>
+      <div class="detail-body">
+        <div class="section-block">
+          <div class="section-label">The Prophecy</div>
+          <p class="section-text">"A fourth kingdom, strong as iron, because iron breaks in pieces and shatters all things." No imagery of inferiority here — iron is described as the most powerful material. And two legs: Rome would eventually split. <em>(Daniel 2:40)</em></p>
+        </div>
+        <div class="section-block">
+          <div class="section-label">History Confirms</div>
+          <p class="section-text">Rome is history's most iron-accurate empire. They built roads, aqueducts, and legal systems that still shape Western civilisation. Their two legs became literal — the Western Roman Empire fell in 476 AD, while the Eastern (Byzantine) Empire continued until 1453 AD. Rome crushed every kingdom before it. And it was under Roman rule — in the reign of Caesar Augustus — that Jesus was born. <em>(Luke 2:1)</em></p>
+        </div>
+        <div class="christ-block">
+          <div class="christ-label">✦ Christ at the Centre</div>
+          <p class="christ-text">Jesus was crucified by Rome. The Roman road system carried the first apostles across the empire in decades. Roman law gave Paul his right of appeal to Caesar. Rome, the iron empire, was the unwitting infrastructure for the spread of the Gospel to the world.</p>
+        </div>
+        <div class="verse-spotlight">
+          <div class="verse-spotlight-label">Key Verse</div>
+          <div class="verse-spotlight-text">"Strong as iron, because iron breaks in pieces and shatters all things."</div>
+          <div class="verse-spotlight-ref">Daniel 2:40</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CLAY / DIVIDED EUROPE -->
+    <div class="detail-card" id="card-clay" style="background: linear-gradient(160deg, #100A08 0%, #060404 100%);">
+      <div class="detail-header">
+        <div class="detail-era" style="color:#907060">Feet &amp; Toes</div>
+        <div class="detail-kingdom" style="color:#C0A898">Divided Europe</div>
+        <div class="detail-dates">476 AD – Present</div>
+        <div class="detail-material-badge" style="color:#907060">Iron &amp; Clay</div>
+      </div>
+      <div class="detail-body">
+        <div class="section-block">
+          <div class="section-label">The Prophecy</div>
+          <p class="section-text">"The feet and toes, partly of potter's clay and partly of iron, it shall be a divided kingdom." The mixture of iron and clay that won't bond: these kingdoms will be partly strong, partly brittle. Intermarriage will be attempted but won't hold them together. <em>(Daniel 2:41–43)</em></p>
+        </div>
+        <div class="section-block">
+          <div class="section-label">History Confirms</div>
+          <p class="section-text">After Rome fell in 476 AD, Europe fragmented into the Germanic kingdoms — the Visigoths, Ostrogoths, Franks, Vandals, and others. Every attempt to re-unify Europe has ultimately failed: Charlemagne, Napoleon, Hitler — all fell short. European royalty spent centuries intermarrying to create political alliances (the iron trying to mix with clay), and none of it lasted. Europe remains divided to this day, exactly as prophesied.</p>
+        </div>
+        <div class="christ-block">
+          <div class="christ-label">✦ Christ at the Centre</div>
+          <p class="christ-text">The prophecy says no human power will unite these kingdoms. The next unifying event in Daniel's vision is the Stone — not a politician or a general, but Christ himself. We are living in the age of the feet right now. The next event in this prophecy is the Second Coming.</p>
+        </div>
+        <div class="verse-spotlight">
+          <div class="verse-spotlight-label">Key Verse</div>
+          <div class="verse-spotlight-text">"As the toes of the feet were partly iron and partly clay, so the kingdom shall be partly strong and partly brittle."</div>
+          <div class="verse-spotlight-ref">Daniel 2:42</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STONE / CHRIST'S KINGDOM -->
+    <div class="detail-card" id="card-stone" style="background: linear-gradient(160deg, #1A1A0A 0%, #0A0A04 100%);">
+      <div class="detail-header">
+        <div class="detail-era" style="color:#C9A84C">The Stone</div>
+        <div class="detail-kingdom" style="color:#F0D080">Christ's Eternal Kingdom</div>
+        <div class="detail-dates">The Second Coming → Eternity</div>
+        <div class="detail-material-badge" style="color:#C9A84C">Cut Without Hands</div>
+      </div>
+      <div class="detail-body">
+        <div class="section-block">
+          <div class="section-label">The Prophecy</div>
+          <p class="section-text">"A stone was cut out by no human hand, and it struck the image on its feet of iron and clay, and broke them in pieces." The stone then became a mountain that filled the whole earth. This kingdom is not built by human effort — it arrives from outside history entirely. <em>(Daniel 2:34–35, 44–45)</em></p>
+        </div>
+        <div class="section-block">
+          <div class="section-label">What It Means</div>
+          <p class="section-text">Every previous kingdom succeeded through military conquest, political strategy, or intermarriage. The Stone kingdom is different: it is "cut without human hands." It doesn't defeat the other kingdoms by playing by their rules — it replaces the entire system. The five kingdoms become "like the chaff of the summer threshing floors" and the Stone becomes a mountain filling the whole earth.</p>
+        </div>
+        <div class="christ-block">
+          <div class="christ-label">✦ Christ at the Centre</div>
+          <p class="christ-text">Jesus called himself "the stone the builders rejected" <em>(Matthew 21:42)</em>. Paul calls him "the chief cornerstone" <em>(Ephesians 2:20)</em>. Peter calls him "a living stone" <em>(1 Peter 2:4)</em>. The Stone in Daniel 2 is not a symbol that needs decoding — the New Testament is emphatic. Christ's kingdom will be the final one, and it will never be destroyed. <em>(Daniel 2:44)</em></p>
+        </div>
+        <div class="verse-spotlight">
+          <div class="verse-spotlight-label">Key Verse</div>
+          <div class="verse-spotlight-text">"The God of heaven will set up a kingdom that shall never be destroyed… it shall stand forever."</div>
+          <div class="verse-spotlight-ref">Daniel 2:44</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /info-col -->
+</div><!-- /main -->
+
+<!-- ── CLOSING VERSE: edit the quote and reference here ── -->
+<div class="closing reveal">
+  <p class="closing-verse">"The great God has made known to the king what shall be after this. The dream is certain, and its interpretation sure."</p>
+  <div class="closing-ref">Daniel 2:45</div>
+</div>
+
+<script>
+  /* ═══════════════════════════════════════════════
+     ANIMATED STARFIELD
+     Canvas-based twinkling stars for a more
+     atmospheric background than static CSS.
+  ══════════════════════════════════════════════ */
+  (function () {
+    const canvas = document.getElementById('starfield');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+    const STAR_COUNT = 160;
+
+    function resize() {
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    function randomStar() {
+      return {
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.2 + 0.3,
+        base: Math.random() * 0.5 + 0.1,
+        speed: Math.random() * 0.008 + 0.003,
+        phase: Math.random() * Math.PI * 2,
+        gold: Math.random() < 0.06,
+      };
+    }
+
+    for (let i = 0; i < STAR_COUNT; i++) stars.push(randomStar());
+
+    function draw(ts) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const t = ts * 0.001;
+      stars.forEach(s => {
+        const alpha = s.base + Math.sin(t * s.speed * 60 + s.phase) * (s.base * 0.7);
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = s.gold
+          ? `rgba(201,168,76,${alpha})`
+          : `rgba(255,255,255,${alpha})`;
+        ctx.fill();
+      });
+      requestAnimationFrame(draw);
+    }
+    requestAnimationFrame(draw);
+  })();
+
+  /* ═══════════════════════════════════════════════
+     SCROLL ENTRANCE ANIMATIONS
+     Elements with class 'reveal' fade in when
+     they enter the viewport.
+  ══════════════════════════════════════════════ */
+  (function () {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  })();
+
+  /* ═══════════════════════════════════════════════
+     KINGDOM INTERACTION
+     All selection logic, counter chip, progress bar,
+     nav dots, and glow ring updates.
+  ══════════════════════════════════════════════ */
+  const kingdoms = ['gold','silver','bronze','iron','clay','stone'];
+
+  // Human-readable names and highlight colours per kingdom
+  const kingdomMeta = {
+    gold:   { name: 'Babylon',        colour: '#C9A84C', glowX: 140, glowY: 68,  glowR: 52 },
+    silver: { name: 'Medo-Persia',    colour: '#A8B8C8', glowX: 140, glowY: 155, glowR: 65 },
+    bronze: { name: 'Greece',         colour: '#A0673A', glowX: 140, glowY: 245, glowR: 62 },
+    iron:   { name: 'Rome',           colour: '#6A7A8A', glowX: 140, glowY: 420, glowR: 46 },
+    clay:   { name: 'Divided Europe', colour: '#8A7060', glowX: 140, glowY: 515, glowR: 50 },
+    stone:  { name: 'Christ\'s Kingdom', colour: '#E8E0D0', glowX: 60, glowY: 588, glowR: 46 },
+  };
+
+  let current = 'gold';
+
+  // Ensure glow ring element exists in SVG
+  (function () {
+    const svg = document.getElementById('statue-svg');
+    const ring = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+    ring.setAttribute('id', 'glow-ring');
+    ring.classList.add('glow-ring');
+    svg.appendChild(ring);
+  })();
+
+  function selectKingdom(k) {
+    current = k;
+    const meta = kingdomMeta[k];
+
+    // ── Statue section states ──
+    kingdoms.forEach(kk => {
+      const el = document.getElementById('sec-' + kk) || document.querySelector(`[data-kingdom="${kk}"]`);
+      if (!el) return;
+      el.classList.remove('active','dimmed');
+      if (kk === k) el.classList.add('active');
+      else el.classList.add('dimmed');
+    });
+
+    // Stone section (separate element)
+    const stone = document.getElementById('sec-stone');
+    if (stone) {
+      stone.classList.remove('active','dimmed');
+      if (k === 'stone') stone.classList.add('active');
+      else stone.classList.add('dimmed');
+    }
+
+    // ── Glow ring on active section ──
+    const ring = document.getElementById('glow-ring');
+    if (ring && meta) {
+      ring.setAttribute('cx', meta.glowX);
+      ring.setAttribute('cy', meta.glowY);
+      ring.setAttribute('rx', meta.glowR + 8);
+      ring.setAttribute('ry', k === 'gold' ? meta.glowR * 0.75 : meta.glowR * 0.55);
+      ring.setAttribute('stroke', meta.colour);
+      ring.classList.add('visible');
+    }
+
+    // ── Kingdom counter chip ──
+    const idx = kingdoms.indexOf(k);
+    const counterEl = document.getElementById('kingdom-counter');
+    if (counterEl && meta) {
+      counterEl.textContent = `${idx + 1} of ${kingdoms.length} · ${meta.name}`;
+    }
+
+    // ── Hide prompt, show correct detail card ──
+    const prompt = document.getElementById('prompt-card');
+    if (prompt) prompt.style.display = 'none';
+
+    kingdoms.forEach(kk => {
+      const card = document.getElementById('card-' + kk);
+      if (card) card.classList.remove('visible');
+    });
+    const activeCard = document.getElementById('card-' + k);
+    if (activeCard) {
+      activeCard.classList.add('visible');
+      if (window.innerWidth < 768) {
+        setTimeout(() => activeCard.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+      }
+    }
+
+    // ── Nav dots ──
+    document.querySelectorAll('.nav-dot').forEach(dot => {
+      dot.classList.remove('active');
+      if (dot.dataset.k === k) dot.classList.add('active');
+    });
+
+    // ── Progress bar ──
+    document.getElementById('progress-fill').style.width =
+      ((idx + 1) / kingdoms.length * 100) + '%';
+  }
+
+  // Prev / Next step
+  function stepKingdom(dir) {
+    const idx = kingdoms.indexOf(current);
+    const next = kingdoms[(idx + dir + kingdoms.length) % kingdoms.length];
+    selectKingdom(next);
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', e => {
+    const idx = kingdoms.indexOf(current);
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') stepKingdom(1);
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   stepKingdom(-1);
+  });
+
+  // Init — select Babylon on load
+  selectKingdom('gold');
+</script>
+
+</body>
+</html>

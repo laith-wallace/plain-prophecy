@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daniel 7 — Four Beasts from the Sea</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold:       #C9A84C;
+    --gold-light: #F0D080;
+    --lion-c:     #C9A84C;
+    --bear-c:     #8B6040;
+    --leopard-c:  #A07840;
+    --beast-c:    #5A6A7A;
+    --horn-c:     #903050;
+    --throne-c:   #E8E0D0;
+    --bg:         #08080F;
+    --panel:      rgba(255,255,255,0.04);
+    --border:     rgba(255,255,255,0.08);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--bg);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── Starfield canvas ── */
+  #starfield {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  }
+
+  /* ── Header ── */
+  header {
+    position: relative; z-index: 10;
+    padding: 48px 24px 0;
+    text-align: center;
+  }
+
+  .eyebrow {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(28px, 6vw, 52px);
+    font-weight: 900;
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: 16px;
+  }
+  h1 span { color: var(--gold); }
+
+  .subtitle {
+    font-size: 15px; font-weight: 300;
+    color: rgba(255,255,255,0.55);
+    max-width: 480px; margin: 0 auto 8px;
+    line-height: 1.6;
+  }
+
+  .scripture-ref {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    color: var(--gold);
+    opacity: 0.7;
+    letter-spacing: 0.1em;
+    margin-bottom: 40px;
+  }
+
+  /* ── Daniel 2 parallel note ── */
+  .parallel-note {
+    position: relative; z-index: 10;
+    max-width: 680px;
+    margin: 0 auto 36px;
+    padding: 0 20px;
+  }
+  .parallel-inner {
+    background: rgba(201,168,76,0.06);
+    border: 1px solid rgba(201,168,76,0.18);
+    border-radius: 12px;
+    padding: 14px 20px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .parallel-icon { font-size: 16px; flex-shrink: 0; margin-top: 2px; }
+  .parallel-text {
+    font-size: 12px; line-height: 1.65;
+    color: rgba(255,255,255,0.42);
+  }
+  .parallel-text strong { color: rgba(255,255,255,0.65); font-weight: 600; }
+
+  /* ── Main layout ── */
+  .main {
+    position: relative; z-index: 10;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 16px 80px;
+  }
+
+  @media (min-width: 768px) {
+    .main {
+      grid-template-columns: 340px 1fr;
+      gap: 40px;
+      align-items: start;
+      padding: 0 32px 80px;
+    }
+  }
+
+  /* ── Beast column ── */
+  .beast-col { position: relative; }
+
+  @media (min-width: 768px) {
+    .beast-col { position: sticky; top: 24px; }
+  }
+
+  .beast-label {
+    text-align: center;
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 12px;
+  }
+
+  .beast-wrap {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Beast section interactive states */
+  .beast-section {
+    cursor: pointer;
+    transition: filter 0.25s ease, opacity 0.25s ease, transform 0.3s cubic-bezier(.34,1.56,.64,1);
+    transform-origin: center center;
+  }
+  .beast-section:hover { filter: brightness(1.3); }
+  .beast-section.active {
+    filter: brightness(1.5) drop-shadow(0 0 16px rgba(201,168,76,0.65));
+    transform: scale(1.04);
+  }
+  .beast-section.dimmed {
+    opacity: 0.18;
+    filter: saturate(0.15);
+  }
+
+  /* Throne scene fade */
+  #throne-scene {
+    transition: opacity 0.55s ease;
+  }
+
+  /* ── Nav dots ── */
+  .nav-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding-bottom: 8px;
+  }
+
+  .nav-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: transparent;
+  }
+  .nav-dot.active {
+    background: var(--gold);
+    border-color: var(--gold);
+    transform: scale(1.2);
+  }
+
+  /* ── Info column ── */
+  .info-col { padding-top: 8px; }
+
+  /* Progress strip */
+  .progress-strip {
+    height: 2px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 1px;
+    margin-bottom: 32px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 1px;
+    transition: width 0.5s ease;
+  }
+
+  /* Detail cards */
+  .detail-card {
+    display: none;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .detail-card.visible {
+    display: block;
+    animation: fadeSlideIn 0.3s ease forwards;
+  }
+
+  .detail-header {
+    padding: 24px 24px 20px;
+    position: relative;
+  }
+  .detail-era {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 6px;
+    opacity: 0.7;
+  }
+  .detail-kingdom {
+    font-family: 'Cinzel', serif;
+    font-size: 26px; font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+  .detail-dates {
+    font-size: 12px;
+    opacity: 0.6;
+    font-weight: 300;
+  }
+  .detail-material-badge {
+    position: absolute;
+    top: 24px; right: 24px;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid currentColor;
+    opacity: 0.7;
+  }
+
+  .detail-body { padding: 0 24px 24px; }
+  .section-block { margin-bottom: 20px; }
+  .section-label {
+    font-size: 9px; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 8px;
+  }
+  .section-text {
+    font-size: 14px; line-height: 1.7;
+    color: rgba(255,255,255,0.8);
+  }
+
+  .christ-block {
+    background: rgba(255,255,255,0.05);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 12px 12px 0;
+    padding: 14px 16px;
+  }
+  .christ-label {
+    font-size: 9px; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .christ-text {
+    font-size: 14px; line-height: 1.7;
+    color: rgba(255,255,255,0.85);
+  }
+
+  /* Mobile hint */
+  .mobile-hint {
+    text-align: center;
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    margin-top: 12px;
+    margin-bottom: 24px;
+  }
+  @media (min-width: 768px) { .mobile-hint { display: none; } }
+
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Scroll entrance */
+  .reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .reveal.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Mobile hint */
+  .mobile-hint {
+    text-align: center;
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    margin-top: 12px;
+    margin-bottom: 24px;
+  }
+  @media (min-width: 768px) { .mobile-hint { display: none; } }
+
+  /* Beast counter chip */
+  .beast-counter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    position: relative; z-index: 10;
+  }
+  .counter-chip {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    opacity: 0.75;
+    background: rgba(201,168,76,0.08);
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 4px 12px;
+    border-radius: 20px;
+    text-transform: uppercase;
+  }
+
+  /* Nav arrows */
+  .nav-arrows {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 16px;
+    position: relative; z-index: 10;
+  }
+  .nav-btn {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.04);
+    color: rgba(255,255,255,0.55);
+    font-size: 18px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s ease;
+    line-height: 1;
+  }
+  .nav-btn:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(201,168,76,0.08);
+  }
+
+  /* Closing */
+  .closing {
+    position: relative; z-index: 10;
+    text-align: center;
+    padding: 0 24px 60px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .closing-verse {
+    font-family: 'Cinzel', serif;
+    font-size: 15px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.85;
+    font-style: italic;
+    margin-bottom: 8px;
+  }
+  .closing-ref {
+    font-size: 12px;
+    color: var(--gold);
+    opacity: 0.7;
+    letter-spacing: 0.1em;
+  }
+
+  /* Verse spotlight */
+  .verse-spotlight {
+    margin-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding-top: 16px;
+  }
+  .verse-spotlight-label {
+    font-size: 9px; font-weight: 700;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.6;
+    margin-bottom: 8px;
+  }
+  .verse-spotlight-text {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.75;
+    font-style: italic;
+  }
+  .verse-spotlight-ref {
+    margin-top: 6px;
+    font-size: 11px;
+    color: var(--gold);
+    opacity: 0.7;
+    letter-spacing: 0.06em;
+  }
+
+  /* Daniel 2 parallel badge */
+  .parallel-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 3px 10px;
+  }
+  .parallel-badge span { color: var(--gold); opacity: 0.7; }
+
+  /* Wave animation */
+  @keyframes wave-drift {
+    0%   { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: -60; }
+  }
+  .wave-animated {
+    stroke-dasharray: 12 6;
+    animation: wave-drift 3s linear infinite;
+  }
+</style>
+</head>
+<body>
+
+<!-- STARFIELD: animated canvas background -->
+<canvas id="starfield"></canvas>
+
+<!-- ── HEADER: edit eyebrow, h1, subtitle, and scripture-ref here ── -->
+<header class="reveal">
+  <div class="eyebrow">Daniel 7 · Written 553 BC</div>
+  <h1>Four Beasts That <span>Shaped an Age</span></h1>
+  <p class="subtitle">While Babylon feasted, Daniel slept — and saw four great empires rise from a stormy sea. Every detail proved true.</p>
+  <div class="scripture-ref">Daniel 7:1–14</div>
+</header>
+
+<!-- Parallel note -->
+<div class="parallel-note">
+  <div class="parallel-inner">
+    <div class="parallel-icon">🔗</div>
+    <div class="parallel-text">
+      <strong>The same four empires, seen differently.</strong> Daniel 2 showed these kingdoms as metals in a statue — a king's perspective. Daniel 7 shows them as beasts rising from a stormy sea — God's perspective. Both visions lock together, each one magnifying what the other leaves vague.
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- ══ BEAST COLUMN (sticky) ══ -->
+  <div class="beast-col">
+    <!-- Beast counter chip -->
+    <div class="beast-counter">
+      <span class="counter-chip" id="beast-counter">1 of 6 · Babylon</span>
+    </div>
+    <div class="beast-label">Tap a beast</div>
+    <div class="beast-wrap">
+
+      <svg id="beast-svg" viewBox="0 0 340 520" width="340" height="520" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- Gradients -->
+          <linearGradient id="g-lion" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#F0D080"/>
+            <stop offset="50%" style="stop-color:#C9A84C"/>
+            <stop offset="100%" style="stop-color:#8A6820"/>
+          </linearGradient>
+          <linearGradient id="g-bear" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#A07850"/>
+            <stop offset="50%" style="stop-color:#7A5030"/>
+            <stop offset="100%" style="stop-color:#4A2810"/>
+          </linearGradient>
+          <linearGradient id="g-leopard" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#D09050"/>
+            <stop offset="50%" style="stop-color:#A07030"/>
+            <stop offset="100%" style="stop-color:#603810"/>
+          </linearGradient>
+          <linearGradient id="g-beast" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#7A8A9A"/>
+            <stop offset="50%" style="stop-color:#3A4A5A"/>
+            <stop offset="100%" style="stop-color:#1A2030"/>
+          </linearGradient>
+          <linearGradient id="g-sea" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#08101E"/>
+            <stop offset="100%" style="stop-color:#020408"/>
+          </linearGradient>
+          <radialGradient id="g-throne-glow" cx="50%" cy="35%" r="55%">
+            <stop offset="0%" style="stop-color:#FFFFFF; stop-opacity:0.9"/>
+            <stop offset="40%" style="stop-color:#F0D080; stop-opacity:0.55"/>
+            <stop offset="100%" style="stop-color:#C9A84C; stop-opacity:0"/>
+          </radialGradient>
+          <radialGradient id="g-fire" cx="50%" cy="100%" r="75%">
+            <stop offset="0%" style="stop-color:#FF9030; stop-opacity:0.9"/>
+            <stop offset="60%" style="stop-color:#FF4010; stop-opacity:0.5"/>
+            <stop offset="100%" style="stop-color:#C00000; stop-opacity:0"/>
+          </radialGradient>
+          <filter id="f-glow">
+            <feGaussianBlur stdDeviation="3" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="f-glow-lg">
+            <feGaussianBlur stdDeviation="7" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- ═══ NIGHT SKY & SEA ═══ -->
+        <rect x="0" y="0" width="340" height="520" fill="url(#g-sea)"/>
+        <!-- Moon -->
+        <circle cx="50" cy="45" r="18" fill="rgba(240,220,160,0.12)"/>
+        <circle cx="50" cy="45" r="12" fill="rgba(240,220,160,0.18)"/>
+        <circle cx="50" cy="45" r="6"  fill="rgba(240,220,160,0.25)"/>
+        <!-- Storm clouds -->
+        <ellipse cx="90"  cy="60"  rx="55" ry="18" fill="rgba(15,25,55,0.7)"/>
+        <ellipse cx="220" cy="45"  rx="75" ry="22" fill="rgba(15,25,55,0.65)"/>
+        <ellipse cx="300" cy="70"  rx="45" ry="16" fill="rgba(15,25,55,0.6)"/>
+        <!-- Wind lines -->
+        <path d="M0,100 Q60,92 120,100 Q180,108 240,100 Q300,92 340,100" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1.5"/>
+        <path d="M0,115 Q55,107 110,115 Q165,123 220,115 Q275,107 340,115" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+        <!-- Deep sea -->
+        <path d="M0,395 Q25,385 50,393 Q75,401 100,393 Q125,385 150,393 Q175,401 200,393 Q225,385 250,393 Q275,401 300,393 Q320,386 340,393 L340,520 L0,520 Z" fill="rgba(6,12,30,0.98)"/>
+        <!-- Wave 1 (animated) -->
+        <path class="wave-animated" d="M0,408 Q30,398 60,408 Q90,418 120,408 Q150,398 180,408 Q210,418 240,408 Q270,398 300,408 Q322,401 340,407" fill="none" stroke="rgba(30,70,140,0.5)" stroke-width="2"/>
+        <!-- Wave 2 (animated slower) -->
+        <path class="wave-animated" d="M0,425 Q35,415 70,425 Q105,435 140,425 Q175,415 210,425 Q245,435 280,425 Q310,418 340,424" fill="none" stroke="rgba(20,55,120,0.3)" stroke-width="1.5" style="animation-duration:4.5s;animation-direction:reverse;"/>
+        <!-- Foam caps -->
+        <path d="M10,402 Q22,396 34,402" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="2" stroke-linecap="round"/>
+        <path d="M90,406 Q103,399 117,406"  fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="2" stroke-linecap="round"/>
+        <path d="M175,400 Q190,393 205,400" fill="none" stroke="rgba(255,255,255,0.32)" stroke-width="2" stroke-linecap="round"/>
+        <path d="M255,404 Q270,397 284,404" fill="none" stroke="rgba(255,255,255,0.26)" stroke-width="2" stroke-linecap="round"/>
+        <path d="M310,400 Q322,394 334,400" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- Sea mist -->
+        <ellipse cx="70"  cy="396" rx="52" ry="7"  fill="rgba(20,45,110,0.28)"/>
+        <ellipse cx="190" cy="400" rx="68" ry="9"  fill="rgba(20,45,110,0.2)"/>
+        <ellipse cx="300" cy="396" rx="46" ry="7"  fill="rgba(20,45,110,0.25)"/>
+
+        <!-- ═══ BEAR (far left — Medo-Persia) ═══ -->
+        <g class="beast-section" id="sec-bear" data-beast="bear" onclick="selectBeast('bear')">
+          <!-- Body – tilted, raised on right (Persia dominant) -->
+          <ellipse cx="48" cy="335" rx="36" ry="26" fill="url(#g-bear)" transform="rotate(-18 48 335)"/>
+          <!-- Haunches (right side raised) -->
+          <ellipse cx="28" cy="318" rx="20" ry="17" fill="url(#g-bear)"/>
+          <!-- Front shoulder -->
+          <ellipse cx="70" cy="308" rx="18" ry="15" fill="url(#g-bear)"/>
+          <!-- Head -->
+          <circle cx="72" cy="292" r="21" fill="url(#g-bear)"/>
+          <!-- Snout -->
+          <ellipse cx="88" cy="299" rx="13" ry="9" fill="url(#g-bear)" opacity="0.9"/>
+          <ellipse cx="93" cy="303" rx="6" ry="4" fill="rgba(80,40,20,0.6)"/><!-- Nostrils -->
+          <!-- Eye -->
+          <circle cx="70" cy="287" r="3.5" fill="rgba(0,0,0,0.8)"/>
+          <circle cx="69" cy="286" r="1.5" fill="rgba(255,190,80,0.5)"/>
+          <!-- Ears -->
+          <ellipse cx="58" cy="274" rx="7" ry="5.5" fill="url(#g-bear)"/>
+          <ellipse cx="58" cy="274" rx="4.5" ry="3" fill="rgba(160,80,50,0.5)"/>
+          <ellipse cx="75" cy="272" rx="6.5" ry="5" fill="url(#g-bear)"/>
+          <!-- THREE RIBS in mouth -->
+          <path d="M90,293 Q100,289 110,286" stroke="rgba(230,215,190,0.95)" stroke-width="2.8" stroke-linecap="round" fill="none"/>
+          <path d="M90,298 Q100,296 111,295" stroke="rgba(230,215,190,0.95)" stroke-width="2.8" stroke-linecap="round" fill="none"/>
+          <path d="M90,304 Q100,304 110,304" stroke="rgba(230,215,190,0.95)" stroke-width="2.8" stroke-linecap="round" fill="none"/>
+          <!-- Rib label -->
+          <text x="113" y="289" fill="rgba(230,215,190,0.55)" font-size="7" font-family="Inter">3 ribs</text>
+          <!-- Legs -->
+          <rect x="30" y="353" width="11" height="28" rx="5" fill="url(#g-bear)"/>
+          <rect x="45" y="355" width="11" height="27" rx="5" fill="url(#g-bear)"/>
+          <rect x="16" y="332" width="10" height="28" rx="5" fill="url(#g-bear)"/>
+          <rect x="28" y="334" width="10" height="26" rx="5" fill="url(#g-bear)"/>
+          <!-- Claws -->
+          <path d="M30,381 L27,387 M35,382 L32,388 M40,381 L38,387" stroke="rgba(180,145,90,0.7)" stroke-width="1.5" stroke-linecap="round"/>
+          <!-- Hit area -->
+          <rect x="5" y="268" width="115" height="145" fill="transparent"/>
+        </g>
+
+        <!-- ═══ LEOPARD (centre-left — Greece) ═══ -->
+        <g class="beast-section" id="sec-leopard" data-beast="leopard" onclick="selectBeast('leopard')">
+          <!-- Body -->
+          <ellipse cx="160" cy="355" rx="40" ry="20" fill="url(#g-leopard)"/>
+          <!-- Spots -->
+          <circle cx="138" cy="349" r="4"   fill="rgba(0,0,0,0.32)"/>
+          <circle cx="152" cy="360" r="3.5" fill="rgba(0,0,0,0.28)"/>
+          <circle cx="167" cy="347" r="4"   fill="rgba(0,0,0,0.32)"/>
+          <circle cx="180" cy="357" r="3"   fill="rgba(0,0,0,0.28)"/>
+          <circle cx="193" cy="348" r="3.5" fill="rgba(0,0,0,0.3)"/>
+          <!-- FOUR WINGS -->
+          <!-- Wing 1 main left -->
+          <path d="M148,352 Q130,325 118,295 Q135,308 152,325 Z" fill="url(#g-leopard)" opacity="0.82"/>
+          <!-- Wing 2 main right -->
+          <path d="M172,352 Q192,323 202,292 Q185,307 166,326 Z" fill="url(#g-leopard)" opacity="0.82"/>
+          <!-- Wing 3 small left -->
+          <path d="M140,356 Q121,340 111,324 Q124,328 142,348 Z" fill="url(#g-leopard)" opacity="0.52"/>
+          <!-- Wing 4 small right -->
+          <path d="M180,356 Q200,338 210,322 Q197,327 178,348 Z" fill="url(#g-leopard)" opacity="0.52"/>
+          <!-- Feather lines -->
+          <path d="M148,352 Q134,325 122,298" fill="none" stroke="rgba(180,110,50,0.45)" stroke-width="1"/>
+          <path d="M143,355 Q130,330 120,308" fill="none" stroke="rgba(180,110,50,0.35)" stroke-width="0.8"/>
+          <path d="M172,352 Q186,325 198,295" fill="none" stroke="rgba(180,110,50,0.45)" stroke-width="1"/>
+          <path d="M177,355 Q190,330 200,308" fill="none" stroke="rgba(180,110,50,0.35)" stroke-width="0.8"/>
+          <!-- FOUR HEADS -->
+          <!-- Main head (facing left) -->
+          <circle cx="132" cy="328" r="20" fill="url(#g-leopard)"/>
+          <ellipse cx="115" cy="334" rx="13" ry="9" fill="url(#g-leopard)"/>
+          <circle cx="130" cy="323" r="3.5" fill="rgba(0,0,0,0.7)"/>
+          <circle cx="129" cy="322" r="1.5" fill="rgba(255,160,0,0.55)"/>
+          <polygon points="123,308 128,318 136,308" fill="url(#g-leopard)"/>
+          <!-- Spots on head -->
+          <circle cx="138" cy="326" r="2.5" fill="rgba(0,0,0,0.25)"/>
+          <!-- Head 2 (top-left, up) -->
+          <circle cx="113" cy="306" r="14" fill="url(#g-leopard)" opacity="0.88"/>
+          <circle cx="108" cy="301" r="2.5" fill="rgba(0,0,0,0.65)"/>
+          <polygon points="107,292 111,302 117,292" fill="url(#g-leopard)" opacity="0.85"/>
+          <!-- Head 3 (top-right, up) -->
+          <circle cx="200" cy="308" r="13" fill="url(#g-leopard)" opacity="0.85"/>
+          <circle cx="205" cy="303" r="2.5" fill="rgba(0,0,0,0.65)"/>
+          <polygon points="196,294 200,304 206,294" fill="url(#g-leopard)" opacity="0.8"/>
+          <!-- Head 4 (right, facing right) -->
+          <circle cx="192" cy="330" r="17" fill="url(#g-leopard)" opacity="0.88"/>
+          <ellipse cx="208" cy="336" rx="11" ry="7.5" fill="url(#g-leopard)" opacity="0.82"/>
+          <circle cx="195" cy="326" r="3" fill="rgba(0,0,0,0.65)"/>
+          <circle cx="194" cy="325" r="1.2" fill="rgba(255,160,0,0.5)"/>
+          <polygon points="200,314 204,324 210,314" fill="url(#g-leopard)" opacity="0.82"/>
+          <!-- Legs -->
+          <rect x="130" y="370" width="10" height="23" rx="4" fill="url(#g-leopard)"/>
+          <rect x="146" y="372" width="10" height="23" rx="4" fill="url(#g-leopard)"/>
+          <rect x="164" y="372" width="10" height="23" rx="4" fill="url(#g-leopard)"/>
+          <rect x="180" y="370" width="10" height="23" rx="4" fill="url(#g-leopard)"/>
+          <!-- Tail -->
+          <path d="M198,355 Q215,345 218,333" fill="none" stroke="url(#g-leopard)" stroke-width="5" stroke-linecap="round"/>
+          <!-- Hit area -->
+          <rect x="100" y="285" width="125" height="115" fill="transparent"/>
+        </g>
+
+        <!-- ═══ TERRIBLE BEAST (dominant centre — Rome) ═══ -->
+        <g class="beast-section" id="sec-beast" data-beast="beast" onclick="selectBeast('beast')">
+          <!-- Body — huge and iron-clad -->
+          <ellipse cx="200" cy="322" rx="62" ry="42" fill="url(#g-beast)"/>
+          <!-- Iron plates/texture -->
+          <ellipse cx="200" cy="320" rx="54" ry="35" fill="none" stroke="rgba(120,150,180,0.25)" stroke-width="1.5"/>
+          <ellipse cx="200" cy="318" rx="44" ry="27" fill="none" stroke="rgba(100,130,165,0.18)" stroke-width="1"/>
+          <!-- Head -->
+          <ellipse cx="230" cy="272" rx="52" ry="40" fill="url(#g-beast)"/>
+          <!-- Iron head plates -->
+          <ellipse cx="230" cy="270" rx="44" ry="32" fill="none" stroke="rgba(130,160,190,0.22)" stroke-width="1.2"/>
+          <!-- IRON TEETH (upper jaw) -->
+          <path d="M184,278 L191,264 L198,278 L205,264 L212,278 L219,264 L226,278 L233,264 L240,278 L247,264 L254,278 L261,264 L268,278 L275,264 L282,278" fill="none" stroke="rgba(210,230,250,0.85)" stroke-width="2.2" stroke-linejoin="round"/>
+          <!-- Lower teeth -->
+          <path d="M186,285 L193,298 L200,285 L207,298 L214,285 L221,298 L228,285 L235,298 L242,285 L249,298 L256,285 L263,298 L270,285 L277,298 L284,285" fill="none" stroke="rgba(170,195,220,0.65)" stroke-width="2" stroke-linejoin="round"/>
+          <!-- Glowing demonic eyes -->
+          <ellipse cx="212" cy="258" rx="8.5" ry="7" fill="rgba(200,15,0,0.95)"/>
+          <circle  cx="212" cy="258" r="4.5" fill="rgba(255,60,10,0.9)"/>
+          <circle  cx="212" cy="258" r="2"   fill="rgba(255,210,0,0.95)" filter="url(#f-glow)"/>
+          <ellipse cx="252" cy="256" rx="8.5" ry="7" fill="rgba(200,15,0,0.95)"/>
+          <circle  cx="252" cy="256" r="4.5" fill="rgba(255,60,10,0.9)"/>
+          <circle  cx="252" cy="256" r="2"   fill="rgba(255,210,0,0.95)" filter="url(#f-glow)"/>
+          <!-- TEN HORNS -->
+          <polygon points="185,252 189,218 193,252" fill="url(#g-beast)" stroke="rgba(160,185,210,0.55)" stroke-width="0.8"/>
+          <polygon points="196,248 201,212 206,248" fill="url(#g-beast)" stroke="rgba(160,185,210,0.55)" stroke-width="0.8"/>
+          <polygon points="208,245 213,208 218,245" fill="url(#g-beast)" stroke="rgba(160,185,210,0.55)" stroke-width="0.8"/>
+          <polygon points="220,244 225,208 230,244" fill="url(#g-beast)" stroke="rgba(160,185,210,0.55)" stroke-width="0.8"/>
+          <polygon points="232,244 237,210 242,244" fill="url(#g-beast)" stroke="rgba(160,185,210,0.55)" stroke-width="0.8"/>
+          <polygon points="244,246 249,212 254,246" fill="url(#g-beast)" stroke="rgba(160,185,210,0.55)" stroke-width="0.8"/>
+          <polygon points="256,249 261,218 266,249" fill="url(#g-beast)" stroke="rgba(160,185,210,0.55)" stroke-width="0.8"/>
+          <polygon points="267,253 271,225 275,253" fill="url(#g-beast)" stroke="rgba(160,185,210,0.45)" stroke-width="0.8"/>
+          <polygon points="178,256 181,234 185,256" fill="url(#g-beast)" stroke="rgba(160,185,210,0.4)" stroke-width="0.8"/>
+          <polygon points="275,256 278,236 281,256" fill="url(#g-beast)" stroke="rgba(160,185,210,0.4)" stroke-width="0.8"/>
+          <!-- LITTLE HORN (highlighted, with human eye) -->
+          <polygon id="little-horn-poly" points="223,244 228,196 233,244" fill="rgba(140,25,55,0.88)" stroke="rgba(220,90,115,0.7)" stroke-width="1.2"/>
+          <ellipse id="little-horn-eye" cx="228" cy="199" rx="4.5" ry="3.5" fill="rgba(245,190,100,0.9)" filter="url(#f-glow)"/>
+          <circle id="little-horn-pupil" cx="228" cy="199" r="1.8" fill="rgba(30,10,0,0.9)"/>
+          <!-- Three fallen/broken horns hint -->
+          <line x1="196" y1="245" x2="192" y2="260" stroke="rgba(100,130,160,0.35)" stroke-width="1.5" stroke-dasharray="3,2"/>
+          <line x1="208" y1="242" x2="205" y2="258" stroke="rgba(100,130,160,0.35)" stroke-width="1.5" stroke-dasharray="3,2"/>
+          <!-- Legs / clawed feet -->
+          <ellipse cx="160" cy="356" rx="17" ry="13" fill="url(#g-beast)"/>
+          <ellipse cx="242" cy="353" rx="17" ry="13" fill="url(#g-beast)"/>
+          <path d="M148,362 L144,374 M156,364 L153,376 M163,364 L161,376" stroke="rgba(120,155,185,0.75)" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M232,362 L228,374 M240,364 L238,376 M248,362 L247,375" stroke="rgba(120,155,185,0.75)" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Hit area -->
+          <rect x="140" y="190" width="150" height="190" fill="transparent"/>
+        </g>
+
+        <!-- ═══ LION (far right — Babylon) ═══ -->
+        <g class="beast-section" id="sec-lion" data-beast="lion" onclick="selectBeast('lion')">
+          <!-- EAGLE WINGS -->
+          <!-- Left wing -->
+          <path d="M275,295 Q252,260 244,225 Q258,242 272,262 Q278,272 280,286 Z" fill="url(#g-lion)" opacity="0.85"/>
+          <path d="M270,298 Q250,266 242,232 Q253,250 268,270 Z" fill="rgba(245,210,90,0.35)"/>
+          <!-- Wing feather lines (left) -->
+          <path d="M275,295 Q257,266 247,235" fill="none" stroke="rgba(200,148,38,0.48)" stroke-width="1.1"/>
+          <path d="M270,299 Q253,272 245,242" fill="none" stroke="rgba(200,148,38,0.35)" stroke-width="0.9"/>
+          <path d="M266,302 Q249,277 242,248" fill="none" stroke="rgba(200,148,38,0.25)" stroke-width="0.8"/>
+          <!-- Right wing -->
+          <path d="M305,295 Q328,260 335,226 Q322,243 308,264 Q302,273 300,287 Z" fill="url(#g-lion)" opacity="0.85"/>
+          <path d="M310,298 Q330,267 337,233 Q326,251 311,271 Z" fill="rgba(245,210,90,0.35)"/>
+          <!-- Wing feather lines (right) -->
+          <path d="M305,295 Q323,267 332,237" fill="none" stroke="rgba(200,148,38,0.48)" stroke-width="1.1"/>
+          <path d="M310,299 Q327,273 334,243" fill="none" stroke="rgba(200,148,38,0.35)" stroke-width="0.9"/>
+          <!-- Body -->
+          <ellipse cx="288" cy="338" rx="36" ry="26" fill="url(#g-lion)"/>
+          <ellipse cx="288" cy="334" rx="28" ry="19" fill="rgba(255,255,255,0.07)"/>
+          <!-- Chest/shoulder -->
+          <ellipse cx="270" cy="323" rx="20" ry="17" fill="url(#g-lion)"/>
+          <!-- HEAD -->
+          <circle cx="260" cy="302" r="24" fill="url(#g-lion)"/>
+          <!-- MANE (radiating spikes) -->
+          <path d="M260,278 L258,265 M260,278 L264,266 M260,278 L270,268 M260,278 L278,274 M260,278 L280,283 M260,278 L278,292 M260,278 L270,298 M260,278 L260,300 M260,278 L250,298 M260,278 L242,292 M260,278 L240,283 M260,278 L241,274 M260,278 L244,268 M260,278 L252,265" stroke="url(#g-lion)" stroke-width="4" stroke-linecap="round" opacity="0.78"/>
+          <!-- Snout -->
+          <ellipse cx="244" cy="308" rx="13" ry="9" fill="url(#g-lion)"/>
+          <ellipse cx="240" cy="312" rx="6" ry="4" fill="rgba(180,120,40,0.5)"/><!-- Nose -->
+          <!-- Eye (golden) -->
+          <circle cx="258" cy="298" r="4.5" fill="rgba(0,0,0,0.75)"/>
+          <circle cx="257" cy="297" r="2"   fill="rgba(255,200,80,0.8)"/>
+          <!-- Ear -->
+          <polygon points="268,282 273,293 282,282" fill="url(#g-lion)"/>
+          <!-- TAIL -->
+          <path d="M321,340 Q336,328 339,315 Q339,301 331,296" fill="none" stroke="url(#g-lion)" stroke-width="6" stroke-linecap="round"/>
+          <circle cx="331" cy="295" r="8" fill="url(#g-lion)"/>
+          <!-- Legs -->
+          <rect x="256" y="357" width="12" height="28" rx="5" fill="url(#g-lion)"/>
+          <rect x="272" y="355" width="12" height="30" rx="5" fill="url(#g-lion)"/>
+          <rect x="296" y="354" width="12" height="30" rx="5" fill="url(#g-lion)"/>
+          <rect x="310" y="356" width="12" height="28" rx="5" fill="url(#g-lion)"/>
+          <!-- Claws -->
+          <path d="M256,385 L253,391 M261,386 L259,392 M267,385 L265,391" stroke="rgba(200,148,40,0.75)" stroke-width="1.5" stroke-linecap="round"/>
+          <!-- Hit area -->
+          <rect x="235" y="225" width="110" height="175" fill="transparent"/>
+        </g>
+
+        <!-- ═══ THRONE / ANCIENT OF DAYS scene (toggled in JS) ═══ -->
+        <g id="throne-scene" style="display:none;">
+          <!-- Backdrop -->
+          <rect x="0" y="0" width="340" height="520" fill="rgba(4,6,16,0.95)"/>
+          <!-- Radiant throne glow -->
+          <circle cx="170" cy="185" r="200" fill="url(#g-throne-glow)" opacity="0.75"/>
+          <!-- Rivers of fire flowing outward -->
+          <path d="M40,520 Q80,450 115,390 Q140,340 165,300 Q175,280 170,245" fill="none" stroke="url(#g-fire)" stroke-width="14" opacity="0.65"/>
+          <path d="M300,520 Q260,452 225,392 Q200,343 185,308 Q175,282 170,245" fill="none" stroke="url(#g-fire)" stroke-width="14" opacity="0.65"/>
+          <!-- Fire glow core -->
+          <ellipse cx="170" cy="245" rx="30" ry="12" fill="rgba(255,150,30,0.45)"/>
+          <!-- Throne base platform -->
+          <ellipse cx="170" cy="245" rx="82" ry="20" fill="rgba(240,208,128,0.18)"/>
+          <!-- Throne seat back -->
+          <rect x="112" y="165" width="116" height="75" rx="12" fill="rgba(240,208,128,0.12)" stroke="rgba(240,208,128,0.35)" stroke-width="1.5"/>
+          <!-- Throne armrests -->
+          <rect x="108" y="200" width="18" height="30" rx="5" fill="rgba(240,208,128,0.2)" stroke="rgba(240,208,128,0.3)" stroke-width="1"/>
+          <rect x="214" y="200" width="18" height="30" rx="5" fill="rgba(240,208,128,0.2)" stroke="rgba(240,208,128,0.3)" stroke-width="1"/>
+          <!-- Throne seat -->
+          <rect x="107" y="228" width="126" height="14" rx="6" fill="rgba(255,255,255,0.25)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+          <!-- ANCIENT OF DAYS figure -->
+          <!-- Robe/body -->
+          <ellipse cx="170" cy="210" rx="24" ry="30" fill="rgba(255,255,255,0.88)"/>
+          <!-- Head -->
+          <circle cx="170" cy="168" r="22" fill="rgba(255,255,255,0.92)"/>
+          <!-- White hair glow -->
+          <circle cx="170" cy="168" r="28" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="3"/>
+          <circle cx="170" cy="168" r="38" fill="none" stroke="rgba(255,255,255,0.2)"  stroke-width="2"/>
+          <circle cx="170" cy="168" r="50" fill="none" stroke="rgba(255,255,255,0.08)"  stroke-width="2"/>
+          <!-- Crown -->
+          <path d="M152,155 L156,142 L162,152 L168,138 L174,152 L180,142 L186,155 Z" fill="rgba(240,208,128,0.85)"/>
+          <!-- Hands/sleeves extended -->
+          <ellipse cx="140" cy="218" rx="20" ry="10" fill="rgba(255,255,255,0.75)" transform="rotate(-25 140 218)"/>
+          <ellipse cx="200" cy="218" rx="20" ry="10" fill="rgba(255,255,255,0.75)" transform="rotate(25 200 218)"/>
+          <!-- OPEN BOOKS (judgment records) -->
+          <rect x="80" y="248" width="55" height="36" rx="5" fill="rgba(200,178,98,0.45)" stroke="rgba(240,208,128,0.5)" stroke-width="1.2"/>
+          <line x1="107" y1="248" x2="107" y2="284" stroke="rgba(240,208,128,0.55)" stroke-width="1"/>
+          <line x1="88" y1="258" x2="105" y2="258" stroke="rgba(240,208,128,0.3)" stroke-width="0.8"/>
+          <line x1="88" y1="264" x2="105" y2="264" stroke="rgba(240,208,128,0.3)" stroke-width="0.8"/>
+          <line x1="88" y1="270" x2="105" y2="270" stroke="rgba(240,208,128,0.3)" stroke-width="0.8"/>
+          <rect x="205" y="246" width="55" height="36" rx="5" fill="rgba(200,178,98,0.45)" stroke="rgba(240,208,128,0.5)" stroke-width="1.2"/>
+          <line x1="232" y1="246" x2="232" y2="282" stroke="rgba(240,208,128,0.55)" stroke-width="1"/>
+          <line x1="212" y1="256" x2="230" y2="256" stroke="rgba(240,208,128,0.3)" stroke-width="0.8"/>
+          <line x1="212" y1="262" x2="230" y2="262" stroke="rgba(240,208,128,0.3)" stroke-width="0.8"/>
+          <line x1="212" y1="268" x2="230" y2="268" stroke="rgba(240,208,128,0.3)" stroke-width="0.8"/>
+          <!-- Thousands of attendants (small figures in rows) -->
+          <line x1="70" y1="300" x2="70" y2="340" stroke="rgba(255,255,255,0.18)" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="70" cy="293" r="6" fill="rgba(255,255,255,0.22)"/>
+          <line x1="92" y1="298" x2="92" y2="335" stroke="rgba(255,255,255,0.15)" stroke-width="3.5" stroke-linecap="round"/>
+          <circle cx="92" cy="292" r="5" fill="rgba(255,255,255,0.18)"/>
+          <line x1="248" y1="300" x2="248" y2="340" stroke="rgba(255,255,255,0.18)" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="248" cy="293" r="6" fill="rgba(255,255,255,0.22)"/>
+          <line x1="270" y1="298" x2="270" y2="335" stroke="rgba(255,255,255,0.15)" stroke-width="3.5" stroke-linecap="round"/>
+          <circle cx="270" cy="292" r="5" fill="rgba(255,255,255,0.18)"/>
+          <!-- More distant attendants -->
+          <circle cx="50"  cy="310" r="3.5" fill="rgba(255,255,255,0.12)"/>
+          <circle cx="295" cy="310" r="3.5" fill="rgba(255,255,255,0.12)"/>
+          <circle cx="30"  cy="328" r="3"   fill="rgba(255,255,255,0.08)"/>
+          <circle cx="310" cy="325" r="3"   fill="rgba(255,255,255,0.08)"/>
+          <!-- SON OF MAN approaching on clouds -->
+          <ellipse cx="298" cy="380" rx="34" ry="12" fill="rgba(255,255,255,0.18)"/>
+          <ellipse cx="298" cy="375" rx="26" ry="9"  fill="rgba(255,255,255,0.22)"/>
+          <!-- Son of Man figure -->
+          <line x1="298" y1="365" x2="298" y2="345" stroke="rgba(255,255,255,0.6)" stroke-width="6" stroke-linecap="round"/>
+          <circle cx="298" cy="338" r="9" fill="rgba(255,255,255,0.72)"/>
+          <!-- Glow around Son of Man -->
+          <circle cx="298" cy="358" r="25" fill="none" stroke="rgba(240,208,128,0.18)" stroke-width="2"/>
+          <circle cx="298" cy="358" r="38" fill="none" stroke="rgba(240,208,128,0.08)" stroke-width="1.5"/>
+          <!-- Arrow of motion toward throne -->
+          <path d="M285,355 Q238,295 200,250" fill="none" stroke="rgba(240,208,128,0.15)" stroke-width="1.5" stroke-dasharray="5,4"/>
+          <!-- Labels -->
+          <text x="170" y="460" text-anchor="middle" fill="rgba(240,208,128,0.65)" font-size="10" font-family="Cinzel" letter-spacing="2.5">ANCIENT OF DAYS</text>
+          <text x="170" y="476" text-anchor="middle" fill="rgba(255,255,255,0.38)" font-size="9" font-family="Inter">Daniel 7:9–14</text>
+          <text x="298" y="400" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="8" font-family="Inter">Son of Man</text>
+          <!-- Clickable -->
+          <rect x="0" y="0" width="340" height="520" fill="transparent" class="throne-section active" onclick="selectBeast('throne')"/>
+        </g>
+
+      </svg>
+    </div>
+
+    <div class="mobile-hint">↑ Tap any beast ↑</div>
+
+    <!-- Nav dots -->
+    <div class="nav-dots">
+      <div class="nav-dot active" data-b="lion"    onclick="selectBeast('lion')"></div>
+      <div class="nav-dot"        data-b="bear"    onclick="selectBeast('bear')"></div>
+      <div class="nav-dot"        data-b="leopard" onclick="selectBeast('leopard')"></div>
+      <div class="nav-dot"        data-b="beast"   onclick="selectBeast('beast')"></div>
+      <div class="nav-dot"        data-b="horn"    onclick="selectBeast('horn')"></div>
+      <div class="nav-dot"        data-b="throne"  onclick="selectBeast('throne')"></div>
+    </div>
+
+    <!-- Prev / Next navigation arrows -->
+    <div class="nav-arrows">
+      <button class="nav-btn" onclick="stepBeast(-1)" title="Previous">&#8592;</button>
+      <button class="nav-btn" onclick="stepBeast(1)"  title="Next">&#8594;</button>
+    </div>
+  </div>
+
+  <!-- ══ INFO COLUMN ══ -->
+  <div class="info-col">
+
+    <div class="progress-strip">
+      <div class="progress-fill" id="progress-fill" style="width:16.6%"></div>
+    </div>
+
+    <!-- ─ LION / BABYLON ─ -->
+    <div class="detail-card visible" id="card-lion"
+         style="background: linear-gradient(160deg, #2A1F00 0%, #0F0C00 100%);">
+      <div class="detail-header">
+        <div class="detail-era" style="color:#C9A84C">The First Beast</div>
+        <div class="detail-kingdom" style="color:#F0D080">Babylon</div>
+        <div class="detail-dates">605 – 539 BC</div>
+        <div class="detail-material-badge" style="color:#C9A84C">Winged Lion</div>
+      </div>
+      <div class="detail-body">
+        <div class="section-block">
+          <div class="section-label">The Prophecy</div>
+          <p class="section-text">"The first was like a lion, and had eagle's wings: I beheld till the wings thereof were plucked, and it was made stand upon the feet as a man, and a man's heart was given to it." The lion — king of the beasts — combined with the eagle, king of birds. Total supremacy. Then a startling change: wings torn off, made to stand like a man, given a human heart. <em>(Daniel 7:4)</em></p>
+        </div>
+        <div class="section-block">
+          <div class="section-label">History Confirms</div>
+          <p class="section-text">Babylon was the most magnificent empire the ancient world had seen. The lion was its national symbol — archaeological evidence shows lions carved into the famous Ishtar Gate. Nebuchadnezzar conquered with eagle-like speed; the prophet Habakkuk wrote that the Babylonians flew like eagles to devour <em>(Habakkuk 1:8)</em>. Then the wings were plucked: after Nebuchadnezzar's seven years of madness and his restoration with a humbled heart <em>(Daniel 4)</em>, the empire's ferocity ebbed. Under Belshazzar, it stood like a proud man — and fell in a single night.</p>
+        </div>
+        <div class="christ-block">
+          <div class="christ-label">✦ Christ at the Centre</div>
+          <p class="christ-text">God brought Daniel to Babylon as a captive teenager and gave him an interpreter's gift no Babylonian wise man possessed. Even at the height of the lion empire, God was preserving — through Daniel — the understanding of prophecy that would culminate in Christ. The same God who humbled Nebuchadnezzar was already writing the story that ends at Calvary.</p>
+        </div>
+        <!-- VERSE SPOTLIGHT -->
+        <div class="verse-spotlight">
+          <div class="verse-spotlight-label">Key Verse</div>
+          <div class="verse-spotlight-text">"The first was like a lion, and had eagle's wings."</div>
+          <div class="verse-spotlight-ref">Daniel 7:4</div>
+        </div>
+        <div class="parallel-badge">— same empire as <span>Gold Head (Dan 2:38)</span></div>
+      </div>
+    </div>
+
+    <!-- ─ BEAR / MEDO-PERSIA ─ -->
+    <div class="detail-card" id="card-bear"
+         style="background: linear-gradient(160deg, #180E06 0%, #080402 100%);">
+      <div class="detail-header">
+        <div class="detail-era" style="color:#A07850">The Second Beast</div>
+        <div class="detail-kingdom" style="color:#C09870">Medo-Persia</div>
+        <div class="detail-dates">539 – 331 BC</div>
+        <div class="detail-material-badge" style="color:#A07850">Bear</div>
+      </div>
+      <div class="detail-body">
+        <div class="section-block">
+          <div class="section-label">The Prophecy</div>
+          <p class="section-text">"And behold another beast, a second, like to a bear, and it raised up itself on one side, and it had three ribs in the mouth of it between the teeth of it: and they said thus unto it, Arise, devour much flesh." Three details: a bear (massive, relentless), raised on one side (asymmetric), and three ribs held in its teeth. <em>(Daniel 7:5)</em></p>
+        </div>
+        <div class="section-block">
+          <div class="section-label">History Confirms</div>
+          <p class="section-text">Medo-Persia was the largest empire the world had seen at that time, amassing armies of over a million men — slow and lumbering like a bear, but ferocious. "Raised on one side" perfectly captures its dual nature: the Persians rose to dominate the Medes (Cyrus overthrew the Median Confederation in the 6th century BC). The three ribs match the three major kingdoms it consumed: Lydia fell in 546 BC, Babylon in 539 BC, and Egypt in 525 BC. Three nations between its teeth, exactly as prophesied.</p>
+        </div>
+        <div class="christ-block">
+          <div class="christ-label">✦ Christ at the Centre</div>
+          <p class="christ-text">Cyrus — named by Isaiah 150 years before he was born <em>(Isaiah 44:28)</em> — issued the decree to restore Jerusalem. That decree in 457 BC launched the prophetic 70-week countdown that ended precisely at Jesus' baptism in AD 27. A pagan bear-empire, unknowingly obeying God, set the clock for the Messiah's arrival. The entire sequence was scripted centuries in advance.</p>
+        </div>
+        <div class="verse-spotlight">
+          <div class="verse-spotlight-label">Key Verse</div>
+          <div class="verse-spotlight-text">"And it had three ribs in the mouth of it between the teeth of it."</div>
+          <div class="verse-spotlight-ref">Daniel 7:5</div>
+        </div>
+        <div class="parallel-badge">— same empire as <span>Silver Chest (Dan 2:39)</span></div>
+      </div>
+    </div>
+
+    <!-- ─ LEOPARD / GREECE ─ -->
+    <div class="detail-card" id="card-leopard"
+         style="background: linear-gradient(160deg, #1A0F05 0%, #0A0602 100%);">
+      <div class="detail-header">
+        <div class="detail-era" style="color:#C08850">The Third Beast</div>
+        <div class="detail-kingdom" style="color:#E0A870">Greece</div>
+        <div class="detail-dates">331 – 168 BC</div>
+        <div class="detail-material-badge" style="color:#C08850">Leopard</div>
+      </div>
+      <div class="detail-body">
+        <div class="section-block">
+          <div class="section-label">The Prophecy</div>
+          <p class="section-text">"After this I beheld, and lo another, like a leopard, which had upon the back of it four wings of a fowl; the beast had also four heads; and dominion was given to it." Four wings — double the speed of Babylon's two. Four heads — four distinct rulers within one kingdom. <em>(Daniel 7:6)</em></p>
+        </div>
+        <div class="section-block">
+          <div class="section-label">History Confirms</div>
+          <p class="section-text">Alexander the Great conquered the entire Persian empire in thirteen years, dying at just 33. The four wings capture what historians still marvel at: a campaign of unprecedented speed. The leopard is fast; four wings of a bird make it almost supernatural in velocity. When Alexander died in 323 BC with no heir, his generals divided his empire into exactly four parts — Lysimachus took the north, Cassander the west, Ptolemy the south (Egypt), and Seleucus the east. Four heads. Written by Daniel centuries before Greece was even a unified nation.</p>
+        </div>
+        <div class="christ-block">
+          <div class="christ-label">✦ Christ at the Centre</div>
+          <p class="christ-text">Greek conquest spread Koine Greek across the entire known world — the language the New Testament would be written in. Under the Greek empire, the Hebrew scriptures were translated into Greek (the Septuagint), making them accessible to the whole Mediterranean world. God used an empire built on conquest to build the communication infrastructure for the Gospel. By the time Jesus was born, the whole world could read his story.</p>
+        </div>
+        <div class="verse-spotlight">
+          <div class="verse-spotlight-label">Key Verse</div>
+          <div class="verse-spotlight-text">"The beast had also four heads; and dominion was given to it."</div>
+          <div class="verse-spotlight-ref">Daniel 7:6</div>
+        </div>
+        <div class="parallel-badge">— same empire as <span>Bronze Belly (Dan 2:39)</span></div>
+      </div>
+    </div>
+
+    <!-- ─ BEAST / ROME ─ -->
+    <div class="detail-card" id="card-beast"
+         style="background: linear-gradient(160deg, #0A1018 0%, #040608 100%);">
+      <div class="detail-header">
+        <div class="detail-era" style="color:#7A9AAA">The Fourth Beast</div>
+        <div class="detail-kingdom" style="color:#A0C0D0">Rome</div>
+        <div class="detail-dates">168 BC – 476 AD</div>
+        <div class="detail-material-badge" style="color:#7A9AAA">Terrible Beast</div>
+      </div>
+      <div class="detail-body">
+        <div class="section-block">
+          <div class="section-label">The Prophecy</div>
+          <p class="section-text">"After this I saw in the night visions, and behold a fourth beast, dreadful and terrible, and strong exceedingly; and it had great iron teeth: it devoured and brake in pieces, and stamped the residue with the feet of it: and it was diverse from all the beasts that were before it; and it had ten horns." No known animal could describe it — Rome was in a category of its own. <em>(Daniel 7:7)</em></p>
+        </div>
+        <div class="section-block">
+          <div class="section-label">History Confirms</div>
+          <p class="section-text">Rome at its height controlled nearly five million square kilometres, devouring nation after nation. Daniel's iron-teeth description mirrors Daniel 2's iron legs exactly: the same empire confirmed twice. Unlike its predecessors, Rome didn't conquer for glory alone — it systematically destroyed and absorbed, stamping residue underfoot. When Rome eventually collapsed, it fragmented into ten Germanic kingdoms (Visigoths, Franks, Anglo-Saxons, Lombards, Suevi, Allemani, Burgundians, Heruli, Vandals, Ostrogoths) — exactly ten horns, which became the major nations of Western Europe. Hippolytus, a 2nd-century Roman theologian, interpreted these ten horns as the kingdoms arising from Rome, more than a century before it happened.</p>
+        </div>
+        <div class="christ-block">
+          <div class="christ-label">✦ Christ at the Centre</div>
+          <p class="christ-text">Jesus was born under Roman rule — "a decree from Caesar Augustus" <em>(Luke 2:1)</em>. He was crucified by Rome. His resurrection happened under Roman watch. And then the terrible beast became the unwitting infrastructure for the Gospel: Roman roads connected the empire; Paul's Roman citizenship protected his ministry; Roman legal courts gave him a platform all the way to Caesar. God used the most brutal empire in history to carry the message of the most compassionate person in history.</p>
+        </div>
+        <div class="verse-spotlight">
+          <div class="verse-spotlight-label">Key Verse</div>
+          <div class="verse-spotlight-text">"Dreadful and terrible, and strong exceedingly; and it had great iron teeth."</div>
+          <div class="verse-spotlight-ref">Daniel 7:7</div>
+        </div>
+        <div class="parallel-badge">— same empire as <span>Iron Legs (Dan 2:40)</span></div>
+      </div>
+    </div>
+
+    <!-- ─ LITTLE HORN ─ -->
+    <div class="detail-card" id="card-horn"
+         style="background: linear-gradient(160deg, #1A0008 0%, #080004 100%);">
+      <div class="detail-header">
+        <div class="detail-era" style="color:#B05070">The Little Horn</div>
+        <div class="detail-kingdom" style="color:#D07090">A Power Unlike Any Before</div>
+        <div class="detail-dates">476 AD – Present</div>
+        <div class="detail-material-badge" style="color:#B05070">Little Horn</div>
+      </div>
+      <div class="detail-body">
+        <div class="section-block">
+          <div class="section-label">The Prophecy</div>
+          <p class="section-text">"And another shall rise after them; he shall be different from the first ones, and shall subdue three kings. He shall speak pompous words against the Most High, shall persecute the saints of the Most High, and shall intend to change times and law. Then the saints shall be given into his hand for a time and times and half a time." A horn — not a beast — rising among Rome's ten successor kingdoms, uprooting three of them, claiming religious and civil authority, persecuting the faithful for 3.5 prophetic times. <em>(Daniel 7:24–25)</em></p>
+        </div>
+        <div class="section-block">
+          <div class="section-label">History Confirms</div>
+          <p class="section-text">One power in history satisfies every criterion Daniel gives. It rose from within the Roman system (not alongside it). It uprooted three kingdoms: the Heruli (AD 493), the Vandals (AD 534), and the Ostrogoths (AD 538). It claimed a human head who spoke for God. It persecuted the saints during centuries of inquisition. It changed times and law — claiming authority to alter the Sabbath. The prophetic 3.5 times, using the day-year principle established in Numbers 14:34 and Ezekiel 4:6, equals 1,260 years. From 538 AD to 1798 AD is exactly 1,260 years — when Napoleon's general arrested the Pope, ending the political supremacy. The precision is extraordinary.</p>
+        </div>
+        <div class="christ-block">
+          <div class="christ-label">✦ Christ at the Centre</div>
+          <p class="christ-text">Even through 1,260 years of persecution, God's Word could not be silenced. The Waldensians hid the scriptures in the mountain valleys of northern Italy. Wycliffe translated them into English. Hus died for preaching them. Luther nailed his theses and the Reformation broke open. The little horn could "make war with the saints" — but Daniel's vision ends with the judgement, not the persecution. The Ancient of Days sits. And the horn's dominion is taken away.</p>
+        </div>
+        <div class="verse-spotlight">
+          <div class="verse-spotlight-label">Key Verse</div>
+          <div class="verse-spotlight-text">"He shall speak pompous words against the Most High, shall persecute the saints of the Most High."</div>
+          <div class="verse-spotlight-ref">Daniel 7:25</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─ ANCIENT OF DAYS ─ -->
+    <div class="detail-card" id="card-throne"
+         style="background: linear-gradient(160deg, #1A1A08 0%, #0A0A04 100%);">
+      <div class="detail-header">
+        <div class="detail-era" style="color:#C9A84C">The Heavenly Judgment</div>
+        <div class="detail-kingdom" style="color:#F0D080">Ancient of Days & Son of Man</div>
+        <div class="detail-dates">Daniel 7:9–14 · The Climax of History</div>
+        <div class="detail-material-badge" style="color:#C9A84C">Eternal Kingdom</div>
+      </div>
+      <div class="detail-body">
+        <div class="section-block">
+          <div class="section-label">The Prophecy</div>
+          <p class="section-text">"I watched till thrones were put in place, and the Ancient of Days was seated; His garment was white as snow, and the hair of His head was like pure wool. His throne was a fiery flame... A river of fire was issuing and coming out from before Him... The court was seated, and the books were opened." And then: "One like the Son of Man, coming with the clouds of heaven... He was given dominion and glory and a kingdom, that all peoples, nations, and languages should serve Him. His dominion is an everlasting dominion, which shall not pass away." <em>(Daniel 7:9–14)</em></p>
+        </div>
+        <div class="section-block">
+          <div class="section-label">What It Means</div>
+          <p class="section-text">Every beast, every empire, every horn — all brought before a heavenly court of justice. The books are opened. The little horn's dominion is stripped away. And then the defining moment: a figure like a Son of Man approaches the Ancient of Days and receives a kingdom that will never end. Unlike every earthly empire — which rose by conquest and fell by conquest — this kingdom is given. No armies. No strategy. A coronation in heaven that ends with a new earth.</p>
+        </div>
+        <div class="christ-block">
+          <div class="christ-label">✦ Christ at the Centre</div>
+          <p class="christ-text">"Son of Man" was Jesus' favourite title for himself — used more than eighty times in the Gospels. When the High Priest demanded "Are you the Christ?" Jesus answered directly: "You will see the Son of Man seated at the right hand of Power, and coming with the clouds of heaven." <em>(Mark 14:62)</em> He was quoting Daniel 7:13. He wasn't being evasive — he was announcing that he was the one Daniel saw approaching the Ancient of Days. The judgment, the kingdom, the dominion — all of it, given to Christ. Every beast that rose falls silent. And he reigns.</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /info-col -->
+</div><!-- /main -->
+
+<!-- ── CLOSING VERSE: edit quote and reference here ── -->
+<div class="closing reveal">
+  <p class="closing-verse">"His dominion is an everlasting dominion, which shall not pass away, and his kingdom one that shall not be destroyed."</p>
+  <div class="closing-ref">Daniel 7:14</div>
+</div>
+
+<script>
+  /* ══ ANIMATED STARFIELD ══ */
+  (function () {
+    const canvas = document.getElementById('starfield');
+    const ctx = canvas.getContext('2d');
+    const STAR_COUNT = 160;
+    let stars = [];
+    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    window.addEventListener('resize', resize); resize();
+    function rnd() {
+      return { x: Math.random()*canvas.width, y: Math.random()*canvas.height,
+        r: Math.random()*1.2+0.3, base: Math.random()*0.5+0.1,
+        speed: Math.random()*0.008+0.003, phase: Math.random()*Math.PI*2,
+        gold: Math.random()<0.06 };
+    }
+    for (let i=0;i<STAR_COUNT;i++) stars.push(rnd());
+    function draw(ts) {
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      const t=ts*0.001;
+      stars.forEach(s => {
+        const a = s.base + Math.sin(t*s.speed*60+s.phase)*(s.base*0.7);
+        ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+        ctx.fillStyle = s.gold ? `rgba(201,168,76,${a})` : `rgba(255,255,255,${a})`;
+        ctx.fill();
+      });
+      requestAnimationFrame(draw);
+    }
+    requestAnimationFrame(draw);
+  })();
+
+  /* ══ SCROLL ENTRANCE ANIMATIONS ══ */
+  (function () {
+    const obs = new IntersectionObserver(entries =>
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view'); }),
+      { threshold: 0.1 }
+    );
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  })();
+
+  /* ══ BEAST INTERACTION ══ */
+  const beasts = ['lion','bear','leopard','beast','horn','throne'];
+
+  const beastMeta = {
+    lion:    { name: 'Babylon' },
+    bear:    { name: 'Medo-Persia' },
+    leopard: { name: 'Greece' },
+    beast:   { name: 'Rome' },
+    horn:    { name: 'Little Horn' },
+    throne:  { name: 'Ancient of Days' },
+  };
+
+  let current = 'lion';
+
+  function selectBeast(b) {
+    if (!beasts.includes(b)) return;
+    current = b;
+
+    const isThrone = b === 'throne';
+    const isHorn   = b === 'horn';
+
+    // Throne scene fade toggle
+    const throneScene = document.getElementById('throne-scene');
+    if (throneScene) {
+      if (isThrone) {
+        throneScene.style.opacity = '0';
+        throneScene.style.display = 'block';
+        requestAnimationFrame(() => {
+          throneScene.style.transition = 'opacity 0.55s ease';
+          throneScene.style.opacity = '1';
+        });
+      } else {
+        throneScene.style.opacity = '0';
+        setTimeout(() => { throneScene.style.display = 'none'; }, 550);
+      }
+    }
+
+    // Beast section states
+    const beastSectionIds = ['lion','bear','leopard','beast'];
+    beastSectionIds.forEach(bid => {
+      const el = document.getElementById('sec-' + bid);
+      if (!el) return;
+      el.classList.remove('active','dimmed');
+      if (isThrone) {
+        el.classList.add('dimmed');
+      } else if (bid === b || (isHorn && bid === 'beast')) {
+        el.classList.add('active');
+      } else {
+        el.classList.add('dimmed');
+      }
+    });
+
+    // Little horn highlight
+    const hornPoly  = document.getElementById('little-horn-poly');
+    const hornEye   = document.getElementById('little-horn-eye');
+    const hornPupil = document.getElementById('little-horn-pupil');
+    if (hornPoly) {
+      if (isHorn) {
+        hornPoly.style.filter  = 'brightness(2.2) drop-shadow(0 0 10px rgba(220,80,110,0.9))';
+        hornEye.style.filter   = 'brightness(2) drop-shadow(0 0 8px rgba(255,200,60,0.9))';
+        hornPupil.style.filter = 'brightness(1.5)';
+        // Pulsing eye animation when horn is active
+        hornEye.style.animation = 'none';
+        setTimeout(() => {
+          hornEye.style.animation = 'horn-eye-pulse 1.8s ease-in-out infinite';
+        }, 50);
+      } else {
+        hornPoly.style.filter  = '';
+        hornEye.style.filter   = '';
+        hornPupil.style.filter = '';
+        hornEye.style.animation = '';
+      }
+    }
+
+    // Beast counter chip
+    const idx = beasts.indexOf(b);
+    const counterEl = document.getElementById('beast-counter');
+    if (counterEl && beastMeta[b]) {
+      counterEl.textContent = `${idx + 1} of ${beasts.length} · ${beastMeta[b].name}`;
+    }
+
+    // Detail cards
+    beasts.forEach(bid => {
+      const card = document.getElementById('card-' + bid);
+      if (card) card.classList.remove('visible');
+    });
+    const activeCard = document.getElementById('card-' + b);
+    if (activeCard) {
+      activeCard.classList.add('visible');
+      if (window.innerWidth < 768) {
+        setTimeout(() => activeCard.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+      }
+    }
+
+    // Nav dots
+    document.querySelectorAll('.nav-dot').forEach(dot => {
+      dot.classList.toggle('active', dot.dataset.b === b);
+    });
+
+    // Progress bar
+    document.getElementById('progress-fill').style.width =
+      ((idx + 1) / beasts.length * 100) + '%';
+  }
+
+  function stepBeast(dir) {
+    const idx = beasts.indexOf(current);
+    selectBeast(beasts[(idx + dir + beasts.length) % beasts.length]);
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') stepBeast(1);
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   stepBeast(-1);
+  });
+
+  // Init
+  selectBeast('lion');
+</script>
+
+</body>
+</html>
