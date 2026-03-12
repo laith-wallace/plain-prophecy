@@ -1,10 +1,10 @@
 {
-  "/robots.txt/route": "app/robots.txt/route.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
   "/sitemap.xml/route": "app/sitemap.xml/route.js",
+  "/robots.txt/route": "app/robots.txt/route.js",
   "/_not-found/page": "app/_not-found/page.js",
+  "/prophet/page": "app/prophet/page.js",
   "/compare/page": "app/compare/page.js",
   "/about/page": "app/about/page.js",
-  "/prophet/page": "app/prophet/page.js",
   "/page": "app/page.js"
 }
