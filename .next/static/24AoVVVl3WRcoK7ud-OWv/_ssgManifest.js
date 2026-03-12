@@ -1,1 +1,0 @@
-self.__SSG_MANIFEST=new Set(["\u002Fstudies\u002F[book]\u002F[lesson]"]);self.__SSG_MANIFEST_CB&&self.__SSG_MANIFEST_CB()

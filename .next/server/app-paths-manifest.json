@@ -1,5 +1,5 @@
 {
-  "/prophet/page": "app/prophet/page.js",
-  "/page": "app/page.js",
-  "/studies/[book]/[lesson]/page": "app/studies/[book]/[lesson]/page.js"
+  "/_not-found/page": "app/_not-found/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/prophet/page": "app/prophet/page.js"
 }
