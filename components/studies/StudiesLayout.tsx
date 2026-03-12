@@ -69,6 +69,10 @@ function StudiesNav() {
 
             return (
               <div key={book.slug} className="studies-sb-book-section">
+                {/* Visual Separator if requested */}
+                {book.hasSeparator && (
+                  <div className="h-[1px] bg-white/10 my-4 mx-4" />
+                )}
                 {/* Book toggle — shows as icon in collapsed mode */}
                 <SidebarMenu>
                   <SidebarMenuItem>

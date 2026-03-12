@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 import type { StudyLesson, StudyBook } from "@/data/studies";
 import type { StudyCardMeta } from "@/data/studyCardMeta";
 import StudyCardFront from "./StudyCardFront";
@@ -12,7 +11,6 @@ interface Props {
   book: StudyBook;
   meta: StudyCardMeta;
   isFlipped: boolean;
-  onFlip: () => void;
   onUnflip: () => void;
 }
 
@@ -21,7 +19,6 @@ export default function StudyCard({
   book,
   meta,
   isFlipped,
-  onFlip,
   onUnflip,
 }: Props) {
   const studyHref = `/studies/${book.slug}/${lesson.slug}`;

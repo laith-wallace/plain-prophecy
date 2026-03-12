@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { StudyBook, StudyLesson } from "@/data/studies";
+import ProphecyQuiz from "./ProphecyQuiz";
 
 interface StudyContentProps {
   book: StudyBook;
@@ -82,6 +83,9 @@ export default function StudyContent({ book, lesson }: StudyContentProps) {
         </div>
         <p className="study-christ-box-body">{lesson.christCentre}</p>
       </div>
+
+      {/* Prophecy Quiz */}
+      <ProphecyQuiz lessonSlug={lesson.slug} />
 
       {/* Footer nav */}
       <footer className="study-footer">

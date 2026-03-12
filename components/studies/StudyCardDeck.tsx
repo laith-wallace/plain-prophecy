@@ -166,10 +166,10 @@ export default function StudyCardDeck({ bookFilter = "all" }: StudyCardDeckProps
           const isFlipped = flippedIndex === lessonIndex;
 
           // Pixel offset from centre
-          let baseX = slot * (cardW + GAP);
+          const baseX = slot * (cardW + GAP);
           let scale = 1;
           let opacity = 1;
-          let zIndex = 10 - Math.abs(slot);
+          const zIndex = 10 - Math.abs(slot);
 
           if (slot === -1) { scale = 0.88; opacity = 0.35; }
           else if (slot === 1) { scale = 0.88; opacity = 0.55; }
@@ -198,7 +198,6 @@ export default function StudyCardDeck({ bookFilter = "all" }: StudyCardDeckProps
                 book={book}
                 meta={meta}
                 isFlipped={isFlipped}
-                onFlip={() => setFlippedIndex(isFlipped ? null : lessonIndex)}
                 onUnflip={() => setFlippedIndex(null)}
               />
             </div>

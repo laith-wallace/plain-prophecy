@@ -11,6 +11,12 @@ export interface StudyCardMeta {
 }
 
 export const studyCardMeta: Record<string, StudyCardMeta> = {
+  "daniel-1": {
+    emoji: "🥗",
+    accentColor: "#0a0a05",
+    shortDescription:
+      "Four teenagers stand trial by fire and food in the heart of pagan Babylon.",
+  },
   "daniel-2": {
     emoji: "🗿",
     accentColor: "#0d0b1f",

@@ -21,6 +21,7 @@ export interface StudyBook {
   title: string;
   icon: string;
   description: string;
+  hasSeparator?: boolean;
   lessons: StudyLesson[];
 }
 
@@ -32,6 +33,42 @@ export const studyBooks: StudyBook[] = [
     description:
       "The prophetic backbone of Scripture — six visions spanning world history from Babylon to the Second Coming.",
     lessons: [
+      {
+        slug: "daniel-1",
+        title: "Daniel 1",
+        scriptureRef: "Daniel 1:1–21",
+        readingTime: 6,
+        keyVerse:
+          "But Daniel resolved that he would not defile himself with the king's food, or with the wine that he drank.",
+        keyVerseRef: "Daniel 1:8",
+        intro:
+          "Taken captive to Babylon, four Hebrew teenagers faced a choice: compromise their consecration to fit in, or risk their lives to remain faithful to God.",
+        sections: [
+          {
+            heading: "The Captivity (vv. 1–4)",
+            body: "In 605 BC, Nebuchadnezzar besieged Jerusalem and carried away the finest of the royal family and nobility. Among them were Daniel, Hananiah, Mishael, and Azariah. They were taken to Babylon to be integrated into Chaldean culture, literature, and statecraft. Their names were changed to reflect Babylonian deities — an attempt to erase their identity and allegiance to the God of Israel.",
+          },
+          {
+            heading: "The King's Meat (vv. 5–7)",
+            body: "The king appointed for them a daily provision of his own food and wine. This was not merely a dietary change; eating from the king's table implied covenantal loyalty and relied on food previously offered to idols. To accept it was to accept assimilation and acknowledge Babylon's gods as supreme.",
+          },
+          {
+            heading: "The 10-Day Test (vv. 8–16)",
+            body: "Daniel 'purposed in his heart' not to defile himself. He respectfully requested a diet of pulse (vegetables/legumes) and water. The chief eunuch feared for his head if the youths appeared emaciated. Daniel proposed a 10-day test. The result? They appeared better and healthier than all the Chaldean youths. Their physical health was a visible manifestation of their spiritual fidelity.",
+          },
+          {
+            heading: "Ten Times Wiser (vv. 17–21)",
+            body: "God gave them singular learning and skill. At their graduation three years later, Nebuchadnezzar found them 'ten times better' than all the magicians and enchanters in his realm. Daniel's influence would span the entire duration of the Babylonian empire and into the Medo-Persian era (v.21).",
+          },
+        ],
+        christCentre:
+          "Daniel entered the darkest place on earth — the heart of pagan Babylon — and lived an undefiled life. He was a captive who became a counselor to kings. In this, he points to Jesus, who entered a world captive to sin, remained completely undefiled by its temptations, and was elevated to the right hand of the Majesty on high. Like Daniel's test, our true loyalty is tested not in the grand moments, but in our daily, unseen choices.",
+        nextLesson: {
+          book: "daniel",
+          lesson: "daniel-2",
+          title: "Daniel 2",
+        },
+      },
       {
         slug: "daniel-2",
         title: "Daniel 2",
@@ -327,6 +364,59 @@ export const studyBooks: StudyBook[] = [
       },
     ],
   },
+  {
+    slug: "gospel",
+    title: "The Gospel",
+    icon: "✝️",
+    description: "The core message of the Bible — Jesus Christ and him crucified.",
+    hasSeparator: true,
+    lessons: [
+      {
+        slug: "love-for-god",
+        title: "Love for God",
+        scriptureRef: "1 John 4:19",
+        readingTime: 0,
+        keyVerse: "We love because he first loved us.",
+        keyVerseRef: "1 John 4:19",
+        intro: "",
+        sections: [],
+        christCentre: ""
+      },
+      {
+        slug: "righteousness-by-faith",
+        title: "Righteousness by Faith",
+        scriptureRef: "Romans 4:3",
+        readingTime: 0,
+        keyVerse: "Abraham believed God, and it was counted to him as righteousness.",
+        keyVerseRef: "Romans 4:3",
+        intro: "",
+        sections: [],
+        christCentre: ""
+      },
+      {
+        slug: "the-resurrection",
+        title: "The Resurrection",
+        scriptureRef: "1 Corinthians 15:17,20",
+        readingTime: 0,
+        keyVerse: "If Christ has not been raised, your faith is futile... But in fact Christ has been raised from the dead.",
+        keyVerseRef: "1 Corinthians 15:17,20",
+        intro: "",
+        sections: [],
+        christCentre: ""
+      },
+      {
+        slug: "jesus-at-the-centre",
+        title: "Jesus at the Centre",
+        scriptureRef: "John 5:39",
+        readingTime: 0,
+        keyVerse: "These are the Scriptures that testify about me.",
+        keyVerseRef: "John 5:39",
+        intro: "",
+        sections: [],
+        christCentre: ""
+      }
+    ]
+  }
 ];
 
 export function findLesson(
