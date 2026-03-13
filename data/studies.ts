@@ -1,6 +1,17 @@
+export interface StudySectionContent {
+  label: string;
+  text: string;
+}
+
 export interface StudySection {
+  id?: string;
+  era?: string;
+  badge?: string;
   heading: string;
   body: string;
+  contentBlocks?: StudySectionContent[];
+  christCentre?: string;
+  keyVerse?: { text: string; ref: string };
 }
 
 export interface StudyLesson {
@@ -81,17 +92,83 @@ export const studyBooks: StudyBook[] = [
           "Nebuchadnezzar's dream of a colossal statue is the first and most accessible of Daniel's visions. It maps world history in four metals — and ends with the only kingdom that never falls.",
         sections: [
           {
-            heading: "The Dream (vv. 31–35)",
-            body: "Nebuchadnezzar saw a great image: head of fine gold, chest and arms of silver, belly and thighs of bronze, legs of iron, feet of iron mixed with clay. A stone cut without human hands struck the feet, shattered the entire statue, and became a mountain that filled the whole earth. The king forgot the dream — only Daniel, by divine revelation, could both recall and interpret it.",
+            id: "gold",
+            era: "605 – 539 BC",
+            badge: "Gold",
+            heading: "Babylon",
+            body: "",
+            contentBlocks: [
+              { label: "The Prophecy", text: "\"You are the head of gold.\" Daniel told Nebuchadnezzar directly — his empire was the first kingdom represented in the dream. Babylon stood alone at the top, the most glorious of all the kingdoms to follow. (Daniel 2:38)" },
+              { label: "History Confirms", text: "Babylon under Nebuchadnezzar was the dominant world empire from 605–539 BC. Herodotus wrote of its astounding wealth — gold-covered temples, gold statues, palaces lined with gold. The Ishtar Gate remains one of the wonders of the ancient world. Babylon fell exactly as Daniel described: in a single night, to the Medes and Persians (Daniel 5)." }
+            ],
+            christCentre: "Daniel himself was brought to Babylon as a captive teenager. The God who ruled over Nebuchadnezzar's golden empire was already preserving the line that would lead to Christ — and giving Daniel the wisdom to interpret what no one else could see.",
+            keyVerse: { text: "\"You are the head of gold.\"", ref: "Daniel 2:38" }
           },
           {
-            heading: "The Four Kingdoms (vv. 36–43)",
-            body: "Daniel interprets each metal as a world empire in sequence. Babylon (gold, 605–539 BC) was the head — the greatest single-ruler empire of the ancient world. Medo-Persia (silver, 539–331 BC) rose next, lopsided like the bear of Daniel 7. Greece (bronze, 331–168 BC) swept the known world under Alexander, then fragmented. Rome (iron, 168 BC–476 AD) crushed all opposition — and then never reunified. The feet of iron mixed with clay represent the divided nations of Europe: strong in parts, fragile in mixture. 'They will not hold together' (v.43) — Napoleon tried, Hitler tried, the EU still tries. None have succeeded.",
+            id: "silver",
+            era: "539 – 331 BC",
+            badge: "Silver",
+            heading: "Medo-Persia",
+            body: "",
+            contentBlocks: [
+              { label: "The Prophecy", text: "\"After you shall arise another kingdom inferior to yours.\" The two arms point to the dual nature of this empire — Medes and Persians ruling together. Silver is valuable but less so than gold: the empire was vast but more bureaucratic, more diffuse. (Daniel 2:39)" },
+              { label: "History Confirms", text: "Cyrus the Great of Persia conquered Babylon in 539 BC — the very night of Belshazzar's feast (Daniel 5). The Medo-Persian empire stretched from India to Ethiopia, with 127 provinces. Notably, Cyrus immediately freed the Jewish captives and financed the rebuilding of Jerusalem's temple. The two-armed nature of the empire perfectly maps to its dual Medo-Persian leadership." }
+            ],
+            christCentre: "It was under Medo-Persian authority that the decree went out to restore Jerusalem — starting the prophetic 70-Week countdown that would end at the exact year of Jesus' baptism (Ezra 7; Daniel 9). Cyrus is even named by Isaiah 150 years before he was born as God's instrument for this. (Isaiah 44:28)",
+            keyVerse: { text: "\"After you shall arise another kingdom inferior to yours.\"", ref: "Daniel 2:39" }
           },
           {
-            heading: "The Eternal Kingdom (vv. 44–45)",
-            body: "The stone cut without hands is the climax. It destroys the image in its final form (the divided nations) and fills the earth. This is no human kingdom established by military conquest. The phrase 'cut without hands' is a deliberate echo of the virgin birth — no human dynasty, no political machinery. The kingdom of God comes by divine initiative, not human effort.",
+            id: "bronze",
+            era: "331 – 168 BC",
+            badge: "Bronze",
+            heading: "Greece",
+            body: "",
+            contentBlocks: [
+              { label: "The Prophecy", text: "\"A third kingdom of bronze, which shall rule over all the earth.\" Bronze was the metal of Greek warfare — their soldiers wore it into battle. The thighs suggest speed and power. This empire would be characterised by conquest across the known world. (Daniel 2:39)" },
+              { label: "History Confirms", text: "Alexander the Great conquered Persia by 331 BC at just 25 years old. He marched an army from Greece to India in a decade — the fastest territorial expansion in ancient history. His soldiers famously wore bronze armour. After his death in 323 BC, his empire split among four generals, exactly mirroring the imagery in Daniel 8. Greece dominated Judea, forcing Hellenistic culture on the Jewish people." }
+            ],
+            christCentre: "Greek conquest spread one common language — Koine Greek — across the entire known world. This was the language the New Testament would be written in, and the Septuagint (the Greek Old Testament) would be translated into. God used the Greek empire to prepare the communication network for the Gospel.",
+            keyVerse: { text: "\"A third kingdom of bronze, which shall rule over all the earth.\"", ref: "Daniel 2:39" }
           },
+          {
+            id: "iron",
+            era: "168 BC – 476 AD",
+            badge: "Iron",
+            heading: "Rome",
+            body: "",
+            contentBlocks: [
+              { label: "The Prophecy", text: "\"A fourth kingdom, strong as iron, because iron breaks in pieces and shatters all things.\" No imagery of inferiority here — iron is described as the most powerful material. And two legs: Rome would eventually split. (Daniel 2:40)" },
+              { label: "History Confirms", text: "Rome is history's most iron-accurate empire. They built roads, aqueducts, and legal systems that still shape Western civilisation. Their two legs became literal — the Western Roman Empire fell in 476 AD, while the Eastern (Byzantine) Empire continued until 1453 AD. Rome crushed every kingdom before it. And it was under Roman rule — in the reign of Caesar Augustus — that Jesus was born. (Luke 2:1)" }
+            ],
+            christCentre: "Jesus was crucified by Rome. The Roman road system carried the first apostles across the empire in decades. Roman law gave Paul his right of appeal to Caesar. Rome, the iron empire, was the unwitting infrastructure for the spread of the Gospel to the world.",
+            keyVerse: { text: "\"Strong as iron, because iron breaks in pieces and shatters all things.\"", ref: "Daniel 2:40" }
+          },
+          {
+            id: "clay",
+            era: "476 AD – Present",
+            badge: "Iron & Clay",
+            heading: "Divided Europe",
+            body: "",
+            contentBlocks: [
+              { label: "The Prophecy", text: "\"The feet and toes, partly of potter's clay and partly of iron, it shall be a divided kingdom.\" The mixture of iron and clay that won't bond: these kingdoms will be partly strong, partly brittle. Intermarriage will be attempted but won't hold them together. (Daniel 2:41–43)" },
+              { label: "History Confirms", text: "After Rome fell in 476 AD, Europe fragmented into the Germanic kingdoms — the Visigoths, Ostrogoths, Franks, Vandals, and others. Every attempt to re-unify Europe has ultimately failed: Charlemagne, Napoleon, Hitler — all fell short. European royalty spent centuries intermarrying to create political alliances (the iron trying to mix with clay), and none of it lasted. Europe remains divided to this day, exactly as prophesied." }
+            ],
+            christCentre: "The prophecy says no human power will unite these kingdoms. The next unifying event in Daniel's vision is the Stone — not a politician or a general, but Christ himself. We are living in the age of the feet right now. The next event in this prophecy is the Second Coming.",
+            keyVerse: { text: "\"As the toes of the feet were partly iron and partly clay, so the kingdom shall be partly strong and partly brittle.\"", ref: "Daniel 2:42" }
+          },
+          {
+            id: "stone",
+            era: "The Second Coming → Eternity",
+            badge: "Cut Without Hands",
+            heading: "Christ's Eternal Kingdom",
+            body: "",
+            contentBlocks: [
+              { label: "The Prophecy", text: "\"A stone was cut out by no human hand, and it struck the image on its feet of iron and clay, and broke them in pieces.\" The stone then became a mountain that filled the whole earth. This kingdom is not built by human effort — it arrives from outside history entirely. (Daniel 2:34–35, 44–45)" },
+              { label: "What It Means", text: "Every previous kingdom succeeded through military conquest, political strategy, or intermarriage. The Stone kingdom is different: it is \"cut without human hands.\" It doesn't defeat the other kingdoms by playing by their rules — it replaces the entire system. The five kingdoms become \"like the chaff of the summer threshing floors\" and the Stone becomes a mountain filling the whole earth." }
+            ],
+            christCentre: "Jesus called himself \"the stone the builders rejected\" (Matthew 21:42). Paul calls him \"the chief cornerstone\" (Ephesians 2:20). Peter calls him \"a living stone\" (1 Peter 2:4). The Stone in Daniel 2 is not a symbol that needs decoding — the New Testament is emphatic. Christ's kingdom will be the final one, and it will never be destroyed. (Daniel 2:44)",
+            keyVerse: { text: "\"The God of heaven will set up a kingdom that shall never be destroyed… it shall stand forever.\"", ref: "Daniel 2:44" }
+          }
         ],
         christCentre:
           "The stone is Christ — born of a virgin (cut without human hands), rejected by the builders (Ps 118:22; Matt 21:42), but destined to fill the earth. Every empire in this vision rises and falls. Only one is described as eternal (v.44). Daniel 2 is not principally about geopolitics — it is a Christological proclamation. The God of heaven had a plan before Babylon's first king sat on a throne, and it ends with Jesus.",

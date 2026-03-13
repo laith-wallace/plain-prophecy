@@ -491,10 +491,265 @@
 }.__variable_46fe82 {--font-ibm-plex-mono: 'IBM Plex Mono', 'IBM Plex Mono Fallback'
 }
 
+/*!********************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./app/study-template.css ***!
+  \********************************************************************************************************************************************************************************************************************************************************************/
+/* ── Interactive Study Template Styles ── */
+
+.study-template-root {
+  --gold: #C9A84C;
+  --gold-light: #F0D080;
+  --silver: #A8B8C8;
+  --bronze: #A0673A;
+  --iron: #6A7A8A;
+  --clay: #8A6A5A;
+  --stone: #E8E0D0;
+  --bg: #08080F;
+  --panel: rgba(255,255,255,0.04);
+  --border: rgba(255,255,255,0.08);
+}
+
+.study-main {
+  position: relative;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 16px 80px;
+}
+
+@media (min-width: 768px) {
+  .study-main {
+    grid-template-columns: 340px 1fr;
+    gap: 40px;
+    align-items: start;
+    padding: 0 32px 80px;
+  }
+}
+
+/* ── Visual column ── */
+.visual-col {
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .visual-col { position: sticky; top: 24px; }
+}
+
+.visual-label {
+  text-align: center;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  margin-bottom: 16px;
+}
+
+.visual-wrap {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+/* Interactive SVG sections */
+.interactive-section {
+  cursor: pointer;
+  transition: filter 0.2s ease, opacity 0.2s ease;
+}
+.interactive-section:hover { filter: brightness(1.3); }
+.interactive-section.active { filter: brightness(1.4) drop-shadow(0 0 12px currentColor); }
+.interactive-section.dimmed { opacity: 0.35; filter: saturate(0.4); }
+
+.stone-section {
+  cursor: pointer;
+  transition: filter 0.2s ease, opacity 0.2s ease;
+}
+.stone-section:hover { filter: brightness(1.2); }
+.stone-section.active { filter: brightness(1.3) drop-shadow(0 0 16px rgba(232,224,208,0.8)); }
+.stone-section.dimmed { opacity: 0.35; filter: saturate(0.4); }
+
+/* ── Info panel column ── */
+.content-col {
+  padding-top: 8px;
+}
+
+.prompt-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.prompt-icon { font-size: 32px; margin-bottom: 10px; }
+.prompt-text {
+  font-size: 14px; color: rgba(255,255,255,0.5);
+  line-height: 1.6;
+}
+.prompt-hint {
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--gold);
+  opacity: 0.7;
+  letter-spacing: 0.05em;
+}
+
+/* Detail card */
+.detail-card {
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.detail-header {
+  padding: 24px 24px 20px;
+  position: relative;
+}
+
+.detail-era {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  margin-bottom: 6px;
+  opacity: 0.7;
+}
+
+.detail-title {
+  font-family: 'Cinzel', serif;
+  font-size: 26px; font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+
+.detail-dates {
+  font-size: 12px;
+  opacity: 0.6;
+  font-weight: 300;
+}
+
+.detail-badge {
+  position: absolute;
+  top: 24px; right: 24px;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid currentColor;
+  opacity: 0.7;
+}
+
+.detail-body { padding: 0 24px 24px; }
+
+.section-block {
+  margin-bottom: 20px;
+}
+
+.section-label {
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  margin-bottom: 8px;
+}
+
+.section-text {
+  font-size: 14px; line-height: 1.7;
+  color: rgba(255,255,255,0.8);
+}
+
+.christ-block {
+  background: rgba(255,255,255,0.05);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 12px 12px 0;
+  padding: 14px 16px;
+}
+
+.christ-label {
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.christ-text {
+  font-size: 14px; line-height: 1.7;
+  color: rgba(255,255,255,0.85);
+}
+
+/* Nav dots */
+.nav-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+  padding-bottom: 8px;
+}
+
+.nav-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: transparent;
+}
+
+.nav-dot.active {
+  background: var(--gold);
+  border-color: var(--gold);
+  transform: scale(1.2);
+}
+
+/* Progress strip */
+.progress-strip {
+  height: 2px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 1px;
+  margin-bottom: 32px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--gold);
+  border-radius: 1px;
+  transition: width 0.5s ease;
+}
+
+/* Controls row (for Daniel 7) */
+.controls-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.nav-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: #fff;
+  border-radius: 50%;
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-btn:hover:not(:disabled) {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.3);
+}
+
+.nav-btn:disabled {
+  opacity: 0.3; cursor: not-allowed;
+}
+
 /*!*************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./app/globals.css ***!
   \*************************************************************************************************************************************************************************************************************************************************************/
-/* shadcn CSS vars loaded below — tw-animate-css and shadcn/tailwind.css imports removed (Tailwind v3 incompatible) */
 *, ::before, ::after {
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
@@ -548,6 +803,7 @@
   --tw-contain-paint:  ;
   --tw-contain-style:  ;
 }
+
 ::backdrop {
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
@@ -600,12 +856,13 @@
   --tw-contain-layout:  ;
   --tw-contain-paint:  ;
   --tw-contain-style:  ;
-}
-/* ! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com */
-/*
+}/*
+! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com
+*//*
 1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
 2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
 */
+
 *,
 ::before,
 ::after {
@@ -614,10 +871,12 @@
   border-style: solid; /* 2 */
   border-color: #e5e7eb; /* 2 */
 }
+
 ::before,
 ::after {
   --tw-content: '';
 }
+
 /*
 1. Use a consistent sensible line-height in all browsers.
 2. Prevent adjustments of font size after orientation changes in iOS.
@@ -627,6 +886,7 @@
 6. Use the user's configured `sans` font-variation-settings by default.
 7. Disable tap highlights on iOS
 */
+
 html,
 :host {
   line-height: 1.5; /* 1 */
@@ -639,34 +899,42 @@ html,
   font-variation-settings: normal; /* 6 */
   -webkit-tap-highlight-color: transparent; /* 7 */
 }
+
 /*
 1. Remove the margin in all browsers.
 2. Inherit line-height from `html` so users can set them as a class directly on the `html` element.
 */
+
 body {
   margin: 0; /* 1 */
   line-height: inherit; /* 2 */
 }
+
 /*
 1. Add the correct height in Firefox.
 2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
 3. Ensure horizontal rules are visible by default.
 */
+
 hr {
   height: 0; /* 1 */
   color: inherit; /* 2 */
   border-top-width: 1px; /* 3 */
 }
+
 /*
 Add the correct text decoration in Chrome, Edge, and Safari.
 */
+
 abbr:where([title]) {
   -webkit-text-decoration: underline dotted;
           text-decoration: underline dotted;
 }
+
 /*
 Remove the default font size and weight for headings.
 */
+
 h1,
 h2,
 h3,
@@ -676,26 +944,32 @@ h6 {
   font-size: inherit;
   font-weight: inherit;
 }
+
 /*
 Reset links to optimize for opt-in styling instead of opt-out.
 */
+
 a {
   color: inherit;
   text-decoration: inherit;
 }
+
 /*
 Add the correct font weight in Edge and Safari.
 */
+
 b,
 strong {
   font-weight: bolder;
 }
+
 /*
 1. Use the user's configured `mono` font-family by default.
 2. Use the user's configured `mono` font-feature-settings by default.
 3. Use the user's configured `mono` font-variation-settings by default.
 4. Correct the odd `em` font sizing in all browsers.
 */
+
 code,
 kbd,
 samp,
@@ -705,15 +979,19 @@ pre {
   font-variation-settings: normal; /* 3 */
   font-size: 1em; /* 4 */
 }
+
 /*
 Add the correct font size in all browsers.
 */
+
 small {
   font-size: 80%;
 }
+
 /*
 Prevent `sub` and `sup` elements from affecting the line height in all browsers.
 */
+
 sub,
 sup {
   font-size: 75%;
@@ -721,27 +999,33 @@ sup {
   position: relative;
   vertical-align: baseline;
 }
+
 sub {
   bottom: -0.25em;
 }
+
 sup {
   top: -0.5em;
 }
+
 /*
 1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)
 2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)
 3. Remove gaps between table borders by default.
 */
+
 table {
   text-indent: 0; /* 1 */
   border-color: inherit; /* 2 */
   border-collapse: collapse; /* 3 */
 }
+
 /*
 1. Change the font styles in all browsers.
 2. Remove the margin in Firefox and Safari.
 3. Remove default padding in all browsers.
 */
+
 button,
 input,
 optgroup,
@@ -758,17 +1042,21 @@ textarea {
   margin: 0; /* 2 */
   padding: 0; /* 3 */
 }
+
 /*
 Remove the inheritance of text transform in Edge and Firefox.
 */
+
 button,
 select {
   text-transform: none;
 }
+
 /*
 1. Correct the inability to style clickable types in iOS and Safari.
 2. Remove default button styles.
 */
+
 button,
 input:where([type='button']),
 input:where([type='reset']),
@@ -777,62 +1065,80 @@ input:where([type='submit']) {
   background-color: transparent; /* 2 */
   background-image: none; /* 2 */
 }
+
 /*
 Use the modern Firefox focus style for all focusable elements.
 */
+
 :-moz-focusring {
   outline: auto;
 }
+
 /*
 Remove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737)
 */
+
 :-moz-ui-invalid {
   box-shadow: none;
 }
+
 /*
 Add the correct vertical alignment in Chrome and Firefox.
 */
+
 progress {
   vertical-align: baseline;
 }
+
 /*
 Correct the cursor style of increment and decrement buttons in Safari.
 */
+
 ::-webkit-inner-spin-button,
 ::-webkit-outer-spin-button {
   height: auto;
 }
+
 /*
 1. Correct the odd appearance in Chrome and Safari.
 2. Correct the outline style in Safari.
 */
+
 [type='search'] {
   -webkit-appearance: textfield; /* 1 */
   outline-offset: -2px; /* 2 */
 }
+
 /*
 Remove the inner padding in Chrome and Safari on macOS.
 */
+
 ::-webkit-search-decoration {
   -webkit-appearance: none;
 }
+
 /*
 1. Correct the inability to style clickable types in iOS and Safari.
 2. Change font properties to `inherit` in Safari.
 */
+
 ::-webkit-file-upload-button {
   -webkit-appearance: button; /* 1 */
   font: inherit; /* 2 */
 }
+
 /*
 Add the correct display in Chrome and Safari.
 */
+
 summary {
   display: list-item;
 }
+
 /*
 Removes the default spacing and border for appropriate elements.
 */
+
 blockquote,
 dl,
 dd,
@@ -848,13 +1154,16 @@ p,
 pre {
   margin: 0;
 }
+
 fieldset {
   margin: 0;
   padding: 0;
 }
+
 legend {
   padding: 0;
 }
+
 ol,
 ul,
 menu {
@@ -862,49 +1171,60 @@ menu {
   margin: 0;
   padding: 0;
 }
+
 /*
 Reset default styling for dialogs.
 */
 dialog {
   padding: 0;
 }
+
 /*
 Prevent resizing textareas horizontally by default.
 */
+
 textarea {
   resize: vertical;
 }
+
 /*
 1. Reset the default placeholder opacity in Firefox. (https://github.com/tailwindlabs/tailwindcss/issues/3300)
 2. Set the default placeholder color to the user's configured gray 400 color.
 */
+
 input::-moz-placeholder, textarea::-moz-placeholder {
   opacity: 1; /* 1 */
   color: #9ca3af; /* 2 */
 }
+
 input::placeholder,
 textarea::placeholder {
   opacity: 1; /* 1 */
   color: #9ca3af; /* 2 */
 }
+
 /*
 Set the default cursor for buttons.
 */
+
 button,
 [role="button"] {
   cursor: pointer;
 }
+
 /*
 Make sure disabled buttons don't get the pointer cursor.
 */
 :disabled {
   cursor: default;
 }
+
 /*
 1. Make replaced elements `display: block` by default. (https://github.com/mozdevs/cssremedy/issues/14)
 2. Add `vertical-align: middle` to align replaced elements more sensibly by default. (https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210)
    This can trigger a poorly considered lint error in some tools but is included by design.
 */
+
 img,
 svg,
 video,
@@ -916,19 +1236,22 @@ object {
   display: block; /* 1 */
   vertical-align: middle; /* 2 */
 }
+
 /*
 Constrain images and videos to the parent width and preserve their intrinsic aspect ratio. (https://github.com/mozdevs/cssremedy/issues/14)
 */
+
 img,
 video {
   max-width: 100%;
   height: auto;
 }
+
 /* Make elements with the HTML hidden attribute stay hidden by default */
 [hidden]:where(:not([hidden="until-found"])) {
   display: none;
 }
-:root {
+  :root {
         --background: oklch(1 0 0);
         --foreground: oklch(0.145 0 0);
         --card: oklch(1 0 0);
@@ -1072,6 +1395,9 @@ video {
 }
 .block {
   display: block;
+}
+.inline {
+  display: inline;
 }
 .flex {
   display: flex;
@@ -1226,6 +1552,7 @@ video {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 @keyframes pulse {
+
   50% {
     opacity: .5;
   }
@@ -1234,6 +1561,7 @@ video {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 @keyframes spin {
+
   to {
     transform: rotate(360deg);
   }
@@ -6312,61 +6640,78 @@ body {
   top: 0.25rem;
 }
 @media (min-width: 640px) {
+
   .sm\:flex {
     display: flex;
   }
+
   .sm\:py-32 {
     padding-top: 8rem;
     padding-bottom: 8rem;
   }
+
   .data-\[side\=left\]\:sm\:max-w-sm[data-side="left"] {
     max-width: 24rem;
   }
+
   .data-\[side\=right\]\:sm\:max-w-sm[data-side="right"] {
     max-width: 24rem;
   }
 }
 @media (min-width: 768px) {
+
   .md\:block {
     display: block;
   }
+
   .md\:flex {
     display: flex;
   }
+
   .md\:p-12 {
     padding: 3rem;
   }
+
   .md\:text-2xl {
     font-size: 1.5rem;
     line-height: 2rem;
   }
+
   .md\:text-5xl {
     font-size: 3rem;
     line-height: 1;
   }
+
   .md\:text-sm {
     font-size: 0.875rem;
     line-height: 1.25rem;
   }
+
   .md\:opacity-0 {
     opacity: 0;
   }
+
   .md\:after\:hidden::after {
     content: var(--tw-content);
     display: none;
   }
+
   .peer[data-variant="inset"] ~ .md\:peer-data-\[variant\=inset\]\:m-2 {
     margin: 0.5rem;
   }
+
   .peer[data-variant="inset"] ~ .md\:peer-data-\[variant\=inset\]\:ml-0 {
     margin-left: 0px;
   }
+
   .peer[data-variant="inset"][data-state="collapsed"] ~ .md\:peer-data-\[variant\=inset\]\:peer-data-\[state\=collapsed\]\:ml-2 {
     margin-left: 0.5rem;
   }
+
   .peer[data-variant="inset"] ~ .md\:peer-data-\[variant\=inset\]\:rounded-xl {
     border-radius: 0.75rem;
   }
+
   .peer[data-variant="inset"] ~ .md\:peer-data-\[variant\=inset\]\:shadow-sm {
     --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
@@ -6374,6 +6719,7 @@ body {
   }
 }
 @media (min-width: 1024px) {
+
   .lg\:text-6xl {
     font-size: 3.75rem;
     line-height: 1;

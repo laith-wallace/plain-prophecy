@@ -1,7 +1,8 @@
-/* shadcn CSS vars loaded below — tw-animate-css and shadcn/tailwind.css imports removed (Tailwind v3 incompatible) */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import "./study-template.css";
 
 :root {
     --ink: #0f0e0c;
