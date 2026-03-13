@@ -3405,6 +3405,7 @@ body {
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
   transition: transform 0.42s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 24px;
 }
@@ -3427,7 +3428,10 @@ body {
   border-radius: 24px;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  overflow: hidden;
+}
+
+.sc-face--front {
+  transform: rotateY(0deg);
 }
 
 .sc-face--back {
