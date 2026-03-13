@@ -103,8 +103,9 @@ export default function RootLayout({
     <html
       lang="en"
       className={cn(playfair.variable, ibmPlexSans.variable, ibmPlexMono.variable, "font-sans", geist.variable)}
+      suppressHydrationWarning
     >
-      <body className="antialiased">
+      <body className="antialiased" suppressHydrationWarning>
         <ConvexClientProvider>
           <SiteNav />
           {children}

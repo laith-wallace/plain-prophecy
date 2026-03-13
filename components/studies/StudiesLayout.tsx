@@ -73,46 +73,47 @@ function StudiesNav() {
                 {book.hasSeparator && (
                   <div className="h-[1px] bg-white/10 my-4 mx-4" />
                 )}
-                {/* Book toggle — shows as icon in collapsed mode */}
+                
                 <SidebarMenu>
                   <SidebarMenuItem>
+                    {/* Book toggle — shows as icon in collapsed mode */}
                     <SidebarMenuButton
                       isActive={bookActive}
-                      tooltip={book.title}
+                      title={book.title}
                       className="studies-book-btn"
                       onClick={() => handleBookClick(book.slug)}
                     >
-                      {/* Icon slot — visible in both expanded and collapsed */}
-                      <span className="studies-book-icon-24" aria-hidden="true">{book.icon}</span>
-                      {/* Text — hidden in collapsed icon mode via shadcn's truncate */}
-                      <span className="studies-book-label">
-                        {book.title}
-                        <span className={`studies-book-chevron ${isExpanded ? "studies-book-chevron--open" : ""}`}>›</span>
-                      </span>
+                      <div className="flex items-center gap-2">
+                        <span className="studies-book-icon-24" aria-hidden="true">{book.icon}</span>
+                        <span className="studies-book-label">{book.title}</span>
+                      </div>
+                      <span className={`studies-book-chevron ${isExpanded ? "studies-book-chevron--open" : ""}`}>›</span>
                     </SidebarMenuButton>
+
+                    {/* Lesson links — nested under the Book item */}
+                    {isExpanded && (
+                      <div className="pl-4 mt-1">
+                        <SidebarMenu className="studies-lessons-list border-l border-white/10 ml-[23px]">
+                          {book.lessons.map((lesson) => {
+                            const href = `/studies/${book.slug}/${lesson.slug}`;
+                            const isActive = pathname === href;
+                            return (
+                              <SidebarMenuItem key={lesson.slug} className="studies-lesson-item ml-[-1px]">
+                                <Link
+                                  href={href}
+                                  className={`studies-lesson-link ${isActive ? "studies-lesson-link--active" : ""}`}
+                                >
+                                  <span className="studies-lesson-dot" aria-hidden="true">·</span>
+                                  <span>{lesson.title}</span>
+                                </Link>
+                              </SidebarMenuItem>
+                            );
+                          })}
+                        </SidebarMenu>
+                      </div>
+                    )}
                   </SidebarMenuItem>
                 </SidebarMenu>
-
-                {/* Lesson links — hidden in collapsed mode */}
-                {isExpanded && (
-                  <SidebarMenu className="studies-lessons-list">
-                    {book.lessons.map((lesson) => {
-                      const href = `/studies/${book.slug}/${lesson.slug}`;
-                      const isActive = pathname === href;
-                      return (
-                        <SidebarMenuItem key={lesson.slug} className="studies-lesson-item">
-                          <Link
-                            href={href}
-                            className={`studies-lesson-link ${isActive ? "studies-lesson-link--active" : ""}`}
-                          >
-                            <span className="studies-lesson-dot" aria-hidden="true">·</span>
-                            <span>{lesson.title}</span>
-                          </Link>
-                        </SidebarMenuItem>
-                      );
-                    })}
-                  </SidebarMenu>
-                )}
               </div>
             );
           })}
@@ -123,7 +124,7 @@ function StudiesNav() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
-              tooltip="Studies Home"
+              title="Studies Home"
               isActive={pathname === "/studies"}
               className="studies-book-btn"
               onClick={() => router.push("/studies")}

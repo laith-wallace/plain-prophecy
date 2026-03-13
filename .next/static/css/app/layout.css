@@ -747,6 +747,136 @@
   opacity: 0.3; cursor: not-allowed;
 }
 
+/* ── Sidebar & Layout Overrides ── */
+
+/* Force dark theme for the overall studies layout including Shadcn Sidebar */
+.studies-root {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+.studies-content {
+  background: #000000 !important;
+  color: #ffffff !important;
+  min-height: 100vh;
+}
+
+/* Sidebar Header */
+.studies-sb-header {
+  padding: 1.5rem 1.25rem 1rem;
+}
+.studies-sb-brand-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.studies-sb-brand {
+  display: flex;
+  flex-direction: column;
+}
+.studies-sb-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+}
+.studies-sb-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+/* Sidebar Nav */
+.studies-nav {
+  padding: 0.5rem 0;
+}
+.studies-sb-book-section {
+  margin-bottom: 0.25rem;
+}
+.studies-book-btn {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+.studies-book-icon-24 {
+  font-size: 1.1rem;
+}
+.studies-book-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.studies-book-chevron {
+  font-size: 1.2rem;
+  color: rgba(255,255,255,0.6);
+  transition: transform 0.2s;
+}
+.studies-book-chevron--open {
+  transform: rotate(90deg);
+}
+
+/* Lesson Links */
+.studies-lessons-list {
+  padding-bottom: 0.5rem;
+}
+/* Ensure the wrapping Menu Items have no strange default padding */
+.studies-lessons-list li {
+  margin: 0;
+  padding: 0;
+}
+.studies-lesson-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1rem 0.4rem 2.25rem;
+  text-decoration: none;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.8rem;
+  transition: background 0.15s, color 0.15s;
+  border-left: 2px solid transparent;
+}
+.studies-lesson-link:hover {
+  background: var(--sidebar-accent);
+  color: var(--sidebar-accent-foreground);
+}
+.studies-lesson-link--active {
+  border-left-color: var(--sidebar-primary);
+  font-weight: 600;
+  background: var(--sidebar-ring); /* slightly stronger gold background */
+}
+.studies-lesson-dot {
+  font-size: 1.2rem;
+  line-height: 1;
+  opacity: 0.6;
+}
+.studies-lesson-link--active .studies-lesson-dot {
+  color: var(--sidebar-primary);
+  opacity: 1;
+}
+
+/* Footer */
+.studies-sb-footer {
+  padding: 1rem 1.25rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.studies-sb-coming-soon {
+  display: block;
+  margin-top: 0.5rem;
+  text-align: center;
+  color: rgba(255,255,255,0.5) !important;
+}
+.studies-sidebar-footer-text {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+}
+
 /*!*************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./app/globals.css ***!
   \*************************************************************************************************************************************************************************************************************************************************************/
@@ -1393,6 +1523,15 @@ video {
 .mt-auto {
   margin-top: auto;
 }
+.ml-\[-1px\] {
+  margin-left: -1px;
+}
+.ml-\[23px\] {
+  margin-left: 23px;
+}
+.mt-1 {
+  margin-top: 0.25rem;
+}
 .block {
   display: block;
 }
@@ -1620,11 +1759,6 @@ video {
 .overflow-hidden {
   overflow: hidden;
 }
-.truncate {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
 .whitespace-nowrap {
   white-space: nowrap;
 }
@@ -1668,6 +1802,9 @@ video {
 .border-\[\#C9A84C\]\/50 {
   border-color: rgb(201 168 76 / 0.5);
 }
+.border-sidebar-border {
+  border-color: var(--sidebar-border);
+}
 .border-transparent {
   border-color: transparent;
 }
@@ -1683,6 +1820,12 @@ video {
 }
 .bg-black\/10 {
   background-color: rgb(0 0 0 / 0.1);
+}
+.bg-sidebar {
+  background-color: var(--sidebar-background);
+}
+.bg-sidebar-border {
+  background-color: var(--sidebar-border);
 }
 .bg-transparent {
   background-color: transparent;
@@ -1784,6 +1927,9 @@ video {
 .pt-4 {
   padding-top: 1rem;
 }
+.pl-4 {
+  padding-left: 1rem;
+}
 .text-left {
   text-align: left;
 }
@@ -1870,6 +2016,9 @@ video {
   --tw-text-opacity: 1;
   color: rgb(201 168 76 / var(--tw-text-opacity, 1));
 }
+.text-sidebar-foreground {
+  color: var(--sidebar-foreground);
+}
 .text-slate-200 {
   --tw-text-opacity: 1;
   color: rgb(226 232 240 / var(--tw-text-opacity, 1));
@@ -1935,6 +2084,9 @@ video {
 }
 .outline {
   outline-style: solid;
+}
+.ring-sidebar-ring {
+  --tw-ring-color: var(--sidebar-ring);
 }
 .filter {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
@@ -2039,6 +2191,27 @@ video {
     --space-6: 64px;
     --space-7: 96px;
     --space-8: 128px;
+
+    /* Shadcn Sidebar defaults (matching dark theme) */
+    --sidebar-background: #08080F; 
+    --sidebar-foreground: #ffffff; 
+    --sidebar-primary: #C9A84C; 
+    --sidebar-primary-foreground: #000000;
+    --sidebar-accent: rgba(255, 255, 255, 0.1); 
+    --sidebar-accent-foreground: #ffffff;
+    --sidebar-border: rgba(255, 255, 255, 0.1);
+    --sidebar-ring: rgba(201, 168, 76, 0.5); 
+}
+
+.dark {
+    --sidebar-background: #08080F; /* Dark cosmic background */
+    --sidebar-foreground: #ffffff; /* White text */
+    --sidebar-primary: #C9A84C; /* Gold */
+    --sidebar-primary-foreground: #000000;
+    --sidebar-accent: rgba(255, 255, 255, 0.1); /* Hover states */
+    --sidebar-accent-foreground: #ffffff;
+    --sidebar-border: rgba(255, 255, 255, 0.1);
+    --sidebar-ring: rgba(201, 168, 76, 0.5); /* Gold ring */
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -6395,6 +6568,12 @@ body {
   content: var(--tw-content);
   width: 2px;
 }
+.hover\:bg-sidebar-accent:hover {
+  background-color: var(--sidebar-accent);
+}
+.hover\:text-sidebar-accent-foreground:hover {
+  color: var(--sidebar-accent-foreground);
+}
 .hover\:text-white:hover {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
@@ -6409,6 +6588,10 @@ body {
   --tw-shadow: 0 0 0 1px hsl(var(--sidebar-accent));
   --tw-shadow-colored: 0 0 0 1px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.hover\:after\:bg-sidebar-border:hover::after {
+  content: var(--tw-content);
+  background-color: var(--sidebar-border);
 }
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
@@ -6430,6 +6613,12 @@ body {
 .active\:translate-y-px:active {
   --tw-translate-y: 1px;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.active\:bg-sidebar-accent:active {
+  background-color: var(--sidebar-accent);
+}
+.active\:text-sidebar-accent-foreground:active {
+  color: var(--sidebar-accent-foreground);
 }
 .disabled\:pointer-events-none:disabled {
   pointer-events: none;
@@ -6456,6 +6645,9 @@ body {
 }
 .group:hover .group-hover\:opacity-100 {
   opacity: 1;
+}
+.peer\/menu-button:hover ~ .peer-hover\/menu-button\:text-sidebar-accent-foreground {
+  color: var(--sidebar-accent-foreground);
 }
 .aria-disabled\:pointer-events-none[aria-disabled="true"] {
   pointer-events: none;
@@ -6620,9 +6812,15 @@ body {
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
+.group[data-variant="floating"] .group-data-\[variant\=floating\]\:ring-sidebar-border {
+  --tw-ring-color: var(--sidebar-border);
+}
 .group[data-collapsible="offcanvas"] .group-data-\[collapsible\=offcanvas\]\:after\:left-full::after {
   content: var(--tw-content);
   left: 100%;
+}
+.group[data-collapsible="offcanvas"] .hover\:group-data-\[collapsible\=offcanvas\]\:bg-sidebar:hover {
+  background-color: var(--sidebar-background);
 }
 .group[data-collapsible="offcanvas"] .data-\[side\=left\]\:group-data-\[collapsible\=offcanvas\]\:left-\[calc\(var\(--sidebar-width\)\*-1\)\][data-side="left"] {
   left: calc(var(--sidebar-width) * -1);
@@ -6747,6 +6945,9 @@ body {
 }
 .\[\&\>svg\]\:shrink-0>svg {
   flex-shrink: 0;
+}
+.\[\&\>svg\]\:text-sidebar-accent-foreground>svg {
+  color: var(--sidebar-accent-foreground);
 }
 .\[\&_svg\:not\(\[class\*\=\'size-\'\]\)\]\:size-3 svg:not([class*='size-']) {
   width: 0.75rem;

@@ -36,6 +36,27 @@
     --space-6: 64px;
     --space-7: 96px;
     --space-8: 128px;
+
+    /* Shadcn Sidebar defaults (matching dark theme) */
+    --sidebar-background: #08080F; 
+    --sidebar-foreground: #ffffff; 
+    --sidebar-primary: #C9A84C; 
+    --sidebar-primary-foreground: #000000;
+    --sidebar-accent: rgba(255, 255, 255, 0.1); 
+    --sidebar-accent-foreground: #ffffff;
+    --sidebar-border: rgba(255, 255, 255, 0.1);
+    --sidebar-ring: rgba(201, 168, 76, 0.5); 
+}
+
+.dark {
+    --sidebar-background: #08080F; /* Dark cosmic background */
+    --sidebar-foreground: #ffffff; /* White text */
+    --sidebar-primary: #C9A84C; /* Gold */
+    --sidebar-primary-foreground: #000000;
+    --sidebar-accent: rgba(255, 255, 255, 0.1); /* Hover states */
+    --sidebar-accent-foreground: #ffffff;
+    --sidebar-border: rgba(255, 255, 255, 0.1);
+    --sidebar-ring: rgba(201, 168, 76, 0.5); /* Gold ring */
 }
 
 @media (prefers-reduced-motion: reduce) {
