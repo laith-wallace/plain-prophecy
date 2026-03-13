@@ -8,7 +8,10 @@ export interface QuizQuestion {
   explanation?: string;
 }
 
-export type LessonQuizId = "daniel-1" | "daniel-2" | "daniel-7" | "2300-days" | "daniel-9" | "70-week-prophecy" | "daniel-12" | "seven-seals" | "revelation-13" | "revelation-14";
+export type LessonQuizId = 
+  | "daniel-1" | "daniel-2" | "daniel-7" | "2300-days" | "daniel-9" | "70-week-prophecy" | "daniel-12" 
+  | "seven-seals" | "revelation-13" | "revelation-14"
+  | "love-for-god" | "righteousness-by-faith" | "the-resurrection" | "jesus-at-the-centre";
 
 export const quizData: Record<LessonQuizId, QuizQuestion[]> = {
   "daniel-1": [
@@ -95,7 +98,51 @@ export const quizData: Record<LessonQuizId, QuizQuestion[]> = {
   "daniel-12": [],
   "seven-seals": [],
   "revelation-13": [],
-  "revelation-14": []
+  "revelation-14": [],
+  "love-for-god": [
+    {
+      id: "lfg-q1",
+      type: "multiple_choice",
+      question: "According to 1 John 4:19, why do we love God?",
+      options: ["To earn salvation", "Because He first loved us", "Out of fear of judgment", "Because we were told to"],
+      correctAnswer: "Because He first loved us",
+      hint: "Our love is a response, not an initiative.",
+      explanation: "1 John 4:19 states clearly: 'We love because he first loved us.'",
+    }
+  ],
+  "righteousness-by-faith": [
+    {
+      id: "rbf-q1",
+      type: "multiple_choice",
+      question: "In Romans 4:3, what was counted to Abraham as righteousness?",
+      options: ["His works", "His circumcision", "His belief in God", "His sacrifice of Isaac"],
+      correctAnswer: "His belief in God",
+      hint: "It was a result of his faith.",
+      explanation: "The text says, 'Abraham believed God, and it was counted to him as righteousness.'",
+    }
+  ],
+  "the-resurrection": [
+    {
+      id: "tr-q1",
+      type: "multiple_choice",
+      question: "What does 1 Corinthians 15 say about our faith if Christ has not been raised?",
+      options: ["It is still valuable", "It is futile", "It is based on tradition", "It is just a theory"],
+      correctAnswer: "It is futile",
+      hint: "If death isn't defeated, our hope is empty.",
+      explanation: "Paul writes, 'If Christ has not been raised, your faith is futile; you are still in your sins.'",
+    }
+  ],
+  "jesus-at-the-centre": [
+    {
+      id: "jatc-q1",
+      type: "multiple_choice",
+      question: "In John 5:39, what did Jesus say the Scriptures testify about?",
+      options: ["Historical events", "Moral laws", "The prophets", "Jesus Himself"],
+      correctAnswer: "Jesus Himself",
+      hint: "He is the heart of every page.",
+      explanation: "Jesus said, 'You study the Scriptures... These are the Scriptures that testify about me.'",
+    }
+  ]
 };
 
 // Helper function to safely fetch quiz data or an empty array if undefined

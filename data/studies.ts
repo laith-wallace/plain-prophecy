@@ -452,45 +452,81 @@ export const studyBooks: StudyBook[] = [
         slug: "love-for-god",
         title: "Love for God",
         scriptureRef: "1 John 4:19",
-        readingTime: 0,
+        readingTime: 5,
         keyVerse: "We love because he first loved us.",
         keyVerseRef: "1 John 4:19",
-        intro: "",
-        sections: [],
-        christCentre: ""
+        intro: "The foundation of all true religion is the love of God. Before we can love Him, we must understand how He has first loved us.",
+        sections: [
+          {
+            heading: "The Source of Love",
+            body: "God is love, and all true love originates in Him. Our capacity to love is a response to His infinite, pre-emptive love shown at the cross."
+          },
+          {
+            heading: "Love in Action",
+            body: "Coming Soon: A deeper look at how God's love transforms our lives and our relationships with others."
+          }
+        ],
+        christCentre: "Jesus is the supreme revelation of God's love. In His life, death, and resurrection, we see the heart of the Father laid bare."
       },
       {
         slug: "righteousness-by-faith",
         title: "Righteousness by Faith",
         scriptureRef: "Romans 4:3",
-        readingTime: 0,
+        readingTime: 6,
         keyVerse: "Abraham believed God, and it was counted to him as righteousness.",
         keyVerseRef: "Romans 4:3",
-        intro: "",
-        sections: [],
-        christCentre: ""
+        intro: "Righteousness is not something we achieve, but something we receive. It is the gift of God through faith in Jesus Christ.",
+        sections: [
+          {
+            heading: "The Gift of Righteousness",
+            body: "Faith is the hand that takes hold of God's promise. It is not our faith that saves us, but the Object of our faith—Jesus Christ."
+          },
+          {
+            heading: "The Walk of Faith",
+            body: "Coming Soon: Exploring how living by faith leads to a life of peace, assurance, and true holiness."
+          }
+        ],
+        christCentre: "Christ is our righteousness. He lived the life we could not live and died the death we deserved, so that we might be clothed in His perfection."
       },
       {
         slug: "the-resurrection",
         title: "The Resurrection",
         scriptureRef: "1 Corinthians 15:17,20",
-        readingTime: 0,
+        readingTime: 5,
         keyVerse: "If Christ has not been raised, your faith is futile... But in fact Christ has been raised from the dead.",
         keyVerseRef: "1 Corinthians 15:17,20",
-        intro: "",
-        sections: [],
-        christCentre: ""
+        intro: "The resurrection of Jesus is the pivot point of history. Without it, our faith is empty; with it, we have a living hope.",
+        sections: [
+          {
+            heading: "Victory Over Death",
+            body: "The empty tomb is God's 'Amen' to Christ's 'It is finished.' It proves that sin and death have been defeated forever."
+          },
+          {
+            heading: "The Power of the Resurrection",
+            body: "Coming Soon: Understanding how the same power that raised Jesus from the dead is at work in believers today."
+          }
+        ],
+        christCentre: "Jesus is the Resurrection and the Life. Because He lives, we shall live also. His victory is our victory."
       },
       {
         slug: "jesus-at-the-centre",
         title: "Jesus at the Centre",
         scriptureRef: "John 5:39",
-        readingTime: 0,
+        readingTime: 5,
         keyVerse: "These are the Scriptures that testify about me.",
         keyVerseRef: "John 5:39",
-        intro: "",
-        sections: [],
-        christCentre: ""
+        intro: "Every page of Scripture, from Genesis to Revelation, points to Jesus. He is the heart and centre of all biblical truth.",
+        sections: [
+          {
+            heading: "All Scripture Testifies of Him",
+            body: "To read the Bible without finding Jesus is to miss its entire purpose. He is the key that unlocks every prophecy and promise."
+          },
+          {
+            heading: "The Alpha and Omega",
+            body: "Coming Soon: A study on how keeping Jesus at the centre of our theology, our worship, and our lives changes everything."
+          }
+        ],
+        christCentre: "Jesus is the focus of every study. He is the Lamb slain, the High Priest interceding, and the King who is coming again."
       }
     ]
   }
