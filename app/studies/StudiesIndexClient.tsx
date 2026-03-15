@@ -6,6 +6,8 @@ import StudyCardDeck from "@/components/studies/StudyCardDeck";
 import StudyListView from "@/components/studies/StudyListView";
 import StudiesViewToggle from "@/components/studies/StudiesViewToggle";
 
+import "../studies-index.css";
+
 const PREF_KEY = "pp-studies-view";
 
 type BookFilter = "all" | "daniel" | "revelation";

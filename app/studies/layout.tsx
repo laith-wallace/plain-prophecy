@@ -3,6 +3,9 @@
 import { usePathname } from "next/navigation";
 import StudiesLayout from "@/components/studies/StudiesLayout";
 
+import "../sidebar.css";
+import "../studies-layout.css";
+
 export default function StudiesShellLayout({
   children,
 }: {

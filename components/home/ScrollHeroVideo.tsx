@@ -133,6 +133,7 @@ export default function ScrollHeroVideo() {
           playsInline
           preload="auto"
           aria-hidden="true"
+          style={{ willChange: "transform" }}
         />
         <div className="scroll-hero-overlay-bg" />
 

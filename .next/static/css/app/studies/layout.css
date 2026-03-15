@@ -1,0 +1,784 @@
+/*!*************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./app/sidebar.css ***!
+  \*************************************************************************************************************************************************************************************************************************************************************/
+/* ═══════════════════════════════════════════════════════════════════════════
+   STUDIES — shadcn Sidebar integration + filter
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Override shadcn sidebar CSS vars to match our aesthetic */
+/* Dark cosmic aesthetic is the default for studies */
+.studies-root {
+  --sidebar-background: #08080f;
+  --sidebar-foreground: #ffffff;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-accent: rgba(255, 255, 255, 0.05);
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-primary: #c9a84c;
+  --sidebar-primary-foreground: #08080f;
+  --sidebar-ring: #c9a84c;
+  /* Icon rail width — 56px */
+  --sidebar-width-icon: 56px;
+}
+
+/* Dark Mode Overrides for Sidebar reached via .dark class */
+.dark .studies-root {
+  --sidebar-background: #08080f;
+  --sidebar-foreground: #ffffff;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-accent: rgba(255, 255, 255, 0.05);
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-primary: #c9a84c;
+  --sidebar-primary-foreground: #08080f;
+  --sidebar-ring: #c9a84c;
+}
+
+/* Override SidebarProvider — it uses flex row; keep our full-height layout */
+.studies-root[data-sidebar="provider"] {
+  min-height: calc(100vh - 56px) !important;
+  flex-direction: row !important;
+}
+
+/* Sidebar panel — className lands on data-slot="sidebar-container" (the fixed element).
+   Override inset-y-0 (top:0 bottom:0) to start below the 56px sticky SiteNav. */
+.studies-sidebar-shadcn {
+  border-right: 1px solid var(--divider, #d9d4cd) !important;
+  top: 56px !important;
+  height: calc(100svh - 56px) !important;
+}
+
+/* SidebarProvider wrapper — fill exactly the viewport below the nav */
+.studies-root {
+  min-height: calc(100svh - 56px);
+}
+
+
+/* Sidebar header row (expanded mode): brand + trigger */
+.studies-sb-header {
+  padding: 1.25rem 1.25rem 0.75rem !important;
+  border-bottom: 1px solid var(--divider, #d9d4cd);
+  overflow: hidden;
+}
+
+/* In expanded mode: brand+trigger row visible, icon-only trigger hidden */
+.studies-sb-brand-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+/* Icon-only trigger — only visible in collapsed (icon) mode */
+.studies-sb-trigger-icon-only {
+  display: none;
+  color: var(--neutral, #8a8078) !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0.3rem !important;
+  border-radius: 6px !important;
+  transition: background 0.15s, color 0.15s !important;
+  margin: 0 auto;
+}
+
+/* When sidebar is in icon (collapsed) mode:
+   hide the brand row, show the icon-only trigger */
+[data-collapsible="icon"] .studies-sb-brand-row { display: none !important; }
+[data-collapsible="icon"] .studies-sb-trigger-icon-only { display: flex !important; }
+
+.studies-sb-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.studies-sb-eyebrow {
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--neutral, #8a8078);
+}
+
+.studies-sb-title {
+  font-family: var(--font-playfair), serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink, #1a1714);
+}
+
+/* Trigger in expanded mode */
+.studies-sb-trigger {
+  color: var(--neutral, #8a8078) !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0.3rem !important;
+  border-radius: 6px !important;
+  transition: background 0.15s, color 0.15s !important;
+}
+.studies-sb-trigger:hover,
+.studies-sb-trigger-icon-only:hover {
+  background: rgba(0,0,0,0.06) !important;
+  color: var(--ink, #1a1714) !important;
+}
+
+/* Sidebar content scroll area */
+.studies-sb-content {
+  padding: 0.5rem 0 !important;
+}
+
+/* Book section wrapper */
+.studies-sb-book-section {
+  margin-bottom: 0.25rem;
+}
+
+/* Book button: emoji icon + label */
+.studies-book-btn {
+  width: 100%;
+  display: flex !important;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0.75rem !important;
+  border-radius: 6px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  text-align: left;
+  transition: background 0.15s;
+}
+.studies-book-btn:hover {
+  background: rgba(0,0,0,0.05);
+}
+
+/* The 24x24 emoji icon — always visible in both modes */
+.studies-book-icon-24 {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  font-size: 18px;
+  line-height: 1;
+  flex-shrink: 0;
+  border-radius: 4px;
+}
+
+/* Book label + chevron — hidden in icon mode by shadcn's span:last-child truncate */
+.studies-book-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
+  font-family: var(--font-ibm-plex-sans), sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink, #1a1714);
+  letter-spacing: 0.01em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.studies-book-chevron {
+  font-size: 1rem;
+  color: var(--neutral, #8a8078);
+  transition: transform 0.2s;
+  margin-left: 0.25rem;
+}
+.studies-book-chevron--open {
+  transform: rotate(90deg);
+}
+
+/* Footer */
+.studies-sb-footer {
+  padding: 1rem 1.25rem 1.5rem !important;
+  border-top: 1px solid var(--divider, #d9d4cd) !important;
+}
+
+/*!********************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./app/studies-layout.css ***!
+  \********************************************************************************************************************************************************************************************************************************************************************/
+/* ═══════════════════════════════════════════════════════════════════════
+   STUDIES PAGE — Notion-inspired layout
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Root shell — full viewport below SiteNav */
+.studies-root {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 56px);
+
+  /* Force dark theme variables for the entire studies section */
+  --paper: #08080f;
+  --ink: #ffffff;
+  --cream-mid: #12121a;
+  --divider: rgba(255, 255, 255, 0.1);
+  --neutral: #8a8078;
+}
+
+/* Mobile-only top bar */
+.studies-mobile-bar {
+  display: none;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 1rem;
+  background: var(--cream-mid);
+  border-bottom: 1px solid var(--divider);
+  position: sticky;
+  top: 56px;
+  z-index: 50;
+}
+
+.studies-sidebar-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  cursor: pointer;
+  padding: 0.35rem 0.7rem;
+  font-family: var(--font-ibm-plex-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.studies-mobile-label {
+  font-size: 0.65rem;
+}
+
+.studies-mobile-crumb {
+  font-family: var(--font-ibm-plex-mono);
+  font-size: 0.65rem;
+  color: var(--neutral);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Shell: sidebar + content row */
+.studies-shell {
+  display: flex;
+  flex: 1;
+  position: relative;
+}
+
+/* ─── LEFT SIDEBAR ─────────────────────────────────────────────────── */
+.studies-sidebar {
+  width: 252px;
+  flex-shrink: 0;
+  background: var(--cream-mid);
+  border-right: 1px solid var(--divider);
+  position: sticky;
+  top: 56px;
+  height: calc(100vh - 56px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--divider) transparent;
+}
+
+.studies-sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+.studies-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.studies-sidebar::-webkit-scrollbar-thumb {
+  background: var(--divider);
+  border-radius: 2px;
+}
+
+.studies-sidebar-inner {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+/* Sidebar header */
+.studies-sidebar-header {
+  padding: 1.5rem 1.25rem 1rem;
+  border-bottom: 1px solid var(--divider);
+}
+
+.studies-sidebar-eyebrow {
+  font-family: var(--font-ibm-plex-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--neutral);
+  margin-bottom: 0.25rem;
+}
+
+.studies-sidebar-title {
+  font-family: var(--font-playfair);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* Nav container */
+.studies-nav {
+  padding: 0.75rem 0;
+  flex: 1;
+}
+
+/* Book group */
+.studies-book-group {
+  margin-bottom: 0.25rem;
+}
+
+/* Book toggle button */
+.studies-book-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.55rem 1.25rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-ibm-plex-sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+  transition: background 0.12s;
+}
+
+.studies-book-toggle:hover {
+  background: rgba(0,0,0,0.04);
+}
+
+.studies-book-toggle--active {
+  color: var(--sda-primary);
+}
+
+.studies-book-icon {
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.studies-book-name {
+  flex: 1;
+}
+
+.studies-book-chevron {
+  font-size: 1rem;
+  color: var(--neutral);
+  transition: transform 0.2s var(--ease-out);
+  display: inline-block;
+  line-height: 1;
+  margin-top: -1px;
+}
+
+.studies-book-chevron--open {
+  transform: rotate(90deg);
+}
+
+/* Lessons list */
+.studies-lessons-list {
+  list-style: none;
+  padding: 0 0 0.5rem;
+  margin: 0;
+}
+
+/* Individual lesson link */
+.studies-lesson-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1.25rem 0.4rem 2.5rem;
+  text-decoration: none;
+  font-family: var(--font-ibm-plex-sans);
+  font-size: 0.8rem;
+  color: var(--neutral);
+  transition: background 0.12s, color 0.12s;
+  border-left: 2px solid transparent;
+}
+
+.studies-lesson-link:hover {
+  background: rgba(0,0,0,0.04);
+  color: var(--ink);
+}
+
+.studies-lesson-link--active {
+  background: rgba(26, 61, 43, 0.06);
+  color: var(--sda-primary);
+  border-left-color: var(--sda-accent);
+  font-weight: 500;
+}
+
+.studies-lesson-dot {
+  color: var(--divider);
+  font-size: 1.1rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.studies-lesson-link--active .studies-lesson-dot {
+  color: var(--sda-accent);
+}
+
+/* Sidebar footer */
+.studies-sidebar-footer {
+  padding: 1rem 1.25rem 1.5rem;
+  border-top: 1px solid var(--divider);
+  margin-top: auto;
+}
+
+.studies-sidebar-footer-text {
+  font-family: var(--font-ibm-plex-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--divider);
+}
+
+/* Mobile overlay */
+.studies-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 14, 12, 0.45);
+  z-index: 40;
+}
+
+/* ─── MAIN CONTENT AREA ─────────────────────────────────────────────── */
+.studies-content {
+  flex: 1;
+  min-width: 0;
+  background: var(--paper);
+  padding: 3rem 2.5rem 5rem;
+  overflow-y: auto;
+}
+
+/* ─── STUDY ARTICLE ─────────────────────────────────────────────────── */
+.study-article {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* Article header */
+.study-header {
+  margin-bottom: 2.5rem;
+}
+
+.study-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.study-book-tag {
+  font-family: var(--font-ibm-plex-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.2rem 0.6rem;
+}
+
+.study-scripture-ref {
+  font-family: var(--font-ibm-plex-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: var(--neutral);
+}
+
+.study-title {
+  font-family: var(--font-playfair);
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 0.85rem;
+}
+
+/* Meta row */
+.study-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-ibm-plex-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: var(--neutral);
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+.study-read-time {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.study-meta-divider {
+  opacity: 0.4;
+}
+
+.study-meta-label {
+  color: var(--sda-primary);
+}
+
+/* Intro paragraph */
+.study-intro {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: #3a3530;
+  margin-bottom: 1.75rem;
+}
+
+/* Key verse blockquote */
+.study-key-verse {
+  border: 2px solid var(--ink);
+  padding: 1.5rem 1.75rem;
+  background: var(--cream-mid);
+  margin: 0;
+}
+
+.study-key-verse-label {
+  font-family: var(--font-ibm-plex-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--neutral);
+  margin-bottom: 0.6rem;
+}
+
+.study-key-verse-text {
+  font-family: var(--font-playfair);
+  font-size: 1.1rem;
+  line-height: 1.65;
+  color: var(--ink);
+  font-style: italic;
+  margin-bottom: 0.5rem;
+}
+
+.study-key-verse-ref {
+  font-family: var(--font-ibm-plex-mono);
+  font-size: 0.72rem;
+  color: var(--neutral);
+  font-style: normal;
+}
+
+/* Divider */
+.study-divider {
+  border: none;
+  border-top: 3px double var(--divider);
+  margin: 2.5rem 0;
+}
+
+/* Body sections */
+.study-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2.25rem;
+  margin-bottom: 2.5rem;
+}
+
+.study-section {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 0 1.25rem;
+  align-items: start;
+}
+
+.study-section-num {
+  font-family: var(--font-playfair);
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--ink);
+  opacity: 0.12;
+  line-height: 1;
+  padding-top: 0.15rem;
+}
+
+.study-section-heading {
+  font-family: var(--font-playfair);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.65rem;
+  line-height: 1.3;
+  grid-column: 2;
+}
+
+/* Since heading and body share the number column */
+.study-section-heading {
+  grid-column: 2;
+}
+
+.study-section-body {
+  grid-column: 2;
+  font-size: 0.9rem;
+  line-height: 1.85;
+  color: #3a3530;
+}
+
+/* Christ at the Centre box */
+.study-christ-box {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.study-christ-box-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.study-christ-box-icon {
+  font-size: 1.5rem;
+  opacity: 0.35;
+  flex-shrink: 0;
+  margin-top: -2px;
+}
+
+.study-christ-box-eyebrow {
+  font-family: var(--font-ibm-plex-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  margin-bottom: 0.25rem;
+}
+
+.study-christ-box-subhead {
+  font-family: var(--font-playfair);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.study-christ-box-body {
+  font-size: 0.88rem;
+  line-height: 1.8;
+  opacity: 0.85;
+}
+
+/* Article footer */
+.study-footer {
+  border-top: 1px solid var(--divider);
+  padding-top: 1.75rem;
+}
+
+.study-footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.study-footer-tag {
+  font-family: var(--font-ibm-plex-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--neutral);
+}
+
+/* Next study link */
+.study-next-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  font-family: var(--font-ibm-plex-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.55rem 1rem;
+  transition: background 0.15s;
+}
+
+.study-next-link:hover {
+  background: var(--sda-primary);
+}
+
+.study-next-title {
+  font-weight: 500;
+  opacity: 0.75;
+}
+
+.study-next-arrow {
+  font-size: 0.9rem;
+}
+
+.study-final-note {
+  font-family: var(--font-ibm-plex-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: var(--neutral);
+  font-style: italic;
+}
+
+/* ─── STUDIES RESPONSIVE ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .studies-mobile-bar {
+    display: flex;
+  }
+
+  .studies-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 50;
+    transform: translateX(-100%);
+    transition: transform 0.25s var(--ease-out);
+    box-shadow: 4px 0 24px rgba(0,0,0,0.15);
+  }
+
+  .studies-sidebar--open {
+    transform: translateX(0);
+  }
+
+  .studies-content {
+    padding: 2rem 1.25rem 5rem;
+  }
+
+  .study-section {
+    grid-template-columns: 1fr;
+  }
+
+  .study-section-num {
+    display: none;
+  }
+
+  .study-section-heading,
+  .study-section-body {
+    grid-column: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .studies-content {
+    padding: 1.5rem 1rem 5rem;
+  }
+
+  .study-title {
+    font-size: 1.75rem;
+  }
+
+  .study-footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .study-next-link {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+

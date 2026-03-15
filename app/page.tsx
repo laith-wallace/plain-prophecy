@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import JsonLd from "@/components/seo/JsonLd";
-import HomeAnimations from "@/components/home/HomeAnimations";
-import ScrollHeroVideo from "@/components/home/ScrollHeroVideo";
+
+// Dynamic imports for heavy client-side components to optimize bundle size and hydration
+const HomeAnimations = dynamic(() => import("@/components/home/HomeAnimations"));
+const ScrollHeroVideo = dynamic(() => import("@/components/home/ScrollHeroVideo"));
+
+import "./home-styles.css";
+
 import { 
   IconScroll, 
   IconHourglass, 

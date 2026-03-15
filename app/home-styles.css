@@ -1,0 +1,293 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   HOMEPAGE REDESIGN — Scroll-Stopping Sections
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Shared animation utilities ─────────────────────────────────────────── */
+
+[data-animate] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.55s cubic-bezier(0.2, 0.9, 0.3, 1),
+              transform 0.55s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+[data-animate].visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+[data-animate][data-delay="100"] { transition-delay: 100ms; }
+[data-animate][data-delay="200"] { transition-delay: 200ms; }
+[data-animate][data-delay="300"] { transition-delay: 300ms; }
+[data-animate][data-delay="400"] { transition-delay: 400ms; }
+[data-animate][data-delay="500"] { transition-delay: 500ms; }
+
+/* ── Shared buttons ────────────────────────────────────────────────────── */
+
+.home-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem 1.75rem;
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  transition: all 0.3s var(--ease-spring);
+  border-radius: 4px;
+}
+
+.home-btn--primary {
+  background: #fff;
+  color: #000;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+}
+
+.home-btn--primary:hover {
+  background: #e0e0e0;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.2);
+}
+
+.home-btn--outline {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.home-btn--outline:hover {
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* ── Shared section layout ───────────────────────────────────────────────── */
+
+.home-section {
+  position: relative;
+  width: 100%;
+  padding: 8rem 0;
+  overflow: hidden;
+}
+
+.home-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.home-section-header {
+  margin-bottom: 5rem;
+  max-width: 800px;
+}
+
+.home-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.home-eyebrow-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, #fff, transparent);
+  opacity: 0.2;
+}
+
+.home-eyebrow-text {
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.home-headline {
+  font-family: var(--font-playfair), serif;
+  font-size: clamp(2.5rem, 6vw, 4.2rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+/* ── 01. Hero Section ─────────────────────────────────────────────────── */
+
+.hero-main {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  overflow: hidden;
+}
+
+.hero-stars {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.05) 0%, transparent 1%),
+    radial-gradient(circle at 80% 60%, rgba(255,255,255,0.05) 0%, transparent 1%),
+    radial-gradient(circle at 40% 80%, rgba(255,255,255,0.05) 0%, transparent 1%);
+  background-size: 100px 100px;
+}
+
+.hero-glow {
+  position: absolute;
+  bottom: -20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80vw;
+  height: 60vh;
+  background: radial-gradient(circle, rgba(201, 168, 76, 0.08) 0%, transparent 70%);
+  filter: blur(80px);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  width: 100%;
+}
+
+.hero-logo-wrap {
+  margin-bottom: 3rem;
+}
+
+/* ── 02. Prophecy Showcase ─────────────────────────────────────────────── */
+
+.showcase-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 2rem;
+  align-items: center;
+}
+
+.showcase-visual {
+  grid-column: 1 / 8;
+  position: relative;
+}
+
+.showcase-text {
+  grid-column: 9 / 13;
+}
+
+.showcase-image-container {
+  aspect-ratio: 16/10;
+  background: #08080a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* ── 03. Timeline Preview ──────────────────────────────────────────────── */
+
+.timeline-preview {
+  position: relative;
+  padding: 4rem;
+  background: #050507;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.timeline-line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+/* ── 04. Scroll Hero Video ────────────────────────────────────────────── */
+
+.scroll-hero-container {
+  position: relative;
+  height: 300vh; /* Control the length of the scroll journey */
+  background: #000;
+}
+
+.scroll-hero-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scroll-hero-video-wrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.scroll-hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.6;
+}
+
+.scroll-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, transparent 0%, rgba(0,0,0,0.4) 100%);
+  z-index: 5;
+}
+
+.scroll-hero-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  color: #fff;
+  max-width: 900px;
+  padding: 0 2rem;
+}
+
+.scroll-hero-headline {
+  font-family: var(--font-playfair), serif;
+  font-size: clamp(3rem, 10vw, 8rem);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  margin-bottom: 2rem;
+  text-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+.scroll-hero-sub {
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: clamp(0.7rem, 2vw, 1.1rem);
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+/* ────────────────────────────────────────────────────────────────────── */
+
+/* ── Scroll Hero: static / mobile variant ─────────────────────────────── */
+.scroll-hero-static {
+  position: relative;
+  height: 85vh;
+  min-height: 520px;
+  background: #000;
+}
+.scroll-hero-static .scroll-hero-sticky {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+}
+/* Ensure content is always visible in static mode */
+.scroll-hero-content--static .scroll-hero-headline,
+.scroll-hero-content--static .scroll-hero-sub,
+.scroll-hero-content--static .scroll-hero-cta {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  transition: none;
+}
