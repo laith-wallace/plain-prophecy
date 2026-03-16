@@ -86,9 +86,20 @@ export default function CourseDetailPage() {
         <Link href="/admin/studies" className="flex items-center gap-1 text-sm text-stone-400 hover:text-stone-200">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Studies
         </Link>
-        <Button onClick={handleSave} disabled={saving}>
-          {saving ? "Saving…" : "Save Book"}
-        </Button>
+        <div className="flex items-center gap-2">
+          {!isNew && slug && published && (
+            <Link
+              href={`/studies/${slug}`}
+              target="_blank"
+              className="text-xs text-stone-500 hover:text-amber-400 transition-colors"
+            >
+              View live ↗
+            </Link>
+          )}
+          <Button onClick={handleSave} disabled={saving}>
+            {saving ? "Saving…" : "Save Book"}
+          </Button>
+        </div>
       </div>
 
       <div className="bg-stone-900 border border-stone-800 rounded-xl p-5 space-y-4">

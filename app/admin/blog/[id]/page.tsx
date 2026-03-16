@@ -14,6 +14,7 @@ import Link from "next/link";
 import { RefreshCw } from "lucide-react";
 import { generateSlug, isValidSlug } from "@/lib/slug";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
+import { markdownToHtml } from "@/lib/markdown";
 
 interface FormState {
   title: string;
@@ -71,6 +72,7 @@ export default function BlogEditPage() {
   const [form, setForm] = useState<FormState>(DEFAULT);
   const [saving, setSaving] = useState(false);
   const [isDirty, setIsDirty] = useState(false);
+  const [previewMode, setPreviewMode] = useState(false);
   useUnsavedChanges(isDirty);
 
   useEffect(() => {
@@ -163,6 +165,15 @@ export default function BlogEditPage() {
           ← Back to Blog
         </Link>
         <div className="flex items-center gap-2">
+          {!isNew && form.slug && form.published && (
+            <Link
+              href={`/blog/${form.slug}`}
+              target="_blank"
+              className="text-xs text-stone-500 hover:text-amber-400 transition-colors"
+            >
+              View live ↗
+            </Link>
+          )}
           {!isNew && (
             <DeleteConfirmDialog
               trigger={<Button variant="destructive" size="sm">Delete</Button>}
@@ -285,15 +296,40 @@ export default function BlogEditPage() {
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-sm font-medium text-stone-300">
-              Content <span className="text-stone-500 font-normal">(Markdown supported)</span>
-            </label>
-            <textarea
-              value={form.body}
-              onChange={(e) => set("body", e.target.value)}
-              rows={20}
-              className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 min-h-[400px] resize-y font-mono"
-            />
+            <div className="flex items-center justify-between">
+              <label className="text-sm font-medium text-stone-300">
+                Content <span className="text-stone-500 font-normal">(Markdown supported)</span>
+              </label>
+              <div className="flex rounded-md overflow-hidden border border-stone-700 text-xs">
+                <button
+                  type="button"
+                  onClick={() => setPreviewMode(false)}
+                  className={`px-3 py-1 transition-colors ${!previewMode ? "bg-amber-600 text-white" : "bg-stone-800 text-stone-400 hover:text-stone-200"}`}
+                >
+                  Edit
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setPreviewMode(true)}
+                  className={`px-3 py-1 transition-colors ${previewMode ? "bg-amber-600 text-white" : "bg-stone-800 text-stone-400 hover:text-stone-200"}`}
+                >
+                  Preview
+                </button>
+              </div>
+            </div>
+            {previewMode ? (
+              <div
+                className="bg-stone-800 border border-stone-700 rounded-lg px-4 py-3 min-h-[400px] text-sm prose prose-invert max-w-none"
+                dangerouslySetInnerHTML={{ __html: markdownToHtml(form.body) }}
+              />
+            ) : (
+              <textarea
+                value={form.body}
+                onChange={(e) => set("body", e.target.value)}
+                rows={20}
+                className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 min-h-[400px] resize-y font-mono"
+              />
+            )}
           </div>
 
           <div className="flex items-center gap-3 pt-2">

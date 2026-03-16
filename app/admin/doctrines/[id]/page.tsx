@@ -315,6 +315,7 @@ export default function DoctrineEditPage() {
 
   const hasNextDoctrine = watch("hasNextDoctrine");
   const slugValue = watch("slug");
+  const publishedValue = watch("published");
 
   useEffect(() => {
     if (existing) {
@@ -422,6 +423,15 @@ export default function DoctrineEditPage() {
           ← Back to Doctrines
         </Link>
         <div className="flex items-center gap-2">
+          {!isNew && slugValue && publishedValue && (
+            <Link
+              href={`/doctrine/${slugValue}`}
+              target="_blank"
+              className="text-xs text-stone-500 hover:text-amber-400 transition-colors"
+            >
+              View live ↗
+            </Link>
+          )}
           {!isNew && (
             <DeleteConfirmDialog
               trigger={<Button variant="destructive" size="sm">Delete</Button>}
