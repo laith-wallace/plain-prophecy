@@ -180,11 +180,11 @@ export const doctrines: DoctrinePage[] = [
         contentBlocks: [
           {
             label: "A Jesuit counter-move",
-            text: "The gap theory was first introduced by Francisco Ribera, a Spanish Jesuit priest, in 1590. His motivation was explicitly political: the Protestant Reformers — Luther, Calvin, Tyndale, Knox, and nearly all the major Reformers — had identified the papacy as the Antichrist of prophecy using the historicist method. Ribera's solution was to relocate the antichrist prophecies to a future figure, removing the threat from the papacy.",
+            text: "The futurist strategy behind the gap theory was first introduced by Francisco Ribera, a Spanish Jesuit priest, in 1590. His motivation was explicitly political: the Protestant Reformers — Luther, Calvin, Tyndale, Knox, and nearly all the major Reformers — had identified the papacy as the Antichrist of prophecy using the historicist method. Ribera's solution was to relocate the antichrist prophecies to a future figure. His version moved only the last 3.5 years of Daniel's 70th week to the end of time — the full dispensational gap (inserting the entire 70th week after a 2,000-year Church Age) was Darby's later development.",
           },
           {
             label: "From Jesuit seminaries to evangelical pulpits",
-            text: "Ribera's futurist interpretation lay largely dormant for two centuries until it was rediscovered and popularised by Manuel Lacunza (1790) and then by Edward Irving and John Nelson Darby in the 1830s. It passed into mainstream evangelicalism through the Scofield Reference Bible (1909) without most readers knowing its Counter-Reformation origin.",
+            text: "Ribera's futurist interpretation lay largely dormant for two centuries until it was rediscovered and popularised by Manuel Lacunza (1790) and then by Edward Irving and John Nelson Darby in the 1830s. Darby systematised it into the dispensational gap theory as we know it today. It passed into mainstream evangelicalism through the Scofield Reference Bible (1909) without most readers knowing its Counter-Reformation origin.",
           },
         ],
       },

@@ -227,7 +227,7 @@ export const studyBooks: StudyBook[] = [
           },
           {
             heading: "The Connection to Daniel 9",
-            body: "Daniel is left overwhelmed after chapter 8 — the 2,300-day figure is unexplained. In chapter 9, the angel Gabriel returns with the explicit purpose of 'giving Daniel understanding' (9:22). The 70 weeks of Daniel 9 are 'cut off' (Hebrew: chātak — severed from a larger whole) from the 2,300 days. They share the same starting point: the decree to restore Jerusalem in 457 BC (Ezra 7, verified by the Elephantine Papyri). The 70 weeks (490 years) end in 34 AD. The remaining 1,810 years run to 1844 AD: 457 BC + 2,300 = 1844 AD. In that year, a worldwide movement independently reached this calculation and recognised that the heavenly sanctuary — not an earthly temple — was the subject of the prophecy.",
+            body: "Daniel is left overwhelmed after chapter 8 — the 2,300-day figure is unexplained. In chapter 9, the angel Gabriel returns with the explicit purpose of 'giving Daniel understanding' (9:22). The 70 weeks of Daniel 9 are 'cut off' (Hebrew: chātak — rendered 'decreed' or 'determined' in most translations, but understood by historicist scholars as 'cut off from a larger period') from the 2,300 days — their starting point is the same, and they are a subset of the larger prophecy. They share the same starting point: the decree to restore Jerusalem in 457 BC (Ezra 7, verified by the Elephantine Papyri). The 70 weeks (490 years) end in 34 AD. The remaining 1,810 years run to 1844 AD: 457 BC + 2,300 = 1844 AD. In that year, a worldwide movement independently reached this calculation and recognised that the heavenly sanctuary — not an earthly temple — was the subject of the prophecy.",
           },
           {
             heading: "The Day-Year Principle",
@@ -235,7 +235,7 @@ export const studyBooks: StudyBook[] = [
           },
         ],
         christCentre:
-          "The sanctuary of Daniel 8 is not the Jerusalem temple — it is the heavenly sanctuary of which the earthly was a copy (Heb 8:2, 5). Christ is the High Priest of that sanctuary (Heb 4:14). The 2,300 days are ultimately about his priestly work: after the 'little horn' power suppressed and substituted for Christ's mediation for centuries, the heavenly sanctuary ministry was brought to a new phase in 1844. The judgment of Daniel 7:9–14 and the sanctuary restoration of Daniel 8:14 are the same event seen from two angles. Both point to Christ completing what no human priesthood can: the final atonement, the vindication of his people, the restoration of truth.",
+          "The sanctuary of Daniel 8 is not the Jerusalem temple — it is the heavenly sanctuary of which the earthly was a copy (Heb 8:2, 5). Christ is the High Priest of that sanctuary (Heb 4:14). The 2,300 days are ultimately about his priestly work: after the 'little horn' power suppressed and substituted for Christ's mediation for centuries, the heavenly sanctuary ministry entered a new phase in 1844. This understanding — that the judgment of Daniel 7:9–14 and the sanctuary restoration of Daniel 8:14 are the same event, beginning in 1844 — is the conclusion historicist interpreters, particularly in the Adventist tradition, have drawn from this prophecy. It is one of the most significant and specific claims in the entire prophetic framework. Both visions point to Christ completing what no human priesthood can: the final atonement, the vindication of his people, the restoration of truth.",
         nextLesson: {
           book: "daniel",
           lesson: "daniel-9",
@@ -259,7 +259,7 @@ export const studyBooks: StudyBook[] = [
           },
           {
             heading: "The 70 Weeks Explained (vv. 24–27)",
-            body: "Gabriel arrives 'in swift flight' while Daniel is still praying. He gives 70 weeks (490 years) concerning Jerusalem and the Messiah. The starting point: 'from the going out of the word to restore and rebuild Jerusalem' — the decree of Artaxerxes in 457 BC (Ezra 7), confirmed by multiple independent ancient sources including the Elephantine Papyri. 69 weeks (483 years) to 'Messiah the Prince' = 457 BC + 483 = 27 AD — the exact year of Jesus' baptism (Luke 3:1, 21–23). 'In the midst of the week' (3.5 years in) = 31 AD — the year of the crucifixion. At the cross, sacrifice and offering ceased in their meaning — the veil tore (Matt 27:51). The 70th week ends at 34 AD — the stoning of Stephen and the formal extension of the gospel to the Gentiles (Acts 7–10).",
+            body: "Gabriel arrives 'in swift flight' while Daniel is still praying. He gives 70 weeks (490 years) concerning Jerusalem and the Messiah. The starting point: 'from the going out of the word to restore and rebuild Jerusalem' — the decree of Artaxerxes in 457 BC (Ezra 7), confirmed by multiple independent ancient sources including the Elephantine Papyri. 69 weeks (483 years) to 'Messiah the Prince' = 457 BC + 483 = 27 AD — the exact year of Jesus' baptism (Luke 3:1, 21–23). 'In the midst of the week' (3.5 years in) = 31 AD — the year of the crucifixion (consistent with the 457 BC start date; scholars have also proposed 30 and 33 AD, but 31 AD produces the most internally coherent alignment across this entire prophecy). At the cross, sacrifice and offering ceased in their meaning — the veil tore (Matt 27:51). The 70th week ends at 34 AD — the stoning of Stephen and the formal extension of the gospel to the Gentiles (Acts 7–10).",
           },
           {
             heading: "Historical Verification",
@@ -295,7 +295,7 @@ export const studyBooks: StudyBook[] = [
           },
           {
             heading: "Why Futurism Moves the 70th Week",
-            body: "Futurist (dispensationalist) interpretation separates the 70th week from the first 69, inserting a 'Church Age gap' of indeterminate length and placing the 70th week at the end of history. This 'gap theory' was introduced by John Nelson Darby in the 1830s, drawing on earlier Jesuit scholar Francisco Ribera (1590). It has no explicit textual basis. The Hebrew text of Daniel 9 uses the conjunction waw to connect the 69th and 70th weeks sequentially. The Reformers, without exception, read all 70 weeks as continuous. The gap theory exists not because the text requires it, but because it is necessary to the futurist system.",
+            body: "Futurist (dispensationalist) interpretation separates the 70th week from the first 69, inserting a 'Church Age gap' of indeterminate length and placing the 70th week at the end of history. This 'gap theory' was systematised by John Nelson Darby in the 1830s, building on the earlier futurist strategy of Jesuit scholar Francisco Ribera (1590) — who had first relocated the last 3.5 years of Daniel's 70th week to the end of time to deflect Protestant identification of the papacy. It has no explicit textual basis. The Hebrew text of Daniel 9 uses the conjunction waw to connect the 69th and 70th weeks sequentially. The Reformers, without exception, read all 70 weeks as continuous. The gap theory exists not because the text requires it, but because it is necessary to the futurist system.",
           },
         ],
         christCentre:
@@ -319,7 +319,7 @@ export const studyBooks: StudyBook[] = [
         sections: [
           {
             heading: "Michael Stands Up (v. 1)",
-            body: "'At that time Michael, the great prince who has charge of your people, will arise.' The phrase 'at that time' connects directly to the sequence of chapters 10–11. Michael 'arising' or 'standing up' does not mean he begins to act — it signals the end of his intercessory role. In the ancient Near East, a judge who sat administered cases; when he stood, the court closed. Michael standing up marks the close of probation — every case decided, every soul either sealed or lost. This is followed immediately by 'a time of trouble such as never has been since there was a nation.'",
+            body: "'At that time Michael, the great prince who has charge of your people, will arise.' The phrase 'at that time' connects directly to the sequence of chapters 10–11. Michael 'arising' or 'standing up' — in the cultural context of ancient Near Eastern judicial proceedings, where a seated judge administered cases and a standing judge closed deliberation — suggests that this is not the beginning of action but the end of the intercessory phase. Historicist interpreters, particularly in the Adventist tradition, have consistently understood this as the close of probation: every case decided, every soul either sealed or lost. This is followed immediately by 'a time of trouble such as never has been since there was a nation.'",
           },
           {
             heading: "The Resurrection (vv. 2–3)",
@@ -331,7 +331,7 @@ export const studyBooks: StudyBook[] = [
           },
         ],
         christCentre:
-          "Michael in Daniel is not a created angel. He is the 'Prince of princes' (Dan 8:25), the one who contends for Moses' body (Jude 9), whose voice raises the dead (1 Thess 4:16). Michael is Christ in his role as the divine warrior-defender of his people. When Michael stands up, probation closes — not as punishment, but as the moment when grace has done its full work and every soul has made its final choice. Then he comes. The stone of Daniel 2 strikes. The Son of Man of Daniel 7 descends with the clouds. The sanctuary of Daniel 8 is fully restored. Every vision in the book of Daniel converges on this moment: the return of Jesus Christ.",
+          "Scripture's cumulative portrait of Michael points toward Christ himself. He is the 'Prince of princes' (Dan 8:25), the one who contends for Moses' body (Jude 9), whose voice raises the dead (1 Thess 4:16). The Adventist tradition, along with many Reformation-era scholars, has understood Michael as Christ in his role as the divine warrior-defender of his people — not a created angel, but the eternal Son acting under this title. When Michael stands up, the intercessory phase ends — not as punishment, but as the moment when grace has done its full work and every soul has made its final choice. Then he comes. The stone of Daniel 2 strikes. The Son of Man of Daniel 7 descends with the clouds. The sanctuary of Daniel 8 is fully restored. Every vision in the book of Daniel converges on this moment: the return of Jesus Christ.",
         nextLesson: {
           book: "revelation",
           lesson: "seven-seals",
@@ -400,7 +400,7 @@ export const studyBooks: StudyBook[] = [
           },
           {
             heading: "The Number of the Beast: 666 (v. 18)",
-            body: "John calls for wisdom: 'Let the one who has understanding calculate the number of the beast, for it is the number of a man, and his number is 666.' The Greek and Hebrew practice of gematria (assigning numerical values to letters) was well known to John's readers. The title 'Vicarius Filii Dei' (Vicar of the Son of God), used in official papal documents, calculates to 666 in Latin. This is not the only line of evidence — but it is historically documented and fits the overall identification. The mark is not merely a number — it represents allegiance: to worship the beast is to accept its authority over conscience.",
+            body: "John calls for wisdom: 'Let the one who has understanding calculate the number of the beast, for it is the number of a man, and his number is 666.' The Greek and Hebrew practice of gematria (assigning numerical values to letters) was well known to John's readers. Reformation-era commentators noted that the title 'Vicarius Filii Dei' (Vicar of the Son of God) — a phrase appearing in certain historical documents associated with the papacy, including the medieval Donation of Constantine — calculates to 666 in Latin. While not a currently official papal title (the formal title is Vicarius Christi), this has been cited as one strand in the cumulative identification. The mark is not merely a number — it represents allegiance: to worship the beast is to accept its authority over conscience.",
           },
         ],
         christCentre:
