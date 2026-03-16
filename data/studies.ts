@@ -450,82 +450,598 @@ export const studyBooks: StudyBook[] = [
       {
         slug: "love-for-god",
         title: "Love for God",
-        scriptureRef: "1 John 4:19",
-        readingTime: 5,
+        scriptureRef: "1 John 4:7–19",
+        readingTime: 12,
         keyVerse: "We love because he first loved us.",
         keyVerseRef: "1 John 4:19",
-        intro: "The foundation of all true religion is the love of God. Before we can love Him, we must understand how He has first loved us.",
+        intro:
+          "Before we can love God, we have to understand what kind of love we're dealing with. This is not the love of songs or films. This is something the world has no category for.",
         sections: [
           {
-            heading: "The Source of Love",
-            body: "God is love, and all true love originates in Him. Our capacity to love is a response to His infinite, pre-emptive love shown at the cross."
+            heading: "What Kind of Love Is This?",
+            contentBlocks: [
+              {
+                label: "The Four Greek Words for Love",
+                text: "English flattens something the ancient Greeks mapped carefully. There are four words for love: storge (family affection), philia (friendship), eros (romantic love), and agape (unconditional, self-giving love). The New Testament uses agape almost exclusively when speaking of God's love — and for good reason. Agape is not love in response to lovability. It creates value in its object.",
+              },
+              {
+                label: "ἀγάπη / agapē",
+                text: "Unconditional, self-giving love. Used 116 times in the NT; defines God's essential nature (1 John 4:8).",
+              },
+              {
+                label: "ἀγαπάω / agapaō",
+                text: "To love unconditionally (verb form). John 3:16 — 'God so loved (agapaō) the world.'",
+              },
+              {
+                label: "Key Theological Point",
+                text: "The Bible does not say God is loving — as though love were one of His many qualities. It says 'God IS love' (1 John 4:8). Love is not something God does; it is what God is. This distinction matters enormously. If love were merely one attribute among many, God could theoretically set it aside. But if love is His essential nature, then His every act toward us — even judgment — flows from it.",
+              },
+              {
+                label: "1 John 4:7–10 (ESV)",
+                text: "\"Beloved, let us love one another, for love is from God, and whoever loves has been born of God and knows God. Anyone who does not love does not know God, because God is love. In this the love of God was made manifest among us, that God sent his only Son into the world, so that we might live through him. In this is love, not that we have loved God but that he loved us and sent his Son to be the propitiation for our sins.\"",
+              },
+              {
+                label: "The Cross as the Definition of Love",
+                text: "Notice the logic John uses. He does not define love abstractly and then say God matches the definition. He points to an event — the sending of the Son — and says: that is love. The cross is not an illustration of love. The cross is the definition.",
+              },
+            ],
           },
           {
-            heading: "Love in Action",
-            body: "Coming Soon: A deeper look at how God's love transforms our lives and our relationships with others."
-          }
+            heading: "Why Did God Love Us? The Problem of Pre-emption",
+            contentBlocks: [
+              {
+                label: "The Question Nobody Wants to Ask",
+                text: "If God loved us before we loved Him, then His love is not a response to anything in us. Which raises an uncomfortable question: why did He love us at all? The answer lies in one small Greek word.",
+              },
+              {
+                label: "πρῶτος / prōtos",
+                text: "First, foremost. 1 John 4:19 — 'He first loved us' — not merely as a sequence but as an origin. God's love is not first chronologically; it is first as the fountainhead. All love that exists anywhere in the universe is downstream of His.",
+              },
+              {
+                label: "Romans 5:8 (ESV)",
+                text: "\"God shows his love for us in that while we were still sinners, Christ died for us.\"",
+              },
+              {
+                label: "Historical Context",
+                text: "In the Roman world, dying for a great person was considered the highest form of virtue. Paul's argument in Romans 5:7–8 is deliberately shocking: God did not die for the great. He died for sinners. He died for His enemies (v.10). No Roman virtue ethic had a category for this. Paul is not describing an elevated version of Roman honour — he is describing something that breaks the entire framework.",
+              },
+            ],
+          },
+          {
+            heading: "The Triune Logic of Love",
+            contentBlocks: [
+              {
+                label: "Why the Trinity Is Required by '1 John 4:8'",
+                text: "'God is love' is one of the most sophisticated arguments for the Trinity in all of Scripture. Here is why: love requires an object. If God were a solitary being, He could not have been love before creation existed. He could have been potentially loving — but John doesn't say God can love. He says God IS love. For that to be eternally true, love must have existed within God's own being before a single creature existed.",
+              },
+              {
+                label: "If God Were a Solitary Being...",
+                text: "Love could only begin when creation existed. 'God is love' would be a future aspiration, not an eternal reality. We would be necessary to complete God. God's love would depend on having someone to love.",
+              },
+              {
+                label: "Because God Is a Trinity...",
+                text: "Love has existed eternally between Father, Son, and Spirit. 'God is love' describes His eternal, essential nature. We are the overflow of a love that needs nothing from us. God's love is the source from which all love flows.",
+              },
+              {
+                label: "The Implication",
+                text: "The Trinity is not a theological puzzle to solve. It is the only framework in which 'God is love' makes sense. We are not necessary to God. We are wanted. The difference between necessity and desire is the difference between a tool and a child.",
+              },
+            ],
+          },
+          {
+            heading: "What Loving God Actually Looks Like",
+            contentBlocks: [
+              {
+                label: "Matthew 22:37–39 (ESV)",
+                text: "\"You shall love the Lord your God with all your heart and with all your soul and with all your mind. This is the great and first commandment. And a second is like it: You shall love your neighbour as yourself.\"",
+              },
+              {
+                label: "καρδία / kardia",
+                text: "Heart — the seat of will and decision (not merely emotion). Matthew 22:37 — love for God originates in the will, not the feelings.",
+              },
+              {
+                label: "The Critical Mistake",
+                text: "The most common mistake is thinking love for God is primarily an emotion we must conjure. But 'heart' in Hebrew and Greek thought is the seat of will and decision — not feeling. Feelings are the fruit of love, not the root. You cannot command a feeling. You can command a direction. Jesus is commanding the direction of your entire life toward God — and feelings, over time, follow.",
+              },
+              {
+                label: "For 16–24s: The Honest Question",
+                text: "How can I love someone I can't see? The Bible's answer is not 'try harder.' Look at the cross. You don't produce love for God — you receive it as you encounter His love for you (1 John 4:19). The more clearly you see what He did, the more naturally love arises. This is why studying the gospel isn't a warm-up act before the 'real' doctrine. It is the engine.",
+              },
+            ],
+          },
+          {
+            heading: "Hard Questions Answered",
+            contentBlocks: [
+              {
+                label: "Q: What if I just don't feel like I love God?",
+                text: "A: John connects loving God to two things: keeping His commandments (1 John 5:3) and loving one another (1 John 4:20). Love is a direction to orient your life in — not a feeling to summon. If you are orienting your life toward obedience and community, you are loving God, even when the feeling is absent. Faith comes before feeling, and feeling follows.",
+              },
+              {
+                label: "Q: Can I love God and still struggle with sin?",
+                text: "A: Yes — 1 John was written specifically to people struggling with assurance of salvation. John's test is not perfection; it is the orientation of your life. The person who loves God struggles against sin; the person who does not care never fights it.",
+              },
+              {
+                label: "Q: What does the Great Controversy have to do with love?",
+                text: "A: Everything. Satan's original charge was that God was unlovable — that His law was arbitrary, that obedience was servitude, and that God was ultimately self-serving (Isaiah 14:12–15; Ezekiel 28:12–16). The entire universe watched to see if God's character was what He claimed. The cross is God's answer — not a verbal argument, but self-sacrifice. He answered Satan's charge by giving everything. Love vindicated.",
+              },
+            ],
+          },
         ],
-        christCentre: "Jesus is the supreme revelation of God's love. In His life, death, and resurrection, we see the heart of the Father laid bare."
+        christCentre:
+          "Jesus is not just the messenger of God's love. He is the love of God made visible, tangible, and historical. John 1:14 says the Word became flesh — God's love put on skin. In the incarnation, life, death, and resurrection of Jesus, we see not a distant God sending a message, but a God who entered the suffering He could have avoided, to rescue people who had no capacity to rescue themselves. 'God is love' is not an abstraction. It has a face: Jesus of Nazareth.",
+        nextLesson: {
+          book: "gospel",
+          lesson: "righteousness-by-faith",
+          title: "Righteousness by Faith",
+        },
       },
       {
         slug: "righteousness-by-faith",
         title: "Righteousness by Faith",
-        scriptureRef: "Romans 4:3",
-        readingTime: 6,
-        keyVerse: "Abraham believed God, and it was counted to him as righteousness.",
-        keyVerseRef: "Romans 4:3",
-        intro: "Righteousness is not something we achieve, but something we receive. It is the gift of God through faith in Jesus Christ.",
+        scriptureRef: "Romans 3:21–4:8",
+        readingTime: 13,
+        keyVerse:
+          "For our sake he made him to be sin who knew no sin, so that in him we might become the righteousness of God.",
+        keyVerseRef: "2 Corinthians 5:21",
+        intro:
+          "This is the doctrine that sparked the Reformation, the doctrine Paul calls 'the gospel' (Romans 1:16–17), and the doctrine most Christians get subtly but fatally wrong.",
         sections: [
           {
-            heading: "The Gift of Righteousness",
-            body: "Faith is the hand that takes hold of God's promise. It is not our faith that saves us, but the Object of our faith—Jesus Christ."
+            heading: "What Is Righteousness?",
+            contentBlocks: [
+              {
+                label: "The English Word Misleads",
+                text: "The English word 'righteousness' sounds like a personality trait — being a good, upright person. The biblical concept is more radical. It is about standing before God. Not character, but status.",
+              },
+              {
+                label: "δικαιοσύνη / dikaiosynē",
+                text: "Righteousness, right standing, justice. Romans 1:17 — 'the righteousness of God is revealed' — not our righteousness, but His. The word describes a legal and relational status, not just moral behaviour.",
+              },
+              {
+                label: "צְדָקָה / tsedaqah",
+                text: "Righteousness, covenant faithfulness (Hebrew). Genesis 15:6 — Abraham's faith was 'counted' as tsedaqah. The Hebrew concept is inseparable from covenant relationship.",
+              },
+              {
+                label: "The Central Question of the Bible",
+                text: "Righteousness means right standing before God — a legal and relational status that human beings cannot manufacture for themselves. The question 'How can a person be right before God?' is not a peripheral theological question. It is the question the entire Bible is answering.",
+              },
+            ],
           },
           {
-            heading: "The Walk of Faith",
-            body: "Coming Soon: Exploring how living by faith leads to a life of peace, assurance, and true holiness."
-          }
+            heading: "The Mechanism: How Does It Work?",
+            contentBlocks: [
+              {
+                label: "Romans 4:3–5 (ESV)",
+                text: "\"For what does the Scripture say? 'Abraham believed God, and it was counted to him as righteousness.' Now to the one who works, his wages are not counted as a gift but as his due. And to the one who does not work but believes in him who justifies the ungodly, his faith is counted as righteousness.\"",
+              },
+              {
+                label: "λογίζομαι / logizomai",
+                text: "To count, reckon, credit to an account. Romans 4:3 — this word appears 11 times in Romans 4 alone. It is accounting language: God credits righteousness to our account. Not earned wages — a gift entered into the ledger.",
+              },
+              {
+                label: "The Accounting Metaphor",
+                text: "Paul uses an accounting metaphor deliberately. God credits righteousness not to the one who earns it but to the one who trusts. This means the ground of our acceptance before God is not our track record. It is Christ's track record, transferred to our account at the moment of genuine faith.",
+              },
+              {
+                label: "Justification Defined",
+                text: "Justification is a forensic legal declaration — not a process of being made good, but a verdict of being declared right. It is instant at the moment of genuine trust. It is complete — nothing more is needed. The penalty of sin is cancelled. The guilt of sin is removed. This is the Reformation's recovered truth: sola fide — faith alone.",
+              },
+            ],
+          },
+          {
+            heading: "Two Phrases That Change Everything",
+            contentBlocks: [
+              {
+                label: "The Distinction Most Translations Flatten",
+                text: "In Galatians 2:16 alone, two different Greek constructions appear side by side, and most English translations render both as 'faith in Jesus.' But the Greek is doing something more precise — and the difference is load-bearing.",
+              },
+              {
+                label: "pistis eis Iēsoun — Faith IN Jesus",
+                text: "Our faith directed toward Jesus as its object. Focus: our act of believing. 'I trust in Jesus.' This is our capacity to believe — which, frankly, is inconsistent and weak.",
+              },
+              {
+                label: "pistis Iēsou — Faith OF Jesus",
+                text: "Jesus's own faithfulness — His perfect trust in the Father throughout His life. Focus: Christ's faithful obedience. 'The faithfulness Jesus lived.' This is Christ's faithfulness given to us as a gift. See Galatians 2:20; Revelation 14:12; Romans 3:22.",
+              },
+              {
+                label: "Galatians 2:20 (ESV)",
+                text: "\"I have been crucified with Christ. It is no longer I who live, but Christ who lives in me. And the life I now live in the flesh I live by faith in the Son of God, who loved me and gave himself for me.\"",
+              },
+              {
+                label: "Why This Matters",
+                text: "The phrase 'faith of the Son of God' in Galatians 2:20 (pistis tou huiou tou theou) is a genitive construction — it can mean 'the faithfulness that the Son of God exercised.' Paul is saying: the life he lives now, he lives by the faithfulness Christ Himself exercised on his behalf. Our righteousness is not built on our fragile faith. It is built on Christ's unbreakable faithfulness.",
+              },
+            ],
+          },
+          {
+            heading: "Justification AND Sanctification — Both Matter",
+            contentBlocks: [
+              {
+                label: "Justification — Forensic",
+                text: "A legal declaration. Positional — what I am in Christ. Instant — the moment of genuine faith. Imputed righteousness — Christ's record credited to me. Qualifies me for heaven. Past tense: I have been justified (Romans 5:1).",
+              },
+              {
+                label: "Sanctification — Experiential",
+                text: "A growing transformation. Progressive — what Christ is doing in me. Ongoing — a daily, lifelong process. Imparted righteousness — Christ's character reproduced in me. Fits me for heaven and witnesses to my justification. Present tense: I am being sanctified (1 Corinthians 1:18).",
+              },
+              {
+                label: "Critical Warning",
+                text: "There are two great errors in Protestant theology. Error 1: Collapsing justification into sanctification — making acceptance before God dependent on progress in holiness. This is legalism. Error 2: Separating sanctification from justification — treating growth in holiness as optional after being declared righteous. The root of the tree is justified; the fruit is sanctified. But a tree with no fruit is a dead tree (James 2:17). They are distinct but inseparable.",
+              },
+            ],
+          },
+          {
+            heading: "Hard Questions Answered",
+            contentBlocks: [
+              {
+                label: "Q: Doesn't this make behaviour irrelevant?",
+                text: "A: Romans 6:1 — Paul anticipates this exact objection. 'Shall we go on sinning that grace may increase? By no means!' Genuine justifying faith is never alone. It always produces the desire and, progressively, the capacity for holy living. A person who treats justification as a licence to sin has not understood justification — they have misunderstood what faith is.",
+              },
+              {
+                label: "Q: What about James 2? Doesn't he say faith without works is dead?",
+                text: "A: Paul and James answer different questions. Paul: how is a sinner justified before God? James: how do you know if someone has genuine faith? Paul addresses the basis of justification; James addresses the evidence of genuine faith. They are perfectly consistent: genuine saving faith always produces works, but works are not the ground of justification.",
+              },
+              {
+                label: "Q: What about the investigative judgment (Daniel 7:9–10, 8:14)?",
+                text: "A: The investigative judgment examines the records to determine whether genuine faith was actually present in the life of each person. Christ's righteousness is the only ground of appeal. The judgment does not threaten the believer who rests in Christ — it vindicates them. The verdict of justification declared at conversion is upheld and publicly confirmed at the judgment.",
+              },
+            ],
+          },
         ],
-        christCentre: "Christ is our righteousness. He lived the life we could not live and died the death we deserved, so that we might be clothed in His perfection."
+        christCentre:
+          "Righteousness by faith is not a system — it is a Person. When Paul says in 1 Corinthians 1:30 that Christ 'became to us wisdom from God, righteousness and sanctification and redemption,' he is saying that every aspect of our standing before God is located in Jesus. We don't possess righteousness as a quality we have earned or even received and now own independently. We are righteous because we are in Christ. The moment we are in Him, His record becomes our record. His life, death, and resurrection are the substance of our justification.",
+        nextLesson: {
+          book: "gospel",
+          lesson: "the-resurrection",
+          title: "The Resurrection",
+        },
       },
       {
         slug: "the-resurrection",
         title: "The Resurrection",
-        scriptureRef: "1 Corinthians 15:17,20",
-        readingTime: 5,
-        keyVerse: "If Christ has not been raised, your faith is futile... But in fact Christ has been raised from the dead.",
-        keyVerseRef: "1 Corinthians 15:17,20",
-        intro: "The resurrection of Jesus is the pivot point of history. Without it, our faith is empty; with it, we have a living hope.",
+        scriptureRef: "1 Corinthians 15:1–28",
+        readingTime: 15,
+        keyVerse:
+          "But in fact Christ has been raised from the dead, the firstfruits of those who have fallen asleep.",
+        keyVerseRef: "1 Corinthians 15:20",
+        intro:
+          "Everything Christianity claims rises or falls with one historical event: the bodily resurrection of Jesus of Nazareth on the third day after His crucifixion. Paul doesn't soften this. He says if it didn't happen, your faith is worthless. So let's look at the evidence.",
         sections: [
           {
-            heading: "Victory Over Death",
-            body: "The empty tomb is God's 'Amen' to Christ's 'It is finished.' It proves that sin and death have been defeated forever."
+            heading: "Why the Resurrection Is Non-Negotiable",
+            contentBlocks: [
+              {
+                label: "1 Corinthians 15:14,17,20 (ESV)",
+                text: "\"If Christ has not been raised, then our preaching is in vain and your faith is in vain... If Christ has not been raised, your faith is futile and you are still in your sins... But in fact Christ has been raised from the dead, the firstfruits of those who have fallen asleep.\"",
+              },
+              {
+                label: "ἀνάστασις / anastasis",
+                text: "Resurrection — a standing up again. 1 Corinthians 15:21 — not a resuscitation to the same mortal life, but a transformation to new, imperishable, glorified life. The resurrection body is continuous with but transformed from the body that died.",
+              },
+              {
+                label: "ἀπαρχή / aparchē",
+                text: "Firstfruits — the first portion of a harvest that guarantees the rest is coming. 1 Corinthians 15:20 — Christ's resurrection is not an isolated miracle. It is the guarantee and the pattern of ours.",
+              },
+              {
+                label: "Paul's Five Consequences of No Resurrection",
+                text: "Paul makes the stakes explicit: (1) preaching is empty, (2) faith is empty, (3) the apostles are false witnesses about God, (4) believers are still in their sins, (5) those who died in Christ are eternally lost. The resurrection is not a peripheral belief. It is the load-bearing wall. Remove it and everything collapses.",
+              },
+            ],
           },
           {
-            heading: "The Power of the Resurrection",
-            body: "Coming Soon: Understanding how the same power that raised Jesus from the dead is at work in believers today."
-          }
+            heading: "The Earliest Evidence: The 1 Corinthians 15 Creed",
+            contentBlocks: [
+              {
+                label: "The Modern Sceptic's Argument",
+                text: "Critics often argue that the resurrection is a legend — a story that grew in the decades following Jesus's death. The historical evidence obliterates this claim, starting with a creed embedded in 1 Corinthians 15 that Paul explicitly identifies as received tradition.",
+              },
+              {
+                label: "1 Corinthians 15:3–7 (ESV)",
+                text: "\"For I delivered to you as of first importance what I also received: that Christ died for our sins in accordance with the Scriptures, that he was buried, that he was raised on the third day in accordance with the Scriptures, and that he appeared to Cephas, then to the twelve. Then he appeared to more than five hundred brothers at one time, most of whom are still alive, though some have fallen asleep. Then he appeared to James, then to all the apostles.\"",
+              },
+              {
+                label: "Historical Dating",
+                text: "The words 'delivered' (paredōka) and 'received' (parelabon) are technical rabbinic terms for the transmission of established tradition. Paul received this creed from earlier sources. Non-Christian scholars including Gerd Lüdemann date this tradition to within 18–36 months of the crucifixion — approximately AD 32–35. Paul wrote 1 Corinthians around AD 55. The resurrection proclamation pre-dates the letter by two decades. There is no time for legend.",
+              },
+            ],
+          },
+          {
+            heading: "Six Arguments for the Empty Tomb",
+            contentBlocks: [
+              {
+                label: "Argument 1: The creed implicitly includes the empty tomb",
+                text: "When Paul says Jesus 'was buried...then raised,' the burial-resurrection sequence presupposes that the body which was buried is the body which was raised — not left behind in the tomb. Resurrection in Jewish thought was always bodily.",
+              },
+              {
+                label: "Argument 2: The tomb's location was publicly known",
+                text: "Jerusalem had a population of roughly 80,000 at Passover. The crucifixion was public, and the burial site was known to both Jewish authorities and the Roman garrison. A movement claiming resurrection in Jerusalem would have been instantly and permanently refuted if the tomb still contained a body.",
+              },
+              {
+                label: "Argument 3: Mark's passion narrative dates to within years of the events",
+                text: "Oxford historian A.N. Sherwin-White established that legendary distortion of historical tradition requires a minimum of two full generations. Mark's passion narrative is far too early for legendary corruption to have occurred.",
+              },
+              {
+                label: "Argument 4: The narrative's simplicity argues for authenticity",
+                text: "Second-century apocryphal accounts of the resurrection describe elaborate visions, Jesus emerging from the tomb in overwhelming glory. Mark's account is stark and unadorned — women, an empty tomb, a young man in white, fear. That is how eyewitness testimony looks. That is not how legend reads.",
+              },
+              {
+                label: "Argument 5: Women discovered the empty tomb",
+                text: "In first-century Jewish and Roman culture, women's testimony was not legally admissible. Josephus states explicitly that women could not serve as witnesses in court. No one fabricating this story would have chosen women as the primary witnesses. The embarrassing detail argues powerfully for historical accuracy.",
+              },
+              {
+                label: "Argument 6: The earliest Jewish polemic concedes the empty tomb",
+                text: "Matthew 28:11–15: Jewish authorities circulated the counter-story that the disciples stole the body. This concedes the fundamental point — the tomb was empty. The debate was never about whether the tomb was empty. It was always about what happened to the body.",
+              },
+            ],
+          },
+          {
+            heading: "The Post-Resurrection Appearances",
+            contentBlocks: [
+              {
+                label: "What the Empty Tomb Establishes",
+                text: "The empty tomb proves something remarkable happened. The post-resurrection appearances establish what. The 1 Corinthians 15 creed names specific individuals — Peter, the twelve, then more than 500 at once. 'Most of whom are still alive' is not a casual aside. It is an explicit legal invitation: go and verify this with living witnesses. This is testimony language, not mythology.",
+              },
+              {
+                label: "The Appearances: What the Evidence Shows",
+                text: "Historian Gary Habermas notes that the resurrection was 'the central proclamation of the early church from the very beginning.' Named, identifiable witnesses are cited. Two of the appearances — to Paul and to James — are to people who were sceptics or opponents before the resurrection. Paul was actively persecuting Christians; James was Jesus's own brother and a non-believer during Jesus's ministry (John 7:5). Both became foundational church leaders who were martyred for their testimony. Nobody knowingly dies for a lie they invented.",
+              },
+            ],
+          },
+          {
+            heading: "Alternative Theories — and Why They Fail",
+            contentBlocks: [
+              {
+                label: "Disciples stole the body (Matthew 28:15)",
+                text: "Requires frightened, scattered disciples (who had fled at the arrest) to overpower a trained Roman guard unit, remove a 1–2 tonne sealed stone, steal the body — and then spend the rest of their lives dying for a lie they personally knew to be false. No serious historian holds this view.",
+              },
+              {
+                label: "Wrong tomb theory (Kirsopp Lake, 1907)",
+                text: "The disciples went to the wrong tomb in the dark and assumed resurrection. But both Jewish authorities and Romans knew the correct tomb and had every motive to produce the body immediately to end the movement. They never did.",
+              },
+              {
+                label: "Swoon theory — Jesus survived the cross",
+                text: "Roman executioners were professionals whose job was confirmed death. Crucifixion victims were stabbed to confirm death — John 19:34 records the spear thrust that produced blood and water, consistent with cardiac tamponade. A half-dead man could not roll away a 1–2 tonne sealed stone, overpower guards, walk on crucifixion wounds, and then inspire 'risen Lord' proclamations in his disciples.",
+              },
+              {
+                label: "Hallucination theory",
+                text: "Hallucinations are private, individual psychological events. The 1 Corinthians 15 creed records group appearances: twelve at once, then five hundred at once. Collective, consistent, contemporaneous hallucinations of this specificity — involving the same person, the same conversations, physical interaction — are not documented anywhere in the psychology literature.",
+              },
+              {
+                label: "Legend theory",
+                text: "The creedal tradition dates to within 18–36 months of the crucifixion. A.N. Sherwin-White demonstrated that 'not even two full generations' is enough time for legendary distortion to corrupt a solid historical core. The entire New Testament was written within one generation of the events it describes. There is no legendary gap.",
+              },
+            ],
+          },
+          {
+            heading: "What the Resurrection Means Now",
+            contentBlocks: [
+              {
+                label: "Acts 2:24 (ESV)",
+                text: "\"God raised him up, loosing the pangs of death, because it was not possible for him to be held by it.\"",
+              },
+              {
+                label: "God's verdict on the cross",
+                text: "The resurrection is God's 'Amen' to the cross. It proves the sacrifice was accepted. If Christ had remained in the tomb, the cross would have been a defeat. The resurrection declares it a victory.",
+              },
+              {
+                label: "The defeat of death itself",
+                text: "Not a temporary reprieve — an ontological reversal. Death no longer has ultimate authority over those who are in Christ (1 Corinthians 15:54–55).",
+              },
+              {
+                label: "The firstfruits guarantee",
+                text: "Where Christ goes in His resurrection body, all who are in Him will follow. His resurrection is not a unique exception — it is the guarantee of the pattern (1 Corinthians 15:20–23).",
+              },
+              {
+                label: "Makes intercession possible",
+                text: "The risen Christ is right now interceding for us at the Father's right hand. He did not merely save us at the cross and disappear — He lives to intercede (Romans 8:34; Hebrews 7:25).",
+              },
+              {
+                label: "Grounds Christian ethics",
+                text: "Because death is defeated, we can live without fear. Because Christ is Lord, we can live with purpose. The resurrection is not just a past event — it is the foundation of the present life.",
+              },
+            ],
+          },
         ],
-        christCentre: "Jesus is the Resurrection and the Life. Because He lives, we shall live also. His victory is our victory."
+        christCentre:
+          "Jesus did not merely teach about life after death. He demonstrated it. He entered the tomb as every human being must — and He left it as no human being had. His resurrection is not a symbol of springtime or new beginnings. It is a dateable, historical, bodily event with named witnesses, legal and political consequences, and permanent cosmic significance. Because He lives, death for the believer is not a terminal event. It is a transition. The grave does not have the final word — the Risen Christ does.",
+        nextLesson: {
+          book: "gospel",
+          lesson: "jesus-at-the-centre",
+          title: "Jesus at the Centre",
+        },
       },
       {
         slug: "jesus-at-the-centre",
         title: "Jesus at the Centre",
-        scriptureRef: "John 5:39",
-        readingTime: 5,
-        keyVerse: "These are the Scriptures that testify about me.",
+        scriptureRef: "John 5:39; Luke 24:27",
+        readingTime: 14,
+        keyVerse:
+          "You search the Scriptures because you think that in them you have eternal life; and it is they that bear witness about me.",
         keyVerseRef: "John 5:39",
-        intro: "Every page of Scripture, from Genesis to Revelation, points to Jesus. He is the heart and centre of all biblical truth.",
+        intro:
+          "The Bible is not a collection of inspiring stories, moral lessons, and prophecies about world events. It is one story — and it has one hero. Reading the Bible without finding Jesus is not just missing the point. Jesus says it is missing the entire purpose.",
         sections: [
           {
-            heading: "All Scripture Testifies of Him",
-            body: "To read the Bible without finding Jesus is to miss its entire purpose. He is the key that unlocks every prophecy and promise."
+            heading: "Jesus's Own Hermeneutic",
+            contentBlocks: [
+              {
+                label: "What Is Hermeneutics?",
+                text: "Hermeneutics is the science of interpretation — the principles used to determine what a text means. Jesus had a specific hermeneutic, and He taught it explicitly. Before we can rightly interpret any part of Scripture, we need to understand the interpretive key He gave us.",
+              },
+              {
+                label: "Luke 24:27 (ESV)",
+                text: "\"And beginning with Moses and all the Prophets, he interpreted to them in all the Scriptures the things concerning himself.\"",
+              },
+              {
+                label: "John 5:39 (ESV)",
+                text: "\"You search the Scriptures because you think that in them you have eternal life; and it is they that bear witness about me.\"",
+              },
+              {
+                label: "μαρτυρέω / martyreō",
+                text: "To testify, bear witness — legal language. John 5:39 — the Scriptures' primary function is to testify — to give legal witness — to Christ. Not one of the Bible's purposes. The purpose.",
+              },
+              {
+                label: "σκιά / σῶμα — skia / sōma",
+                text: "Shadow / Body (substance). Colossians 2:17 — the OT practices are the shadow; the body (substance) belongs to Christ. A shadow is real. It has shape and form. But it is not the object itself.",
+              },
+              {
+                label: "The Pharisees' Failure",
+                text: "In Luke 24, Jesus walks two disciples through the entirety of the Hebrew scriptures and shows how each section pointed to Him. In John 5, He charges the Pharisees — who knew the biblical text with extraordinary precision — with missing its entire purpose. You can know the Bible forwards and backwards and still miss the point. The point is Jesus.",
+              },
+            ],
           },
           {
-            heading: "The Alpha and Omega",
-            body: "Coming Soon: A study on how keeping Jesus at the centre of our theology, our worship, and our lives changes everything."
-          }
+            heading: "The Shadow-to-Substance Pattern",
+            contentBlocks: [
+              {
+                label: "Colossians 2:17",
+                text: "Paul says the festivals, new moons, and Sabbaths of the OT ceremonial system 'are a shadow of the things to come, but the substance belongs to Christ.' A shadow is real — it has shape, it has form. But a shadow is not the object. God gave Israel types — real events, real people, real institutions — that carried the shape of the coming Christ. This is not allegory. It is typology — and Jesus Himself teaches it.",
+              },
+              {
+                label: "Adam (Genesis 1–3)",
+                text: "First man, head of humanity. Antitype: Christ — the Last Adam, head of a new humanity (Romans 5:14–21; 1 Corinthians 15:45).",
+              },
+              {
+                label: "The Passover Lamb (Exodus 12)",
+                text: "Blood on the doorpost protects from judgment. Antitype: Christ — 'our Passover lamb has been sacrificed' (1 Corinthians 5:7; John 1:29).",
+              },
+              {
+                label: "The Bronze Serpent (Numbers 21:8–9)",
+                text: "Lifted up to heal the dying. Antitype: Christ — 'as Moses lifted up the serpent, so must the Son of Man be lifted up' (John 3:14).",
+              },
+              {
+                label: "The Day of Atonement (Leviticus 16)",
+                text: "The High Priest enters the Most Holy Place once a year with blood. Antitype: Christ — our High Priest who entered heaven itself with His own blood (Hebrews 9:11–12).",
+              },
+              {
+                label: "Manna in the Wilderness (Exodus 16)",
+                text: "Bread from heaven sustains life in the desert. Antitype: Christ — 'I am the bread of life that came down from heaven' (John 6:32–35).",
+              },
+              {
+                label: "David (2 Samuel 7)",
+                text: "King after God's own heart, promised an eternal dynasty. Antitype: Christ — Son of David, the eternal King (Matthew 22:41–45; Revelation 22:16).",
+              },
+              {
+                label: "Daniel (Daniel 1)",
+                text: "Faithful exile who refused to be reprogrammed by Babylon. Antitype: Christ — the greater Daniel who entered this world (the greater Babylon), refused every Satanic reprogramming, and was vindicated by the Father.",
+              },
+              {
+                label: "The Sanctuary System",
+                text: "Priesthood, sacrifice, and intercession — the entire system pointing forward. Antitype: Christ — Lamb, Priest, and Sanctuary all in one (Hebrews 8–10).",
+              },
+            ],
+          },
+          {
+            heading: "Why Getting This Wrong Leads to Moralism",
+            contentBlocks: [
+              {
+                label: "The Moralism Test",
+                text: "Here is a practical test for any Bible teaching: if you removed Jesus entirely from the message, could the audience still walk away with a practical takeaway? If yes — Jesus has not been sufficiently embedded. 'Be like Daniel' is moralism. 'Receive the faithfulness of Jesus — which is what Daniel himself was pointing to' is the gospel.",
+              },
+              {
+                label: "Daniel — Moralistic vs Christ-Centred",
+                text: "Moralism: 'Daniel refused the king's food — so should you.' Christ-centred: 'Daniel points to Jesus, who refused every Satanic provision and was faithful where Daniel could only be faithful in glimpses.'",
+              },
+              {
+                label: "David — Moralistic vs Christ-Centred",
+                text: "Moralism: 'David trusted God with Goliath — so should you.' Christ-centred: 'David is a type; Christ is the King who defeated the ultimate enemy — sin and death — where David's victories were temporary.'",
+              },
+              {
+                label: "Moses — Moralistic vs Christ-Centred",
+                text: "Moralism: 'Moses led the people out of slavery — be a leader.' Christ-centred: 'Moses is a type; Christ is the greater Deliverer who leads humanity out of slavery to sin.'",
+              },
+              {
+                label: "Esther — Moralistic vs Christ-Centred",
+                text: "Moralism: 'Esther had courage — be courageous.' Christ-centred: 'Esther points to Christ, who like her entered the presence of the King uninvited, at the risk of death, to intercede for His people.'",
+              },
+              {
+                label: "Paul — Moralistic vs Christ-Centred",
+                text: "Moralism: 'Paul was faithful despite suffering — endure suffering.' Christ-centred: 'Paul's endurance flows from Christ's strength, not his own. Philippians 4:13 — through Him who gives me strength.'",
+              },
+            ],
+          },
+          {
+            heading: "The One Biblical Storyline",
+            contentBlocks: [
+              {
+                label: "Why This Matters Practically",
+                text: "From Genesis to Revelation, there is one unfolding story. Understanding this prevents reading Bible passages as disconnected moral episodes. Every text is a scene in a story — and if you don't know the story, you will misread the scene.",
+              },
+              {
+                label: "Creation",
+                text: "God creates humanity in His image, to live in love-relationship with Him (Genesis 1–2). The world is good. The relationship is whole.",
+              },
+              {
+                label: "Fall",
+                text: "Humanity chooses autonomy over trust. Sin enters. The image is damaged. Death is introduced. The relationship is broken (Genesis 3).",
+              },
+              {
+                label: "Promise",
+                text: "Immediately, God promises a Deliverer who will crush the serpent (Genesis 3:15 — the protoevangelium, the 'first gospel'). The rest of the Bible is this promise being progressively and specifically revealed.",
+              },
+              {
+                label: "Israel",
+                text: "God calls a people through whom the promise will come, gives them the Law (revealing the standard Christ will meet), the sacrificial system (typifying the sacrifice Christ will make), and the prophecies (specifying who Christ will be and when He will come).",
+              },
+              {
+                label: "Incarnation",
+                text: "The Word becomes flesh. Jesus of Nazareth enters the story as its long-promised hero. 'When the fullness of time had come, God sent forth his Son' (John 1:14; Galatians 4:4–5).",
+              },
+              {
+                label: "Cross and Resurrection",
+                text: "Christ meets the standard the Law required, makes the sacrifice the system pointed toward, defeats death, and vindicates the character of God before the watching universe.",
+              },
+              {
+                label: "Church Age",
+                text: "The gospel goes to every nation. The Spirit applies the work of Christ to human hearts. The great controversy between Christ and Satan is in its final phase.",
+              },
+              {
+                label: "Consummation",
+                text: "Christ returns, the dead are raised, the wicked are judged, the righteous receive the promised inheritance, and God dwells with humanity in a restored creation (Revelation 21–22). The story ends where it began — but better. The garden becomes a city. The relationship is restored, but now it is indestructible.",
+              },
+              {
+                label: "Revelation 22:13 (ESV)",
+                text: "\"I am the Alpha and the Omega, the first and the last, the beginning and the end.\" Jesus is not just the beginning and end chronologically. He is the interpretive lens of everything in between.",
+              },
+            ],
+          },
+          {
+            heading: "How to Read Scripture with Jesus as the Key",
+            contentBlocks: [
+              {
+                label: "A Four-Step Method for Any Old Testament Passage",
+                text: "This is practical. Here is a framework for reading any OT text with Christ-centred eyes — without descending into allegory or losing the original meaning.",
+              },
+              {
+                label: "Step 1: Text",
+                text: "What does this passage say in its original, literal sense? Who wrote it, to whom, and what did it mean to the original audience? Start here. Never skip this step.",
+              },
+              {
+                label: "Step 2: Type",
+                text: "What is the typological shape of this text? What person, event, or institution is functioning as a shadow pointing forward?",
+              },
+              {
+                label: "Step 3: Christ",
+                text: "Where did Jesus live this out at a deeper level? What is the corresponding substance in His life, death, or resurrection? What did the type become in Him?",
+              },
+              {
+                label: "Step 4: You",
+                text: "What does this mean for your life — not 'try to be like the OT figure,' but 'receive the reality that OT figure was pointing to.' You don't imitate Daniel; you receive the faithfulness of Christ that Daniel prefigured.",
+              },
+              {
+                label: "Q: Isn't this reading Jesus into texts that aren't about Him?",
+                text: "A: There is an important difference between responsible typology and free-form allegory. Typology identifies structural correspondences that the NT authors themselves make explicit — Paul on Adam, Hagar, Melchizedek, the sanctuary; Hebrews on the priesthood and sacrifice. These are apostolic interpretation, grounded in Jesus's own teaching in Luke 24. We are not inventing connections. We are following the interpretive tradition Jesus established.",
+              },
+              {
+                label: "Q: What about the prophetic books — aren't they mainly about history?",
+                text: "A: The prophets address historical situations, but always within covenant faithfulness and eschatological hope. Isaiah 53, Micah 5:2, Zechariah 9:9, Psalm 22 — these were recognised as messianic before their historical fulfilment. The prophets were not historians with occasional predictions. They were covenant theologians who saw all of history through the lens of God's redemptive purpose.",
+              },
+            ],
+          },
         ],
-        christCentre: "Jesus is the focus of every study. He is the Lamb slain, the High Priest interceding, and the King who is coming again."
+        christCentre:
+          "Revelation 19:10 says 'the testimony of Jesus is the spirit of prophecy.' This means prophecy — all of it — exists to give testimony about Jesus. If you are studying prophecy and not finding Jesus, you have not yet found the point. He is the Lamb slain (Revelation 5:6), the High Priest interceding (Hebrews 7:25), the King who is coming (Revelation 19:11–16), the Judge whose verdict is grace (Daniel 7:22), and the New Creation's light (Revelation 21:23). Every study on Plain Prophecy is built on this conviction: prophecy stripped of Christ is not prophecy at all. It is map-reading with no destination.",
+        nextLesson: undefined,
       }
     ]
   }
