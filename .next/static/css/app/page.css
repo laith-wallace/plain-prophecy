@@ -96,7 +96,7 @@
 .section-subtitle {
   font-size: 1rem;
   line-height: 1.7;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.75);
   max-width: 600px;
   margin: 0 auto;
 }
@@ -126,28 +126,39 @@
   box-shadow: 0 8px 24px rgba(201, 168, 76, 0.3);
 }
 
+.btn-primary:focus-visible {
+  outline: 2px solid #c9a84c;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px rgba(201, 168, 76, 0.25);
+}
+
 .btn-ghost {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: 0.85rem 2rem;
   background: transparent;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.9);
   font-family: var(--font-ibm-plex-mono), monospace;
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   border-radius: 3px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.35);
   transition: border-color 0.2s, color 0.2s, background 0.2s;
   text-decoration: none;
 }
 
 .btn-ghost:hover {
-  border-color: rgba(255, 255, 255, 0.5);
+  border-color: rgba(255, 255, 255, 0.7);
   color: #fff;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.btn-ghost:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 3px;
 }
 
 .btn-outline {
@@ -163,14 +174,19 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   border-radius: 3px;
-  border: 1px solid rgba(201, 168, 76, 0.4);
+  border: 1px solid rgba(201, 168, 76, 0.55);
   transition: border-color 0.2s, background 0.2s;
   text-decoration: none;
 }
 
 .btn-outline:hover {
   border-color: #c9a84c;
-  background: rgba(201, 168, 76, 0.08);
+  background: rgba(201, 168, 76, 0.1);
+}
+
+.btn-outline:focus-visible {
+  outline: 2px solid #c9a84c;
+  outline-offset: 3px;
 }
 
 .btn-accent {
@@ -195,11 +211,17 @@
   transform: translateY(-1px);
 }
 
+.btn-accent:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.2);
+}
+
 /* ── 01. Hero Section ─────────────────────────────────────────────────── */
 
 .hero-section {
   position: relative;
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -232,6 +254,68 @@
     radial-gradient(ellipse 80vw 40vh at 50% 100%, rgba(201, 168, 76, 0.06) 0%, transparent 70%);
 }
 
+/* Bottom fade — blends hero into the studies-teaser-section (#08080f) */
+.hero-section::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 220px;
+  background: linear-gradient(to bottom, transparent 0%, #08080f 100%);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* ── Hero background video ───────────────────────────────────────────── */
+
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center center;
+     object-position: center center;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  z-index: 1;
+  /* Prevent interaction / selection */
+  pointer-events: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+
+.hero-video--visible {
+  opacity: 0.55;
+}
+
+/* Dark gradient overlay — keeps headline legible at all screen sizes */
+.hero-video-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background:
+    /* Base scrim — ensures minimum contrast over any video frame */
+    rgba(5, 5, 10, 0.45),
+    /* Top fade — darkens into the nav */
+    linear-gradient(to bottom, rgba(5,5,10,0.65) 0%, transparent 28%),
+    /* Bottom fade — darkens near the scroll hint */
+    linear-gradient(to top, rgba(5,5,10,0.75) 0%, transparent 35%),
+    /* Centre column scrim — tightens contrast behind headline text */
+    radial-gradient(ellipse 80% 65% at 50% 50%, rgba(5,5,10,0.40) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+/* On reduced-motion, skip the fade-in transition */
+@media (prefers-reduced-motion: reduce) {
+  .hero-video {
+    transition: none;
+  }
+}
+
 .hero-eyebrow {
   position: relative;
   z-index: 1;
@@ -243,7 +327,7 @@
   font-size: 0.62rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.65);
 }
 
 .hero-rule {
@@ -273,7 +357,7 @@
   z-index: 1;
   font-size: clamp(0.95rem, 2vw, 1.15rem);
   line-height: 1.8;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.82);
   margin-bottom: 2.5rem;
   max-width: 500px;
 }
@@ -303,7 +387,7 @@
   font-family: var(--font-playfair), serif;
   font-size: 0.92rem;
   font-style: italic;
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.88);
   line-height: 1.6;
   margin: 0 0 0.25rem;
 }
@@ -313,7 +397,7 @@
   font-size: 0.6rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(201, 168, 76, 0.5);
+  color: rgba(201, 168, 76, 0.9);
   font-style: normal;
 }
 
@@ -437,7 +521,7 @@
 .prophecy-card-hook {
   font-size: 0.85rem;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.72);
   margin-bottom: 0.75rem;
 }
 
@@ -446,7 +530,7 @@
   font-size: 0.62rem;
   letter-spacing: 0.15em;
   color: var(--card-accent, #c9a84c);
-  opacity: 0.7;
+  opacity: 0.9;
   text-transform: uppercase;
 }
 
@@ -460,6 +544,11 @@
 .prophecy-card:hover .prophecy-card-arrow {
   color: var(--card-accent, #c9a84c);
   transform: translateX(3px);
+}
+
+.prophecy-card:focus-visible {
+  outline: 2px solid #c9a84c;
+  outline-offset: -2px;
 }
 
 /* ── 03. Timeline Section ──────────────────────────────────────────────── */
@@ -595,7 +684,7 @@
   font-size: 0.62rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: rgba(201, 168, 76, 0.7);
+  color: rgba(201, 168, 76, 0.92);
   margin-bottom: 1.5rem;
 }
 
@@ -616,7 +705,7 @@
   font-size: clamp(0.7rem, 1.5vw, 0.95rem);
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.82);
   margin-bottom: 2rem;
   opacity: 0;
   transform: translateY(10px);
@@ -1637,6 +1726,19 @@
   transform: translateY(-1px);
 }
 
+/* ── Card Deck — empty state ──────────────────────────────────────────────── */
+.scd-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  font-family: var(--font-ibm-plex-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+}
+
 /* ── List View ────────────────────────────────────────────────────────────── */
 .slv-root {
   padding: 0.5rem 1.5rem 5rem;
@@ -1644,6 +1746,23 @@
   flex-direction: column;
   gap: 2rem;
 }
+
+.slv-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem 0;
+}
+.slv-skeleton-row {
+  height: 72px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.04);
+  animation: skeletonPulse 1.6s ease-in-out infinite;
+}
+.slv-skeleton-row:nth-child(2) { animation-delay: 0.1s; }
+.slv-skeleton-row:nth-child(3) { animation-delay: 0.2s; }
+.slv-skeleton-row:nth-child(4) { animation-delay: 0.3s; }
+.slv-skeleton-row:nth-child(5) { animation-delay: 0.4s; }
 
 .slv-book-group {
   display: flex;

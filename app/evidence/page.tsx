@@ -36,7 +36,7 @@ export default function EvidencePage() {
       style={{
         background: "var(--ink)",
         color: "var(--paper)",
-        minHeight: "100vh",
+        minHeight: "100dvh",
       }}
     >
       <div

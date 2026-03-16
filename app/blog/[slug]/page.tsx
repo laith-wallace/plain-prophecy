@@ -56,9 +56,9 @@ export default async function BlogPostPage({ params }: Props) {
     <main
       style={{
         background: "#0a0a06",
-        minHeight: "100vh",
+        minHeight: "100dvh",
         color: "#fff",
-        fontFamily: "Inter, sans-serif",
+        fontFamily: "var(--font-ibm-plex-sans), sans-serif",
       }}
     >
       {/* Back nav */}

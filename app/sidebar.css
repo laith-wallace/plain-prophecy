@@ -31,7 +31,7 @@
 
 /* Override SidebarProvider — it uses flex row; keep our full-height layout */
 .studies-root[data-sidebar="provider"] {
-  min-height: calc(100vh - 56px) !important;
+  min-height: calc(100dvh - 56px) !important;
   flex-direction: row !important;
 }
 

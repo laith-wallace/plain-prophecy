@@ -133,6 +133,16 @@ export default function StudyCardDeck({ bookFilter = "all" }: StudyCardDeckProps
     }
   }
 
+  if (booksData === undefined) {
+    return (
+      <div className="scd-root">
+        <div className="si-skeleton">
+          <div className="si-skeleton-card" />
+        </div>
+      </div>
+    );
+  }
+
   if (TOTAL === 0) {
     return (
       <div className="scd-root">

@@ -16,6 +16,18 @@ export default function StudyListView({ bookFilter = "all" }: StudyListViewProps
     (book) => bookFilter === "all" || book.slug === bookFilter
   );
 
+  if (booksData === undefined) {
+    return (
+      <div className="slv-root">
+        <div className="slv-skeleton">
+          {[...Array(5)].map((_, i) => (
+            <div key={i} className="slv-skeleton-row" />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="slv-root">
       {filtered.map((book) => (

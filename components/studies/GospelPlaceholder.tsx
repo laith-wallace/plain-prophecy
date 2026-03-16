@@ -21,7 +21,7 @@ export default function GospelPlaceholder({
   svgMotif,
 }: GospelPlaceholderProps) {
   return (
-    <div className="min-h-screen bg-[#08080F] text-slate-200 font-sans relative overflow-hidden">
+    <div className="min-h-[100dvh] bg-[#08080F] text-slate-200 font-sans relative overflow-hidden">
       {/* Star Field Background - Matches existing pattern */}
       <div 
         className="absolute inset-0 pointer-events-none opacity-40 mix-blend-screen"

@@ -262,7 +262,7 @@
 .studies-content {
   background: #000000 !important;
   color: #ffffff !important;
-  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 /* Sidebar Header */

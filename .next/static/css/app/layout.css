@@ -1019,9 +1019,6 @@ video {
 .mt-1\.5 {
   margin-top: 0.375rem;
 }
-.mt-2 {
-  margin-top: 0.5rem;
-}
 .mt-4 {
   margin-top: 1rem;
 }
@@ -1139,6 +1136,9 @@ video {
 .h-\[calc\(100\%-1px\)\] {
   height: calc(100% - 1px);
 }
+.h-auto {
+  height: auto;
+}
 .h-dvh {
   height: 100dvh;
 }
@@ -1150,9 +1150,6 @@ video {
 }
 .h-svh {
   height: 100svh;
-}
-.h-auto {
-  height: auto;
 }
 .max-h-48 {
   max-height: 12rem;
@@ -1177,6 +1174,9 @@ video {
 }
 .min-h-svh {
   min-height: 100svh;
+}
+.min-h-\[100dvh\] {
+  min-height: 100dvh;
 }
 .w-1\.5 {
   width: 0.375rem;
@@ -2269,7 +2269,7 @@ body {
     background: var(--paper);
     font-family: "IBM Plex Sans", sans-serif;
     color: var(--ink);
-    min-height: 100vh;
+    min-height: 100dvh;
 }
 
 /* ===== SHARED BADGES ===== */

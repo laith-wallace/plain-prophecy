@@ -85,7 +85,7 @@ body {
     background: var(--paper);
     font-family: "IBM Plex Sans", sans-serif;
     color: var(--ink);
-    min-height: 100vh;
+    min-height: 100dvh;
 }
 
 /* ===== SHARED BADGES ===== */

@@ -7,6 +7,7 @@ import JsonLd from "@/components/seo/JsonLd";
 const HomeAnimations = dynamic(() => import("@/components/home/HomeAnimations"));
 import ScrollHeroVideoClient from "@/components/home/ScrollHeroVideoClient";
 import StudyCardDeckClient from "@/components/home/StudyCardDeckClient";
+import HeroVideo from "@/components/home/HeroVideo";
 
 import "./home-styles.css";
 
@@ -127,9 +128,10 @@ export default function HomePage() {
 
       {/* ── SECTION 1: HERO ─────────────────────────────────────────────── */}
       <section className="hero-section">
-        {/* Animated star/particle background */}
+        {/* Background — stars always present; video layered on top on fast connections */}
         <div className="hero-bg" aria-hidden="true">
           <div className="hero-stars" />
+          <HeroVideo />
         </div>
 
         {/* Decorative eyebrow */}
@@ -167,10 +169,10 @@ export default function HomePage() {
         {/* Scripture badge */}
         <div className="hero-scripture" data-hero-fade="1400">
           <blockquote className="hero-quote">
-            &ldquo;Seal not the sayings of the prophecy of this book: for the
-            time is at hand.&rdquo;
+            &ldquo;Here is the patience of the saints: here are they that keep
+            the commandments of God, and the faith of Jesus.&rdquo;
           </blockquote>
-          <cite className="hero-cite">Revelation 22:10</cite>
+          <cite className="hero-cite">Revelation 14:12</cite>
         </div>
 
         {/* Scroll hint */}

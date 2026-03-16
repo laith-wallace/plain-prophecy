@@ -34,7 +34,7 @@
 
 /* Override SidebarProvider — it uses flex row; keep our full-height layout */
 .studies-root[data-sidebar="provider"] {
-  min-height: calc(100vh - 56px) !important;
+  min-height: calc(100dvh - 56px) !important;
   flex-direction: row !important;
 }
 
@@ -204,7 +204,7 @@
 .studies-root {
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - 56px);
+  min-height: calc(100dvh - 56px);
 
   /* Force dark theme variables for the entire studies section */
   --paper: #08080f;
@@ -271,7 +271,7 @@
   border-right: 1px solid var(--divider);
   position: sticky;
   top: 56px;
-  height: calc(100vh - 56px);
+  height: calc(100dvh - 56px);
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--divider) transparent;
@@ -733,7 +733,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    height: 100vh;
+    height: 100dvh;
     z-index: 50;
     transform: translateX(-100%);
     transition: transform 0.25s var(--ease-out);
@@ -1049,7 +1049,7 @@
 .studies-content {
   background: #000000 !important;
   color: #ffffff !important;
-  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 /* Sidebar Header */
