@@ -14,6 +14,7 @@ import type * as blog from "../blog.js";
 import type * as compareHighlights from "../compareHighlights.js";
 import type * as doctrines from "../doctrines.js";
 import type * as evidence from "../evidence.js";
+import type * as files from "../files.js";
 import type * as http from "../http.js";
 import type * as pillars from "../pillars.js";
 import type * as prophecies from "../prophecies.js";
@@ -36,6 +37,7 @@ declare const fullApi: ApiFromModules<{
   compareHighlights: typeof compareHighlights;
   doctrines: typeof doctrines;
   evidence: typeof evidence;
+  files: typeof files;
   http: typeof http;
   pillars: typeof pillars;
   prophecies: typeof prophecies;

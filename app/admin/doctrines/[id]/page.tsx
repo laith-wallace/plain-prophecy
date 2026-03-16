@@ -15,6 +15,7 @@ import Link from "next/link";
 import { Trash2, Plus, RefreshCw } from "lucide-react";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import { generateSlug, isValidSlug } from "@/lib/slug";
+import ImageUpload from "@/components/admin/ImageUpload";
 
 type CategoryType = "rapture" | "antichrist" | "daniel" | "revelation";
 
@@ -656,13 +657,17 @@ export default function DoctrineEditPage() {
 
             <div className="space-y-1.5">
               <label className={labelCls}>
-                OG Image <span className="text-stone-500 font-normal">(social share image URL)</span>
+                OG Image <span className="text-stone-500 font-normal">(social share image)</span>
               </label>
-              <input
-                type="text"
-                {...register("ogImage")}
-                placeholder="https://..."
-                className={inputCls}
+              <Controller
+                control={control}
+                name="ogImage"
+                render={({ field }) => (
+                  <ImageUpload
+                    value={field.value}
+                    onChange={field.onChange}
+                  />
+                )}
               />
             </div>
           </CardContent>

@@ -15,6 +15,7 @@ import { RefreshCw } from "lucide-react";
 import { generateSlug, isValidSlug } from "@/lib/slug";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import { markdownToHtml } from "@/lib/markdown";
+import ImageUpload from "@/components/admin/ImageUpload";
 
 interface FormState {
   title: string;
@@ -283,15 +284,10 @@ export default function BlogEditPage() {
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-sm font-medium text-stone-300">
-              Cover Image <span className="text-stone-500 font-normal">(optional URL)</span>
-            </label>
-            <input
-              type="text"
+            <label className="text-sm font-medium text-stone-300">Cover Image</label>
+            <ImageUpload
               value={form.coverImage}
-              onChange={(e) => set("coverImage", e.target.value)}
-              placeholder="https://..."
-              className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 placeholder:text-stone-600"
+              onChange={(url) => set("coverImage", url)}
             />
           </div>
 
@@ -384,14 +380,12 @@ export default function BlogEditPage() {
 
           <div className="space-y-1.5">
             <label className="text-sm font-medium text-stone-300">
-              OG Image <span className="text-stone-500 font-normal">(social share image URL)</span>
+              OG Image <span className="text-stone-500 font-normal">(social share image)</span>
             </label>
-            <input
-              type="text"
+            <ImageUpload
               value={form.ogImage}
-              onChange={(e) => set("ogImage", e.target.value)}
+              onChange={(url) => set("ogImage", url)}
               placeholder={form.coverImage || "https://..."}
-              className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 placeholder:text-stone-600"
             />
           </div>
         </CardContent>
