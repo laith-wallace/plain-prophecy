@@ -1,9 +1,10 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   HOMEPAGE REDESIGN — Scroll-Stopping Sections
+   HOMEPAGE — Plain Prophecy
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* ── Shared animation utilities ─────────────────────────────────────────── */
+/* ── Animation utilities ─────────────────────────────────────────────────── */
 
+/* Scroll-reveal: start hidden, reveal on .in-view (added by HomeAnimations) */
 [data-animate] {
   opacity: 0;
   transform: translateY(28px);
@@ -11,209 +12,548 @@
               transform 0.55s cubic-bezier(0.2, 0.9, 0.3, 1);
 }
 
-[data-animate].visible {
+[data-animate].in-view {
   opacity: 1 !important;
   transform: translateY(0) !important;
 }
 
-[data-animate][data-delay="100"] { transition-delay: 100ms; }
-[data-animate][data-delay="200"] { transition-delay: 200ms; }
-[data-animate][data-delay="300"] { transition-delay: 300ms; }
-[data-animate][data-delay="400"] { transition-delay: 400ms; }
-[data-animate][data-delay="500"] { transition-delay: 500ms; }
-
-/* ── Shared buttons ────────────────────────────────────────────────────── */
-
-.home-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  padding: 1rem 1.75rem;
-  font-family: var(--font-ibm-plex-mono), monospace;
-  font-size: 0.75rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  font-weight: 700;
-  transition: all 0.3s var(--ease-spring);
-  border-radius: 4px;
+/* Hero headline slide-in (added by HomeAnimations via data-hero-line) */
+.hero-line {
+  display: block;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s cubic-bezier(0.2, 0.9, 0.3, 1),
+              transform 0.6s cubic-bezier(0.2, 0.9, 0.3, 1);
 }
 
-.home-btn--primary {
-  background: #fff;
-  color: #000;
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+.hero-line.hero-line-in {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.home-btn--primary:hover {
-  background: #e0e0e0;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.2);
+/* Hero element fade-in (added by HomeAnimations via data-hero-fade) */
+[data-hero-fade] {
+  opacity: 0;
+  transition: opacity 0.6s ease;
 }
 
-.home-btn--outline {
-  background: transparent;
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+[data-hero-fade].hero-fade-in {
+  opacity: 1;
 }
 
-.home-btn--outline:hover {
-  border-color: #fff;
-  background: rgba(255, 255, 255, 0.05);
+/* Timeline dot pulse */
+.timeline-dot.pulse-once {
+  animation: dotPulse 0.6s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+}
+
+@keyframes dotPulse {
+  0%   { transform: scale(1); box-shadow: 0 0 0 0 rgba(201, 168, 76, 0.6); }
+  50%  { transform: scale(1.4); box-shadow: 0 0 0 8px rgba(201, 168, 76, 0); }
+  100% { transform: scale(1); }
 }
 
 /* ── Shared section layout ───────────────────────────────────────────────── */
 
-.home-section {
-  position: relative;
-  width: 100%;
-  padding: 8rem 0;
-  overflow: hidden;
+.home-page {
+  background: #05050a;
+  color: #fff;
+  overflow-x: hidden;
 }
 
-.home-container {
-  max-width: 1400px;
+.section-inner {
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 1.5rem;
 }
 
-.home-section-header {
-  margin-bottom: 5rem;
-  max-width: 800px;
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
 }
 
-.home-eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.home-eyebrow-line {
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, #fff, transparent);
-  opacity: 0.2;
-}
-
-.home-eyebrow-text {
+.section-eyebrow {
   font-family: var(--font-ibm-plex-mono), monospace;
   font-size: 0.65rem;
-  letter-spacing: 0.35em;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.4);
+  color: #c9a84c;
+  margin-bottom: 1rem;
 }
 
-.home-headline {
+.section-title {
   font-family: var(--font-playfair), serif;
-  font-size: clamp(2.5rem, 6vw, 4.2rem);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
   font-weight: 900;
-  line-height: 1.05;
+  line-height: 1.1;
   letter-spacing: -0.02em;
   color: #fff;
+  margin-bottom: 1rem;
+}
+
+.section-subtitle {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.55);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ── Shared buttons ─────────────────────────────────────────────────────── */
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 2rem;
+  background: #c9a84c;
+  color: #05050a;
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: 3px;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+}
+
+.btn-primary:hover {
+  background: #dbb85a;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(201, 168, 76, 0.3);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 2rem;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+  text-decoration: none;
+}
+
+.btn-ghost:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem 1.75rem;
+  background: transparent;
+  color: #c9a84c;
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: 3px;
+  border: 1px solid rgba(201, 168, 76, 0.4);
+  transition: border-color 0.2s, background 0.2s;
+  text-decoration: none;
+}
+
+.btn-outline:hover {
+  border-color: #c9a84c;
+  background: rgba(201, 168, 76, 0.08);
+}
+
+.btn-accent {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 2rem;
+  background: #fff;
+  color: #05050a;
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: 3px;
+  transition: background 0.2s, transform 0.2s;
+  text-decoration: none;
+}
+
+.btn-accent:hover {
+  background: #e8e8e8;
+  transform: translateY(-1px);
 }
 
 /* ── 01. Hero Section ─────────────────────────────────────────────────── */
 
-.hero-main {
+.hero-section {
   position: relative;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: #000;
+  text-align: center;
+  padding: 8rem 1.5rem 6rem;
+  background: #05050a;
   overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .hero-stars {
   position: absolute;
   inset: 0;
-  background-image: 
-    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.05) 0%, transparent 1%),
-    radial-gradient(circle at 80% 60%, rgba(255,255,255,0.05) 0%, transparent 1%),
-    radial-gradient(circle at 40% 80%, rgba(255,255,255,0.05) 0%, transparent 1%);
-  background-size: 100px 100px;
+  background-image:
+    radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 25% 60%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 40% 10%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 60% 75%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 75% 30%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 85% 50%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 92% 80%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 50% 45%, rgba(255,255,255,0.2) 0%, transparent 100%),
+    radial-gradient(ellipse 80vw 40vh at 50% 100%, rgba(201, 168, 76, 0.06) 0%, transparent 70%);
 }
 
-.hero-glow {
-  position: absolute;
-  bottom: -20%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80vw;
-  height: 60vh;
-  background: radial-gradient(circle, rgba(201, 168, 76, 0.08) 0%, transparent 70%);
-  filter: blur(80px);
-}
-
-.hero-content {
+.hero-eyebrow {
   position: relative;
-  z-index: 10;
-  text-align: center;
-  width: 100%;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
 }
 
-.hero-logo-wrap {
+.hero-rule {
+  width: 40px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.hero-headline {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-playfair), serif;
+  font-size: clamp(3rem, 8vw, 6.5rem);
+  font-weight: 900;
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  color: #fff;
+  margin-bottom: 2rem;
+}
+
+.hero-accent {
+  color: #c9a84c;
+}
+
+.hero-sub {
+  position: relative;
+  z-index: 1;
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 2.5rem;
+  max-width: 500px;
+}
+
+.hero-sub-br {
+  display: block;
+}
+
+.hero-ctas {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 3.5rem;
+}
+
+.hero-scripture {
+  position: relative;
+  z-index: 1;
   margin-bottom: 3rem;
 }
 
-/* ── 02. Prophecy Showcase ─────────────────────────────────────────────── */
+.hero-quote {
+  font-family: var(--font-playfair), serif;
+  font-size: 0.92rem;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.35);
+  line-height: 1.6;
+  margin: 0 0 0.25rem;
+}
 
-.showcase-grid {
+.hero-cite {
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(201, 168, 76, 0.5);
+  font-style: normal;
+}
+
+.hero-scroll-hint {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.scroll-chevron {
+  width: 20px;
+  height: 20px;
+  border-right: 1.5px solid rgba(255, 255, 255, 0.25);
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.25);
+  transform: rotate(45deg);
+  margin: 0 auto;
+  animation: chevronBounce 2s ease-in-out infinite;
+}
+
+@keyframes chevronBounce {
+  0%, 100% { transform: rotate(45deg) translateY(0); opacity: 0.4; }
+  50%       { transform: rotate(45deg) translateY(4px); opacity: 0.8; }
+}
+
+/* ── 02. Studies Teaser ──────────────────────────────────────────────────── */
+
+.studies-teaser-section {
+  padding: 7rem 0 5rem;
+  background: #08080f;
+}
+
+.studies-teaser-cta {
+  text-align: center;
+  margin-top: 2.5rem;
+}
+
+/* ── 03. Prophecy Showcase ─────────────────────────────────────────────── */
+
+.prophecy-section {
+  padding: 7rem 0;
+  background: #08080f;
+}
+
+.prophecy-grid {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 2rem;
-  align-items: center;
-}
-
-.showcase-visual {
-  grid-column: 1 / 8;
-  position: relative;
-}
-
-.showcase-text {
-  grid-column: 9 / 13;
-}
-
-.showcase-image-container {
-  aspect-ratio: 16/10;
-  background: #08080a;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 4px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 6px;
   overflow: hidden;
 }
 
-/* ── 03. Timeline Preview ──────────────────────────────────────────────── */
-
-.timeline-preview {
+.prophecy-card {
   position: relative;
-  padding: 4rem;
-  background: #050507;
-  border-radius: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem 1.75rem;
+  background: #08080f;
+  text-decoration: none;
+  transition: background 0.2s;
+  overflow: hidden;
+}
+
+.prophecy-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--card-accent, #c9a84c);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.prophecy-card:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.prophecy-card:hover::before {
+  opacity: 1;
+}
+
+.hover-spring {
+  transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1),
+              background 0.2s;
+}
+
+.hover-spring:hover {
+  transform: translateY(-2px);
+}
+
+.prophecy-card-icon {
+  width: 36px;
+  height: 36px;
+  color: var(--card-accent, #c9a84c);
+  flex-shrink: 0;
+}
+
+.icon-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.prophecy-card-body {
+  flex: 1;
+}
+
+.prophecy-card-title {
+  font-family: var(--font-playfair), serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.4rem;
+}
+
+.prophecy-card-hook {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 0.75rem;
+}
+
+.prophecy-card-ref {
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  color: var(--card-accent, #c9a84c);
+  opacity: 0.7;
+  text-transform: uppercase;
+}
+
+.prophecy-card-arrow {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.2);
+  align-self: flex-end;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.prophecy-card:hover .prophecy-card-arrow {
+  color: var(--card-accent, #c9a84c);
+  transform: translateX(3px);
+}
+
+/* ── 03. Timeline Section ──────────────────────────────────────────────── */
+
+.timeline-section {
+  padding: 7rem 0;
+  background: #05050a;
+}
+
+.timeline-track {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  overflow-x: auto;
+  padding: 2rem 0;
+  margin-bottom: 3rem;
+  scrollbar-width: none;
+}
+
+.timeline-track::-webkit-scrollbar {
+  display: none;
+}
+
+.timeline-node {
+  position: relative;
+  flex: 1;
+  min-width: 130px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 0.5rem;
+}
+
+.timeline-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #c9a84c;
+  border: 2px solid #05050a;
+  box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.3);
+  flex-shrink: 0;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 1;
 }
 
 .timeline-line {
   position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
+  top: 5px;
+  left: 50%;
+  width: 100%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  background: linear-gradient(90deg, rgba(201, 168, 76, 0.4), rgba(201, 168, 76, 0.1));
+  z-index: 0;
+}
+
+.timeline-year {
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  color: #c9a84c;
+  margin-bottom: 0.3rem;
+}
+
+.timeline-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.3;
+  margin-bottom: 0.25rem;
+}
+
+.timeline-ref {
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.timeline-cta {
+  text-align: center;
 }
 
 /* ── 04. Scroll Hero Video ────────────────────────────────────────────── */
 
-.scroll-hero-container {
+/* Desktop scroll-scrub wrapper */
+.scroll-hero-wrapper {
   position: relative;
-  height: 300vh; /* Control the length of the scroll journey */
+  height: 115vh;
   background: #000;
 }
 
 .scroll-hero-sticky {
   position: sticky;
   top: 0;
-  height: 100vh;
+  height: 90vh;
   width: 100%;
   overflow: hidden;
   display: flex;
@@ -221,25 +561,20 @@
   justify-content: center;
 }
 
-.scroll-hero-video-wrap {
+.scroll-hero-video {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.scroll-hero-video {
   width: 100%;
   height: 100%;
   object-fit: cover;
   opacity: 0.6;
 }
 
-.scroll-hero-overlay {
+.scroll-hero-overlay-bg {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle, transparent 0%, rgba(0,0,0,0.4) 100%);
-  z-index: 5;
+  background: radial-gradient(circle at 50% 50%, transparent 30%, rgba(0,0,0,0.6) 100%);
+  z-index: 2;
 }
 
 .scroll-hero-content {
@@ -251,43 +586,412 @@
   padding: 0 2rem;
 }
 
+.scroll-hero-eyebrow {
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(201, 168, 76, 0.7);
+  margin-bottom: 1.5rem;
+}
+
 .scroll-hero-headline {
   font-family: var(--font-playfair), serif;
-  font-size: clamp(3rem, 10vw, 8rem);
+  font-size: clamp(3rem, 10vw, 7rem);
   font-weight: 900;
-  line-height: 0.9;
+  line-height: 0.95;
   letter-spacing: -0.04em;
-  margin-bottom: 2rem;
-  text-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .scroll-hero-sub {
   font-family: var(--font-ibm-plex-mono), monospace;
-  font-size: clamp(0.7rem, 2vw, 1.1rem);
-  letter-spacing: 0.4em;
+  font-size: clamp(0.7rem, 1.5vw, 0.95rem);
+  letter-spacing: 0.25em;
   text-transform: uppercase;
-  opacity: 0.6;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 2rem;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s;
 }
 
-/* ────────────────────────────────────────────────────────────────────── */
+.scroll-hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.9rem 2rem;
+  background: #c9a84c;
+  color: #0a0a12;
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 3px;
+  border: 2px solid #c9a84c;
+  text-decoration: none;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s, background 0.2s, color 0.2s, border-color 0.2s;
+}
 
-/* ── Scroll Hero: static / mobile variant ─────────────────────────────── */
+.scroll-hero-cta:hover {
+  background: #e0be6a;
+  border-color: #e0be6a;
+  color: #0a0a12;
+}
+
+.scroll-hero-cta:focus-visible {
+  outline: 2px solid #c9a84c;
+  outline-offset: 3px;
+}
+
+/* Visible state — toggled by JS */
+.scroll-hero-visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* Desktop content with JS-controlled visibility starts hidden */
+/* Static / mobile variant */
 .scroll-hero-static {
   position: relative;
-  height: 85vh;
+  height: 70vh;
   min-height: 520px;
   background: #000;
 }
+
 .scroll-hero-static .scroll-hero-sticky {
   position: absolute;
   inset: 0;
   height: 100%;
 }
-/* Ensure content is always visible in static mode */
+
+/* Content always visible in static mode */
 .scroll-hero-content--static .scroll-hero-headline,
 .scroll-hero-content--static .scroll-hero-sub,
 .scroll-hero-content--static .scroll-hero-cta {
   opacity: 1 !important;
   transform: translateY(0) !important;
   transition: none;
+}
+
+/* Scroll progress hint */
+.scroll-hero-progress-hint {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  text-align: center;
+  transition: opacity 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.scroll-hero-progress-hint span {
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.scroll-hero-chevron {
+  width: 16px;
+  height: 16px;
+  border-right: 1.5px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.3);
+  transform: rotate(45deg);
+  animation: chevronBounce 2s ease-in-out infinite;
+}
+
+/* ── 05. Learning Paths ─────────────────────────────────────────────────── */
+
+.paths-section {
+  padding: 7rem 0;
+  background: #08080f;
+}
+
+.paths-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+.path-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 2rem 1.75rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.2s, border-color 0.2s, transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1);
+  overflow: hidden;
+}
+
+.path-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 6px;
+  border: 1px solid var(--path-accent, #c9a84c);
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+}
+
+.path-card:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-3px);
+}
+
+.path-card:hover::after {
+  opacity: 0.4;
+}
+
+.path-icon {
+  width: 32px;
+  height: 32px;
+  color: var(--path-accent, #c9a84c);
+  flex-shrink: 0;
+}
+
+.path-label {
+  font-family: var(--font-playfair), serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.path-desc {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.5);
+  flex: 1;
+}
+
+.path-cta {
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  color: var(--path-accent, #c9a84c);
+  text-transform: uppercase;
+  margin-top: auto;
+}
+
+/* ── 05b. Christ Pivot ──────────────────────────────────────────────────── */
+
+.christ-pivot-section {
+  padding: 2rem 1.5rem 8rem;
+  background: #05050a;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.christ-pivot-inner {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.christ-pivot-title {
+  font-family: var(--font-playfair), serif;
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: #fff;
+  margin-bottom: 2.5rem;
+}
+
+.christ-pivot-quote {
+  font-family: var(--font-playfair), serif;
+  font-size: clamp(1rem, 2.2vw, 1.2rem);
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.65;
+  margin: 0 0 0.75rem;
+}
+
+.christ-pivot-cite {
+  display: block;
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #c9a84c;
+  font-style: normal;
+}
+
+/* ── 06. Reformers Banner ───────────────────────────────────────────────── */
+
+.reformers-section {
+  position: relative;
+  padding: 8rem 1.5rem;
+  background: #0d0b08;
+  text-align: center;
+  overflow: hidden;
+}
+
+.reformers-watermark {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.reformers-name {
+  font-family: var(--font-playfair), serif;
+  font-size: clamp(4rem, 10vw, 9rem);
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.03);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.reformers-content {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.reformers-eyebrow {
+  color: rgba(201, 168, 76, 0.7);
+  margin-bottom: 1.25rem;
+}
+
+.reformers-title {
+  font-family: var(--font-playfair), serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin-bottom: 1.25rem;
+}
+
+.reformers-body {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 2.5rem;
+}
+
+/* ── 07. Scripture Closer ───────────────────────────────────────────────── */
+
+.closer-section {
+  padding: 7rem 1.5rem;
+  background: #05050a;
+  text-align: center;
+}
+
+.closer-inner {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.closer-rule {
+  width: 60px;
+  height: 1px;
+  background: rgba(201, 168, 76, 0.3);
+  margin: 0 auto 2rem;
+}
+
+.closer-quote {
+  font-family: var(--font-playfair), serif;
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  font-style: italic;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.5;
+  margin: 0 0 0.75rem;
+}
+
+.closer-cite {
+  display: block;
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(201, 168, 76, 0.6);
+  font-style: normal;
+  margin-bottom: 3rem;
+}
+
+.closer-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.closer-link {
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.closer-link:hover {
+  color: #c9a84c;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .prophecy-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .paths-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .prophecy-grid {
+    grid-template-columns: 1fr;
+    overflow-x: visible;
+  }
+
+  .hero-ctas {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn-primary,
+  .btn-ghost {
+    width: 100%;
+  }
+
+  .timeline-track {
+    gap: 0;
+    padding-bottom: 1.5rem;
+  }
+
+  .timeline-node {
+    min-width: 110px;
+  }
+
+  .reformers-watermark {
+    gap: 1.5rem;
+  }
 }

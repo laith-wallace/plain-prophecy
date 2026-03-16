@@ -6,23 +6,17 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/studies/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/studies/layout.css",
-      "static/chunks/app/studies/layout.js"
-    ],
-    "/studies/[book]/[lesson]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/studies/[book]/[lesson]/page.css",
-      "static/chunks/app/studies/[book]/[lesson]/page.js"
-    ],
     "/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/page.css",
       "static/chunks/app/page.js"
+    ],
+    "/studies/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/studies/layout.css",
+      "static/chunks/app/studies/layout.js"
     ],
     "/studies/page": [
       "static/chunks/webpack.js",
@@ -34,11 +28,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/compare/page.js"
-    ],
-    "/about/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/about/page.js"
     ]
   }
 }

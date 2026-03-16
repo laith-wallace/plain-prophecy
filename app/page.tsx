@@ -5,21 +5,18 @@ import JsonLd from "@/components/seo/JsonLd";
 
 // Dynamic imports for heavy client-side components to optimize bundle size and hydration
 const HomeAnimations = dynamic(() => import("@/components/home/HomeAnimations"));
-const ScrollHeroVideo = dynamic(() => import("@/components/home/ScrollHeroVideo"));
+import ScrollHeroVideoClient from "@/components/home/ScrollHeroVideoClient";
+import StudyCardDeckClient from "@/components/home/StudyCardDeckClient";
 
 import "./home-styles.css";
 
-import { 
-  IconScroll, 
-  IconHourglass, 
-  IconCloud, 
-  IconLion, 
-  IconStatue, 
+import {
+  IconScroll,
+  IconHourglass,
+  IconCloud,
+  IconLion,
+  IconStatue,
   IconSeal,
-  IconSeedling,
-  IconScales,
-  IconNewspaper,
-  IconTarget
 } from "@/components/icons/HeroIcons";
 
 export const metadata: Metadata = {
@@ -118,50 +115,6 @@ const prophecyCards = [
   },
 ];
 
-const timelineNodes = [
-  { year: "457 BC", label: "Ezra's Decree", ref: "Dan 9:25" },
-  { year: "27 AD", label: "Messiah Anointed", ref: "Luke 3:21" },
-  { year: "31 AD", label: "The Cross", ref: "Dan 9:26" },
-  { year: "538 AD", label: "Papal Supremacy", ref: "Dan 7:25" },
-  { year: "1798 AD", label: "Napoleon Ends It", ref: "Rev 13:3" },
-  { year: "Today", label: "Signs Multiplying", ref: "Matt 24:14" },
-];
-
-const learningPaths = [
-  {
-    icon: IconSeedling,
-    label: "I'm new to prophecy",
-    desc: "See both prophetic frameworks side-by-side in 5 minutes.",
-    href: "/compare",
-    cta: "Compare the Frameworks →",
-    accent: "var(--sda-accent)",
-  },
-  {
-    icon: IconScales,
-    label: "I know Futurism",
-    desc: "10 criteria. Same evidential standard. See which system wins.",
-    href: "/compare#scoring",
-    cta: "See the Evidence Scores →",
-    accent: "var(--futurist-primary)",
-  },
-  {
-    icon: IconNewspaper,
-    label: "Show me evidence",
-    desc: "Six prophetic signs in active fulfilment — verified by mainstream news.",
-    href: "/compare#evidence",
-    cta: "View the Evidence →",
-    accent: "#8b4513",
-  },
-  {
-    icon: IconTarget,
-    label: "Learn by doing",
-    desc: "Swipe through 8 Daniel prophecies. Commit to an answer, then see history converge.",
-    href: "/prophet",
-    cta: "Start the Prophecies →",
-    accent: "var(--sda-primary)",
-  },
-];
-
 const reformers = ["Luther", "Calvin", "Newton", "Wesley"];
 
 // ── PAGE ──────────────────────────────────────────────────────────────────────
@@ -189,23 +142,22 @@ export default function HomePage() {
         {/* Main headline — two lines animate in via data-hero-line */}
         <h1 className="hero-headline">
           <span className="hero-line" data-hero-line="300">Biblical Prophecy.</span>
-          <br />
           <span className="hero-line hero-accent" data-hero-line="500">Plain and Simple.</span>
         </h1>
 
         {/* Subheadline - One thought per line rhythm */}
         <p className="hero-sub" data-hero-fade="900">
-          What the Reformers believed. 
+          What the Reformers believed.
           <br className="hero-sub-br" />
-          Rigorously examined. 
+          Rigorously examined.
           <br className="hero-sub-br" />
           Christ at the centre.
         </p>
 
         {/* CTAs */}
         <div className="hero-ctas" data-hero-fade="1100">
-          <Link href="/compare" className="btn-primary">
-            Start Comparing →
+          <Link href="/studies" className="btn-primary">
+            Explore the Studies →
           </Link>
           <Link href="/about" className="btn-ghost">
             Our Mission
@@ -227,10 +179,45 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── SECTION 2: PROPHECY SHOWCASE ──────────────────────────────────── */}
+      {/* ── SECTION 2: STUDIES CAROUSEL ────────────────────────────────────── */}
+      <section className="studies-teaser-section">
+        <div className="section-inner">
+          <div className="section-header" data-animate>
+            <div className="section-eyebrow">The Studies</div>
+            <h2 className="section-title">Start Exploring</h2>
+            <p className="section-subtitle">
+              Swipe through the prophecies. Commit to an answer, then see history converge on Christ.
+            </p>
+          </div>
+          <StudyCardDeckClient />
+          <div className="studies-teaser-cta" data-animate>
+            <Link href="/studies" className="btn-outline">
+              View All Studies →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── SECTION 3: SCROLL HERO VIDEO ──────────────────────────────────── */}
+      <ScrollHeroVideoClient />
+      {/* ── SECTION 3b: CHRIST PIVOT ─────────────────────────────────────── */}
+      <section className="christ-pivot-section">
+        <div className="christ-pivot-inner" data-animate>
+          <div className="section-eyebrow">The Central Claim</div>
+          <h2 className="christ-pivot-title">
+            Every prophecy converges<br />on one Name.
+          </h2>
+          <blockquote className="christ-pivot-quote">
+            &ldquo;For the testimony of Jesus is the spirit of prophecy.&rdquo;
+          </blockquote>
+          <cite className="christ-pivot-cite">Revelation 19:10</cite>
+        </div>
+      </section>
+
+      {/* ── SECTION 4: PROPHECY SHOWCASE ──────────────────────────────────── */}
       <section className="prophecy-section">
         <div className="section-inner">
-          <div className="section-header" data-animate data-animate-delay="0">
+          <div className="section-header" data-animate>
             <div className="section-eyebrow">The Prophecies</div>
             <h2 className="section-title">Six Anchors in Scripture and History</h2>
             <p className="section-subtitle">
@@ -239,7 +226,6 @@ export default function HomePage() {
             </p>
           </div>
 
-          {/* Mobile: horizontal scroll. Desktop: 3-col grid */}
           <div className="prophecy-grid">
             {prophecyCards.map((card, i) => {
               const Icon = card.icon;
@@ -268,79 +254,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── SECTION 3: TIMELINE TEASER ────────────────────────────────────── */}
-      <section className="timeline-section">
-        <div className="section-inner">
-          <div className="section-header" data-animate>
-            <div className="section-eyebrow">The Prophetic Record</div>
-            <h2 className="section-title">History Locked in Advance</h2>
-          </div>
-
-          <div className="timeline-track" role="list">
-            {timelineNodes.map((node, i) => (
-              <div
-                key={node.year}
-                className="timeline-node"
-                role="listitem"
-                data-animate
-                data-animate-delay={String(i * 120)}
-              >
-                <div className="timeline-dot" />
-                {i < timelineNodes.length - 1 && (
-                  <div className="timeline-line" />
-                )}
-                <div className="timeline-year">{node.year}</div>
-                <div className="timeline-label">{node.label}</div>
-                <div className="timeline-ref">{node.ref}</div>
-              </div>
-            ))}
-          </div>
-
-          <div className="timeline-cta" data-animate>
-            <Link href="/compare" className="btn-outline">
-              See the Full Timeline →
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ── SECTION 4: SCROLL HERO VIDEO ──────────────────────────────────── */}
-      <ScrollHeroVideo />
-
-      {/* ── SECTION 5: LEARNING PATHS ─────────────────────────────────────── */}
-      <section className="paths-section">
-        <div className="section-inner">
-          <div className="section-header" data-animate>
-            <div className="section-eyebrow">Where to Begin</div>
-            <h2 className="section-title">Start Here</h2>
-          </div>
-
-          <div className="paths-grid">
-            {learningPaths.map((path, i) => {
-              const Icon = path.icon;
-              return (
-                <Link
-                  key={path.label}
-                  href={path.href}
-                  className="path-card hover-spring"
-                  data-animate
-                  data-animate-delay={String(i * 80)}
-                  style={{ "--path-accent": path.accent } as React.CSSProperties}
-                >
-                  <div className="path-icon">
-                    <Icon className="icon-svg" />
-                  </div>
-                  <div className="path-label">{path.label}</div>
-                  <p className="path-desc">{path.desc}</p>
-                  <div className="path-cta" aria-hidden="true">{path.cta}</div>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ── SECTION 6: REFORMERS BANNER ───────────────────────────────────── */}
+      {/* ── SECTION 5: REFORMERS BANNER ───────────────────────────────────── */}
       <section className="reformers-section">
         {/* Typographic watermark texture */}
         <div className="reformers-watermark" aria-hidden="true">
@@ -359,8 +273,8 @@ export default function HomePage() {
             Luther, Calvin, Newton, and Wesley All Agreed
           </h2>
           <p className="reformers-body">
-            The Historicist reading of Daniel and Revelation was the dominant 
-            Protestant position for 300 years — a legacy of rigorous scholarship 
+            The Historicist reading of Daniel and Revelation was the dominant
+            Protestant position for 300 years — a legacy of rigorous scholarship
             and Christ-centred clarity.
           </p>
           <Link href="/compare" className="btn-accent">
@@ -369,7 +283,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── SECTION 7: SCRIPTURE CLOSER ───────────────────────────────────── */}
+      {/* ── SECTION 6: SCRIPTURE CLOSER ───────────────────────────────────── */}
       <section className="closer-section">
         <div className="closer-inner" data-animate>
           <div className="closer-rule" aria-hidden="true" />
@@ -380,11 +294,11 @@ export default function HomePage() {
           <cite className="closer-cite">Revelation 2:7</cite>
           <div className="closer-rule" aria-hidden="true" />
           <div className="closer-links">
+            <Link href="/studies" className="closer-link">
+              Start the Studies →
+            </Link>
             <Link href="/compare" className="closer-link">
               Explore Prophecy →
-            </Link>
-            <Link href="/prophet" className="closer-link">
-              Take the Quiz →
             </Link>
           </div>
         </div>

@@ -4,6 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
+function getInitialStatic(): boolean {
+  if (typeof window === "undefined") return false;
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const isMobile = window.innerWidth < 768 || navigator.maxTouchPoints > 0;
+  return prefersReduced || isMobile;
+}
+
 export default function ScrollHeroVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -12,8 +19,12 @@ export default function ScrollHeroVideo() {
   const ctaRef = useRef<HTMLAnchorElement>(null);
   const hintRef = useRef<HTMLDivElement>(null);
 
-  // Whether to use the static (non-scroll-scrub) path
-  const [useStatic, setUseStatic] = useState(false);
+  // Whether to use the static (non-scroll-scrub) path.
+  // Lazy initializer reads window synchronously on first client render so the
+  // correct version (desktop or static) is shown immediately — no flash or
+  // layout shift. With ssr:false on the dynamic import, typeof window is always
+  // "object" here, so the check is reliable.
+  const [useStatic, setUseStatic] = useState(getInitialStatic);
 
   useEffect(() => {
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -47,7 +58,7 @@ export default function ScrollHeroVideo() {
         video.currentTime = progress * video.duration;
       }
 
-      const visible = progress > 0.1 && progress < 0.9;
+      const visible = progress < 0.95;
       [headlineRef.current, sublineRef.current, ctaRef.current].forEach((el) => {
         if (!el) return;
         el.classList.toggle("scroll-hero-visible", visible);
