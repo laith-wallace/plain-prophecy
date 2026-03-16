@@ -3,6 +3,15 @@
 import { useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 
+function getYouTubeId(href: string): string | null {
+  try {
+    const url = new URL(href);
+    if (url.hostname.includes("youtube.com")) return url.searchParams.get("v");
+    if (url.hostname === "youtu.be") return url.pathname.slice(1).split("?")[0];
+  } catch {}
+  return null;
+}
+
 export default function EvidenceTab() {
   const sections = useQuery(api.evidence.getPublished);
 
@@ -34,7 +43,7 @@ export default function EvidenceTab() {
           <div className="ev-columns">
             {/* Prophecy Col */}
             <div className="ev-col">
-              <div className="ev-col-head" style={{ color: "var(--sda-primary)" }}>{sec.prophecyCol.label}</div>
+              <div className="ev-col-head" style={{ color: "var(--sda-accent)" }}>{sec.prophecyCol.label}</div>
               <div className="ev-col-body">
                 {sec.prophecyCol.content.map((p, j) => <p key={j}>{p}</p>)}
                 {sec.prophecyCol.scripture && (
@@ -44,7 +53,7 @@ export default function EvidenceTab() {
             </div>
             {/* Scripture Col */}
             <div className="ev-col">
-              <div className="ev-col-head" style={{ color: "#5c3d11" }}>{sec.scriptureCol.label}</div>
+              <div className="ev-col-head" style={{ color: "#c8934a" }}>{sec.scriptureCol.label}</div>
               <div className="ev-col-body">
                 {sec.scriptureCol.content.map((p, j) => <p key={j}>{p}</p>)}
                 {sec.scriptureCol.scripture && (
@@ -54,7 +63,7 @@ export default function EvidenceTab() {
             </div>
             {/* Evidence Col */}
             <div className="ev-col" style={{ padding: 0 }}>
-              <div className="ev-col-head" style={{ padding: "0.75rem 1rem", color: "#b5222c" }}>{sec.evidenceCol.label}</div>
+              <div className="ev-col-head" style={{ color: "#e06060" }}>{sec.evidenceCol.label}</div>
               <div>
                 {sec.evidenceCol.newsItems.map((item, j) => (
                   <div className="ev-news-item" key={j}>
@@ -71,9 +80,22 @@ export default function EvidenceTab() {
             <div className="media-row-label">▶ Watch media coverage</div>
             <div className="media-cards">
               {sec.mediaCards.map((mc, j) => (
-                <a className="media-card" href={mc.href} target="_blank" rel="noopener" key={j}>
+                <a className="media-card" href={mc.href} target="_blank" rel="noopener noreferrer" key={j}>
                   <div className="media-thumb">
-                    <div className="thumb-icon">{mc.icon}</div>
+                    {(() => {
+                      const ytId = getYouTubeId(mc.href);
+                      return ytId ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={`https://img.youtube.com/vi/${ytId}/hqdefault.jpg`}
+                          alt={mc.headline}
+                          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+                          loading="lazy"
+                        />
+                      ) : (
+                        <div className="thumb-icon">{mc.icon}</div>
+                      );
+                    })()}
                     <div className="play-btn">▶</div>
                   </div>
                   <div className="media-info">

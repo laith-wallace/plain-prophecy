@@ -65,7 +65,7 @@ export default function EvidencePage() {
             style={{
               fontFamily: "var(--font-playfair)",
               fontSize: "clamp(1.8rem, 4vw, 2.8rem)",
-              fontWeight: 900,
+              fontWeight: 700,
               color: "var(--paper)",
               letterSpacing: "-0.02em",
               lineHeight: 1.15,

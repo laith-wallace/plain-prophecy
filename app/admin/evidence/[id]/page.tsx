@@ -5,7 +5,7 @@ import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useEffect } from "react";
-import { useForm, useFieldArray, Controller } from "react-hook-form";
+import { useForm, useFieldArray, Controller, useWatch } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
@@ -69,6 +69,30 @@ const DEFAULT_VALUES: FormValues = {
   newsItems: [{ headline: "", meta: "", body: "" }],
   mediaCards: [],
 };
+
+function getYouTubeId(href: string): string | null {
+  try {
+    const url = new URL(href);
+    if (url.hostname.includes("youtube.com")) return url.searchParams.get("v");
+    if (url.hostname === "youtu.be") return url.pathname.slice(1).split("?")[0];
+  } catch {}
+  return null;
+}
+
+function ThumbnailPreview({ control, index }: { control: any; index: number }) {
+  const href = useWatch({ control, name: `mediaCards.${index}.href` });
+  const ytId = href ? getYouTubeId(href) : null;
+  if (!ytId) return null;
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={`https://img.youtube.com/vi/${ytId}/hqdefault.jpg`}
+      alt="Thumbnail preview"
+      className="w-full rounded mt-1.5 border border-stone-700"
+      style={{ aspectRatio: "16/9", objectFit: "cover" }}
+    />
+  );
+}
 
 const inputCls = "bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 placeholder:text-stone-600";
 const textareaCls = `${inputCls} min-h-[80px] resize-y`;
@@ -414,8 +438,9 @@ export default function EvidenceEditPage() {
                       </Button>
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-xs font-medium text-stone-400">URL</label>
-                      <input type="url" {...register(`mediaCards.${index}.href`)} className={inputCls} placeholder="https://..." />
+                      <label className="text-xs font-medium text-stone-400">YouTube URL</label>
+                      <input type="url" {...register(`mediaCards.${index}.href`)} className={inputCls} placeholder="https://www.youtube.com/watch?v=..." />
+                      <ThumbnailPreview control={control} index={index} />
                     </div>
                     <div className="grid grid-cols-2 gap-2">
                       <div className="space-y-1.5">

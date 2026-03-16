@@ -779,29 +779,32 @@ body {
     margin-bottom: 2rem;
 }
 .ev-intro p {
-    font-size: 0.88rem;
+    font-size: 0.9rem;
     line-height: 1.7;
-    color: var(--neutral);
+    color: rgba(255, 255, 255, 0.55);
     font-style: italic;
 }
 .ev-section {
     margin-bottom: 2.5rem;
-    border: 2px solid var(--ink);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
     overflow: hidden;
+    background: #0f0f1a;
 }
 .ev-section-header {
     display: grid;
     grid-template-columns: 36px 1fr;
     gap: 0;
-    background: var(--ink);
+    background: #18182a;
     color: var(--paper);
     padding: 1rem 1.25rem;
     align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 .ev-section-number {
     font-family: "Playfair Display", serif;
     font-size: 1.8rem;
-    font-weight: 900;
+    font-weight: 700;
     opacity: 0.25;
     line-height: 1;
 }
@@ -813,7 +816,7 @@ body {
     font-size: 0.6rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    opacity: 0.6;
+    opacity: 0.55;
     margin-bottom: 0.2rem;
 }
 .ev-section-title {
@@ -826,30 +829,30 @@ body {
     grid-template-columns: 1fr 1fr 1fr;
 }
 .ev-col {
-    border-right: 1px solid var(--divider);
+    border-right: 1px solid rgba(255, 255, 255, 0.07);
 }
 .ev-col:last-child {
     border-right: none;
 }
 .ev-col-head {
     padding: 0.75rem 1rem;
-    background: var(--cream-mid);
-    border-bottom: 1px solid var(--divider);
+    background: rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
     font-family: "IBM Plex Mono", monospace;
     font-size: 0.62rem;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: var(--neutral);
+    color: rgba(255, 255, 255, 0.45);
 }
 .ev-col-body {
-    padding: 0.85rem 1rem;
+    padding: 1rem 1.1rem;
 }
 .ev-col-body p {
-    font-size: 0.82rem;
-    line-height: 1.6;
-    color: #3a3530;
-    margin-bottom: 0.6rem;
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.78);
+    margin-bottom: 0.65rem;
 }
 .ev-col-body p:last-child {
     margin-bottom: 0;
@@ -858,23 +861,23 @@ body {
     display: block;
     font-family: "IBM Plex Mono", monospace;
     font-size: 0.72rem;
-    background: var(--cream-mid);
+    background: rgba(232, 160, 32, 0.1);
     border-left: 3px solid var(--sda-accent);
-    padding: 0.45rem 0.7rem;
-    color: var(--ink);
-    margin-top: 0.5rem;
+    padding: 0.5rem 0.8rem;
+    color: rgba(255, 255, 255, 0.75);
+    margin-top: 0.6rem;
     font-style: italic;
+    border-radius: 0 3px 3px 0;
 }
 .ev-news-list {
-    border-top: 1px solid var(--divider);
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
 }
 .ev-news-item {
-    padding: 0.6rem 1rem;
-    border-bottom: 1px solid var(--divider);
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 0.5rem;
-    align-items: flex-start;
+    padding: 0.85rem 1.1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
 }
 .ev-news-item:last-child {
     border-bottom: none;
@@ -888,15 +891,22 @@ body {
     flex-shrink: 0;
 }
 .ev-news-headline {
-    font-size: 0.78rem;
+    font-size: 0.88rem;
     font-weight: 600;
     line-height: 1.4;
-    margin-bottom: 0.2rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+.ev-news-meta {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.65rem;
+    color: var(--sda-accent);
+    opacity: 0.75;
+    margin-bottom: 0.1rem;
 }
 .ev-news-body {
-    font-size: 0.74rem;
-    color: #4a4540;
-    line-height: 1.5;
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.58);
+    line-height: 1.55;
 }
 .ev-summary-banner {
     background: var(--ink);
