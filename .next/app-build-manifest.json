@@ -93,6 +93,11 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/admin/compare/page.js"
+    ],
+    "/admin/timelines/[id]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/admin/timelines/[id]/page.js"
     ]
   }
 }
