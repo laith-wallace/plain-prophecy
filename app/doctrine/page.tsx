@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { doctrines } from "@/data/doctrines";
+import { fetchQuery } from "convex/nextjs";
+import { api } from "@/convex/_generated/api";
 
 export const metadata: Metadata = {
   title: "Doctrine — Plain Prophecy",
@@ -25,7 +26,9 @@ const categoryLabel: Record<string, string> = {
   revelation: "Revelation",
 };
 
-export default function DoctrinePage() {
+export default async function DoctrinePage() {
+  const doctrines = await fetchQuery(api.doctrines.getAll);
+
   return (
     <main
       style={{

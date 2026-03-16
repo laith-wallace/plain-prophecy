@@ -15,6 +15,8 @@ export const dashboardStats = query({
       studyLessons,
       doctrines,
       blog,
+      pillars,
+      compareHighlights,
     ] = await Promise.all([
       ctx.db.query("evidence").collect(),
       ctx.db.query("prophecies").collect(),
@@ -23,6 +25,8 @@ export const dashboardStats = query({
       ctx.db.query("studyLessons").collect(),
       ctx.db.query("doctrines").collect(),
       ctx.db.query("blogPosts").collect(),
+      ctx.db.query("pillars").collect(),
+      ctx.db.query("compareHighlights").collect(),
     ]);
 
     return {
@@ -33,6 +37,8 @@ export const dashboardStats = query({
       studyLessons: { total: studyLessons.length, published: studyLessons.filter((l) => l.published).length },
       doctrines: { total: doctrines.length, published: doctrines.filter((d) => d.published).length },
       blog: { total: blog.length, published: blog.filter((p) => p.published).length },
+      pillars: { total: pillars.length },
+      compareHighlights: { total: compareHighlights.length },
     };
   },
 });

@@ -3,7 +3,7 @@
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BookOpen, Map, Clock, GraduationCap, Scroll, FileText, LayoutDashboard } from "lucide-react";
+import { BookOpen, Map, Clock, GraduationCap, Scroll, FileText, LayoutDashboard, Layers, GitCompare } from "lucide-react";
 
 const statCards = [
   { key: "evidence", label: "Evidence Sections", icon: BookOpen, href: "/admin/evidence" },
@@ -13,6 +13,8 @@ const statCards = [
   { key: "prophecies", label: "Prophecies", icon: Scroll, href: "/admin/prophecies" },
   { key: "timelines", label: "Timeline Entries", icon: Clock, href: "/admin/timelines" },
   { key: "blog", label: "Blog Posts", icon: FileText, href: "/admin/blog" },
+  { key: "pillars", label: "Pillars", icon: Layers, href: "/admin/pillars" },
+  { key: "compareHighlights", label: "Compare Highlights", icon: GitCompare, href: "/admin/compare" },
 ] as const;
 
 export default function AdminDashboard() {

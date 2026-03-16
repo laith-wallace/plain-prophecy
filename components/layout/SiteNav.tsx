@@ -8,6 +8,7 @@ const links = [
   { href: "/studies", label: "Studies" },
   { href: "/compare", label: "Compare" },
   { href: "/doctrine", label: "Doctrine" },
+  { href: "/blog", label: "Blog" },
   { href: "/prophet", label: "Prophet" },
   { href: "/about", label: "About" },
 ];

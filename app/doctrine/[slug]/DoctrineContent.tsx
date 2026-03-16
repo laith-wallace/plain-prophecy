@@ -2,10 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { DoctrinePage } from "@/data/doctrines";
+import type { Doc } from "@/convex/_generated/dataModel";
 
 interface Props {
-  doctrine: DoctrinePage;
+  doctrine: Doc<"doctrines">;
 }
 
 const categoryLabel: Record<string, string> = {
