@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import "./study-template.css";
-
 :root {
     --ink: #0f0e0c;
     --paper: #f7f3ec;

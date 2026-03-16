@@ -10,13 +10,13 @@ const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
-  weight: ["400", "700", "900"],
+  weight: ["400", "700"],
   variable: "--font-playfair",
 });
 
 const ibmPlexSans = IBM_Plex_Sans({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+  weight: ["400", "600"],
   variable: "--font-ibm-plex-sans",
 });
 

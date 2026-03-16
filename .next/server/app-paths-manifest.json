@@ -1,9 +1,1 @@
-{
-  "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/page": "app/page.js",
-  "/admin/pillars/page": "app/admin/pillars/page.js",
-  "/admin/compare/page": "app/admin/compare/page.js",
-  "/admin/timelines/page": "app/admin/timelines/page.js",
-  "/admin/timelines/[id]/page": "app/admin/timelines/[id]/page.js",
-  "/admin/doctrines/page": "app/admin/doctrines/page.js"
-}
+{}

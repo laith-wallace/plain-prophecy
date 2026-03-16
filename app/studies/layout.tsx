@@ -5,6 +5,7 @@ import StudiesLayout from "@/components/studies/StudiesLayout";
 
 import "../sidebar.css";
 import "../studies-layout.css";
+import "../study-template.css";
 
 export default function StudiesShellLayout({
   children,
