@@ -147,7 +147,7 @@ export default function HomePage() {
 
         {/* Subheadline - One thought per line rhythm */}
         <p className="hero-sub" data-hero-fade="900">
-          What the Reformers believed.
+          Daniel and Revelation — decoded.
           <br className="hero-sub-br" />
           Rigorously examined.
           <br className="hero-sub-br" />
@@ -232,7 +232,7 @@ export default function HomePage() {
               return (
                 <Link
                   key={card.title}
-                  href="/compare"
+                  href="/studies"
                   className="prophecy-card hover-spring"
                   data-animate
                   data-animate-delay={String(i * 80)}
