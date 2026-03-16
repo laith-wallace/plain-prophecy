@@ -51,6 +51,9 @@ export const add = mutation({
     tags: v.array(v.string()),
     coverImage: v.optional(v.string()),
     published: v.boolean(),
+    metaTitle: v.optional(v.string()),
+    metaDescription: v.optional(v.string()),
+    ogImage: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx);
@@ -71,6 +74,9 @@ export const update = mutation({
     tags: v.array(v.string()),
     coverImage: v.optional(v.string()),
     published: v.boolean(),
+    metaTitle: v.optional(v.string()),
+    metaDescription: v.optional(v.string()),
+    ogImage: v.optional(v.string()),
   },
   handler: async (ctx, { id, ...rest }) => {
     const userId = await getAuthUserId(ctx);

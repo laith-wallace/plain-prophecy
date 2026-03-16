@@ -11,6 +11,7 @@ import { Switch } from "@/components/ui/switch";
 import DeleteConfirmDialog from "@/components/admin/DeleteConfirmDialog";
 import { toast } from "sonner";
 import Link from "next/link";
+import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 
 interface FormState {
   number: number;
@@ -51,6 +52,8 @@ export default function ProphecyEditPage() {
 
   const [form, setForm] = useState<FormState>(DEFAULT);
   const [saving, setSaving] = useState(false);
+  const [isDirty, setIsDirty] = useState(false);
+  useUnsavedChanges(isDirty);
 
   useEffect(() => {
     if (allProphecies) {
@@ -75,6 +78,7 @@ export default function ProphecyEditPage() {
 
   function set<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((prev) => ({ ...prev, [key]: value }));
+    setIsDirty(true);
   }
 
   async function handleSave() {

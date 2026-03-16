@@ -79,6 +79,9 @@ export default defineSchema({
     tags: v.array(v.string()),
     coverImage: v.optional(v.string()),
     published: v.boolean(),
+    metaTitle: v.optional(v.string()),
+    metaDescription: v.optional(v.string()),
+    ogImage: v.optional(v.string()),
   }).index("by_slug", ["slug"]).index("by_published_at", ["publishedAt"]),
 
   timelines: defineTable({
@@ -165,6 +168,9 @@ export default defineSchema({
     })),
     published: v.boolean(),
     order: v.number(),
+    metaTitle: v.optional(v.string()),
+    metaDescription: v.optional(v.string()),
+    ogImage: v.optional(v.string()),
   }).index("by_slug", ["slug"]).index("by_order", ["order"]),
 
   pillars: defineTable({

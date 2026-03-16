@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import DeleteConfirmDialog from "@/components/admin/DeleteConfirmDialog";
 import { toast } from "sonner";
 import Link from "next/link";
+import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 
 interface FormState {
   num: string;
@@ -40,6 +41,8 @@ export default function PillarEditPage() {
 
   const [form, setForm] = useState<FormState>(DEFAULT);
   const [saving, setSaving] = useState(false);
+  const [isDirty, setIsDirty] = useState(false);
+  useUnsavedChanges(isDirty);
 
   useEffect(() => {
     if (!isNew && allPillars) {
@@ -58,6 +61,7 @@ export default function PillarEditPage() {
 
   function set<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((prev) => ({ ...prev, [key]: value }));
+    setIsDirty(true);
   }
 
   function updateParagraph(index: number, value: string) {
@@ -66,10 +70,12 @@ export default function PillarEditPage() {
       updated[index] = value;
       return { ...prev, paragraphs: updated };
     });
+    setIsDirty(true);
   }
 
   function addParagraph() {
     setForm((prev) => ({ ...prev, paragraphs: [...prev.paragraphs, ""] }));
+    setIsDirty(true);
   }
 
   function removeParagraph(index: number) {
@@ -77,6 +83,7 @@ export default function PillarEditPage() {
       ...prev,
       paragraphs: prev.paragraphs.filter((_, i) => i !== index),
     }));
+    setIsDirty(true);
   }
 
   async function handleSave() {

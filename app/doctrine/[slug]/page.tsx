@@ -12,17 +12,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const doctrine = findDoctrine(slug);
   if (!doctrine) return { title: "Doctrine Not Found" };
 
+  const d = doctrine as typeof doctrine & { metaTitle?: string; metaDescription?: string; ogImage?: string };
+  const title = d.metaTitle || `${doctrine.title} — Plain Prophecy`;
+  const description = d.metaDescription || doctrine.intro;
+
   return {
-    title: `${doctrine.title} — Plain Prophecy`,
-    description: doctrine.intro,
+    title,
+    description,
     alternates: {
       canonical: `https://plainprophecy.com/doctrine/${slug}`,
     },
     openGraph: {
-      title: `${doctrine.title} | Plain Prophecy`,
-      description: doctrine.intro,
+      title: d.metaTitle || `${doctrine.title} | Plain Prophecy`,
+      description,
       url: `https://plainprophecy.com/doctrine/${slug}`,
       type: "article",
+      ...(d.ogImage ? { images: [{ url: d.ogImage }] } : {}),
     },
   };
 }

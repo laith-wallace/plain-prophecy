@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import Link from "next/link";
 import { RefreshCw } from "lucide-react";
 import { generateSlug, isValidSlug } from "@/lib/slug";
+import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 
 interface FormState {
   title: string;
@@ -24,6 +25,9 @@ interface FormState {
   coverImage: string;
   body: string;
   published: boolean;
+  metaTitle: string;
+  metaDescription: string;
+  ogImage: string;
 }
 
 function timestampToDateInput(ts: number): string {
@@ -45,6 +49,9 @@ const DEFAULT: FormState = {
   coverImage: "",
   body: "",
   published: false,
+  metaTitle: "",
+  metaDescription: "",
+  ogImage: "",
 };
 
 export default function BlogEditPage() {
@@ -63,6 +70,8 @@ export default function BlogEditPage() {
 
   const [form, setForm] = useState<FormState>(DEFAULT);
   const [saving, setSaving] = useState(false);
+  const [isDirty, setIsDirty] = useState(false);
+  useUnsavedChanges(isDirty);
 
   useEffect(() => {
     if (post) {
@@ -76,12 +85,16 @@ export default function BlogEditPage() {
         coverImage: post.coverImage ?? "",
         body: post.body,
         published: post.published,
+        metaTitle: post.metaTitle ?? "",
+        metaDescription: post.metaDescription ?? "",
+        ogImage: post.ogImage ?? "",
       });
     }
   }, [post]);
 
   function set<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((prev) => ({ ...prev, [key]: value }));
+    setIsDirty(true);
   }
 
   async function handleSave() {
@@ -112,6 +125,9 @@ export default function BlogEditPage() {
         coverImage: form.coverImage.trim() || undefined,
         body: form.body,
         published: form.published,
+        metaTitle: form.metaTitle.trim() || undefined,
+        metaDescription: form.metaDescription.trim() || undefined,
+        ogImage: form.ogImage.trim() || undefined,
       };
       if (isNew) {
         await addPost(payload);
@@ -289,6 +305,58 @@ export default function BlogEditPage() {
             <label htmlFor="published" className="text-sm font-medium text-stone-300 cursor-pointer">
               Published
             </label>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="bg-stone-900 border-stone-800">
+        <CardHeader>
+          <CardTitle className="text-base text-stone-200">SEO</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium text-stone-300">
+              Meta Title <span className="text-stone-500 font-normal">(overrides page title in search results)</span>
+            </label>
+            <input
+              type="text"
+              value={form.metaTitle}
+              onChange={(e) => set("metaTitle", e.target.value)}
+              placeholder={form.title || "Defaults to post title"}
+              className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 placeholder:text-stone-600"
+            />
+            {form.metaTitle && (
+              <p className="text-xs text-stone-500">{form.metaTitle.length} / 60 chars</p>
+            )}
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium text-stone-300">
+              Meta Description <span className="text-stone-500 font-normal">(shown in search snippets)</span>
+            </label>
+            <textarea
+              value={form.metaDescription}
+              onChange={(e) => set("metaDescription", e.target.value)}
+              rows={2}
+              placeholder={form.excerpt || "Defaults to excerpt"}
+              className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 min-h-[70px] resize-y placeholder:text-stone-600"
+            />
+            {form.metaDescription && (
+              <p className="text-xs text-stone-500">{form.metaDescription.length} / 160 chars</p>
+            )}
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium text-stone-300">
+              OG Image <span className="text-stone-500 font-normal">(social share image URL)</span>
+            </label>
+            <input
+              type="text"
+              value={form.ogImage}
+              onChange={(e) => set("ogImage", e.target.value)}
+              placeholder={form.coverImage || "https://..."}
+              className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 placeholder:text-stone-600"
+            />
           </div>
         </CardContent>
       </Card>

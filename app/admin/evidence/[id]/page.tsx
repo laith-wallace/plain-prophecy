@@ -19,6 +19,7 @@ import DeleteConfirmDialog from "@/components/admin/DeleteConfirmDialog";
 import { toast } from "sonner";
 import Link from "next/link";
 import { Trash2, Plus } from "lucide-react";
+import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 
 interface NewsItem {
   headline: string;
@@ -87,9 +88,10 @@ export default function EvidenceEditPage() {
   const updateEvidence = useMutation(api.evidence.update);
   const removeEvidence = useMutation(api.evidence.remove);
 
-  const { register, control, handleSubmit, reset } = useForm<FormValues>({
+  const { register, control, handleSubmit, reset, formState } = useForm<FormValues>({
     defaultValues: DEFAULT_VALUES,
   });
+  useUnsavedChanges(formState.isDirty);
 
   const {
     fields: prophecyFields,

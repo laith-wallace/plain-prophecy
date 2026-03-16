@@ -13,6 +13,7 @@ import PublishedBadge from "@/components/admin/PublishedBadge";
 import DeleteConfirmDialog from "@/components/admin/DeleteConfirmDialog";
 import { toast } from "sonner";
 import type { Id } from "@/convex/_generated/dataModel";
+import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 
 export default function CourseDetailPage() {
   const { courseId } = useParams<{ courseId: string }>();
@@ -39,6 +40,8 @@ export default function CourseDetailPage() {
   const [order, setOrder] = useState(0);
   const [published, setPublished] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [isDirty, setIsDirty] = useState(false);
+  useUnsavedChanges(isDirty);
 
   useEffect(() => {
     if (course) {
@@ -96,7 +99,7 @@ export default function CourseDetailPage() {
             <Label className="text-stone-300">Title</Label>
             <input
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e) => { setTitle(e.target.value); setIsDirty(true); }}
               className="w-full px-3 py-2 bg-stone-800 border border-stone-700 rounded-lg text-stone-100 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600"
               placeholder="Daniel"
             />
@@ -105,7 +108,7 @@ export default function CourseDetailPage() {
             <Label className="text-stone-300">Icon (emoji)</Label>
             <input
               value={icon}
-              onChange={(e) => setIcon(e.target.value)}
+              onChange={(e) => { setIcon(e.target.value); setIsDirty(true); }}
               className="w-full px-3 py-2 bg-stone-800 border border-stone-700 rounded-lg text-stone-100 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600"
               placeholder="📘"
             />
@@ -116,7 +119,7 @@ export default function CourseDetailPage() {
           <Label className="text-stone-300">Slug (URL identifier)</Label>
           <input
             value={slug}
-            onChange={(e) => setSlug(e.target.value)}
+            onChange={(e) => { setSlug(e.target.value); setIsDirty(true); }}
             className="w-full px-3 py-2 bg-stone-800 border border-stone-700 rounded-lg text-stone-100 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-amber-600"
             placeholder="daniel"
           />
@@ -126,7 +129,7 @@ export default function CourseDetailPage() {
           <Label className="text-stone-300">Description</Label>
           <textarea
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={(e) => { setDescription(e.target.value); setIsDirty(true); }}
             rows={2}
             className="w-full px-3 py-2 bg-stone-800 border border-stone-700 rounded-lg text-stone-100 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-amber-600"
             placeholder="Short description shown on the studies index page"
@@ -139,12 +142,12 @@ export default function CourseDetailPage() {
             <input
               type="number"
               value={order}
-              onChange={(e) => setOrder(Number(e.target.value))}
+              onChange={(e) => { setOrder(Number(e.target.value)); setIsDirty(true); }}
               className="w-24 px-3 py-2 bg-stone-800 border border-stone-700 rounded-lg text-stone-100 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600"
             />
           </div>
           <div className="flex items-center gap-2 pt-5">
-            <Switch checked={published} onCheckedChange={setPublished} />
+            <Switch checked={published} onCheckedChange={(v) => { setPublished(v); setIsDirty(true); }} />
             <Label className="text-stone-300">Published</Label>
           </div>
         </div>

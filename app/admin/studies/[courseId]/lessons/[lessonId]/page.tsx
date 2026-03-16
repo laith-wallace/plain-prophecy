@@ -6,6 +6,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { ArrowLeft, Plus, Trash2 } from "lucide-react";
+import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -70,7 +71,7 @@ export default function LessonEditorPage() {
   const addLesson = useMutation(api.studyLessons.add);
   const updateLesson = useMutation(api.studyLessons.update);
 
-  const { register, control, handleSubmit, reset, watch, setValue } = useForm<FormValues>({
+  const { register, control, handleSubmit, reset, watch, setValue, formState } = useForm<FormValues>({
     defaultValues: {
       title: "",
       slug: "",
@@ -133,6 +134,7 @@ export default function LessonEditorPage() {
     }
   }, [lesson, reset]);
 
+  useUnsavedChanges(formState.isDirty);
   const [saving, setSaving] = useState(false);
 
   async function onSubmit(data: FormValues) {

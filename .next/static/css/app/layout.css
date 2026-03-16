@@ -1684,6 +1684,9 @@ video {
 .h-svh {
   height: 100svh;
 }
+.h-1\.5 {
+  height: 0.375rem;
+}
 .min-h-0 {
   min-height: 0px;
 }
@@ -1701,6 +1704,9 @@ video {
 }
 .min-h-svh {
   min-height: 100svh;
+}
+.min-h-\[70px\] {
+  min-height: 70px;
 }
 .w-24 {
   width: 6rem;
@@ -1735,6 +1741,9 @@ video {
 }
 .w-32 {
   width: 8rem;
+}
+.w-1\.5 {
+  width: 0.375rem;
 }
 .min-w-0 {
   min-width: 0px;
@@ -2168,6 +2177,10 @@ video {
 .bg-orange-900 {
   --tw-bg-opacity: 1;
   background-color: rgb(124 45 18 / var(--tw-bg-opacity, 1));
+}
+.bg-amber-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(251 191 36 / var(--tw-bg-opacity, 1));
 }
 .bg-gradient-to-t {
   background-image: linear-gradient(to top, var(--tw-gradient-stops));

@@ -13,6 +13,7 @@ import DeleteConfirmDialog from "@/components/admin/DeleteConfirmDialog";
 import { toast } from "sonner";
 import Link from "next/link";
 import { Trash2, Plus, RefreshCw } from "lucide-react";
+import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import { generateSlug, isValidSlug } from "@/lib/slug";
 
 type CategoryType = "rapture" | "antichrist" | "daniel" | "revelation";
@@ -49,6 +50,9 @@ interface FormValues {
   nextDoctrineSlug: string;
   nextDoctrineTitle: string;
   sections: SectionForm[];
+  metaTitle: string;
+  metaDescription: string;
+  ogImage: string;
 }
 
 const DEFAULT_SECTION = (id: string, heading: string): SectionForm => ({
@@ -85,6 +89,9 @@ const DEFAULT_VALUES: FormValues = {
   nextDoctrineSlug: "",
   nextDoctrineTitle: "",
   sections: DEFAULT_NEW_SECTIONS,
+  metaTitle: "",
+  metaDescription: "",
+  ogImage: "",
 };
 
 const inputCls = "bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 placeholder:text-stone-600";
@@ -295,9 +302,10 @@ export default function DoctrineEditPage() {
   const updateDoctrine = useMutation(api.doctrines.update);
   const removeDoctrine = useMutation(api.doctrines.remove);
 
-  const { register, control, handleSubmit, reset, watch, getValues, setValue } = useForm<FormValues>({
+  const { register, control, handleSubmit, reset, watch, getValues, setValue, formState } = useForm<FormValues>({
     defaultValues: DEFAULT_VALUES,
   });
+  useUnsavedChanges(formState.isDirty);
 
   const {
     fields: sectionFields,
@@ -335,6 +343,9 @@ export default function DoctrineEditPage() {
           keyVerseRef: s.keyVerse?.ref ?? "",
           contentBlocks: s.contentBlocks,
         })),
+        metaTitle: existing.metaTitle ?? "",
+        metaDescription: existing.metaDescription ?? "",
+        ogImage: existing.ogImage ?? "",
       });
     }
   }, [existing, reset]);
@@ -372,6 +383,9 @@ export default function DoctrineEditPage() {
               : undefined,
           contentBlocks: s.contentBlocks,
         })),
+        metaTitle: data.metaTitle || undefined,
+        metaDescription: data.metaDescription || undefined,
+        ogImage: data.ogImage || undefined,
       };
 
       if (isNew) {
@@ -593,6 +607,56 @@ export default function DoctrineEditPage() {
             ))}
           </div>
         </div>
+
+        {/* SEO */}
+        <Card className="bg-stone-900 border-stone-800">
+          <CardHeader>
+            <CardTitle className="text-base">SEO</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-1.5">
+              <label className={labelCls}>
+                Meta Title <span className="text-stone-500 font-normal">(overrides page title in search results)</span>
+              </label>
+              <input
+                type="text"
+                {...register("metaTitle")}
+                placeholder="Defaults to doctrine title"
+                className={inputCls}
+              />
+              {watch("metaTitle") && (
+                <p className="text-xs text-stone-500">{watch("metaTitle").length} / 60 chars</p>
+              )}
+            </div>
+
+            <div className="space-y-1.5">
+              <label className={labelCls}>
+                Meta Description <span className="text-stone-500 font-normal">(shown in search snippets)</span>
+              </label>
+              <textarea
+                {...register("metaDescription")}
+                rows={2}
+                placeholder="Defaults to intro"
+                className={`${inputCls} min-h-[70px] resize-y`}
+              />
+              {watch("metaDescription") && (
+                <p className="text-xs text-stone-500">{watch("metaDescription").length} / 160 chars</p>
+              )}
+            </div>
+
+            <div className="space-y-1.5">
+              <label className={labelCls}>
+                OG Image <span className="text-stone-500 font-normal">(social share image URL)</span>
+              </label>
+              <input
+                type="text"
+                {...register("ogImage")}
+                placeholder="https://..."
+                className={inputCls}
+              />
+            </div>
+          </CardContent>
+        </Card>
       </form>
     </div>
   );

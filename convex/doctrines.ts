@@ -30,6 +30,9 @@ const doctrineFields = {
   nextDoctrine: v.optional(v.object({ slug: v.string(), title: v.string() })),
   published: v.boolean(),
   order: v.number(),
+  metaTitle: v.optional(v.string()),
+  metaDescription: v.optional(v.string()),
+  ogImage: v.optional(v.string()),
 };
 
 export const getAll = query({
