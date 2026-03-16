@@ -2,7 +2,7 @@ import { mutation } from "./_generated/server";
 import { futuristTimeline, preteristTimeline, sdaTimeline } from "../data/timelines";
 import { prophecies } from "../data/prophecies";
 import { doctrines } from "../data/doctrines";
-import { pillars, futuristWeaknesses, sdaStrengths } from "../data/pillars";
+import { pillars, futuristWeaknesses, preteristWeaknesses, sdaStrengths } from "../data/pillars";
 import { studyBooks } from "../data/studies";
 
 const evidenceSections = [
@@ -295,7 +295,7 @@ export const run = mutation({
       }
     }
 
-    // 6. Seed CompareHighlights (futurist weaknesses + SDA strengths)
+    // 6. Seed CompareHighlights (futurist weaknesses + preterist weaknesses + SDA strengths)
     const currentHighlights = await ctx.db.query("compareHighlights").collect();
     if (currentHighlights.length === 0) {
       for (let i = 0; i < futuristWeaknesses.length; i++) {
@@ -309,6 +309,17 @@ export const run = mutation({
         await ctx.db.insert("compareHighlights", {
           type: "sdaStrength",
           text: sdaStrengths[i],
+          order: i,
+        });
+      }
+    }
+    // Seed preterist weaknesses (added later — always check independently)
+    const existingPreteristHighlights = currentHighlights.filter((h: any) => h.type === "preteristWeakness");
+    if (existingPreteristHighlights.length === 0) {
+      for (let i = 0; i < preteristWeaknesses.length; i++) {
+        await ctx.db.insert("compareHighlights", {
+          type: "preteristWeakness",
+          text: preteristWeaknesses[i],
           order: i,
         });
       }

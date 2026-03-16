@@ -58,7 +58,7 @@ export default function StudyCardBack({ lesson, meta, studyHref, onClose }: Prop
       <div className="scb-sections">
         <span className="scb-sections-label">What you&apos;ll cover</span>
         <ul className="scb-section-list">
-          {lesson.sections.map((s) => (
+          {(lesson.sections ?? []).map((s) => (
             <li key={s.heading} className="scb-section-item">
               <span className="scb-section-dot">›</span>
               <span>{s.heading}</span>

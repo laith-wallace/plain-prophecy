@@ -3,7 +3,8 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { studyBooks } from "@/data/studies";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 import {
   SidebarProvider,
   Sidebar,
@@ -22,9 +23,17 @@ function StudiesNav() {
   const pathname = usePathname();
   const router = useRouter();
   const { open, toggleSidebar } = useSidebar();
-  const [expandedBooks, setExpandedBooks] = useState<string[]>(
-    studyBooks.map((b) => b.slug)
-  );
+  const booksData = useQuery(api.studyCourses.getAllWithLessons);
+  const studyBooks = booksData ?? [];
+  const [expandedBooks, setExpandedBooks] = useState<string[]>([]);
+
+  // Expand all books once data loads (runs once when data arrives)
+  React.useEffect(() => {
+    if (booksData && expandedBooks.length === 0) {
+      setExpandedBooks(booksData.map((b) => b.slug));
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [booksData]);
 
   const toggleBook = (slug: string) => {
     setExpandedBooks((prev) =>

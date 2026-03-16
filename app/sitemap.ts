@@ -1,14 +1,14 @@
 import type { MetadataRoute } from "next";
-import { studyBooks } from "@/data/studies";
 import { fetchQuery } from "convex/nextjs";
 import { api } from "@/convex/_generated/api";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://plainprophecy.com";
 
-  const [blogPosts, publishedDoctrines] = await Promise.all([
+  const [blogPosts, publishedDoctrines, studyLessonSlugs] = await Promise.all([
     fetchQuery(api.blog.getAllPosts).catch(() => []),
     fetchQuery(api.doctrines.getAll).catch(() => []),
+    fetchQuery(api.studyLessons.getAllSlugs).catch(() => []),
   ]);
 
   const blogPostRoutes: MetadataRoute.Sitemap = blogPosts.map((post) => ({
@@ -25,14 +25,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
-  const studyLessonRoutes: MetadataRoute.Sitemap = studyBooks.flatMap((book) =>
-    book.lessons.map((lesson) => ({
-      url: `${baseUrl}/studies/${book.slug}/${lesson.slug}`,
-      lastModified: new Date(),
-      changeFrequency: "monthly" as const,
-      priority: 0.75,
-    }))
-  );
+  const studyLessonRoutes: MetadataRoute.Sitemap = studyLessonSlugs.map(({ book, lesson }) => ({
+    url: `${baseUrl}/studies/${book}/${lesson}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.75,
+  }));
 
   return [
     {
@@ -49,6 +47,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${baseUrl}/compare`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/evidence`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.9,

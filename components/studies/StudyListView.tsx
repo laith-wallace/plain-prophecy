@@ -2,7 +2,8 @@
 
 import React from "react";
 import Link from "next/link";
-import { studyBooks } from "@/data/studies";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 import { getCardMeta } from "@/data/studyCardMeta";
 
 interface StudyListViewProps {
@@ -10,7 +11,8 @@ interface StudyListViewProps {
 }
 
 export default function StudyListView({ bookFilter = "all" }: StudyListViewProps) {
-  const filtered = studyBooks.filter(
+  const booksData = useQuery(api.studyCourses.getAllWithLessons);
+  const filtered = (booksData ?? []).filter(
     (book) => bookFilter === "all" || book.slug === bookFilter
   );
 

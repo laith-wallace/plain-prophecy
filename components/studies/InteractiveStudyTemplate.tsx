@@ -12,7 +12,7 @@ interface InteractiveStudyTemplateProps {
 }
 
 export default function InteractiveStudyTemplate({ book, lesson, VisualComponent }: InteractiveStudyTemplateProps) {
-  const interactiveSections = lesson.sections.filter(s => s.id);
+  const interactiveSections = (lesson.sections ?? []).filter(s => s.id);
   const hasInteractive = interactiveSections.length > 0;
   
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -222,7 +222,7 @@ export default function InteractiveStudyTemplate({ book, lesson, VisualComponent
       ) : (
         /* Fallback for traditional structure (no interactive sections) */
         <div style={{ maxWidth: '800px', margin: '0 auto', color: '#fff', padding: '0 24px 80px' }}>
-          {lesson.sections.map((section, idx) => (
+          {(lesson.sections ?? []).map((section, idx) => (
             <div key={idx} style={{ marginBottom: '40px' }} className="reveal">
               <h2 style={{ fontFamily: 'Cinzel', fontSize: '24px', fontWeight: 700, color: 'var(--gold)', marginBottom: '16px' }}>{section.heading}</h2>
               <p style={{ fontSize: '16px', lineHeight: 1.7, color: 'rgba(255,255,255,0.85)' }}>{section.body}</p>

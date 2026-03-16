@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import { studyBooks, type StudyLesson, type StudyBook } from "@/data/studies";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import type { StudyLesson, StudyBook } from "@/data/studies";
 import { getCardMeta } from "@/data/studyCardMeta";
 import StudyCard from "./StudyCard";
 
@@ -11,8 +13,11 @@ interface FlatLesson {
   book: StudyBook;
 }
 
-function buildFlatLessons(bookFilter: string): FlatLesson[] {
-  return studyBooks
+function buildFlatLessons(
+  books: (StudyBook & { lessons: StudyLesson[] })[],
+  bookFilter: string
+): FlatLesson[] {
+  return books
     .filter((book) => bookFilter === "all" || book.slug === bookFilter)
     .flatMap((book) => book.lessons.map((lesson) => ({ lesson, book })));
 }
@@ -34,7 +39,8 @@ interface StudyCardDeckProps {
 }
 
 export default function StudyCardDeck({ bookFilter = "all" }: StudyCardDeckProps) {
-  const lessons = buildFlatLessons(bookFilter);
+  const booksData = useQuery(api.studyCourses.getAllWithLessons);
+  const lessons = booksData ? buildFlatLessons(booksData as (StudyBook & { lessons: StudyLesson[] })[], bookFilter) : [];
   const TOTAL = lessons.length;
   const [activeIndex, setActiveIndex] = useState(0);
   const [flippedIndex, setFlippedIndex] = useState<number | null>(null);

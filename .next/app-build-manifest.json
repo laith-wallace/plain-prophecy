@@ -83,6 +83,16 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/admin/blog/[id]/page.js"
+    ],
+    "/admin/pillars/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/admin/pillars/page.js"
+    ],
+    "/admin/compare/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/admin/compare/page.js"
     ]
   }
 }

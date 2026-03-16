@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
-import { prophecies as localProphecies } from "../../data/prophecies";
+
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
@@ -572,28 +572,12 @@ export default function ProphetClient() {
   const [cardKey, setCardKey] = useState(0); // forces card remount after swipe
 
   // Map idStr to id for UI compatibility.
-  // Fall back to local data if Convex hasn't loaded yet or returns empty.
   const prophecies: Prophecy[] = useMemo(() => {
-    if (fetchedProphecies && fetchedProphecies.length > 0) {
-      return fetchedProphecies.map((p) => ({
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ...(p as any),
-        id: p.idStr,
-      }));
-    }
-    // Fallback: use local static data so cards always render
-    return localProphecies.map((p) => ({
-      _id: p.id,
-      id: p.id,
-      idStr: p.id,
-      number: p.number,
-      title: p.title,
-      subtitle: p.subtitle,
-      symbol: p.symbol,
-      scripture: p.scripture,
-      connections: p.connections,
-      reveal: p.reveal,
-      published: true,
+    if (!fetchedProphecies) return [];
+    return fetchedProphecies.map((p) => ({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ...(p as any),
+      id: p.idStr,
     }));
   }, [fetchedProphecies]);
 

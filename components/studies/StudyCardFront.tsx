@@ -35,7 +35,7 @@ export default function StudyCardFront({ lesson, meta }: Props) {
       <div className="scf-body">
         <div className="scf-reading-time">
           <span className="scf-dot-glyph">·</span>
-          {lesson.readingTime} min read
+          {lesson.readingTime ?? '?'} min read
         </div>
         <h2 className="scf-title">{lesson.title}</h2>
         <p className="scf-desc">{meta.shortDescription}</p>

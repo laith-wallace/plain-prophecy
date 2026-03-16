@@ -12,6 +12,28 @@ export const getAll = query({
   },
 });
 
+export const getAllWithLessons = query({
+  handler: async (ctx) => {
+    const courses = await ctx.db
+      .query("studyCourses")
+      .filter((q) => q.eq(q.field("published"), true))
+      .collect();
+    courses.sort((a, b) => a.order - b.order);
+
+    return await Promise.all(
+      courses.map(async (course) => {
+        const lessons = await ctx.db
+          .query("studyLessons")
+          .withIndex("by_course", (q) => q.eq("courseId", course._id))
+          .filter((q) => q.eq(q.field("published"), true))
+          .collect();
+        lessons.sort((a, b) => a.order - b.order);
+        return { ...course, lessons };
+      })
+    );
+  },
+});
+
 export const getWithLessons = query({
   args: { slug: v.string() },
   handler: async (ctx, args) => {

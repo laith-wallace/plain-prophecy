@@ -8,7 +8,7 @@ export interface StudySection {
   era?: string;
   badge?: string;
   heading: string;
-  body: string;
+  body?: string;
   contentBlocks?: StudySectionContent[];
   christCentre?: string;
   keyVerse?: { text: string; ref: string };
@@ -18,19 +18,19 @@ export interface StudyLesson {
   slug: string;
   title: string;
   scriptureRef: string;
-  readingTime: number; // minutes
-  keyVerse: string;
-  keyVerseRef: string;
-  intro: string;
-  sections: StudySection[];
-  christCentre: string;
+  readingTime?: number;
+  keyVerse?: string;
+  keyVerseRef?: string;
+  intro?: string;
+  sections?: StudySection[];
+  christCentre?: string;
   nextLesson?: { book: string; lesson: string; title: string };
 }
 
 export interface StudyBook {
   slug: string;
   title: string;
-  icon: string;
+  icon?: string;
   description: string;
   hasSeparator?: boolean;
   lessons: StudyLesson[];
