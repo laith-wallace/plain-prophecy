@@ -64,10 +64,28 @@ function StudiesNav() {
             <span className="studies-sb-eyebrow">Plain Prophecy</span>
             <span className="studies-sb-title">Bible Books</span>
           </div>
-          <SidebarTrigger className="studies-sb-trigger" aria-label="Toggle sidebar" />
+          <button
+            className="studies-sb-trigger"
+            aria-label="Toggle sidebar"
+            onClick={() => toggleSidebar()}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect width="18" height="18" x="3" y="3" rx="2" />
+              <path d="M9 3v18" />
+            </svg>
+          </button>
         </div>
         {/* In collapsed icon mode: just the trigger, centred */}
-        <SidebarTrigger className="studies-sb-trigger-icon-only" aria-label="Toggle sidebar" />
+        <button
+          className="studies-sb-trigger-icon-only"
+          aria-label="Toggle sidebar"
+          onClick={() => toggleSidebar()}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <rect width="18" height="18" x="3" y="3" rx="2" />
+            <path d="M9 3v18" />
+          </svg>
+        </button>
       </SidebarHeader>
 
       <SidebarContent className="studies-sb-content">

@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import ListControls from "@/components/admin/ListControls";
 import Link from "next/link";
@@ -56,60 +57,60 @@ export default function TimelinesAdminPage() {
       />
 
       <div className="bg-stone-900 border border-stone-800 rounded-lg overflow-hidden">
-        <table className="w-full">
-          <thead>
-            <tr className="border-b border-stone-800">
-              <th className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3 bg-stone-950 text-left">Type</th>
-              <th className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3 bg-stone-950 text-left">Date</th>
-              <th className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3 bg-stone-950 text-left">Title</th>
-              <th className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3 bg-stone-950 text-left">Badge</th>
-              <th className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3 bg-stone-950 text-left">Order</th>
-              <th className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3 bg-stone-950 text-left"></th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-stone-800">
+        <Table>
+          <TableHeader className="[&_tr]:border-stone-800">
+            <TableRow className="border-stone-800 hover:bg-transparent">
+              <TableHead className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3 bg-stone-950">Type</TableHead>
+              <TableHead className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3 bg-stone-950">Date</TableHead>
+              <TableHead className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3 bg-stone-950">Title</TableHead>
+              <TableHead className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3 bg-stone-950">Badge</TableHead>
+              <TableHead className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3 bg-stone-950">Order</TableHead>
+              <TableHead className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3 bg-stone-950"></TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody className="divide-y divide-stone-800">
             {entries === undefined && (
-              <tr>
-                <td colSpan={colSpan} className="px-4 py-6 text-sm text-stone-500 text-center">Loading…</td>
-              </tr>
+              <TableRow>
+                <TableCell colSpan={colSpan} className="px-4 py-6 text-sm text-stone-500 text-center">Loading…</TableCell>
+              </TableRow>
             )}
             {entries !== undefined && filtered.length === 0 && entries.length > 0 && (
-              <tr>
-                <td colSpan={colSpan} className="px-4 py-6 text-sm text-stone-500 text-center">
+              <TableRow>
+                <TableCell colSpan={colSpan} className="px-4 py-6 text-sm text-stone-500 text-center">
                   No results for &ldquo;{search}&rdquo;.{" "}
-                  <button onClick={() => setSearch("")} className="text-amber-500 hover:text-amber-400 underline">Clear</button>
-                </td>
-              </tr>
+                  <Button variant="link" size="sm" onClick={() => setSearch("")} className="text-amber-500 hover:text-amber-400 h-auto p-0">Clear</Button>
+                </TableCell>
+              </TableRow>
             )}
             {entries?.length === 0 && (
-              <tr>
-                <td colSpan={colSpan} className="px-4 py-6 text-sm text-stone-500 text-center">No entries yet.</td>
-              </tr>
+              <TableRow>
+                <TableCell colSpan={colSpan} className="px-4 py-6 text-sm text-stone-500 text-center">No entries yet.</TableCell>
+              </TableRow>
             )}
             {filtered.map((entry) => {
               const typeMeta = TYPE_BADGE[entry.type] ?? { label: entry.type, className: "" };
               const badgeMeta = ENTRY_BADGE_BADGE[entry.badge] ?? { label: entry.badge, className: "" };
               return (
-                <tr key={entry._id} className="hover:bg-stone-800/50 transition-colors">
-                  <td className="px-4 py-3 text-sm text-stone-200">
+                <TableRow key={entry._id} className="border-stone-800 hover:bg-stone-800/50">
+                  <TableCell className="px-4 py-3 text-sm text-stone-200">
                     <Badge variant="outline" className={typeMeta.className}>{typeMeta.label}</Badge>
-                  </td>
-                  <td className="px-4 py-3 text-sm text-stone-200">{entry.date}</td>
-                  <td className="px-4 py-3 text-sm text-stone-200 max-w-xs truncate">{entry.title}</td>
-                  <td className="px-4 py-3 text-sm text-stone-200">
+                  </TableCell>
+                  <TableCell className="px-4 py-3 text-sm text-stone-200">{entry.date}</TableCell>
+                  <TableCell className="px-4 py-3 text-sm text-stone-200 max-w-xs truncate">{entry.title}</TableCell>
+                  <TableCell className="px-4 py-3 text-sm text-stone-200">
                     <Badge variant="outline" className={badgeMeta.className}>{badgeMeta.label}</Badge>
-                  </td>
-                  <td className="px-4 py-3 text-sm text-stone-200">{entry.order}</td>
-                  <td className="px-4 py-3 text-sm text-stone-200 text-right">
+                  </TableCell>
+                  <TableCell className="px-4 py-3 text-sm text-stone-200">{entry.order}</TableCell>
+                  <TableCell className="px-4 py-3 text-sm text-stone-200 text-right">
                     <Link href={`/admin/timelines/${entry._id}`} className={cn(buttonVariants({ variant: "outline", size: "sm" }), "border-stone-700 text-stone-300 hover:bg-stone-800")}>
                       Edit
                     </Link>
-                  </td>
-                </tr>
+                  </TableCell>
+                </TableRow>
               );
             })}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </div>
     </div>
   );

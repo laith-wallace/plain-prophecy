@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import ListControls from "@/components/admin/ListControls";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -42,53 +43,53 @@ export default function PillarsAdminPage() {
       />
 
       <div className="bg-stone-900 border border-stone-800 rounded-lg overflow-hidden">
-        <table className="w-full">
-          <thead>
-            <tr className="border-b border-stone-800">
-              <th className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3 bg-stone-950 text-left">Num</th>
-              <th className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3 bg-stone-950 text-left">Title</th>
-              <th className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3 bg-stone-950 text-left">Label</th>
-              <th className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3 bg-stone-950 text-left">Order</th>
-              <th className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3 bg-stone-950 text-left"></th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-stone-800">
+        <Table>
+          <TableHeader className="[&_tr]:border-stone-800">
+            <TableRow className="border-stone-800 hover:bg-transparent">
+              <TableHead className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3 bg-stone-950">Num</TableHead>
+              <TableHead className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3 bg-stone-950">Title</TableHead>
+              <TableHead className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3 bg-stone-950">Label</TableHead>
+              <TableHead className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3 bg-stone-950">Order</TableHead>
+              <TableHead className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3 bg-stone-950"></TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody className="divide-y divide-stone-800">
             {pillars === undefined && (
-              <tr>
-                <td colSpan={colSpan} className="px-4 py-6 text-sm text-stone-500 text-center">Loading…</td>
-              </tr>
+              <TableRow>
+                <TableCell colSpan={colSpan} className="px-4 py-6 text-sm text-stone-500 text-center">Loading…</TableCell>
+              </TableRow>
             )}
             {pillars !== undefined && filtered.length === 0 && pillars.length > 0 && (
-              <tr>
-                <td colSpan={colSpan} className="px-4 py-6 text-sm text-stone-500 text-center">
+              <TableRow>
+                <TableCell colSpan={colSpan} className="px-4 py-6 text-sm text-stone-500 text-center">
                   No results for &ldquo;{search}&rdquo;.{" "}
-                  <button onClick={() => setSearch("")} className="text-amber-500 hover:text-amber-400 underline">Clear</button>
-                </td>
-              </tr>
+                  <Button variant="link" size="sm" onClick={() => setSearch("")} className="text-amber-500 hover:text-amber-400 h-auto p-0">Clear</Button>
+                </TableCell>
+              </TableRow>
             )}
             {pillars?.length === 0 && (
-              <tr>
-                <td colSpan={colSpan} className="px-4 py-6 text-sm text-stone-500 text-center">No pillars yet.</td>
-              </tr>
+              <TableRow>
+                <TableCell colSpan={colSpan} className="px-4 py-6 text-sm text-stone-500 text-center">No pillars yet.</TableCell>
+              </TableRow>
             )}
             {filtered.map((pillar) => (
-              <tr key={pillar._id} className="hover:bg-stone-800/50 transition-colors">
-                <td className="px-4 py-3 text-sm text-stone-400 font-mono">{pillar.num}</td>
-                <td className="px-4 py-3 text-sm text-stone-200">{pillar.title}</td>
-                <td className="px-4 py-3 text-sm text-stone-400">{pillar.label}</td>
-                <td className="px-4 py-3 text-sm text-stone-200">{pillar.order}</td>
-                <td className="px-4 py-3 text-sm text-stone-200 text-right">
+              <TableRow key={pillar._id} className="border-stone-800 hover:bg-stone-800/50">
+                <TableCell className="px-4 py-3 text-sm text-stone-400 font-mono">{pillar.num}</TableCell>
+                <TableCell className="px-4 py-3 text-sm text-stone-200">{pillar.title}</TableCell>
+                <TableCell className="px-4 py-3 text-sm text-stone-400">{pillar.label}</TableCell>
+                <TableCell className="px-4 py-3 text-sm text-stone-200">{pillar.order}</TableCell>
+                <TableCell className="px-4 py-3 text-sm text-stone-200 text-right">
                   <Link
                     href={`/admin/pillars/${pillar._id}`}
                     className={cn(buttonVariants({ variant: "outline", size: "sm" }), "border-stone-700 text-stone-300 hover:bg-stone-800")}
                   >
                     Edit
                   </Link>
-                </td>
-              </tr>
+                </TableCell>
+              </TableRow>
             ))}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </div>
     </div>
   );

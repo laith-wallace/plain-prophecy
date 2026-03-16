@@ -7,6 +7,9 @@ import { Id } from "@/convex/_generated/dataModel";
 import { useEffect } from "react";
 import { useForm, useFieldArray, Controller, useWatch } from "react-hook-form";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import {
@@ -94,9 +97,9 @@ function ThumbnailPreview({ control, index }: { control: any; index: number }) {
   );
 }
 
-const inputCls = "bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 placeholder:text-stone-600";
-const textareaCls = `${inputCls} min-h-[80px] resize-y`;
-const labelCls = "text-sm font-medium text-stone-300";
+const inputCls = "bg-stone-800 border-stone-700 text-stone-100 placeholder:text-stone-600 focus-visible:ring-amber-600";
+const textareaCls = "bg-stone-800 border-stone-700 text-stone-100 focus-visible:ring-amber-600 min-h-[80px] resize-y";
+const labelCls = "text-stone-300";
 
 export default function EvidenceEditPage() {
   const params = useParams();
@@ -242,21 +245,21 @@ export default function EvidenceEditPage() {
             <AccordionContent className="space-y-4 pt-2 pb-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className={labelCls}>Num</label>
-                  <input type="text" {...register("num")} className={inputCls} placeholder="01" />
+                  <Label className={labelCls}>Num</Label>
+                  <Input type="text" {...register("num")} className={inputCls} placeholder="01" />
                 </div>
                 <div className="space-y-1.5">
-                  <label className={labelCls}>Order</label>
-                  <input type="number" {...register("order", { valueAsNumber: true })} className={inputCls} />
+                  <Label className={labelCls}>Order</Label>
+                  <Input type="number" {...register("order", { valueAsNumber: true })} className={inputCls} />
                 </div>
               </div>
               <div className="space-y-1.5">
-                <label className={labelCls}>Label</label>
-                <input type="text" {...register("label")} className={inputCls} placeholder="e.g. The Mark of the Beast" />
+                <Label className={labelCls}>Label</Label>
+                <Input type="text" {...register("label")} className={inputCls} placeholder="e.g. The Mark of the Beast" />
               </div>
               <div className="space-y-1.5">
-                <label className={labelCls}>Title</label>
-                <input type="text" {...register("title")} className={inputCls} />
+                <Label className={labelCls}>Title</Label>
+                <Input type="text" {...register("title")} className={inputCls} />
               </div>
               <div className="flex items-center gap-3">
                 <Controller
@@ -270,7 +273,7 @@ export default function EvidenceEditPage() {
                     />
                   )}
                 />
-                <label htmlFor="published" className={`${labelCls} cursor-pointer`}>Published</label>
+                <Label htmlFor="published" className={`${labelCls} cursor-pointer`}>Published</Label>
               </div>
             </AccordionContent>
           </AccordionItem>
@@ -280,18 +283,18 @@ export default function EvidenceEditPage() {
             <AccordionTrigger className="text-sm font-medium text-stone-200 hover:no-underline">Prophecy Column</AccordionTrigger>
             <AccordionContent className="space-y-4 pt-2 pb-4">
               <div className="space-y-1.5">
-                <label className={labelCls}>Label</label>
-                <input type="text" {...register("prophecyColLabel")} className={inputCls} />
+                <Label className={labelCls}>Label</Label>
+                <Input type="text" {...register("prophecyColLabel")} className={inputCls} />
               </div>
               <div className="space-y-1.5">
-                <label className={labelCls}>Scripture Quote <span className="text-stone-500 font-normal">(e.g. Rev 13:16–17)</span></label>
-                <input type="text" {...register("prophecyColScripture")} className={inputCls} placeholder="Rev 13:16–17" />
+                <Label className={labelCls}>Scripture Quote <span className="text-stone-500 font-normal">(e.g. Rev 13:16–17)</span></Label>
+                <Input type="text" {...register("prophecyColScripture")} className={inputCls} placeholder="Rev 13:16–17" />
               </div>
               <div className="space-y-2">
-                <label className={labelCls}>Content Paragraphs</label>
+                <Label className={labelCls}>Content Paragraphs</Label>
                 {prophecyFields.map((field, index) => (
                   <div key={field.id} className="flex gap-2 items-start">
-                    <textarea
+                    <Textarea
                       {...register(`prophecyColContent.${index}.value`)}
                       rows={2}
                       className={`${textareaCls} flex-1`}
@@ -325,18 +328,18 @@ export default function EvidenceEditPage() {
             <AccordionTrigger className="text-sm font-medium text-stone-200 hover:no-underline">Scripture Column</AccordionTrigger>
             <AccordionContent className="space-y-4 pt-2 pb-4">
               <div className="space-y-1.5">
-                <label className={labelCls}>Label</label>
-                <input type="text" {...register("scriptureColLabel")} className={inputCls} />
+                <Label className={labelCls}>Label</Label>
+                <Input type="text" {...register("scriptureColLabel")} className={inputCls} />
               </div>
               <div className="space-y-1.5">
-                <label className={labelCls}>Scripture Quote</label>
-                <input type="text" {...register("scriptureColScripture")} className={inputCls} />
+                <Label className={labelCls}>Scripture Quote</Label>
+                <Input type="text" {...register("scriptureColScripture")} className={inputCls} />
               </div>
               <div className="space-y-2">
-                <label className={labelCls}>Content Paragraphs</label>
+                <Label className={labelCls}>Content Paragraphs</Label>
                 {scriptureFields.map((field, index) => (
                   <div key={field.id} className="flex gap-2 items-start">
-                    <textarea
+                    <Textarea
                       {...register(`scriptureColContent.${index}.value`)}
                       rows={2}
                       className={`${textareaCls} flex-1`}
@@ -370,11 +373,11 @@ export default function EvidenceEditPage() {
             <AccordionTrigger className="text-sm font-medium text-stone-200 hover:no-underline">Evidence Today Column</AccordionTrigger>
             <AccordionContent className="space-y-4 pt-2 pb-4">
               <div className="space-y-1.5">
-                <label className={labelCls}>Label</label>
-                <input type="text" {...register("evidenceColLabel")} className={inputCls} />
+                <Label className={labelCls}>Label</Label>
+                <Input type="text" {...register("evidenceColLabel")} className={inputCls} />
               </div>
               <div className="space-y-3">
-                <label className={labelCls}>News Items</label>
+                <Label className={labelCls}>News Items</Label>
                 {newsFields.map((field, index) => (
                   <Card key={field.id} className="bg-stone-800 border-stone-700">
                     <CardContent className="p-3 space-y-2">
@@ -391,16 +394,16 @@ export default function EvidenceEditPage() {
                         </Button>
                       </div>
                       <div className="space-y-1.5">
-                        <label className="text-xs font-medium text-stone-400">Headline</label>
-                        <input type="text" {...register(`newsItems.${index}.headline`)} className={inputCls} />
+                        <Label className="text-xs text-stone-400">Headline</Label>
+                        <Input type="text" {...register(`newsItems.${index}.headline`)} className={inputCls} />
                       </div>
                       <div className="space-y-1.5">
-                        <label className="text-xs font-medium text-stone-400">Meta <span className="text-stone-500 font-normal">(Source · Year)</span></label>
-                        <input type="text" {...register(`newsItems.${index}.meta`)} className={inputCls} placeholder="BBC News · 2024" />
+                        <Label className="text-xs text-stone-400">Meta <span className="text-stone-500 font-normal">(Source · Year)</span></Label>
+                        <Input type="text" {...register(`newsItems.${index}.meta`)} className={inputCls} placeholder="BBC News · 2024" />
                       </div>
                       <div className="space-y-1.5">
-                        <label className="text-xs font-medium text-stone-400">Body</label>
-                        <textarea {...register(`newsItems.${index}.body`)} rows={2} className={textareaCls} />
+                        <Label className="text-xs text-stone-400">Body</Label>
+                        <Textarea {...register(`newsItems.${index}.body`)} rows={2} className={textareaCls} />
                       </div>
                     </CardContent>
                   </Card>
@@ -438,31 +441,31 @@ export default function EvidenceEditPage() {
                       </Button>
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-xs font-medium text-stone-400">YouTube URL</label>
-                      <input type="url" {...register(`mediaCards.${index}.href`)} className={inputCls} placeholder="https://www.youtube.com/watch?v=..." />
+                      <Label className="text-xs text-stone-400">YouTube URL</Label>
+                      <Input type="url" {...register(`mediaCards.${index}.href`)} className={inputCls} placeholder="https://www.youtube.com/watch?v=..." />
                       <ThumbnailPreview control={control} index={index} />
                     </div>
                     <div className="grid grid-cols-2 gap-2">
                       <div className="space-y-1.5">
-                        <label className="text-xs font-medium text-stone-400">Icon</label>
-                        <input type="text" {...register(`mediaCards.${index}.icon`)} className={inputCls} placeholder="🎬" />
+                        <Label className="text-xs text-stone-400">Icon</Label>
+                        <Input type="text" {...register(`mediaCards.${index}.icon`)} className={inputCls} placeholder="🎬" />
                       </div>
                       <div className="space-y-1.5">
-                        <label className="text-xs font-medium text-stone-400">Outlet</label>
-                        <input type="text" {...register(`mediaCards.${index}.outlet`)} className={inputCls} placeholder="BBC" />
+                        <Label className="text-xs text-stone-400">Outlet</Label>
+                        <Input type="text" {...register(`mediaCards.${index}.outlet`)} className={inputCls} placeholder="BBC" />
                       </div>
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-xs font-medium text-stone-400">Outlet Class <span className="text-stone-500 font-normal">(CSS classes)</span></label>
-                      <input type="text" {...register(`mediaCards.${index}.outletClass`)} className={inputCls} placeholder="text-red-400" />
+                      <Label className="text-xs text-stone-400">Outlet Class <span className="text-stone-500 font-normal">(CSS classes)</span></Label>
+                      <Input type="text" {...register(`mediaCards.${index}.outletClass`)} className={inputCls} placeholder="text-red-400" />
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-xs font-medium text-stone-400">Headline</label>
-                      <input type="text" {...register(`mediaCards.${index}.headline`)} className={inputCls} />
+                      <Label className="text-xs text-stone-400">Headline</Label>
+                      <Input type="text" {...register(`mediaCards.${index}.headline`)} className={inputCls} />
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-xs font-medium text-stone-400">CTA</label>
-                      <input type="text" {...register(`mediaCards.${index}.cta`)} className={inputCls} placeholder="Watch now →" />
+                      <Label className="text-xs text-stone-400">CTA</Label>
+                      <Input type="text" {...register(`mediaCards.${index}.cta`)} className={inputCls} placeholder="Watch now →" />
                     </div>
                   </CardContent>
                 </Card>

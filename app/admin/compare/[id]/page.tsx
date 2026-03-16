@@ -6,6 +6,10 @@ import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import DeleteConfirmDialog from "@/components/admin/DeleteConfirmDialog";
 import { toast } from "sonner";
@@ -124,35 +128,36 @@ export default function CompareHighlightEditPage() {
         <CardContent className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-sm font-medium text-stone-300">Type</label>
-              <select
-                value={form.type}
-                onChange={(e) => set("type", e.target.value as HighlightType)}
-                className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600"
-              >
-                <option value="sdaStrength">SDA Strength</option>
-                <option value="futuristWeakness">Futurist Weakness</option>
-                <option value="preteristWeakness">Preterist Weakness</option>
-              </select>
+              <Label className="text-stone-300">Type</Label>
+              <Select value={form.type} onValueChange={(v) => set("type", v as HighlightType)}>
+                <SelectTrigger className="bg-stone-800 border-stone-700 text-stone-100 focus:ring-amber-600">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-stone-800 border-stone-700 text-stone-100">
+                  <SelectItem value="sdaStrength">SDA Strength</SelectItem>
+                  <SelectItem value="futuristWeakness">Futurist Weakness</SelectItem>
+                  <SelectItem value="preteristWeakness">Preterist Weakness</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             <div className="space-y-1.5">
-              <label className="text-sm font-medium text-stone-300">Order</label>
-              <input
+              <Label className="text-stone-300">Order</Label>
+              <Input
                 type="number"
                 value={form.order}
                 onChange={(e) => set("order", Number(e.target.value))}
-                className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600"
+                className="bg-stone-800 border-stone-700 text-stone-100 focus-visible:ring-amber-600"
               />
             </div>
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-sm font-medium text-stone-300">Text</label>
-            <textarea
+            <Label className="text-stone-300">Text</Label>
+            <Textarea
               value={form.text}
               onChange={(e) => set("text", e.target.value)}
               rows={4}
-              className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 min-h-[80px] resize-y"
+              className="bg-stone-800 border-stone-700 text-stone-100 focus-visible:ring-amber-600 min-h-[80px] resize-y"
             />
           </div>
         </CardContent>

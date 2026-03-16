@@ -6,6 +6,9 @@ import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import DeleteConfirmDialog from "@/components/admin/DeleteConfirmDialog";
 import { toast } from "sonner";
@@ -151,65 +154,67 @@ export default function PillarEditPage() {
         <CardContent className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-sm font-medium text-stone-300">Num</label>
-              <input
+              <Label className="text-stone-300">Num</Label>
+              <Input
                 type="text"
                 value={form.num}
                 onChange={(e) => set("num", e.target.value)}
                 placeholder="e.g. 01"
-                className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 placeholder:text-stone-600"
+                className="bg-stone-800 border-stone-700 text-stone-100 placeholder:text-stone-600 focus-visible:ring-amber-600"
               />
             </div>
             <div className="space-y-1.5">
-              <label className="text-sm font-medium text-stone-300">Order</label>
-              <input
+              <Label className="text-stone-300">Order</Label>
+              <Input
                 type="number"
                 value={form.order}
                 onChange={(e) => set("order", Number(e.target.value))}
-                className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600"
+                className="bg-stone-800 border-stone-700 text-stone-100 focus-visible:ring-amber-600"
               />
             </div>
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-sm font-medium text-stone-300">Label</label>
-            <input
+            <Label className="text-stone-300">Label</Label>
+            <Input
               type="text"
               value={form.label}
               onChange={(e) => set("label", e.target.value)}
               placeholder="Short label"
-              className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 placeholder:text-stone-600"
+              className="bg-stone-800 border-stone-700 text-stone-100 placeholder:text-stone-600 focus-visible:ring-amber-600"
             />
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-sm font-medium text-stone-300">Title</label>
-            <input
+            <Label className="text-stone-300">Title</Label>
+            <Input
               type="text"
               value={form.title}
               onChange={(e) => set("title", e.target.value)}
-              className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600"
+              className="bg-stone-800 border-stone-700 text-stone-100 focus-visible:ring-amber-600"
             />
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium text-stone-300">Paragraphs</label>
+            <Label className="text-stone-300">Paragraphs</Label>
             {form.paragraphs.map((para, index) => (
               <div key={index} className="flex gap-2 items-start">
-                <textarea
+                <Textarea
                   value={para}
                   onChange={(e) => updateParagraph(index, e.target.value)}
                   rows={3}
-                  className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 flex-1 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 min-h-[80px] resize-y"
+                  className="bg-stone-800 border-stone-700 text-stone-100 focus-visible:ring-amber-600 min-h-[80px] resize-y flex-1"
                 />
                 {form.paragraphs.length > 1 && (
-                  <button
+                  <Button
                     type="button"
+                    variant="ghost"
+                    size="sm"
                     onClick={() => removeParagraph(index)}
-                    className="mt-2 text-stone-500 hover:text-red-400 text-sm transition-colors"
+                    className="mt-1 text-stone-500 hover:text-red-400 hover:bg-transparent px-2"
                   >
                     ×
-                  </button>
+                  </Button>
                 )}
               </div>
             ))}

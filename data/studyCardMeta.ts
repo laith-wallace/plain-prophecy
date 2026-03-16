@@ -11,6 +11,30 @@ export interface StudyCardMeta {
 }
 
 export const studyCardMeta: Record<string, StudyCardMeta> = {
+  "love-for-god": {
+    emoji: "❤️",
+    accentColor: "#0f0a0a",
+    shortDescription:
+      "Before rules, before rituals — God loved us first. The foundation of everything.",
+  },
+  "righteousness-by-faith": {
+    emoji: "🕊️",
+    accentColor: "#0a0a12",
+    shortDescription:
+      "Righteousness is not achieved, it's received. A gift through faith in Jesus Christ.",
+  },
+  "the-resurrection": {
+    emoji: "🌅",
+    accentColor: "#0a0d0a",
+    shortDescription:
+      "The empty tomb is God's 'Amen' to Christ's 'It is finished.' Death defeated forever.",
+  },
+  "jesus-at-the-centre": {
+    emoji: "✝️",
+    accentColor: "#0a0d14",
+    shortDescription:
+      "Every page of Scripture, from Genesis to Revelation, points to one Person.",
+  },
   "daniel-1": {
     emoji: "🥗",
     accentColor: "#0a0a05",

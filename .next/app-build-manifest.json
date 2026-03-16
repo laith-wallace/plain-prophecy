@@ -36,6 +36,79 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/admin/evidence/[id]/page.js"
+    ],
+    "/doctrine/loading": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/doctrine/loading.js"
+    ],
+    "/doctrine/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/doctrine/page.js"
+    ],
+    "/studies/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/studies/layout.css",
+      "static/chunks/app/studies/layout.js"
+    ],
+    "/studies/loading": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/studies/loading.js"
+    ],
+    "/studies/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/studies/page.css",
+      "static/chunks/app/studies/page.js"
+    ],
+    "/studies/[book]/[lesson]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/studies/[book]/[lesson]/page.css",
+      "static/chunks/app/studies/[book]/[lesson]/page.js"
+    ],
+    "/admin/studies/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/admin/studies/page.js"
+    ],
+    "/admin/studies/[courseId]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/admin/studies/[courseId]/page.js"
+    ],
+    "/admin/studies/[courseId]/lessons/[lessonId]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/admin/studies/[courseId]/lessons/[lessonId]/page.js"
+    ],
+    "/admin/timelines/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/admin/timelines/page.js"
+    ],
+    "/compare/loading": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/compare/loading.js"
+    ],
+    "/compare/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/compare/page.js"
+    ],
+    "/blog/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/blog/page.js"
+    ],
+    "/prophet/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/prophet/page.js"
     ]
   }
 }

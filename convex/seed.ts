@@ -327,6 +327,21 @@ export const run = mutation({
 
     // 7. Seed Study Books + Lessons
     const currentCourses = await ctx.db.query("studyCourses").collect();
+
+    // Migration: fix course ordering — Gospel=0, Daniel=1, Revelation=2
+    const gospelCourse = currentCourses.find((c: any) => c.slug === "gospel");
+    const danielCourse = currentCourses.find((c: any) => c.slug === "daniel");
+    const revelationCourse = currentCourses.find((c: any) => c.slug === "revelation");
+    if (gospelCourse && gospelCourse.order !== 0) {
+      await ctx.db.patch(gospelCourse._id, { order: 0, hasSeparator: false });
+    }
+    if (danielCourse && danielCourse.order !== 1) {
+      await ctx.db.patch(danielCourse._id, { order: 1 });
+    }
+    if (revelationCourse && revelationCourse.order !== 2) {
+      await ctx.db.patch(revelationCourse._id, { order: 2 });
+    }
+
     if (currentCourses.length === 0) {
       for (let i = 0; i < studyBooks.length; i++) {
         const book = studyBooks[i];

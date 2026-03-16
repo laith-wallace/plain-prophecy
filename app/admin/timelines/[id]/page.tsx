@@ -6,6 +6,10 @@ import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import DeleteConfirmDialog from "@/components/admin/DeleteConfirmDialog";
 import { toast } from "sonner";
@@ -137,82 +141,84 @@ export default function TimelineEditPage() {
         <CardContent className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-sm font-medium text-stone-300">Type</label>
-              <select
-                value={form.type}
-                onChange={(e) => set("type", e.target.value as TimelineType)}
-                className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600"
-              >
-                <option value="sda">SDA</option>
-                <option value="futurist">Futurist</option>
-                <option value="preterist">Preterist</option>
-              </select>
+              <Label className="text-stone-300">Type</Label>
+              <Select value={form.type} onValueChange={(v) => set("type", v as TimelineType)}>
+                <SelectTrigger className="bg-stone-800 border-stone-700 text-stone-100 focus:ring-amber-600">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-stone-800 border-stone-700 text-stone-100">
+                  <SelectItem value="sda">SDA</SelectItem>
+                  <SelectItem value="futurist">Futurist</SelectItem>
+                  <SelectItem value="preterist">Preterist</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             <div className="space-y-1.5">
-              <label className="text-sm font-medium text-stone-300">Badge</label>
-              <select
-                value={form.badge}
-                onChange={(e) => set("badge", e.target.value as BadgeType)}
-                className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600"
-              >
-                <option value="fulfilled">Fulfilled</option>
-                <option value="future">Future</option>
-                <option value="present">Present</option>
-                <option value="historical">Historical</option>
-              </select>
+              <Label className="text-stone-300">Badge</Label>
+              <Select value={form.badge} onValueChange={(v) => set("badge", v as BadgeType)}>
+                <SelectTrigger className="bg-stone-800 border-stone-700 text-stone-100 focus:ring-amber-600">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-stone-800 border-stone-700 text-stone-100">
+                  <SelectItem value="fulfilled">Fulfilled</SelectItem>
+                  <SelectItem value="future">Future</SelectItem>
+                  <SelectItem value="present">Present</SelectItem>
+                  <SelectItem value="historical">Historical</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-sm font-medium text-stone-300">Date</label>
-              <input
+              <Label className="text-stone-300">Date</Label>
+              <Input
                 type="text"
                 value={form.date}
                 onChange={(e) => set("date", e.target.value)}
                 placeholder="e.g. 538 BC or AD 1844"
-                className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 placeholder:text-stone-600"
+                className="bg-stone-800 border-stone-700 text-stone-100 placeholder:text-stone-600 focus-visible:ring-amber-600"
               />
             </div>
             <div className="space-y-1.5">
-              <label className="text-sm font-medium text-stone-300">Order</label>
-              <input
+              <Label className="text-stone-300">Order</Label>
+              <Input
                 type="number"
                 value={form.order}
                 onChange={(e) => set("order", Number(e.target.value))}
-                className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600"
+                className="bg-stone-800 border-stone-700 text-stone-100 focus-visible:ring-amber-600"
               />
             </div>
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-sm font-medium text-stone-300">Title</label>
-            <input
+            <Label className="text-stone-300">Title</Label>
+            <Input
               type="text"
               value={form.title}
               onChange={(e) => set("title", e.target.value)}
-              className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600"
+              className="bg-stone-800 border-stone-700 text-stone-100 focus-visible:ring-amber-600"
             />
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-sm font-medium text-stone-300">Description</label>
-            <textarea
+            <Label className="text-stone-300">Description</Label>
+            <Textarea
               value={form.desc}
               onChange={(e) => set("desc", e.target.value)}
               rows={4}
-              className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 min-h-[80px] resize-y"
+              className="bg-stone-800 border-stone-700 text-stone-100 focus-visible:ring-amber-600 min-h-[80px] resize-y"
             />
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-sm font-medium text-stone-300">Scripture References</label>
-            <input
+            <Label className="text-stone-300">Scripture References</Label>
+            <Input
               type="text"
               value={form.refs}
               onChange={(e) => set("refs", e.target.value)}
               placeholder="e.g. Dan 7:25; Rev 13:5"
-              className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 placeholder:text-stone-600"
+              className="bg-stone-800 border-stone-700 text-stone-100 placeholder:text-stone-600 focus-visible:ring-amber-600"
             />
           </div>
         </CardContent>

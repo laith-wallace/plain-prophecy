@@ -17,13 +17,68 @@
         "app/admin/evidence/[id]/page": {
           "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Flaithwallace%2FCursorProjectDev%2FPlain%20Prophecy%2Fnode_modules%2F%40convex-dev%2Fauth%2Fdist%2Fnextjs%2Fserver%2FinvalidateCache.js%22%2C%5B%7B%22id%22%3A%220068265ee3bb6b06655c847cdba5a8edc295403411%22%2C%22exportedName%22%3A%22invalidateCache%22%7D%5D%5D%5D&__client_imported__=true!",
           "async": false
+        },
+        "app/doctrine/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Flaithwallace%2FCursorProjectDev%2FPlain%20Prophecy%2Fnode_modules%2F%40convex-dev%2Fauth%2Fdist%2Fnextjs%2Fserver%2FinvalidateCache.js%22%2C%5B%7B%22id%22%3A%220068265ee3bb6b06655c847cdba5a8edc295403411%22%2C%22exportedName%22%3A%22invalidateCache%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        },
+        "app/studies/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Flaithwallace%2FCursorProjectDev%2FPlain%20Prophecy%2Fnode_modules%2F%40convex-dev%2Fauth%2Fdist%2Fnextjs%2Fserver%2FinvalidateCache.js%22%2C%5B%7B%22id%22%3A%220068265ee3bb6b06655c847cdba5a8edc295403411%22%2C%22exportedName%22%3A%22invalidateCache%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        },
+        "app/studies/[book]/[lesson]/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Flaithwallace%2FCursorProjectDev%2FPlain%20Prophecy%2Fnode_modules%2F%40convex-dev%2Fauth%2Fdist%2Fnextjs%2Fserver%2FinvalidateCache.js%22%2C%5B%7B%22id%22%3A%220068265ee3bb6b06655c847cdba5a8edc295403411%22%2C%22exportedName%22%3A%22invalidateCache%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        },
+        "app/admin/studies/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Flaithwallace%2FCursorProjectDev%2FPlain%20Prophecy%2Fnode_modules%2F%40convex-dev%2Fauth%2Fdist%2Fnextjs%2Fserver%2FinvalidateCache.js%22%2C%5B%7B%22id%22%3A%220068265ee3bb6b06655c847cdba5a8edc295403411%22%2C%22exportedName%22%3A%22invalidateCache%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        },
+        "app/admin/studies/[courseId]/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Flaithwallace%2FCursorProjectDev%2FPlain%20Prophecy%2Fnode_modules%2F%40convex-dev%2Fauth%2Fdist%2Fnextjs%2Fserver%2FinvalidateCache.js%22%2C%5B%7B%22id%22%3A%220068265ee3bb6b06655c847cdba5a8edc295403411%22%2C%22exportedName%22%3A%22invalidateCache%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        },
+        "app/admin/studies/[courseId]/lessons/[lessonId]/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Flaithwallace%2FCursorProjectDev%2FPlain%20Prophecy%2Fnode_modules%2F%40convex-dev%2Fauth%2Fdist%2Fnextjs%2Fserver%2FinvalidateCache.js%22%2C%5B%7B%22id%22%3A%220068265ee3bb6b06655c847cdba5a8edc295403411%22%2C%22exportedName%22%3A%22invalidateCache%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        },
+        "app/admin/timelines/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Flaithwallace%2FCursorProjectDev%2FPlain%20Prophecy%2Fnode_modules%2F%40convex-dev%2Fauth%2Fdist%2Fnextjs%2Fserver%2FinvalidateCache.js%22%2C%5B%7B%22id%22%3A%220068265ee3bb6b06655c847cdba5a8edc295403411%22%2C%22exportedName%22%3A%22invalidateCache%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        },
+        "app/compare/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Flaithwallace%2FCursorProjectDev%2FPlain%20Prophecy%2Fnode_modules%2F%40convex-dev%2Fauth%2Fdist%2Fnextjs%2Fserver%2FinvalidateCache.js%22%2C%5B%7B%22id%22%3A%220068265ee3bb6b06655c847cdba5a8edc295403411%22%2C%22exportedName%22%3A%22invalidateCache%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        },
+        "app/blog/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Flaithwallace%2FCursorProjectDev%2FPlain%20Prophecy%2Fnode_modules%2F%40convex-dev%2Fauth%2Fdist%2Fnextjs%2Fserver%2FinvalidateCache.js%22%2C%5B%7B%22id%22%3A%220068265ee3bb6b06655c847cdba5a8edc295403411%22%2C%22exportedName%22%3A%22invalidateCache%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        },
+        "app/prophet/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Flaithwallace%2FCursorProjectDev%2FPlain%20Prophecy%2Fnode_modules%2F%40convex-dev%2Fauth%2Fdist%2Fnextjs%2Fserver%2FinvalidateCache.js%22%2C%5B%7B%22id%22%3A%220068265ee3bb6b06655c847cdba5a8edc295403411%22%2C%22exportedName%22%3A%22invalidateCache%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        },
+        "app/_not-found/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Flaithwallace%2FCursorProjectDev%2FPlain%20Prophecy%2Fnode_modules%2F%40convex-dev%2Fauth%2Fdist%2Fnextjs%2Fserver%2FinvalidateCache.js%22%2C%5B%7B%22id%22%3A%220068265ee3bb6b06655c847cdba5a8edc295403411%22%2C%22exportedName%22%3A%22invalidateCache%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
         }
       },
       "layer": {
         "app/page": "action-browser",
         "app/evidence/page": "action-browser",
         "app/admin/evidence/page": "action-browser",
-        "app/admin/evidence/[id]/page": "action-browser"
+        "app/admin/evidence/[id]/page": "action-browser",
+        "app/doctrine/page": "action-browser",
+        "app/studies/page": "action-browser",
+        "app/studies/[book]/[lesson]/page": "action-browser",
+        "app/admin/studies/page": "action-browser",
+        "app/admin/studies/[courseId]/page": "action-browser",
+        "app/admin/studies/[courseId]/lessons/[lessonId]/page": "action-browser",
+        "app/admin/timelines/page": "action-browser",
+        "app/compare/page": "action-browser",
+        "app/blog/page": "action-browser",
+        "app/prophet/page": "action-browser",
+        "app/_not-found/page": "action-browser"
       }
     }
   },

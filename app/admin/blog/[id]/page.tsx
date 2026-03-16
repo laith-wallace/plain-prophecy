@@ -6,6 +6,9 @@ import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import DeleteConfirmDialog from "@/components/admin/DeleteConfirmDialog";
@@ -197,29 +200,29 @@ export default function BlogEditPage() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-1.5">
-            <label className="text-sm font-medium text-stone-300">Title</label>
-            <input
+            <Label className="text-stone-300">Title</Label>
+            <Input
               type="text"
               value={form.title}
               onChange={(e) => set("title", e.target.value)}
               onBlur={() => {
                 if (!form.slug) set("slug", generateSlug(form.title));
               }}
-              className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600"
+              className="bg-stone-800 border-stone-700 text-stone-100 focus-visible:ring-amber-600"
             />
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-sm font-medium text-stone-300">
+            <Label className="text-stone-300">
               Slug <span className="text-stone-500 font-normal">(used in URL)</span>
-            </label>
+            </Label>
             <div className="flex gap-2">
-              <input
+              <Input
                 type="text"
                 value={form.slug}
                 onChange={(e) => set("slug", e.target.value)}
                 placeholder="my-post-title"
-                className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 flex-1 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 placeholder:text-stone-600"
+                className="bg-stone-800 border-stone-700 text-stone-100 placeholder:text-stone-600 focus-visible:ring-amber-600 flex-1"
               />
               <Button
                 type="button"
@@ -240,46 +243,46 @@ export default function BlogEditPage() {
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-sm font-medium text-stone-300">Excerpt</label>
-            <textarea
+            <Label className="text-stone-300">Excerpt</Label>
+            <Textarea
               value={form.excerpt}
               onChange={(e) => set("excerpt", e.target.value)}
               rows={2}
-              className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 min-h-[80px] resize-y"
+              className="bg-stone-800 border-stone-700 text-stone-100 focus-visible:ring-amber-600 min-h-[80px] resize-y"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-sm font-medium text-stone-300">Author</label>
-              <input
+              <Label className="text-stone-300">Author</Label>
+              <Input
                 type="text"
                 value={form.author}
                 onChange={(e) => set("author", e.target.value)}
-                className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600"
+                className="bg-stone-800 border-stone-700 text-stone-100 focus-visible:ring-amber-600"
               />
             </div>
             <div className="space-y-1.5">
-              <label className="text-sm font-medium text-stone-300">Published Date</label>
-              <input
+              <Label className="text-stone-300">Published Date</Label>
+              <Input
                 type="date"
                 value={form.publishedAt}
                 onChange={(e) => set("publishedAt", e.target.value)}
-                className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600"
+                className="bg-stone-800 border-stone-700 text-stone-100 focus-visible:ring-amber-600"
               />
             </div>
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-sm font-medium text-stone-300">
+            <Label className="text-stone-300">
               Tags <span className="text-stone-500 font-normal">(comma-separated)</span>
-            </label>
-            <input
+            </Label>
+            <Input
               type="text"
               value={form.tags}
               onChange={(e) => set("tags", e.target.value)}
               placeholder="daniel, prophecy, historicism"
-              className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 placeholder:text-stone-600"
+              className="bg-stone-800 border-stone-700 text-stone-100 placeholder:text-stone-600 focus-visible:ring-amber-600"
             />
           </div>
 
@@ -319,11 +322,11 @@ export default function BlogEditPage() {
                 dangerouslySetInnerHTML={{ __html: markdownToHtml(form.body) }}
               />
             ) : (
-              <textarea
+              <Textarea
                 value={form.body}
                 onChange={(e) => set("body", e.target.value)}
                 rows={20}
-                className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 min-h-[400px] resize-y font-mono"
+                className="bg-stone-800 border-stone-700 text-stone-100 focus-visible:ring-amber-600 min-h-[400px] resize-y font-mono"
               />
             )}
           </div>

@@ -7,6 +7,10 @@ import { Id } from "@/convex/_generated/dataModel";
 import { useEffect } from "react";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import DeleteConfirmDialog from "@/components/admin/DeleteConfirmDialog";
@@ -95,10 +99,10 @@ const DEFAULT_VALUES: FormValues = {
   ogImage: "",
 };
 
-const inputCls = "bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 placeholder:text-stone-600";
-const textareaCls = `${inputCls} min-h-[80px] resize-y`;
-const labelCls = "text-sm font-medium text-stone-300";
-const smallLabelCls = "text-xs font-medium text-stone-400";
+const inputCls = "bg-stone-800 border-stone-700 text-stone-100 placeholder:text-stone-600 focus-visible:ring-amber-600";
+const textareaCls = "bg-stone-800 border-stone-700 text-stone-100 focus-visible:ring-amber-600 min-h-[80px] resize-y";
+const labelCls = "text-stone-300";
+const smallLabelCls = "text-xs text-stone-400";
 
 function SectionEditor({
   sectionIndex,
@@ -146,7 +150,7 @@ function SectionEditor({
       <div className="p-4 space-y-3">
         <div className="grid grid-cols-2 gap-3">
           <div className="space-y-1.5">
-            <label className={smallLabelCls}>Section ID</label>
+            <Label className={smallLabelCls}>Section ID</Label>
             <input
               type="text"
               {...register(`sections.${sectionIndex}.id`)}
@@ -155,7 +159,7 @@ function SectionEditor({
             />
           </div>
           <div className="space-y-1.5">
-            <label className={smallLabelCls}>Heading</label>
+            <Label className={smallLabelCls}>Heading</Label>
             <input
               type="text"
               {...register(`sections.${sectionIndex}.heading`)}
@@ -166,7 +170,7 @@ function SectionEditor({
 
         <div className="grid grid-cols-2 gap-3">
           <div className="space-y-1.5">
-            <label className={smallLabelCls}>Badge <span className="text-stone-600 font-normal">(optional)</span></label>
+            <Label className={smallLabelCls}>Badge <span className="text-stone-600 font-normal">(optional)</span></Label>
             <input
               type="text"
               {...register(`sections.${sectionIndex}.badge`)}
@@ -175,7 +179,7 @@ function SectionEditor({
             />
           </div>
           <div className="space-y-1.5">
-            <label className={smallLabelCls}>Era <span className="text-stone-600 font-normal">(optional)</span></label>
+            <Label className={smallLabelCls}>Era <span className="text-stone-600 font-normal">(optional)</span></Label>
             <input
               type="text"
               {...register(`sections.${sectionIndex}.era`)}
@@ -186,8 +190,8 @@ function SectionEditor({
         </div>
 
         <div className="space-y-1.5">
-          <label className={smallLabelCls}>Christ-Centre <span className="text-stone-600 font-normal">(optional)</span></label>
-          <textarea
+          <Label className={smallLabelCls}>Christ-Centre <span className="text-stone-600 font-normal">(optional)</span></Label>
+          <Textarea
             {...register(`sections.${sectionIndex}.christCentre`)}
             rows={2}
             className={textareaCls}
@@ -208,26 +212,26 @@ function SectionEditor({
                 />
               )}
             />
-            <label
+            <Label
               htmlFor={`keyVerse-${sectionIndex}`}
               className={`${smallLabelCls} cursor-pointer`}
             >
               Add key verse
-            </label>
+            </Label>
           </div>
           {hasKeyVerse && (
             <div className="grid grid-cols-3 gap-3 pl-1">
               <div className="col-span-2 space-y-1.5">
-                <label className={smallLabelCls}>Verse Text</label>
-                <textarea
+                <Label className={smallLabelCls}>Verse Text</Label>
+                <Textarea
                   {...register(`sections.${sectionIndex}.keyVerseText`)}
                   rows={2}
                   className={textareaCls}
                 />
               </div>
               <div className="space-y-1.5">
-                <label className={smallLabelCls}>Reference</label>
-                <input
+                <Label className={smallLabelCls}>Reference</Label>
+                <Input
                   type="text"
                   {...register(`sections.${sectionIndex}.keyVerseRef`)}
                   className={inputCls}
@@ -240,7 +244,7 @@ function SectionEditor({
 
         {/* Content Blocks */}
         <div className="space-y-2">
-          <label className={smallLabelCls}>Content Blocks</label>
+          <Label className={smallLabelCls}>Content Blocks</Label>
           {fields.map((block, blockIndex) => (
             <div key={block.id} className="border border-stone-700 rounded-lg p-3 bg-stone-800 space-y-2">
               <div className="flex items-center justify-between">
@@ -256,7 +260,7 @@ function SectionEditor({
                 </Button>
               </div>
               <div className="space-y-1.5">
-                <label className="text-xs text-stone-500">Label</label>
+                <Label className="text-xs text-stone-500">Label</Label>
                 <input
                   type="text"
                   {...register(`sections.${sectionIndex}.contentBlocks.${blockIndex}.label`)}
@@ -265,8 +269,8 @@ function SectionEditor({
                 />
               </div>
               <div className="space-y-1.5">
-                <label className="text-xs text-stone-500">Text</label>
-                <textarea
+                <Label className="text-xs text-stone-500">Text</Label>
+                <Textarea
                   {...register(`sections.${sectionIndex}.contentBlocks.${blockIndex}.text`)}
                   rows={3}
                   className={`${inputCls} min-h-[80px] resize-y`}
@@ -457,7 +461,7 @@ export default function DoctrineEditPage() {
           <CardContent className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className={labelCls}>Title</label>
+                <Label className={labelCls}>Title</Label>
                 <input
                   {...titleField}
                   onBlur={(e) => {
@@ -468,9 +472,9 @@ export default function DoctrineEditPage() {
                 />
               </div>
               <div className="space-y-1.5">
-                <label className={labelCls}>Slug</label>
+                <Label className={labelCls}>Slug</Label>
                 <div className="flex gap-2">
-                  <input type="text" {...register("slug")} className={`${inputCls} flex-1`} placeholder="e.g. pre-trib-rapture" />
+                  <Input type="text" {...register("slug")} className={`${inputCls} flex-1`} placeholder="e.g. pre-trib-rapture" />
                   <Button
                     type="button"
                     variant="outline"
@@ -491,33 +495,41 @@ export default function DoctrineEditPage() {
             </div>
 
             <div className="space-y-1.5">
-              <label className={labelCls}>Subtitle</label>
-              <input type="text" {...register("subtitle")} className={inputCls} />
+              <Label className={labelCls}>Subtitle</Label>
+              <Input type="text" {...register("subtitle")} className={inputCls} />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className={labelCls}>Scripture Reference</label>
-                <input type="text" {...register("scriptureRef")} className={inputCls} placeholder="e.g. 1 Thess 4:16–17" />
+                <Label className={labelCls}>Scripture Reference</Label>
+                <Input type="text" {...register("scriptureRef")} className={inputCls} placeholder="e.g. 1 Thess 4:16–17" />
               </div>
               <div className="space-y-1.5">
-                <label className={labelCls}>Category</label>
-                <select
-                  {...register("category")}
-                  className={inputCls}
-                >
-                  <option value="rapture">Rapture</option>
-                  <option value="antichrist">Antichrist</option>
-                  <option value="daniel">Daniel</option>
-                  <option value="revelation">Revelation</option>
-                </select>
+                <Label className={labelCls}>Category</Label>
+                <Controller
+                  control={control}
+                  name="category"
+                  render={({ field }) => (
+                    <Select value={field.value} onValueChange={field.onChange}>
+                      <SelectTrigger className="bg-stone-800 border-stone-700 text-stone-100 focus:ring-amber-600">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent className="bg-stone-800 border-stone-700 text-stone-100">
+                        <SelectItem value="rapture">Rapture</SelectItem>
+                        <SelectItem value="antichrist">Antichrist</SelectItem>
+                        <SelectItem value="daniel">Daniel</SelectItem>
+                        <SelectItem value="revelation">Revelation</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className={labelCls}>Order</label>
-                <input type="number" {...register("order", { valueAsNumber: true })} className={inputCls} />
+                <Label className={labelCls}>Order</Label>
+                <Input type="number" {...register("order", { valueAsNumber: true })} className={inputCls} />
               </div>
               <div className="flex items-center gap-3 pt-6">
                 <Controller
@@ -531,23 +543,23 @@ export default function DoctrineEditPage() {
                     />
                   )}
                 />
-                <label htmlFor="published" className={`${labelCls} cursor-pointer`}>Published</label>
+                <Label htmlFor="published" className={`${labelCls} cursor-pointer`}>Published</Label>
               </div>
             </div>
 
             <div className="space-y-1.5">
-              <label className={labelCls}>Intro</label>
-              <textarea {...register("intro")} rows={4} className={`${inputCls} min-h-[80px] resize-y`} />
+              <Label className={labelCls}>Intro</Label>
+              <Textarea {...register("intro")} rows={4} className={textareaCls} />
             </div>
 
             <div className="space-y-1.5">
-              <label className={labelCls}>Christ at the Centre <span className="text-stone-500 font-normal">(closing reflection)</span></label>
-              <textarea {...register("christCentre")} rows={3} className={`${inputCls} min-h-[80px] resize-y`} />
+              <Label className={labelCls}>Christ at the Centre <span className="text-stone-500 font-normal">(closing reflection)</span></Label>
+              <Textarea {...register("christCentre")} rows={3} className={textareaCls} />
             </div>
 
             <div className="space-y-1.5">
-              <label className={labelCls}>Verdict</label>
-              <textarea {...register("verdict")} rows={3} className={`${inputCls} min-h-[80px] resize-y`} />
+              <Label className={labelCls}>Verdict</Label>
+              <Textarea {...register("verdict")} rows={3} className={textareaCls} />
             </div>
 
             {/* Next Doctrine */}
@@ -564,19 +576,19 @@ export default function DoctrineEditPage() {
                     />
                   )}
                 />
-                <label htmlFor="hasNextDoctrine" className={`${labelCls} cursor-pointer`}>
+                <Label htmlFor="hasNextDoctrine" className={`${labelCls} cursor-pointer`}>
                   Add next doctrine link
-                </label>
+                </Label>
               </div>
               {hasNextDoctrine && (
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <label className={labelCls}>Next Doctrine Slug</label>
-                    <input type="text" {...register("nextDoctrineSlug")} className={inputCls} placeholder="e.g. antichrist" />
+                    <Label className={labelCls}>Next Doctrine Slug</Label>
+                    <Input type="text" {...register("nextDoctrineSlug")} className={inputCls} placeholder="e.g. antichrist" />
                   </div>
                   <div className="space-y-1.5">
-                    <label className={labelCls}>Next Doctrine Title</label>
-                    <input type="text" {...register("nextDoctrineTitle")} className={inputCls} placeholder="e.g. Who is the Antichrist?" />
+                    <Label className={labelCls}>Next Doctrine Title</Label>
+                    <Input type="text" {...register("nextDoctrineTitle")} className={inputCls} placeholder="e.g. Who is the Antichrist?" />
                   </div>
                 </div>
               )}
@@ -626,9 +638,9 @@ export default function DoctrineEditPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-1.5">
-              <label className={labelCls}>
+              <Label className={labelCls}>
                 Meta Title <span className="text-stone-500 font-normal">(overrides page title in search results)</span>
-              </label>
+              </Label>
               <input
                 type="text"
                 {...register("metaTitle")}
@@ -641,10 +653,10 @@ export default function DoctrineEditPage() {
             </div>
 
             <div className="space-y-1.5">
-              <label className={labelCls}>
+              <Label className={labelCls}>
                 Meta Description <span className="text-stone-500 font-normal">(shown in search snippets)</span>
-              </label>
-              <textarea
+              </Label>
+              <Textarea
                 {...register("metaDescription")}
                 rows={2}
                 placeholder="Defaults to intro"
@@ -656,9 +668,9 @@ export default function DoctrineEditPage() {
             </div>
 
             <div className="space-y-1.5">
-              <label className={labelCls}>
+              <Label className={labelCls}>
                 OG Image <span className="text-stone-500 font-normal">(social share image)</span>
-              </label>
+              </Label>
               <Controller
                 control={control}
                 name="ogImage"

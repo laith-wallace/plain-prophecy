@@ -5,10 +5,13 @@ import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import Link from "next/link";
 import { Pencil } from "lucide-react";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import PublishedBadge from "@/components/admin/PublishedBadge";
 import ListControls from "@/components/admin/ListControls";
 import DeleteConfirmDialog from "@/components/admin/DeleteConfirmDialog";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 export default function AdminStudiesPage() {
   const courses = useQuery(api.studyCourses.getAllAdmin);
@@ -49,51 +52,51 @@ export default function AdminStudiesPage() {
       />
 
       <div className="rounded-lg border border-stone-800 overflow-hidden">
-        <table className="w-full">
-          <thead>
-            <tr className="bg-stone-950">
-              <th className="text-left text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3">Book</th>
-              <th className="text-left text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3">Slug</th>
-              <th className="text-left text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3">Status</th>
-              <th className="text-left text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3">Order</th>
-              <th className="text-left text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-stone-800">
+        <Table>
+          <TableHeader className="[&_tr]:border-stone-800">
+            <TableRow className="bg-stone-950 border-stone-800 hover:bg-transparent">
+              <TableHead className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3">Book</TableHead>
+              <TableHead className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3">Slug</TableHead>
+              <TableHead className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3">Status</TableHead>
+              <TableHead className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3">Order</TableHead>
+              <TableHead className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3">Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody className="divide-y divide-stone-800">
             {courses === undefined && (
-              <tr><td colSpan={colSpan} className="px-4 py-8 text-center text-sm text-stone-500">Loading…</td></tr>
+              <TableRow><TableCell colSpan={colSpan} className="px-4 py-8 text-center text-sm text-stone-500">Loading…</TableCell></TableRow>
             )}
             {courses !== undefined && filtered.length === 0 && courses.length > 0 && (
-              <tr>
-                <td colSpan={colSpan} className="px-4 py-6 text-sm text-stone-500 text-center">
+              <TableRow>
+                <TableCell colSpan={colSpan} className="px-4 py-6 text-sm text-stone-500 text-center">
                   No results for &ldquo;{search}&rdquo;.{" "}
-                  <button onClick={() => { setSearch(""); setStatusFilter("all"); }} className="text-amber-500 hover:text-amber-400 underline">Clear</button>
-                </td>
-              </tr>
+                  <Button variant="link" size="sm" onClick={() => { setSearch(""); setStatusFilter("all"); }} className="text-amber-500 hover:text-amber-400 h-auto p-0">Clear</Button>
+                </TableCell>
+              </TableRow>
             )}
             {courses?.length === 0 && (
-              <tr><td colSpan={colSpan} className="px-4 py-8 text-center text-sm text-stone-500">No books yet.</td></tr>
+              <TableRow><TableCell colSpan={colSpan} className="px-4 py-8 text-center text-sm text-stone-500">No books yet.</TableCell></TableRow>
             )}
             {filtered.map((course) => (
-              <tr key={course._id} className="bg-stone-900 hover:bg-stone-800/50 transition-colors">
-                <td className="px-4 py-3 text-sm text-stone-200">
+              <TableRow key={course._id} className="bg-stone-900 border-stone-800 hover:bg-stone-800/50">
+                <TableCell className="px-4 py-3 text-sm text-stone-200">
                   {course.icon && <span className="mr-2">{course.icon}</span>}
                   {course.title}
-                </td>
-                <td className="px-4 py-3 text-sm text-stone-400 font-mono">{course.slug}</td>
-                <td className="px-4 py-3"><PublishedBadge published={course.published} /></td>
-                <td className="px-4 py-3 text-sm text-stone-400">{course.order}</td>
-                <td className="px-4 py-3">
+                </TableCell>
+                <TableCell className="px-4 py-3 text-sm text-stone-400 font-mono">{course.slug}</TableCell>
+                <TableCell className="px-4 py-3"><PublishedBadge published={course.published} /></TableCell>
+                <TableCell className="px-4 py-3 text-sm text-stone-400">{course.order}</TableCell>
+                <TableCell className="px-4 py-3">
                   <div className="flex items-center gap-2">
                     <Link
                       href={`/admin/studies/${course._id}`}
-                      className="flex items-center gap-1 text-xs text-amber-400 hover:text-amber-300"
+                      className={cn(buttonVariants({ variant: "outline", size: "sm" }), "border-stone-700 text-stone-300 hover:bg-stone-800")}
                     >
                       <Pencil className="w-3 h-3" /> Edit
                     </Link>
                     <DeleteConfirmDialog
                       trigger={
-                        <button className="text-xs text-red-400 hover:text-red-300">Delete</button>
+                        <Button variant="ghost" size="sm" className="text-xs text-red-400 hover:text-red-300 hover:bg-transparent">Delete</Button>
                       }
                       title="Delete this book?"
                       description="This will also delete all lessons in this book. This cannot be undone."
@@ -103,11 +106,11 @@ export default function AdminStudiesPage() {
                       }}
                     />
                   </div>
-                </td>
-              </tr>
+                </TableCell>
+              </TableRow>
             ))}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </div>
     </div>
   );

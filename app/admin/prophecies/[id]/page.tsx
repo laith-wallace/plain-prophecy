@@ -6,6 +6,9 @@ import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import DeleteConfirmDialog from "@/components/admin/DeleteConfirmDialog";
@@ -156,107 +159,107 @@ export default function ProphecyEditPage() {
         <CardContent className="space-y-4">
           <div className="grid grid-cols-3 gap-4">
             <div className="space-y-1.5">
-              <label className="text-sm font-medium text-stone-300">Number</label>
-              <input
+              <Label className="text-stone-300">Number</Label>
+              <Input
                 type="number"
                 value={form.number}
                 onChange={(e) => set("number", Number(e.target.value))}
-                className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600"
+                className="bg-stone-800 border-stone-700 text-stone-100 focus-visible:ring-amber-600"
               />
             </div>
             <div className="space-y-1.5">
-              <label className="text-sm font-medium text-stone-300">ID String</label>
-              <input
+              <Label className="text-stone-300">ID String</Label>
+              <Input
                 type="text"
                 value={form.idStr}
                 onChange={(e) => set("idStr", e.target.value)}
                 placeholder="e.g. daniel-2"
-                className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 placeholder:text-stone-600"
+                className="bg-stone-800 border-stone-700 text-stone-100 placeholder:text-stone-600 focus-visible:ring-amber-600"
               />
             </div>
             <div className="space-y-1.5">
-              <label className="text-sm font-medium text-stone-300">Symbol (emoji)</label>
-              <input
+              <Label className="text-stone-300">Symbol (emoji)</Label>
+              <Input
                 type="text"
                 value={form.symbol}
                 onChange={(e) => set("symbol", e.target.value)}
                 placeholder="🗿"
-                className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 placeholder:text-stone-600"
+                className="bg-stone-800 border-stone-700 text-stone-100 placeholder:text-stone-600 focus-visible:ring-amber-600"
               />
             </div>
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-sm font-medium text-stone-300">Title</label>
-            <input
+            <Label className="text-stone-300">Title</Label>
+            <Input
               type="text"
               value={form.title}
               onChange={(e) => set("title", e.target.value)}
-              className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600"
+              className="bg-stone-800 border-stone-700 text-stone-100 focus-visible:ring-amber-600"
             />
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-sm font-medium text-stone-300">Subtitle</label>
-            <input
+            <Label className="text-stone-300">Subtitle</Label>
+            <Input
               type="text"
               value={form.subtitle}
               onChange={(e) => set("subtitle", e.target.value)}
-              className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600"
+              className="bg-stone-800 border-stone-700 text-stone-100 focus-visible:ring-amber-600"
             />
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-sm font-medium text-stone-300">Scripture</label>
-            <input
+            <Label className="text-stone-300">Scripture</Label>
+            <Input
               type="text"
               value={form.scripture}
               onChange={(e) => set("scripture", e.target.value)}
               placeholder="e.g. Daniel 2:31–45"
-              className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 placeholder:text-stone-600"
+              className="bg-stone-800 border-stone-700 text-stone-100 placeholder:text-stone-600 focus-visible:ring-amber-600"
             />
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-sm font-medium text-stone-300">What It Reveals</label>
-            <textarea
+            <Label className="text-stone-300">What It Reveals</Label>
+            <Textarea
               value={form.revealWhat}
               onChange={(e) => set("revealWhat", e.target.value)}
               rows={3}
-              className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 min-h-[80px] resize-y"
+              className="bg-stone-800 border-stone-700 text-stone-100 focus-visible:ring-amber-600 min-h-[80px] resize-y"
             />
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-sm font-medium text-stone-300">Historical Fulfilment</label>
-            <textarea
+            <Label className="text-stone-300">Historical Fulfilment</Label>
+            <Textarea
               value={form.revealHistory}
               onChange={(e) => set("revealHistory", e.target.value)}
               rows={3}
-              className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 min-h-[80px] resize-y"
+              className="bg-stone-800 border-stone-700 text-stone-100 focus-visible:ring-amber-600 min-h-[80px] resize-y"
             />
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-sm font-medium text-stone-300">Christ Connection</label>
-            <textarea
+            <Label className="text-stone-300">Christ Connection</Label>
+            <Textarea
               value={form.revealChrist}
               onChange={(e) => set("revealChrist", e.target.value)}
               rows={3}
-              className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 min-h-[80px] resize-y"
+              className="bg-stone-800 border-stone-700 text-stone-100 focus-visible:ring-amber-600 min-h-[80px] resize-y"
             />
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-sm font-medium text-stone-300">
+            <Label className="text-stone-300">
               Connections <span className="text-stone-500 font-normal">(one slug per line)</span>
-            </label>
-            <textarea
+            </Label>
+            <Textarea
               value={form.connections}
               onChange={(e) => set("connections", e.target.value)}
               rows={3}
               placeholder="daniel-7&#10;daniel-9"
-              className="bg-stone-800 border border-stone-700 text-stone-100 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 min-h-[80px] resize-y placeholder:text-stone-600"
+              className="bg-stone-800 border-stone-700 text-stone-100 placeholder:text-stone-600 focus-visible:ring-amber-600 min-h-[80px] resize-y"
             />
           </div>
 
@@ -266,9 +269,9 @@ export default function ProphecyEditPage() {
               onCheckedChange={(v) => set("published", v)}
               id="published"
             />
-            <label htmlFor="published" className="text-sm font-medium text-stone-300 cursor-pointer">
+            <Label htmlFor="published" className="text-stone-300 cursor-pointer font-medium">
               Published
-            </label>
+            </Label>
           </div>
         </CardContent>
       </Card>

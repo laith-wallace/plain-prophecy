@@ -1151,6 +1151,9 @@ video {
 .h-svh {
   height: 100svh;
 }
+.h-auto {
+  height: auto;
+}
 .max-h-48 {
   max-height: 12rem;
 }
@@ -4176,6 +4179,10 @@ body {
   background-color: rgb(41 37 36 / 0.5);
 }
 
+.hover\:bg-transparent:hover {
+  background-color: transparent;
+}
+
 .hover\:text-amber-300:hover {
   --tw-text-opacity: 1;
   color: rgb(252 211 77 / var(--tw-text-opacity, 1));
@@ -4282,6 +4289,11 @@ body {
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+.focus-visible\:ring-amber-600:focus-visible {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(217 119 6 / var(--tw-ring-opacity, 1));
 }
 
 .active\:translate-y-px:active {
@@ -4908,6 +4920,11 @@ body {
 
 .\[\&_tr\]\:border-b tr {
   border-bottom-width: 1px;
+}
+
+.\[\&_tr\]\:border-stone-800 tr {
+  --tw-border-opacity: 1;
+  border-color: rgb(41 37 36 / var(--tw-border-opacity, 1));
 }
 
 [data-side=left][data-collapsible=offcanvas] .\[\[data-side\=left\]\[data-collapsible\=offcanvas\]_\&\]\:-right-2 {

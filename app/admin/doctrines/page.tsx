@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import PublishedBadge from "@/components/admin/PublishedBadge";
 import ListControls from "@/components/admin/ListControls";
@@ -55,60 +56,60 @@ export default function DoctrinesAdminPage() {
       />
 
       <div className="bg-stone-900 border border-stone-800 rounded-lg overflow-hidden">
-        <table className="w-full">
-          <thead>
-            <tr className="border-b border-stone-800">
-              <th className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3 bg-stone-950 text-left">Category</th>
-              <th className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3 bg-stone-950 text-left">Title</th>
-              <th className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3 bg-stone-950 text-left">Status</th>
-              <th className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3 bg-stone-950 text-left">Order</th>
-              <th className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3 bg-stone-950 text-left"></th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-stone-800">
+        <Table>
+          <TableHeader className="[&_tr]:border-stone-800">
+            <TableRow className="border-stone-800 hover:bg-transparent">
+              <TableHead className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3 bg-stone-950">Category</TableHead>
+              <TableHead className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3 bg-stone-950">Title</TableHead>
+              <TableHead className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3 bg-stone-950">Status</TableHead>
+              <TableHead className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3 bg-stone-950">Order</TableHead>
+              <TableHead className="text-xs font-medium text-stone-400 uppercase tracking-wide px-4 py-3 bg-stone-950"></TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody className="divide-y divide-stone-800">
             {doctrines === undefined && (
-              <tr>
-                <td colSpan={colSpan} className="px-4 py-6 text-sm text-stone-500 text-center">Loading…</td>
-              </tr>
+              <TableRow>
+                <TableCell colSpan={colSpan} className="px-4 py-6 text-sm text-stone-500 text-center">Loading…</TableCell>
+              </TableRow>
             )}
             {doctrines !== undefined && filtered.length === 0 && doctrines.length > 0 && (
-              <tr>
-                <td colSpan={colSpan} className="px-4 py-6 text-sm text-stone-500 text-center">
+              <TableRow>
+                <TableCell colSpan={colSpan} className="px-4 py-6 text-sm text-stone-500 text-center">
                   No results for &ldquo;{search}&rdquo;.{" "}
-                  <button onClick={() => { setSearch(""); setStatusFilter("all"); }} className="text-amber-500 hover:text-amber-400 underline">Clear</button>
-                </td>
-              </tr>
+                  <Button variant="link" size="sm" onClick={() => { setSearch(""); setStatusFilter("all"); }} className="text-amber-500 hover:text-amber-400 h-auto p-0">Clear</Button>
+                </TableCell>
+              </TableRow>
             )}
             {doctrines?.length === 0 && (
-              <tr>
-                <td colSpan={colSpan} className="px-4 py-6 text-sm text-stone-500 text-center">No doctrines yet.</td>
-              </tr>
+              <TableRow>
+                <TableCell colSpan={colSpan} className="px-4 py-6 text-sm text-stone-500 text-center">No doctrines yet.</TableCell>
+              </TableRow>
             )}
             {filtered.map((doc) => {
               const catMeta = CATEGORY_BADGE[doc.category] ?? { label: doc.category, className: "" };
               return (
-                <tr key={doc._id} className="hover:bg-stone-800/50 transition-colors">
-                  <td className="px-4 py-3 text-sm text-stone-200">
+                <TableRow key={doc._id} className="border-stone-800 hover:bg-stone-800/50">
+                  <TableCell className="px-4 py-3 text-sm text-stone-200">
                     <Badge variant="outline" className={catMeta.className}>{catMeta.label}</Badge>
-                  </td>
-                  <td className="px-4 py-3 text-sm text-stone-200">
+                  </TableCell>
+                  <TableCell className="px-4 py-3 text-sm text-stone-200">
                     <div>{doc.title}</div>
                     <div className="text-xs text-stone-500">{doc.slug}</div>
-                  </td>
-                  <td className="px-4 py-3 text-sm text-stone-200">
+                  </TableCell>
+                  <TableCell className="px-4 py-3 text-sm text-stone-200">
                     <PublishedBadge published={doc.published} />
-                  </td>
-                  <td className="px-4 py-3 text-sm text-stone-200">{doc.order}</td>
-                  <td className="px-4 py-3 text-sm text-stone-200 text-right">
+                  </TableCell>
+                  <TableCell className="px-4 py-3 text-sm text-stone-200">{doc.order}</TableCell>
+                  <TableCell className="px-4 py-3 text-sm text-stone-200 text-right">
                     <Link href={`/admin/doctrines/${doc._id}`} className={cn(buttonVariants({ variant: "outline", size: "sm" }), "border-stone-700 text-stone-300 hover:bg-stone-800")}>
                       Edit
                     </Link>
-                  </td>
-                </tr>
+                  </TableCell>
+                </TableRow>
               );
             })}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </div>
     </div>
   );

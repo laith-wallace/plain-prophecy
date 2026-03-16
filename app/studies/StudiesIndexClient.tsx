@@ -10,7 +10,7 @@ import "../studies-index.css";
 
 const PREF_KEY = "pp-studies-view";
 
-type BookFilter = "all" | "daniel" | "revelation";
+type BookFilter = "all" | "gospel" | "daniel" | "revelation";
 
 export default function StudiesIndexClient() {
   const [view, setView] = useState<"card" | "list">("card");
@@ -51,6 +51,7 @@ export default function StudiesIndexClient() {
               aria-label="Filter by book"
             >
               <option value="all">All Books</option>
+              <option value="gospel">The Gospel</option>
               <option value="daniel">Daniel</option>
               <option value="revelation">Revelation</option>
             </select>

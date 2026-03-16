@@ -445,8 +445,7 @@ export const studyBooks: StudyBook[] = [
     slug: "gospel",
     title: "The Gospel",
     icon: "✝️",
-    description: "The core message of the Bible — Jesus Christ and him crucified.",
-    hasSeparator: true,
+    description: "Before the beasts, the seals, or the trumpets — there is the Lamb. Every prophecy in Daniel and Revelation finds its meaning in the person and work of Jesus Christ.",
     lessons: [
       {
         slug: "love-for-god",
