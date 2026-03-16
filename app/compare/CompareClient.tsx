@@ -8,7 +8,6 @@ import {
   preteristDeductions,
   sdaDeductions,
 } from "@/data/scoring";
-import { pillars, futuristWeaknesses, preteristWeaknesses, sdaStrengths } from "@/data/pillars";
 import EvidenceTab from "./EvidenceTab";
 
 type Tab = "timelines" | "scoring" | "pillars" | "evidence";
@@ -18,6 +17,13 @@ export default function CompareClient() {
   const futuristData = useQuery(api.timelines.getTimeline, { type: "futurist" });
   const preteristData = useQuery(api.timelines.getTimeline, { type: "preterist" });
   const sdaData = useQuery(api.timelines.getTimeline, { type: "sda" });
+  const pillarsData = useQuery(api.pillars.getAll);
+  const highlightsData = useQuery(api.compareHighlights.getAll);
+
+  const pillars = pillarsData ?? [];
+  const futuristWeaknesses = (highlightsData ?? []).filter((h) => h.type === "futuristWeakness").map((h) => h.text);
+  const preteristWeaknesses = (highlightsData ?? []).filter((h) => h.type === "preteristWeakness").map((h) => h.text);
+  const sdaStrengths = (highlightsData ?? []).filter((h) => h.type === "sdaStrength").map((h) => h.text);
 
   // Progress bar + scroll-to-top
   useEffect(() => {

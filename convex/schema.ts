@@ -182,7 +182,7 @@ export default defineSchema({
   }).index("by_order", ["order"]),
 
   compareHighlights: defineTable({
-    type: v.union(v.literal("futuristWeakness"), v.literal("sdaStrength")),
+    type: v.union(v.literal("futuristWeakness"), v.literal("preteristWeakness"), v.literal("sdaStrength")),
     text: v.string(),
     order: v.number(),
   }).index("by_type_order", ["type", "order"]),

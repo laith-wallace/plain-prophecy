@@ -12,7 +12,7 @@ import { toast } from "sonner";
 import Link from "next/link";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 
-type HighlightType = "futuristWeakness" | "sdaStrength";
+type HighlightType = "futuristWeakness" | "preteristWeakness" | "sdaStrength";
 
 interface FormState {
   type: HighlightType;
@@ -132,6 +132,7 @@ export default function CompareHighlightEditPage() {
               >
                 <option value="sdaStrength">SDA Strength</option>
                 <option value="futuristWeakness">Futurist Weakness</option>
+                <option value="preteristWeakness">Preterist Weakness</option>
               </select>
             </div>
             <div className="space-y-1.5">

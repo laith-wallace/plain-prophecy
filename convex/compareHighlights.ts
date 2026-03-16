@@ -18,7 +18,7 @@ export const getAllAdmin = query({
 
 export const add = mutation({
   args: {
-    type: v.union(v.literal("futuristWeakness"), v.literal("sdaStrength")),
+    type: v.union(v.literal("futuristWeakness"), v.literal("preteristWeakness"), v.literal("sdaStrength")),
     text: v.string(),
     order: v.number(),
   },
@@ -32,7 +32,7 @@ export const add = mutation({
 export const update = mutation({
   args: {
     id: v.id("compareHighlights"),
-    type: v.union(v.literal("futuristWeakness"), v.literal("sdaStrength")),
+    type: v.union(v.literal("futuristWeakness"), v.literal("preteristWeakness"), v.literal("sdaStrength")),
     text: v.string(),
     order: v.number(),
   },

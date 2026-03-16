@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 
 const TYPE_BADGE: Record<string, { label: string; className: string }> = {
   futuristWeakness: { label: "Futurist Weakness", className: "bg-blue-900 text-blue-200 border-blue-800" },
+  preteristWeakness: { label: "Preterist Weakness", className: "bg-purple-900 text-purple-200 border-purple-800" },
   sdaStrength: { label: "SDA Strength", className: "bg-amber-900 text-amber-200 border-amber-800" },
 };
 
