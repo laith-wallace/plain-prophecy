@@ -1160,6 +1160,9 @@ video {
 .min-h-16 {
   min-height: 4rem;
 }
+.min-h-\[100dvh\] {
+  min-height: 100dvh;
+}
 .min-h-\[400px\] {
   min-height: 400px;
 }
@@ -1174,9 +1177,6 @@ video {
 }
 .min-h-svh {
   min-height: 100svh;
-}
-.min-h-\[100dvh\] {
-  min-height: 100dvh;
 }
 .w-1\.5 {
   width: 0.375rem;
@@ -3268,6 +3268,27 @@ body {
 }
 .media-card:hover .media-cta {
     color: rgba(255, 255, 255, 0.55);
+}
+
+/* ===== TABLET (640–768px) — intermediate fixes before full mobile layout ===== */
+@media (max-width: 640px) {
+  /* Compare table — reduce font size so it doesn't cramp before the card layout kicks in */
+  .criteria-table th,
+  .criteria-table td {
+    font-size: 0.72rem;
+    padding: 0.6rem 0.4rem;
+  }
+
+  /* Tab nav — smaller text for tight screens */
+  .tab-btn {
+    font-size: 0.65rem;
+    padding: 0.55rem 0.75rem;
+  }
+
+  /* Compare wrapper — tighter on phones */
+  .compare-wrapper {
+    padding: 1rem 0.75rem 4rem;
+  }
 }
 
 /* ===== MOBILE ===== */
