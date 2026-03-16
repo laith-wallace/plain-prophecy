@@ -1052,6 +1052,35 @@
 }
 
 @media (max-width: 640px) {
+  /* Hero — reduce excessive top/bottom padding on phones */
+  .hero-section {
+    padding: 5rem 1rem 4rem;
+  }
+
+  /* Scroll hero — 115vh is too tall on phones */
+  .scroll-hero-wrapper {
+    height: 80vh;
+  }
+
+  .scroll-hero-static {
+    height: 60vh;
+    min-height: 420px;
+  }
+
+  /* Scroll progress hint — bump from 0.6rem to readable size */
+  .scroll-hero-progress-hint span {
+    font-size: 0.7rem;
+  }
+
+  /* Buttons — tighter padding on phones */
+  .btn-primary,
+  .btn-ghost,
+  .btn-outline,
+  .btn-accent {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.68rem;
+  }
+
   .prophecy-grid {
     grid-template-columns: 1fr;
     overflow-x: visible;
@@ -1078,5 +1107,17 @@
 
   .reformers-watermark {
     gap: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Section inner — tighter gutters on small phones */
+  .section-inner {
+    padding: 0 1rem;
+  }
+
+  /* Timeline — prevent overflow on very small screens */
+  .timeline-node {
+    min-width: 90px;
   }
 }

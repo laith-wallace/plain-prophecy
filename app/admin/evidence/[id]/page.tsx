@@ -5,7 +5,7 @@ import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useEffect } from "react";
-import { useForm, useFieldArray, Controller, useWatch } from "react-hook-form";
+import { useForm, useFieldArray, Controller, useWatch, type Control } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -82,7 +82,7 @@ function getYouTubeId(href: string): string | null {
   return null;
 }
 
-function ThumbnailPreview({ control, index }: { control: any; index: number }) {
+function ThumbnailPreview({ control, index }: { control: Control<FormValues>; index: number }) {
   const href = useWatch({ control, name: `mediaCards.${index}.href` });
   const ytId = href ? getYouTubeId(href) : null;
   if (!ytId) return null;

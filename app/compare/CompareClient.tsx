@@ -270,7 +270,7 @@ export default function CompareClient() {
                 <div className="se-ded-header">
                   <div className="se-eyebrow" style={{ color: "rgba(255,255,255,0.55)", marginBottom: "0.4rem" }}>Honest Assessment — Preterism</div>
                   <h3 className="se-ded-title">Where Preterism Has Partial Merit</h3>
-                  <p className="se-ded-intro">Preterism scores higher than Futurism because it anchors prophecy to verifiable history and reads the 70 weeks correctly. But it closes the prophetic book at 70 AD — and full preterism's denial of a future bodily resurrection is its most significant exegetical failure.</p>
+                  <p className="se-ded-intro">Preterism scores higher than Futurism because it anchors prophecy to verifiable history and reads the 70 weeks correctly. But it closes the prophetic book at 70 AD — and full preterism&apos;s denial of a future bodily resurrection is its most significant exegetical failure.</p>
                 </div>
                 <div className="se-ded-grid">
                   {preteristDeductions.map((d, i) => (

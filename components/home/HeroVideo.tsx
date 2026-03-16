@@ -9,10 +9,15 @@ import { useEffect, useRef, useState } from "react";
 function shouldSkipVideo(): boolean {
   if (typeof navigator === "undefined") return true;
 
-  // Honour "Save Data" preference
-  const conn = (navigator as any).connection ??
-    (navigator as any).mozConnection ??
-    (navigator as any).webkitConnection;
+  // Honour "Save Data" preference — Network Information API is not in all TS lib defs
+  type NetworkInformation = { saveData?: boolean; effectiveType?: string };
+  type NavigatorWithConnection = Navigator & {
+    connection?: NetworkInformation;
+    mozConnection?: NetworkInformation;
+    webkitConnection?: NetworkInformation;
+  };
+  const nav = navigator as NavigatorWithConnection;
+  const conn = nav.connection ?? nav.mozConnection ?? nav.webkitConnection;
 
   if (conn) {
     if (conn.saveData) return true;
@@ -56,7 +61,7 @@ export default function HeroVideo() {
       <video
         ref={videoRef}
         className={`hero-video${loaded ? " hero-video--visible" : ""}`}
-        src="/videos/hero-bible-study.mp4"
+        src="/videos/hero-bible-study-compressed.mp4"
         poster="/videos/hero-bible-study-poster.jpg"
         muted
         loop

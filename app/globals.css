@@ -1083,6 +1083,27 @@ body {
     color: rgba(255, 255, 255, 0.55);
 }
 
+/* ===== TABLET (640–768px) — intermediate fixes before full mobile layout ===== */
+@media (max-width: 640px) {
+  /* Compare table — reduce font size so it doesn't cramp before the card layout kicks in */
+  .criteria-table th,
+  .criteria-table td {
+    font-size: 0.72rem;
+    padding: 0.6rem 0.4rem;
+  }
+
+  /* Tab nav — smaller text for tight screens */
+  .tab-btn {
+    font-size: 0.65rem;
+    padding: 0.55rem 0.75rem;
+  }
+
+  /* Compare wrapper — tighter on phones */
+  .compare-wrapper {
+    padding: 1rem 0.75rem 4rem;
+  }
+}
+
 /* ===== MOBILE ===== */
 @media (max-width: 768px) {
     .compare-wrapper {
