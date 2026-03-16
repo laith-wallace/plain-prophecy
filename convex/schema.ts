@@ -1,9 +1,12 @@
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
+import { authTables } from "@convex-dev/auth/server";
 
 export default defineSchema({
+  ...authTables,
+
   prophecies: defineTable({
-    idStr: v.string(), // e.g. "dream-statue"
+    idStr: v.string(),
     number: v.number(),
     title: v.string(),
     subtitle: v.string(),
@@ -24,6 +27,8 @@ export default defineSchema({
     description: v.string(),
     order: v.number(),
     published: v.boolean(),
+    icon: v.optional(v.string()),
+    hasSeparator: v.optional(v.boolean()),
   }).index("by_slug", ["slug"]),
 
   studyLessons: defineTable({
@@ -31,10 +36,37 @@ export default defineSchema({
     slug: v.string(),
     title: v.string(),
     order: v.number(),
-    body: v.string(), // MDX string
+    body: v.string(),
     scriptureRef: v.string(),
     tags: v.array(v.string()),
     published: v.boolean(),
+    // Structured content (from data/studies.ts migration)
+    readingTime: v.optional(v.number()),
+    keyVerse: v.optional(v.string()),
+    keyVerseRef: v.optional(v.string()),
+    intro: v.optional(v.string()),
+    christCentre: v.optional(v.string()),
+    nextLesson: v.optional(v.object({
+      book: v.string(),
+      lesson: v.string(),
+      title: v.string(),
+    })),
+    sections: v.optional(v.array(v.object({
+      id: v.optional(v.string()),
+      era: v.optional(v.string()),
+      badge: v.optional(v.string()),
+      heading: v.string(),
+      body: v.optional(v.string()),
+      contentBlocks: v.optional(v.array(v.object({
+        label: v.string(),
+        text: v.string(),
+      }))),
+      christCentre: v.optional(v.string()),
+      keyVerse: v.optional(v.object({
+        text: v.string(),
+        ref: v.string(),
+      })),
+    }))),
   }).index("by_slug", ["slug"]).index("by_course", ["courseId"]),
 
   blogPosts: defineTable({
@@ -42,15 +74,15 @@ export default defineSchema({
     title: v.string(),
     excerpt: v.string(),
     author: v.string(),
-    publishedAt: v.number(), // Timestamp
-    body: v.string(), // MDX string
+    publishedAt: v.number(),
+    body: v.string(),
     tags: v.array(v.string()),
     coverImage: v.optional(v.string()),
     published: v.boolean(),
   }).index("by_slug", ["slug"]).index("by_published_at", ["publishedAt"]),
 
   timelines: defineTable({
-    type: v.union(v.literal("futurist"), v.literal("sda")),
+    type: v.union(v.literal("futurist"), v.literal("sda"), v.literal("preterist")),
     date: v.string(),
     badge: v.union(
       v.literal("fulfilled"),
@@ -97,4 +129,55 @@ export default defineSchema({
     order: v.number(),
     published: v.boolean(),
   }).index("by_order", ["order"]),
+
+  doctrines: defineTable({
+    slug: v.string(),
+    title: v.string(),
+    subtitle: v.string(),
+    scriptureRef: v.string(),
+    category: v.union(
+      v.literal("rapture"),
+      v.literal("antichrist"),
+      v.literal("daniel"),
+      v.literal("revelation")
+    ),
+    intro: v.string(),
+    sections: v.array(v.object({
+      id: v.string(),
+      heading: v.string(),
+      badge: v.optional(v.string()),
+      era: v.optional(v.string()),
+      contentBlocks: v.array(v.object({
+        label: v.string(),
+        text: v.string(),
+      })),
+      christCentre: v.optional(v.string()),
+      keyVerse: v.optional(v.object({
+        text: v.string(),
+        ref: v.string(),
+      })),
+    })),
+    christCentre: v.string(),
+    verdict: v.string(),
+    nextDoctrine: v.optional(v.object({
+      slug: v.string(),
+      title: v.string(),
+    })),
+    published: v.boolean(),
+    order: v.number(),
+  }).index("by_slug", ["slug"]).index("by_order", ["order"]),
+
+  pillars: defineTable({
+    num: v.string(),
+    label: v.string(),
+    title: v.string(),
+    paragraphs: v.array(v.string()),
+    order: v.number(),
+  }).index("by_order", ["order"]),
+
+  compareHighlights: defineTable({
+    type: v.union(v.literal("futuristWeakness"), v.literal("sdaStrength")),
+    text: v.string(),
+    order: v.number(),
+  }).index("by_type_order", ["type", "order"]),
 });

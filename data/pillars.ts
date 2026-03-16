@@ -79,6 +79,15 @@ export const futuristWeaknesses = [
   'Compresses 6 convergent "1,260" texts into literal 3.5 years',
 ];
 
+export const preteristWeaknesses = [
+  'Hermeneutic developed by Jesuit de Alcazar (1614) — same Counter-Reformation origin as Futurism',
+  'Full preterism requires the resurrection to be past — contradicts 1 Cor 15 written before 70 AD',
+  'Renders 2,000 years of church history prophetically irrelevant — same problem as Futurism',
+  'Antiochus and Nero lack the full diagnostic profile of Daniel 7\'s little horn (1,260-year dominance, changing "times and law")',
+  'Requires Revelation to have been written before 70 AD — contested by patristic dating (Irenaeus places it c.95 AD)',
+  'Rejects the day-year principle — leaves the time prophecies of Daniel and Revelation without a consistent hermeneutical rule',
+];
+
 export const sdaStrengths = [
   'Day-year principle explicitly mandated (Num 14:34; Ezek 4:6)',
   'Every prophetic anchor historically verified by independent sources',

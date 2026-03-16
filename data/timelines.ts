@@ -67,6 +67,65 @@ export const futuristTimeline: EraBlock[] = [
   },
 ];
 
+export const preteristTimeline: EraBlock[] = [
+  {
+    date: '~165 BC',
+    badge: 'fulfilled',
+    title: 'Antiochus Epiphanes — Temple Desecrated',
+    desc: "Preterism identifies Antiochus IV Epiphanes as the primary fulfilment of Daniel's \"little horn\" (Dan 8) and the \"abomination of desolation.\" He desecrates the Jerusalem Temple, abolishes daily sacrifice, and erects an altar to Zeus in 167 BC — a historical event that Preterists treat as the lens for reading all subsequent prophetic imagery.",
+    refs: 'Dan 8:9–14 · 11:31 · 1 Macc 1:54 · 2 Macc 6:1–6',
+  },
+  {
+    date: '27–34 AD',
+    badge: 'fulfilled',
+    title: "Christ's Ministry — The 70th Week",
+    desc: "Jesus ministers, is crucified, and rises. Preterists agree with Historicists that Daniel's 70 weeks are contiguous, placing the 70th week in 27–34 AD. Where they diverge is what follows: Preterism sees Matthew 24's \"tribulation\" and the prophetic imagery of Revelation as pointing forward only to 70 AD, not to a continuous outworking through church history.",
+    refs: 'Dan 9:24–27 · Matt 4:17 · Luke 4:21',
+  },
+  {
+    date: '31 AD',
+    badge: 'fulfilled',
+    title: 'Crucifixion — Sacrifice and Oblation Cease',
+    desc: '"In the midst of the week He shall cause sacrifice and oblation to cease" (Dan 9:27). Preterists and Historicists agree: the Cross ends the sacrificial system. Calvary is the centrepiece of the 70-week prophecy. The veil tears. Christ is the final Lamb.',
+    refs: 'Dan 9:27 · Matt 27:51 · Heb 10:1–14',
+  },
+  {
+    date: '34 AD',
+    badge: 'fulfilled',
+    title: 'Stoning of Stephen — Gospel to Gentiles',
+    desc: "End of the 490 years. The Gospel breaks beyond Israel's borders — Saul converted, Peter sent to Cornelius. Preterists agree this closes the 70 weeks. But they then read the remainder of Daniel and all of Revelation as pointing to the Roman-Jewish War rather than to broader church history.",
+    refs: 'Acts 7:59–60 · 9:1–6 · 10:44–48',
+  },
+  {
+    date: '~67 AD',
+    badge: 'fulfilled',
+    title: 'Roman Armies Surround Jerusalem',
+    desc: 'General Vespasian, then his son Titus, lay siege to Jerusalem. Preterists identify this as the fulfilment of Jesus\' warning: "When you see Jerusalem surrounded by armies, know that its desolation is near" (Luke 21:20). They argue the \"great tribulation\" of Matthew 24 refers exclusively to this Roman siege — the worst catastrophe in Jewish national history.',
+    refs: 'Luke 21:20–24 · Matt 24:15–21 · Dan 9:26',
+  },
+  {
+    date: '70 AD',
+    badge: 'fulfilled',
+    title: 'Destruction of Jerusalem — The "Great Tribulation" Fulfilled',
+    desc: 'Titus destroys the Temple. Josephus records 1.1 million dead, 97,000 enslaved. Preterism identifies this as the fulfilment of the "great tribulation" (Matt 24:21), the sealing of the scroll (Dan 12), the \"abomination of desolation,\" and — for full preterists — the return of Christ in judgment. This event is the interpretive fulcrum of the entire preterist system.',
+    refs: 'Matt 24:21 · Dan 12:1 · Luke 21:22 · Rev 1:1, 3',
+  },
+  {
+    date: '70 AD',
+    badge: 'fulfilled',
+    title: 'Abomination of Desolation — Temple Razed',
+    desc: 'Roman legions carry their eagle standards (idols) into the Temple precincts and ultimately burn it to the ground. Preterists identify this as the definitive \"abomination of desolation\" Jesus warned about. For full preterists, Revelation\'s Beast, False Prophet, and Babylon all refer to the Roman Empire and apostate Jerusalem — all judged by 70 AD.',
+    refs: 'Matt 24:15 · Dan 9:27 · Rev 17–18 · Luke 19:43–44',
+  },
+  {
+    date: 'Ongoing',
+    badge: 'present',
+    title: 'Church Age — The New Covenant Kingdom',
+    desc: "Partial preterists hold that most prophecy is fulfilled but retain a future bodily return of Christ and final resurrection. Full preterists believe all prophecy — including the resurrection and Second Coming — was fulfilled spiritually in 70 AD. The church now lives in the \"new heavens and new earth\" inaugurated by the Cross and confirmed by the fall of Jerusalem.",
+    refs: 'Rev 21:1–4 · 2 Pet 3:10–13 · 1 Cor 15:22–28',
+  },
+];
+
 export const sdaTimeline: EraBlock[] = [
   {
     date: '457 BC',

@@ -1,5 +1,6 @@
 import { v } from "convex/values";
 import { query, mutation, internalMutation } from "./_generated/server";
+import { getAuthUserId } from "@convex-dev/auth/server";
 
 export const getByIdStr = query({
   args: { idStr: v.string() },
@@ -50,5 +51,34 @@ export const seedProphecies = internalMutation({
         await ctx.db.insert("prophecies", p);
       }
     }
+  },
+});
+
+export const update = mutation({
+  args: {
+    id: v.id("prophecies"),
+    idStr: v.string(),
+    number: v.number(),
+    title: v.string(),
+    subtitle: v.string(),
+    symbol: v.string(),
+    scripture: v.string(),
+    connections: v.array(v.string()),
+    reveal: v.object({ what: v.string(), history: v.string(), christ: v.string() }),
+    published: v.boolean(),
+  },
+  handler: async (ctx, { id, ...rest }) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) throw new Error("Unauthenticated");
+    await ctx.db.patch(id, rest);
+  },
+});
+
+export const remove = mutation({
+  args: { id: v.id("prophecies") },
+  handler: async (ctx, { id }) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) throw new Error("Unauthenticated");
+    await ctx.db.delete(id);
   },
 });

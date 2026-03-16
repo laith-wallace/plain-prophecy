@@ -11,6 +11,9 @@
     --futurist-primary: #1a2e5c;
     --futurist-accent: #c0392b;
     --futurist-light: #d6e4f7;
+    --preterist-primary: #5c3a1a;
+    --preterist-accent: #b07d3a;
+    --preterist-light: #f4ead6;
     --sda-primary: #1a3d2b;
     --sda-accent: #e8a020;
     --sda-light: #d4edda;
@@ -333,6 +336,10 @@ body {
     background: var(--futurist-primary);
     color: white;
 }
+.col-header.preterist {
+    background: var(--preterist-primary);
+    color: white;
+}
 .col-header.sda {
     background: var(--sda-primary);
     color: white;
@@ -380,6 +387,10 @@ body {
 .era-date.futurist-date {
     background: #edf1f8;
     color: var(--futurist-primary);
+}
+.era-date.preterist-date {
+    background: #f5ede0;
+    color: var(--preterist-primary);
 }
 .era-date.sda-date {
     background: #eaf4ed;
@@ -665,12 +676,15 @@ body {
     margin-top: 2rem;
     border: 3px solid var(--ink);
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
 }
 .verdict-side {
     padding: 1.75rem;
 }
 .verdict-side.futurist-v {
+    border-right: 3px solid var(--ink);
+}
+.verdict-side.preterist-v {
     border-right: 3px solid var(--ink);
 }
 .verdict-side h3 {
@@ -690,6 +704,10 @@ body {
 }
 .v-tag.futurist-tag {
     background: var(--futurist-primary);
+    color: white;
+}
+.v-tag.preterist-tag {
+    background: var(--preterist-primary);
     color: white;
 }
 .v-tag.sda-tag {
@@ -718,6 +736,10 @@ body {
 .futurist-v ul li::before {
     content: "✕";
     color: var(--red-flag);
+}
+.preterist-v ul li::before {
+    content: "✕";
+    color: var(--preterist-accent);
 }
 .sda-v ul li::before {
     content: "✓";
@@ -1134,6 +1156,10 @@ body {
         grid-template-columns: 1fr;
     }
     .verdict-side.futurist-v {
+        border-right: none;
+        border-bottom: 3px solid var(--ink);
+    }
+    .verdict-side.preterist-v {
         border-right: none;
         border-bottom: 3px solid var(--ink);
     }

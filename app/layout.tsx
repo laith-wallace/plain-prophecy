@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Playfair_Display, IBM_Plex_Sans, IBM_Plex_Mono, Geist } from "next/font/google";
 import "./globals.css";
-import SiteNav from "@/components/layout/SiteNav";
-import SiteFooter from "@/components/layout/SiteFooter";
+import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
+import PublicShell from "@/components/layout/PublicShell";
 import { ConvexClientProvider } from "@/components/providers/ConvexClientProvider";
 import { cn } from "@/lib/utils";
 
@@ -72,7 +72,7 @@ export const metadata: Metadata = {
       "Biblical prophecy examined through Scripture, history, and the Reformation tradition. Futurism vs Historicism — rigorously compared.",
     url: "https://plainprophecy.com",
     siteName: "Plain Prophecy",
-    locale: "en_US",
+    locale: "en_GB",
     type: "website",
     images: [
       {
@@ -100,18 +100,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={cn(playfair.variable, ibmPlexSans.variable, ibmPlexMono.variable, "font-sans", geist.variable)}
-      suppressHydrationWarning
-    >
-      <body className="antialiased" suppressHydrationWarning>
-        <ConvexClientProvider>
-          <SiteNav />
-          {children}
-          <SiteFooter />
-        </ConvexClientProvider>
-      </body>
-    </html>
+    <ConvexAuthNextjsServerProvider>
+      <html
+        lang="en-GB"
+        className={cn(playfair.variable, ibmPlexSans.variable, ibmPlexMono.variable, "font-sans", geist.variable)}
+        suppressHydrationWarning
+      >
+        <body className="antialiased" suppressHydrationWarning>
+          <ConvexClientProvider>
+            <PublicShell>
+              {children}
+            </PublicShell>
+          </ConvexClientProvider>
+        </body>
+      </html>
+    </ConvexAuthNextjsServerProvider>
   );
 }

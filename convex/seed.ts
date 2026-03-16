@@ -1,6 +1,9 @@
 import { mutation } from "./_generated/server";
-import { futuristTimeline, sdaTimeline } from "../data/timelines";
+import { futuristTimeline, preteristTimeline, sdaTimeline } from "../data/timelines";
 import { prophecies } from "../data/prophecies";
+import { doctrines } from "../data/doctrines";
+import { pillars, futuristWeaknesses, sdaStrengths } from "../data/pillars";
+import { studyBooks } from "../data/studies";
 
 const evidenceSections = [
   {
@@ -245,6 +248,18 @@ export const run = mutation({
         } as any);
       }
     }
+    // Seed Preterist timelines (added later — always check independently)
+    const existingPreterist = currentTimelines.filter((t: any) => t.type === "preterist");
+    if (existingPreterist.length === 0) {
+      let order = 0;
+      for (const t of preteristTimeline) {
+        await ctx.db.insert("timelines", {
+          ...t,
+          type: "preterist",
+          order: order++,
+        } as any);
+      }
+    }
 
     // 3. Seed Evidence
     const currentEvidence = await ctx.db.query("evidence").collect();
@@ -256,6 +271,83 @@ export const run = mutation({
           order: i,
           published: true,
         });
+      }
+    }
+
+    // 4. Seed Doctrines
+    const currentDoctrines = await ctx.db.query("doctrines").collect();
+    if (currentDoctrines.length === 0) {
+      for (let i = 0; i < doctrines.length; i++) {
+        const d = doctrines[i];
+        await ctx.db.insert("doctrines", {
+          ...d,
+          published: true,
+          order: i,
+        });
+      }
+    }
+
+    // 5. Seed Pillars
+    const currentPillars = await ctx.db.query("pillars").collect();
+    if (currentPillars.length === 0) {
+      for (let i = 0; i < pillars.length; i++) {
+        await ctx.db.insert("pillars", { ...pillars[i], order: i });
+      }
+    }
+
+    // 6. Seed CompareHighlights (futurist weaknesses + SDA strengths)
+    const currentHighlights = await ctx.db.query("compareHighlights").collect();
+    if (currentHighlights.length === 0) {
+      for (let i = 0; i < futuristWeaknesses.length; i++) {
+        await ctx.db.insert("compareHighlights", {
+          type: "futuristWeakness",
+          text: futuristWeaknesses[i],
+          order: i,
+        });
+      }
+      for (let i = 0; i < sdaStrengths.length; i++) {
+        await ctx.db.insert("compareHighlights", {
+          type: "sdaStrength",
+          text: sdaStrengths[i],
+          order: i,
+        });
+      }
+    }
+
+    // 7. Seed Study Books + Lessons
+    const currentCourses = await ctx.db.query("studyCourses").collect();
+    if (currentCourses.length === 0) {
+      for (let i = 0; i < studyBooks.length; i++) {
+        const book = studyBooks[i];
+        const courseId = await ctx.db.insert("studyCourses", {
+          slug: book.slug,
+          title: book.title,
+          description: book.description,
+          icon: book.icon,
+          hasSeparator: book.hasSeparator,
+          order: i,
+          published: true,
+        });
+        for (let j = 0; j < book.lessons.length; j++) {
+          const lesson = book.lessons[j];
+          await ctx.db.insert("studyLessons", {
+            courseId,
+            slug: lesson.slug,
+            title: lesson.title,
+            order: j,
+            body: "",
+            scriptureRef: lesson.scriptureRef,
+            tags: [],
+            published: true,
+            readingTime: lesson.readingTime,
+            keyVerse: lesson.keyVerse,
+            keyVerseRef: lesson.keyVerseRef,
+            intro: lesson.intro,
+            christCentre: lesson.christCentre,
+            nextLesson: lesson.nextLesson,
+            sections: lesson.sections,
+          });
+        }
       }
     }
 

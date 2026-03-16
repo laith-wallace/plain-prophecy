@@ -1,19 +1,15 @@
 "use client";
 
-import { ConvexProvider, ConvexReactClient } from "convex/react";
-import { ReactNode, useMemo } from "react";
+import { ConvexAuthNextjsProvider } from "@convex-dev/auth/nextjs";
+import { ConvexReactClient } from "convex/react";
+import { ReactNode } from "react";
+
+const convex = new ConvexReactClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
 export function ConvexClientProvider({ children }: { children: ReactNode }) {
-  const convexUrl = process.env.NEXT_PUBLIC_CONVEX_URL;
-
-  // If no URL is provided (e.g. during Vercel prerendering without the env var set),
-  // skip the Convex provider entirely and just render children.
-  const client = useMemo(() => {
-    if (!convexUrl) return null;
-    return new ConvexReactClient(convexUrl);
-  }, [convexUrl]);
-
-  if (!client) return <>{children}</>;
-
-  return <ConvexProvider client={client}>{children}</ConvexProvider>;
+  return (
+    <ConvexAuthNextjsProvider client={convex}>
+      {children}
+    </ConvexAuthNextjsProvider>
+  );
 }

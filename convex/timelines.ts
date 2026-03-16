@@ -1,8 +1,19 @@
 import { v } from "convex/values";
-import { query, internalMutation } from "./_generated/server";
+import { query, mutation, internalMutation } from "./_generated/server";
+import { getAuthUserId } from "@convex-dev/auth/server";
+
+const timelineFields = {
+  type: v.union(v.literal("futurist"), v.literal("sda"), v.literal("preterist")),
+  date: v.string(),
+  badge: v.union(v.literal("fulfilled"), v.literal("future"), v.literal("present"), v.literal("historical")),
+  title: v.string(),
+  desc: v.string(),
+  refs: v.string(),
+  order: v.number(),
+};
 
 export const getTimeline = query({
-  args: { type: v.union(v.literal("futurist"), v.literal("sda")) },
+  args: { type: v.union(v.literal("futurist"), v.literal("sda"), v.literal("preterist")) },
   handler: async (ctx, args) => {
     return await ctx.db
       .query("timelines")
@@ -15,7 +26,7 @@ export const seedTimelines = internalMutation({
   args: {
     entries: v.array(
       v.object({
-        type: v.union(v.literal("futurist"), v.literal("sda")),
+        type: v.union(v.literal("futurist"), v.literal("sda"), v.literal("preterist")),
         date: v.string(),
         badge: v.union(
           v.literal("fulfilled"),
@@ -49,5 +60,40 @@ export const seedTimelines = internalMutation({
         await ctx.db.insert("timelines", entry);
       }
     }
+  },
+});
+
+export const getAllAdmin = query({
+  handler: async (ctx) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) throw new Error("Unauthenticated");
+    return await ctx.db.query("timelines").collect();
+  },
+});
+
+export const add = mutation({
+  args: timelineFields,
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) throw new Error("Unauthenticated");
+    return await ctx.db.insert("timelines", args);
+  },
+});
+
+export const update = mutation({
+  args: { id: v.id("timelines"), ...timelineFields },
+  handler: async (ctx, { id, ...rest }) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) throw new Error("Unauthenticated");
+    await ctx.db.patch(id, rest);
+  },
+});
+
+export const remove = mutation({
+  args: { id: v.id("timelines") },
+  handler: async (ctx, { id }) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) throw new Error("Unauthenticated");
+    await ctx.db.delete(id);
   },
 });
