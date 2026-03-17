@@ -35,6 +35,13 @@ export const studyCardMeta: Record<string, StudyCardMeta> = {
     shortDescription:
       "Every page of Scripture, from Genesis to Revelation, points to one Person.",
   },
+  "the-sabbath": {
+    emoji: "🕊️",
+    accentColor: "#0a0d0a",
+    isNew: true,
+    shortDescription:
+      "Creation joy, liberation, Greek word studies, and every major objection answered.",
+  },
   "daniel-1": {
     emoji: "🥗",
     accentColor: "#0a0a05",
