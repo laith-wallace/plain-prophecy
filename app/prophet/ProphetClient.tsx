@@ -356,6 +356,10 @@ export interface SwipeCardHandle {
   triggerSwipe: (dir: "left" | "right") => void;
 }
 
+const THRESHOLD_FRAC = 0.28;
+const MAX_ROTATE = 13;    // degrees — hard cap
+const PEAK_FRACTION = 0.2; // tilt peaks at 20% of threshold drag
+
 const SwipeCard = forwardRef<
   SwipeCardHandle,
   {
@@ -392,11 +396,6 @@ const SwipeCard = forwardRef<
       return () => clearTimeout(t);
     }
   }, [isNext]);
-
-  // Physics constants
-  const THRESHOLD_FRAC = 0.28;
-  const MAX_ROTATE = 13;    // degrees — hard cap
-  const PEAK_FRACTION = 0.2; // tilt peaks at 20% of threshold drag
 
   const resetTransform = useCallback(() => {
     const card = cardRef.current;
@@ -471,7 +470,7 @@ const SwipeCard = forwardRef<
       label.textContent = "? Not sure";
       label.style.transform = "rotate(20deg)";
     }
-  }, [THRESHOLD_FRAC, PEAK_FRACTION, MAX_ROTATE]);
+  }, []);
 
   const snapBack = useCallback((releaseDx: number) => {
     const card = cardRef.current;
@@ -511,7 +510,7 @@ const SwipeCard = forwardRef<
         card.getAnimations().forEach((a) => a.cancel());
       }
     }, 640);
-  }, [THRESHOLD_FRAC, MAX_ROTATE]);
+  }, []);
 
   const commitSwipe = useCallback(
     (dir: "left" | "right") => {
@@ -617,7 +616,7 @@ const SwipeCard = forwardRef<
           onReveal();
         }
       }}
-      onClick={(e) => {
+      onClick={() => {
         const totalDrag = Math.abs(drag.current.currentX - drag.current.startX);
         if (totalDrag < 8) onReveal();
       }}

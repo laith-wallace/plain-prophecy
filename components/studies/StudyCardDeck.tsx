@@ -199,7 +199,7 @@ export default function StudyCardDeck({ bookFilter = "all" }: StudyCardDeckProps
 
           return (
             <div
-              key={lessonIndex}
+              key={slot}
               className={`scd-card-wrap ${isActive ? "scd-card-wrap--active" : ""}`}
               style={{
                 transform: `translateX(${totalX}px) rotate(${rotate}deg) scale(${scale})`,
