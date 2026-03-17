@@ -11,9 +11,9 @@ interface PulsarMapProps {
   data: PulsarMapData
 }
 
-const CANVAS_SIZE = 800
-const CENTRE = CANVAS_SIZE / 2       // 400
-const MAX_RADIUS = CANVAS_SIZE * 0.42 // 336px
+const CANVAS_SIZE = 1000
+const CENTRE = CANVAS_SIZE / 2        // 500
+const MAX_RADIUS = CANVAS_SIZE * 0.40  // 400px
 
 function starCoords(angle: number, distance: number) {
   const radians = ((angle - 90) * Math.PI) / 180
@@ -23,38 +23,150 @@ function starCoords(angle: number, distance: number) {
   }
 }
 
-// Static starfield — radial gradient dots to suggest depth
+// ─────────────────────────────────────────────────────────────────────────────
+// Milky Way-style starfield — deep navy base, blue nebula band, dense stars
+// ─────────────────────────────────────────────────────────────────────────────
 function StarfieldBackground() {
-  // A set of fixed "background star" positions for depth effect
-  const staticStars = [
-    { x: 120, y: 80, r: 1 }, { x: 680, y: 100, r: 0.8 }, { x: 200, y: 300, r: 1.2 },
-    { x: 720, y: 250, r: 0.7 }, { x: 60, y: 500, r: 1 }, { x: 750, y: 560, r: 0.9 },
-    { x: 150, y: 680, r: 1.1 }, { x: 640, y: 720, r: 0.8 }, { x: 380, y: 50, r: 0.7 },
-    { x: 420, y: 760, r: 1 }, { x: 50, y: 180, r: 0.8 }, { x: 760, y: 400, r: 0.6 },
-    { x: 280, y: 130, r: 0.9 }, { x: 560, y: 650, r: 1.1 }, { x: 100, y: 620, r: 0.7 },
-    { x: 700, y: 170, r: 1 }, { x: 320, y: 740, r: 0.8 }, { x: 460, y: 90, r: 0.6 },
-    { x: 80, y: 350, r: 1.2 }, { x: 730, y: 680, r: 0.9 }, { x: 190, y: 450, r: 0.7 },
-    { x: 610, y: 120, r: 1 }, { x: 50, y: 720, r: 0.8 }, { x: 760, y: 320, r: 0.6 },
-    { x: 340, y: 30, r: 0.9 }, { x: 500, y: 770, r: 1.1 },
+  // ── Background stars (spread across full canvas) ──
+  // w = white, b = blue-tinted, c = cyan-tinted
+  const bgStars = [
+    // top-left quadrant
+    { x: 42,  y: 58,  r: 0.8, o: 0.5, col: 'w' }, { x: 118, y: 32,  r: 0.6, o: 0.4, col: 'w' },
+    { x: 88,  y: 142, r: 1.0, o: 0.55, col: 'b' }, { x: 195, y: 75,  r: 0.7, o: 0.45, col: 'w' },
+    { x: 155, y: 198, r: 0.5, o: 0.35, col: 'w' }, { x: 62,  y: 268, r: 1.2, o: 0.6, col: 'b' },
+    { x: 228, y: 155, r: 0.6, o: 0.4, col: 'w' },  { x: 310, y: 88,  r: 0.9, o: 0.5, col: 'w' },
+    { x: 278, y: 42,  r: 0.7, o: 0.45, col: 'b' }, { x: 42,  y: 380, r: 0.8, o: 0.4, col: 'w' },
+    { x: 148, y: 320, r: 1.1, o: 0.55, col: 'b' }, { x: 92,  y: 445, r: 0.6, o: 0.35, col: 'w' },
+    { x: 198, y: 412, r: 0.9, o: 0.5, col: 'w' },  { x: 345, y: 165, r: 0.7, o: 0.4, col: 'w' },
+    { x: 388, y: 48,  r: 1.3, o: 0.65, col: 'b' }, { x: 268, y: 288, r: 0.5, o: 0.3, col: 'w' },
+    // top-right quadrant
+    { x: 582, y: 22,  r: 0.8, o: 0.5, col: 'w' },  { x: 648, y: 68,  r: 1.1, o: 0.55, col: 'b' },
+    { x: 718, y: 32,  r: 0.6, o: 0.4, col: 'w' },  { x: 785, y: 78,  r: 0.9, o: 0.5, col: 'w' },
+    { x: 855, y: 38,  r: 1.4, o: 0.65, col: 'b' }, { x: 922, y: 88,  r: 0.7, o: 0.45, col: 'w' },
+    { x: 968, y: 42,  r: 0.5, o: 0.35, col: 'w' }, { x: 935, y: 165, r: 1.0, o: 0.5, col: 'b' },
+    { x: 878, y: 228, r: 0.8, o: 0.45, col: 'w' }, { x: 962, y: 295, r: 0.6, o: 0.35, col: 'w' },
+    { x: 820, y: 168, r: 1.2, o: 0.6, col: 'b' },  { x: 748, y: 138, r: 0.7, o: 0.4, col: 'w' },
+    { x: 688, y: 188, r: 0.9, o: 0.5, col: 'w' },  { x: 558, y: 112, r: 1.5, o: 0.7, col: 'b' },
+    { x: 495, y: 42,  r: 0.6, o: 0.4, col: 'w' },  { x: 468, y: 118, r: 0.8, o: 0.45, col: 'w' },
+    // bottom-left quadrant
+    { x: 55,  y: 628, r: 0.9, o: 0.5, col: 'w' },  { x: 112, y: 692, r: 1.1, o: 0.55, col: 'b' },
+    { x: 48,  y: 758, r: 0.6, o: 0.4, col: 'w' },  { x: 168, y: 748, r: 0.8, o: 0.45, col: 'w' },
+    { x: 88,  y: 842, r: 1.3, o: 0.6, col: 'b' },  { x: 215, y: 812, r: 0.7, o: 0.4, col: 'w' },
+    { x: 148, y: 902, r: 0.5, o: 0.35, col: 'w' }, { x: 58,  y: 928, r: 1.0, o: 0.5, col: 'b' },
+    { x: 248, y: 888, r: 0.8, o: 0.45, col: 'w' }, { x: 322, y: 942, r: 1.2, o: 0.6, col: 'w' },
+    { x: 178, y: 968, r: 0.6, o: 0.35, col: 'b' }, { x: 298, y: 758, r: 0.9, o: 0.5, col: 'w' },
+    { x: 388, y: 828, r: 1.1, o: 0.55, col: 'b' }, { x: 448, y: 908, r: 0.7, o: 0.4, col: 'w' },
+    { x: 338, y: 688, r: 0.8, o: 0.45, col: 'w' }, { x: 128, y: 568, r: 1.4, o: 0.65, col: 'b' },
+    // bottom-right quadrant
+    { x: 618, y: 928, r: 0.9, o: 0.5, col: 'w' },  { x: 698, y: 892, r: 1.1, o: 0.55, col: 'b' },
+    { x: 778, y: 948, r: 0.6, o: 0.4, col: 'w' },  { x: 848, y: 908, r: 0.8, o: 0.45, col: 'w' },
+    { x: 928, y: 868, r: 1.2, o: 0.6, col: 'b' },  { x: 968, y: 788, r: 0.7, o: 0.4, col: 'w' },
+    { x: 942, y: 718, r: 0.5, o: 0.35, col: 'w' }, { x: 878, y: 658, r: 1.0, o: 0.5, col: 'b' },
+    { x: 958, y: 558, r: 0.8, o: 0.45, col: 'w' }, { x: 528, y: 968, r: 0.6, o: 0.35, col: 'w' },
+    { x: 748, y: 832, r: 1.3, o: 0.6, col: 'b' },  { x: 818, y: 768, r: 0.9, o: 0.5, col: 'w' },
+    { x: 558, y: 858, r: 1.1, o: 0.55, col: 'b' }, { x: 468, y: 958, r: 0.7, o: 0.4, col: 'w' },
+    // sparse mid-corner fills (top-right and bottom-left dark zones stay dark)
+    { x: 858, y: 398, r: 0.8, o: 0.4, col: 'w' },  { x: 918, y: 458, r: 0.6, o: 0.3, col: 'w' },
+    { x: 158, y: 548, r: 0.7, o: 0.35, col: 'w' }, { x: 198, y: 628, r: 0.9, o: 0.45, col: 'w' },
   ]
+
+  // ── Nebula band stars — brighter, blue-tinted, denser along the diagonal band
+  // Band sweeps from (80,680)→(920,320) — the bright Milky Way diagonal
+  const bandStars = [
+    // left entry of band
+    { x: 95,  y: 648, r: 1.0, o: 0.65, col: 'b' }, { x: 148, y: 602, r: 1.4, o: 0.7, col: 'c' },
+    { x: 118, y: 688, r: 0.8, o: 0.6, col: 'b' },   { x: 185, y: 638, r: 1.2, o: 0.65, col: 'b' },
+    { x: 162, y: 562, r: 0.9, o: 0.6, col: 'c' },   { x: 228, y: 598, r: 1.5, o: 0.75, col: 'c' },
+    { x: 248, y: 548, r: 1.1, o: 0.65, col: 'b' },  { x: 205, y: 718, r: 0.7, o: 0.55, col: 'b' },
+    { x: 268, y: 668, r: 1.3, o: 0.7, col: 'c' },   { x: 298, y: 618, r: 0.9, o: 0.6, col: 'b' },
+    { x: 315, y: 568, r: 1.6, o: 0.75, col: 'c' },  { x: 338, y: 528, r: 1.0, o: 0.65, col: 'b' },
+    // centre-left of band (brightest zone)
+    { x: 358, y: 608, r: 1.2, o: 0.7, col: 'c' },   { x: 378, y: 558, r: 1.8, o: 0.8, col: 'c' },
+    { x: 398, y: 498, r: 1.0, o: 0.65, col: 'b' },  { x: 418, y: 578, r: 1.4, o: 0.75, col: 'c' },
+    { x: 438, y: 528, r: 1.1, o: 0.7, col: 'b' },   { x: 458, y: 478, r: 0.8, o: 0.6, col: 'b' },
+    { x: 368, y: 658, r: 1.0, o: 0.6, col: 'b' },   { x: 408, y: 618, r: 1.5, o: 0.75, col: 'c' },
+    { x: 448, y: 448, r: 1.3, o: 0.7, col: 'c' },   { x: 388, y: 708, r: 0.7, o: 0.5, col: 'b' },
+    // centre of band (around pulsar — stars here will be behind the core glow)
+    { x: 478, y: 558, r: 0.9, o: 0.55, col: 'b' },  { x: 488, y: 498, r: 1.2, o: 0.65, col: 'c' },
+    { x: 508, y: 448, r: 0.8, o: 0.55, col: 'b' },  { x: 518, y: 548, r: 1.0, o: 0.6, col: 'b' },
+    { x: 538, y: 498, r: 1.4, o: 0.7, col: 'c' },   { x: 558, y: 448, r: 0.9, o: 0.6, col: 'b' },
+    { x: 468, y: 608, r: 0.7, o: 0.5, col: 'b' },   { x: 528, y: 578, r: 1.1, o: 0.65, col: 'c' },
+    // centre-right of band
+    { x: 578, y: 528, r: 1.3, o: 0.7, col: 'c' },   { x: 598, y: 478, r: 0.9, o: 0.6, col: 'b' },
+    { x: 618, y: 428, r: 1.6, o: 0.75, col: 'c' },  { x: 638, y: 498, r: 1.1, o: 0.65, col: 'b' },
+    { x: 658, y: 448, r: 0.8, o: 0.55, col: 'b' },  { x: 678, y: 398, r: 1.4, o: 0.7, col: 'c' },
+    { x: 588, y: 568, r: 0.7, o: 0.5, col: 'b' },   { x: 628, y: 538, r: 1.2, o: 0.65, col: 'c' },
+    { x: 668, y: 508, r: 0.9, o: 0.6, col: 'b' },   { x: 648, y: 358, r: 1.0, o: 0.6, col: 'b' },
+    // right entry of band
+    { x: 698, y: 448, r: 1.1, o: 0.65, col: 'c' },  { x: 718, y: 398, r: 1.5, o: 0.75, col: 'c' },
+    { x: 738, y: 348, r: 0.9, o: 0.6, col: 'b' },   { x: 758, y: 418, r: 1.3, o: 0.7, col: 'c' },
+    { x: 778, y: 368, r: 1.0, o: 0.65, col: 'b' },  { x: 798, y: 318, r: 1.7, o: 0.8, col: 'c' },
+    { x: 818, y: 388, r: 0.8, o: 0.55, col: 'b' },  { x: 838, y: 338, r: 1.2, o: 0.65, col: 'c' },
+    { x: 858, y: 288, r: 0.9, o: 0.6, col: 'b' },   { x: 878, y: 358, r: 1.4, o: 0.7, col: 'c' },
+    { x: 898, y: 308, r: 1.0, o: 0.6, col: 'b' },   { x: 918, y: 358, r: 0.7, o: 0.5, col: 'b' },
+    { x: 708, y: 478, r: 0.8, o: 0.5, col: 'b' },   { x: 748, y: 458, r: 1.1, o: 0.6, col: 'c' },
+  ]
+
+  // ── Bright highlight stars — the shining points in the reference ──
+  const brightStars = [
+    { x: 228, y: 588, r: 2.8, o: 0.95, col: 'c' },
+    { x: 378, y: 528, r: 2.2, o: 0.9, col: 'c' },
+    { x: 548, y: 458, r: 2.5, o: 0.95, col: 'c' },
+    { x: 708, y: 398, r: 2.0, o: 0.85, col: 'c' },
+    { x: 818, y: 328, r: 2.8, o: 0.95, col: 'c' },
+    { x: 148, y: 628, r: 1.8, o: 0.8, col: 'c' },
+    { x: 458, y: 488, r: 1.6, o: 0.75, col: 'c' },
+    { x: 628, y: 428, r: 2.2, o: 0.9, col: 'c' },
+    { x: 938, y: 298, r: 1.5, o: 0.75, col: 'c' },
+    // scattered brights outside the band
+    { x: 388, y: 88,  r: 2.0, o: 0.85, col: 'w' },
+    { x: 848, y: 122, r: 1.8, o: 0.8, col: 'b' },
+    { x: 68,  y: 798, r: 1.8, o: 0.8, col: 'w' },
+    { x: 888, y: 798, r: 2.0, o: 0.85, col: 'b' },
+    { x: 218, y: 878, r: 1.6, o: 0.75, col: 'w' },
+    { x: 778, y: 858, r: 1.8, o: 0.8, col: 'b' },
+  ]
+
+  const colourMap = {
+    w: (o: number) => `rgba(255,255,255,${o})`,
+    b: (o: number) => `rgba(160,200,255,${o})`,
+    c: (o: number) => `rgba(100,220,255,${o})`,
+  }
+
+  const allStars = [...bgStars, ...bandStars]
 
   return (
     <g aria-hidden="true">
-      <rect
-        x={0}
-        y={0}
-        width={CANVAS_SIZE}
-        height={CANVAS_SIZE}
-        fill="radial-gradient(ellipse at center, #0D0D1A 0%, #08080F 100%)"
-      />
-      {staticStars.map((s, i) => (
+      {/* Render all small stars */}
+      {allStars.map((s, i) => (
         <circle
           key={i}
-          cx={s.x}
-          cy={s.y}
-          r={s.r}
-          fill="rgba(255,255,255,0.25)"
+          cx={s.x} cy={s.y} r={s.r}
+          fill={colourMap[s.col as keyof typeof colourMap](s.o)}
         />
+      ))}
+
+      {/* Bright highlight stars with a glow halo */}
+      {brightStars.map((s, i) => (
+        <g key={`bright-${i}`}>
+          {/* Soft glow bloom */}
+          <circle
+            cx={s.x} cy={s.y}
+            r={s.r * 4}
+            fill={colourMap[s.col as keyof typeof colourMap](0.12)}
+          />
+          <circle
+            cx={s.x} cy={s.y}
+            r={s.r * 2.2}
+            fill={colourMap[s.col as keyof typeof colourMap](0.28)}
+          />
+          {/* Hard bright core */}
+          <circle
+            cx={s.x} cy={s.y}
+            r={s.r}
+            fill={colourMap[s.col as keyof typeof colourMap](s.o)}
+          />
+        </g>
       ))}
     </g>
   )
@@ -75,7 +187,6 @@ export default function PulsarMap({ data }: PulsarMapProps) {
     setActiveStarId(null)
   }, [])
 
-  // Close card on Escape key
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setActiveStarId(null)
@@ -85,152 +196,172 @@ export default function PulsarMap({ data }: PulsarMapProps) {
   }, [])
 
   return (
-    <>
+    <div
+      style={{
+        position: 'relative',
+        width: '100%',
+        height: '100%',
+        flex: 1,
+        minHeight: 0,
+      }}
+    >
+      <svg
+        viewBox={`0 0 ${CANVAS_SIZE} ${CANVAS_SIZE}`}
+        preserveAspectRatio="xMidYMid meet"
+        xmlns="http://www.w3.org/2000/svg"
+        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
+        role="img"
+        aria-label="God IS Love constellation map — every study orbiting a central truth"
+      >
+        <defs>
+          {/* ── Deep space base — very dark navy ── */}
+          <radialGradient id="bg-deep" cx="50%" cy="50%" r="70%">
+            <stop offset="0%"   stopColor="#060D1E" />
+            <stop offset="60%"  stopColor="#030810" />
+            <stop offset="100%" stopColor="#010408" />
+          </radialGradient>
+
+          {/*
+           * ── Milky Way nebula band ──
+           * Diagonal sweep from lower-left to upper-right.
+           * Three overlapping gradients to build the luminous band.
+           */}
+
+          {/* Main band — left-centre glow (brightest zone) */}
+          <radialGradient id="band-left" cx="28%" cy="62%" r="38%">
+            <stop offset="0%"   stopColor="rgba(20,80,180,0.30)" />
+            <stop offset="35%"  stopColor="rgba(10,50,130,0.18)" />
+            <stop offset="70%"  stopColor="rgba(5,25,70,0.08)" />
+            <stop offset="100%" stopColor="rgba(0,0,0,0)" />
+          </radialGradient>
+
+          {/* Main band — centre glow */}
+          <radialGradient id="band-centre" cx="52%" cy="50%" r="35%">
+            <stop offset="0%"   stopColor="rgba(15,70,170,0.28)" />
+            <stop offset="40%"  stopColor="rgba(8,45,120,0.16)" />
+            <stop offset="75%"  stopColor="rgba(4,20,60,0.07)" />
+            <stop offset="100%" stopColor="rgba(0,0,0,0)" />
+          </radialGradient>
+
+          {/* Main band — right glow */}
+          <radialGradient id="band-right" cx="76%" cy="38%" r="34%">
+            <stop offset="0%"   stopColor="rgba(18,75,175,0.26)" />
+            <stop offset="40%"  stopColor="rgba(10,48,125,0.15)" />
+            <stop offset="75%"  stopColor="rgba(5,22,65,0.07)" />
+            <stop offset="100%" stopColor="rgba(0,0,0,0)" />
+          </radialGradient>
+
+          {/* Cyan hot-spot 1 — left cluster */}
+          <radialGradient id="hot1" cx="24%" cy="60%" r="16%">
+            <stop offset="0%"   stopColor="rgba(0,160,240,0.28)" />
+            <stop offset="40%"  stopColor="rgba(0,100,180,0.14)" />
+            <stop offset="100%" stopColor="rgba(0,0,0,0)" />
+          </radialGradient>
+
+          {/* Cyan hot-spot 2 — centre-right cluster */}
+          <radialGradient id="hot2" cx="68%" cy="42%" r="14%">
+            <stop offset="0%"   stopColor="rgba(0,180,255,0.26)" />
+            <stop offset="40%"  stopColor="rgba(0,110,190,0.12)" />
+            <stop offset="100%" stopColor="rgba(0,0,0,0)" />
+          </radialGradient>
+
+          {/* Cyan hot-spot 3 — far-right cluster (faint) */}
+          <radialGradient id="hot3" cx="88%" cy="30%" r="12%">
+            <stop offset="0%"   stopColor="rgba(0,150,220,0.20)" />
+            <stop offset="50%"  stopColor="rgba(0,90,160,0.09)" />
+            <stop offset="100%" stopColor="rgba(0,0,0,0)" />
+          </radialGradient>
+
+          {/* Pulsar gold glow — keeps the gold accent at the centre */}
+          <radialGradient id="pulsar-gold-glow" cx="50%" cy="50%" r="22%">
+            <stop offset="0%"   stopColor="rgba(201,168,76,0.20)" />
+            <stop offset="35%"  stopColor="rgba(160,110,30,0.10)" />
+            <stop offset="70%"  stopColor="rgba(80,55,15,0.04)" />
+            <stop offset="100%" stopColor="rgba(0,0,0,0)" />
+          </radialGradient>
+        </defs>
+
+        {/* ── 1. Base deep-space background ── */}
+        <rect x={0} y={0} width={CANVAS_SIZE} height={CANVAS_SIZE} fill="url(#bg-deep)" />
+
+        {/* ── 2. Milky Way nebula band ── */}
+        <rect x={0} y={0} width={CANVAS_SIZE} height={CANVAS_SIZE} fill="url(#band-left)" />
+        <rect x={0} y={0} width={CANVAS_SIZE} height={CANVAS_SIZE} fill="url(#band-centre)" />
+        <rect x={0} y={0} width={CANVAS_SIZE} height={CANVAS_SIZE} fill="url(#band-right)" />
+
+        {/* ── 3. Cyan hot spots (bright star clusters) ── */}
+        <rect x={0} y={0} width={CANVAS_SIZE} height={CANVAS_SIZE} fill="url(#hot1)" />
+        <rect x={0} y={0} width={CANVAS_SIZE} height={CANVAS_SIZE} fill="url(#hot2)" />
+        <rect x={0} y={0} width={CANVAS_SIZE} height={CANVAS_SIZE} fill="url(#hot3)" />
+
+        {/* ── 4. Dense starfield ── */}
+        <StarfieldBackground />
+
+        {/* ── 5. Pulsar gold warmth (over the cold blue nebula) ── */}
+        <rect x={0} y={0} width={CANVAS_SIZE} height={CANVAS_SIZE} fill="url(#pulsar-gold-glow)" />
+
+        {/* ── 6. Constellation lines ── */}
+        {data.stars.map(star => {
+          const { x, y } = starCoords(star.angle, star.distance)
+          return (
+            <ConstellationLine
+              key={star.id}
+              x1={CENTRE} y1={CENTRE}
+              x2={x} y2={y}
+              active={activeStarId === star.id}
+              category={star.category}
+            />
+          )
+        })}
+
+        {/* ── 7. Study star nodes ── */}
+        {data.stars.map(star => {
+          const { x, y } = starCoords(star.angle, star.distance)
+          return (
+            <ConstellationStar
+              key={star.id}
+              star={star}
+              cx={x} cy={y}
+              isActive={activeStarId === star.id}
+              onClick={() => handleStarClick(star.id)}
+            />
+          )
+        })}
+
+        {/* ── 8. Pulsar core — always on top ── */}
+        <PulsarCore cx={CENTRE} cy={CENTRE} />
+      </svg>
+
+      {/* Star card — outside SVG */}
+      {activeStar && (
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            zIndex: 50,
+            padding: '0 16px 24px',
+          }}
+          className="star-card-wrap"
+        >
+          <StarCard star={activeStar} onClose={handleClose} />
+        </div>
+      )}
+
       <style>{`
-        .pulsar-map-wrap {
-          position: relative;
-          width: 100%;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 0;
-        }
-
-        .pulsar-canvas-container {
-          width: 100%;
-          max-width: min(100vw, 480px);
-        }
-
-        .pulsar-canvas {
-          display: block;
-          width: 100%;
-          aspect-ratio: 1;
-        }
-
-        /* Star card — mobile: fixed bottom sheet */
-        .star-card-wrap {
-          position: fixed;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          z-index: 50;
-          padding: 0 16px 24px;
-          max-height: 85vh;
-          overflow-y: auto;
-        }
-
-        /* Desktop: side-by-side layout */
         @media (min-width: 768px) {
-          .pulsar-map-wrap {
-            flex-direction: row;
-            align-items: flex-start;
-            justify-content: center;
-            gap: 32px;
-          }
-
-          .pulsar-canvas-container {
-            flex: 0 0 60%;
-            max-width: 60%;
-          }
-
           .star-card-wrap {
-            position: sticky;
-            top: 80px;
-            bottom: auto;
-            left: auto;
-            right: auto;
-            flex: 0 0 38%;
-            max-width: 38%;
-            padding: 0;
-            max-height: calc(100vh - 120px);
-            overflow-y: auto;
-            z-index: 1;
-          }
-        }
-
-        @media (min-width: 1280px) {
-          .pulsar-canvas-container {
-            max-width: 560px;
-          }
-
-          .star-card-wrap {
-            max-width: 380px;
+            top: 50% !important;
+            bottom: auto !important;
+            left: auto !important;
+            right: 24px !important;
+            transform: translateY(-50%);
+            width: 360px;
+            padding: 0 !important;
           }
         }
       `}</style>
-
-      <div className="pulsar-map-wrap">
-        {/* SVG canvas */}
-        <div className="pulsar-canvas-container">
-          <svg
-            className="pulsar-canvas"
-            viewBox={`0 0 ${CANVAS_SIZE} ${CANVAS_SIZE}`}
-            xmlns="http://www.w3.org/2000/svg"
-            role="img"
-            aria-label="God IS Love constellation map — every study orbiting a central truth"
-          >
-            <defs>
-              <radialGradient id="bg-gradient" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="#0D0D1A" />
-                <stop offset="100%" stopColor="#08080F" />
-              </radialGradient>
-            </defs>
-
-            {/* Background */}
-            <rect
-              x={0}
-              y={0}
-              width={CANVAS_SIZE}
-              height={CANVAS_SIZE}
-              fill="url(#bg-gradient)"
-            />
-
-            {/* Static starfield */}
-            <StarfieldBackground />
-
-            {/* Constellation lines — behind stars */}
-            {data.stars.map(star => {
-              const { x, y } = starCoords(star.angle, star.distance)
-              return (
-                <ConstellationLine
-                  key={star.id}
-                  x1={CENTRE}
-                  y1={CENTRE}
-                  x2={x}
-                  y2={y}
-                  active={activeStarId === star.id}
-                  category={star.category}
-                />
-              )
-            })}
-
-            {/* Star nodes — on top of lines */}
-            {data.stars.map(star => {
-              const { x, y } = starCoords(star.angle, star.distance)
-              return (
-                <ConstellationStar
-                  key={star.id}
-                  star={star}
-                  cx={x}
-                  cy={y}
-                  isActive={activeStarId === star.id}
-                  onClick={() => handleStarClick(star.id)}
-                />
-              )
-            })}
-
-            {/* Pulsar core — always on top */}
-            <PulsarCore cx={CENTRE} cy={CENTRE} />
-          </svg>
-        </div>
-
-        {/* Star card — outside SVG */}
-        {activeStar && (
-          <div className="star-card-wrap">
-            <StarCard star={activeStar} onClose={handleClose} />
-          </div>
-        )}
-      </div>
-    </>
+    </div>
   )
 }

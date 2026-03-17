@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import PulsarMap from '@/components/studies/PulsarMap'
 import { pulsarMapData } from '@/data/pulsar-map'
 
@@ -8,55 +9,95 @@ export const metadata: Metadata = {
 }
 
 const CATEGORY_LEGEND = [
-  { label: 'The Gospel', colour: '#C9A84C', bg: 'rgba(201,168,76,0.15)' },
-  { label: 'Prophecy',   colour: '#7A9ABB', bg: 'rgba(90,130,170,0.15)' },
-  { label: 'Doctrine',   colour: '#B8906A', bg: 'rgba(180,140,100,0.15)' },
+  { label: 'The Gospel', colour: '#C9A84C', bg: 'rgba(201,168,76,0.12)' },
+  { label: 'Prophecy',   colour: '#7A9ABB', bg: 'rgba(90,130,170,0.12)' },
+  { label: 'Doctrine',   colour: '#B8906A', bg: 'rgba(180,140,100,0.12)' },
 ]
 
 export default function PulsarMapPage() {
   return (
-    <main
+    /*
+     * Fullscreen container — 100dvh so it fills the true viewport on mobile
+     * (avoids browser chrome overlap). Overflow hidden keeps it contained.
+     */
+    <div
       style={{
-        minHeight: '100vh',
-        background: '#08080F',
-        color: '#FFFFFF',
-        paddingBottom: 64,
+        position: 'fixed',
+        inset: 0,
+        background: '#010408',
+        overflow: 'hidden',
+        display: 'flex',
+        flexDirection: 'column',
       }}
     >
-      {/* Page header */}
+      {/* ── Top bar: back link + page title ── */}
       <header
         style={{
-          textAlign: 'center',
-          padding: '64px 24px 48px',
-          position: 'relative',
-          zIndex: 10,
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 20,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          padding: '28px 24px 0',
+          pointerEvents: 'none',
         }}
       >
+        {/* Back link — re-enables pointer events */}
+        <div
+          style={{
+            alignSelf: 'flex-start',
+            pointerEvents: 'auto',
+            marginBottom: 8,
+          }}
+        >
+          <Link
+            href="/studies"
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: 11,
+              fontWeight: 600,
+              letterSpacing: '0.14em',
+              textTransform: 'uppercase',
+              color: 'rgba(201,168,76,0.6)',
+              textDecoration: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 6,
+            }}
+          >
+            ← Studies
+          </Link>
+        </div>
+
         {/* Eyebrow */}
         <p
           style={{
             fontFamily: "'Inter', sans-serif",
-            fontSize: 11,
+            fontSize: 10,
             fontWeight: 600,
-            letterSpacing: '0.18em',
+            letterSpacing: '0.22em',
             textTransform: 'uppercase',
-            color: 'rgba(201,168,76,0.7)',
-            marginBottom: 16,
+            color: 'rgba(201,168,76,0.5)',
+            margin: '0 0 10px',
           }}
         >
           Plain Prophecy · The Map
         </p>
 
-        {/* H1 */}
+        {/* Main heading */}
         <h1
           style={{
             fontFamily: "'Cinzel', serif",
-            fontSize: 'clamp(28px, 5vw, 52px)',
+            fontSize: 'clamp(22px, 3.5vw, 44px)',
             fontWeight: 700,
             color: '#FFFFFF',
             lineHeight: 1.15,
-            margin: '0 auto 16px',
-            maxWidth: 640,
+            margin: '0 0 10px',
+            textAlign: 'center',
+            textShadow: '0 0 40px rgba(201,168,76,0.25)',
           }}
         >
           He{' '}
@@ -68,112 +109,109 @@ export default function PulsarMapPage() {
         <p
           style={{
             fontFamily: "'Inter', sans-serif",
-            fontSize: 'clamp(15px, 2vw, 18px)',
-            color: 'rgba(255,255,255,0.55)',
-            maxWidth: 480,
-            margin: '0 auto 32px',
-            lineHeight: 1.6,
+            fontSize: 'clamp(13px, 1.4vw, 16px)',
+            color: 'rgba(255,255,255,0.45)',
+            margin: 0,
+            textAlign: 'center',
           }}
         >
           Every doctrine, every prophecy, every study — all orbiting one truth.
         </p>
+      </header>
 
-        {/* Scripture pull quote */}
-        <blockquote
+      {/* ── Map fills the rest ── */}
+      <PulsarMap data={pulsarMapData} />
+
+      {/* ── Bottom overlay: scripture + legend ── */}
+      <footer
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          zIndex: 10,
+          padding: '0 24px 20px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: 12,
+          pointerEvents: 'none',
+        }}
+      >
+        {/* Psalm quote */}
+        <p
           style={{
-            maxWidth: 420,
-            margin: '0 auto',
-            padding: '16px 20px',
-            borderLeft: '3px solid rgba(201,168,76,0.4)',
-            background: 'rgba(201,168,76,0.05)',
-            borderRadius: '0 10px 10px 0',
-            textAlign: 'left',
+            fontFamily: "'Cinzel', serif",
+            fontSize: 'clamp(10px, 1.2vw, 12px)',
+            fontStyle: 'italic',
+            color: 'rgba(255,255,255,0.28)',
+            margin: 0,
+            textAlign: 'center',
+            letterSpacing: '0.04em',
           }}
         >
-          <p
+          &ldquo;He determines the number of the stars and calls them each by name.&rdquo;
+          <span
             style={{
-              fontFamily: "'Cinzel', serif",
-              fontSize: 14,
-              fontStyle: 'italic',
-              color: 'rgba(255,255,255,0.75)',
-              margin: '0 0 8px 0',
-              lineHeight: 1.65,
-            }}
-          >
-            &ldquo;He determines the number of the stars and calls them each by name.&rdquo;
-          </p>
-          <cite
-            style={{
-              fontFamily: "'Inter', sans-serif",
-              fontSize: 11,
-              color: '#C9A84C',
+              display: 'inline-block',
+              marginLeft: 8,
+              color: 'rgba(201,168,76,0.5)',
               fontStyle: 'normal',
-              letterSpacing: '0.06em',
+              fontSize: '0.85em',
             }}
           >
             Psalm 147:4
-          </cite>
-        </blockquote>
-      </header>
+          </span>
+        </p>
 
-      {/* Map — padded container */}
-      <div
-        style={{
-          maxWidth: 1200,
-          margin: '0 auto',
-          padding: '0 16px',
-        }}
-      >
-        <PulsarMap data={pulsarMapData} />
-      </div>
-
-      {/* Legend footer */}
-      <footer
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          gap: 12,
-          flexWrap: 'wrap',
-          padding: '40px 24px 0',
-        }}
-        aria-label="Map legend"
-      >
-        {CATEGORY_LEGEND.map(cat => (
-          <div
-            key={cat.label}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-              background: cat.bg,
-              border: `1px solid ${cat.colour}33`,
-              borderRadius: 20,
-              padding: '6px 14px',
-            }}
-          >
-            <span
+        {/* Legend pills */}
+        <div
+          style={{
+            display: 'flex',
+            gap: 8,
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            pointerEvents: 'auto',
+          }}
+          aria-label="Map legend"
+        >
+          {CATEGORY_LEGEND.map(cat => (
+            <div
+              key={cat.label}
               style={{
-                display: 'inline-block',
-                width: 8,
-                height: 8,
-                borderRadius: '50%',
-                background: cat.colour,
-              }}
-            />
-            <span
-              style={{
-                fontFamily: "'Inter', sans-serif",
-                fontSize: 12,
-                fontWeight: 600,
-                color: cat.colour,
-                letterSpacing: '0.04em',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+                background: cat.bg,
+                border: `1px solid ${cat.colour}30`,
+                borderRadius: 20,
+                padding: '4px 12px',
               }}
             >
-              {cat.label}
-            </span>
-          </div>
-        ))}
+              <span
+                style={{
+                  display: 'inline-block',
+                  width: 7,
+                  height: 7,
+                  borderRadius: '50%',
+                  background: cat.colour,
+                }}
+              />
+              <span
+                style={{
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: 11,
+                  fontWeight: 600,
+                  color: cat.colour,
+                  letterSpacing: '0.04em',
+                }}
+              >
+                {cat.label}
+              </span>
+            </div>
+          ))}
+        </div>
       </footer>
-    </main>
+    </div>
   )
 }

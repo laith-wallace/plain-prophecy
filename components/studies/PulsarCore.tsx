@@ -5,23 +5,27 @@ interface PulsarCoreProps {
   cy: number
 }
 
-const TOKENS = {
-  gold: '#C9A84C',
-  textMuted: 'rgba(255,255,255,0.55)',
-  pulsarCore: '#FFFFFF',
-  pulsarRing1: 'rgba(255,255,255,0.35)',
-  pulsarRing2: 'rgba(240,208,128,0.18)',
-  pulsarRing3: 'rgba(201,168,76,0.08)',
-}
+const GOLD = '#C9A84C'
+const GOLD_LIGHT = '#F0D080'
 
 export default function PulsarCore({ cx, cy }: PulsarCoreProps) {
   return (
     <g className="pulsar-core-group">
+      <defs>
+        {/* Core radial glow */}
+        <radialGradient id="core-glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"  stopColor="#FFFFFF" stopOpacity={1} />
+          <stop offset="30%" stopColor={GOLD_LIGHT} stopOpacity={0.8} />
+          <stop offset="70%" stopColor={GOLD} stopOpacity={0.3} />
+          <stop offset="100%" stopColor={GOLD} stopOpacity={0} />
+        </radialGradient>
+      </defs>
+
       <style>{`
         @media (prefers-reduced-motion: no-preference) {
           @keyframes pulsar-ring {
-            0%   { transform: scale(0.5); opacity: 0.8; }
-            100% { transform: scale(1.8); opacity: 0; }
+            0%   { transform: scale(0.5); opacity: 0.9; }
+            100% { transform: scale(2.2); opacity: 0;   }
           }
           .pulsar-ring-1 {
             transform-origin: ${cx}px ${cy}px;
@@ -41,60 +45,89 @@ export default function PulsarCore({ cx, cy }: PulsarCoreProps) {
         }
       `}</style>
 
-      {/* Pulsing rings — rendered behind the core */}
+      {/* Outer corona glow — very wide, very faint */}
+      <circle
+        cx={cx}
+        cy={cy}
+        r={140}
+        fill="rgba(201,168,76,0.04)"
+      />
+      <circle
+        cx={cx}
+        cy={cy}
+        r={100}
+        fill="rgba(240,208,128,0.06)"
+      />
+      <circle
+        cx={cx}
+        cy={cy}
+        r={70}
+        fill="rgba(255,230,150,0.09)"
+      />
+
+      {/* Animated rings */}
       <circle
         className="pulsar-ring-3"
         cx={cx}
         cy={cy}
-        r={90}
+        r={110}
         fill="none"
-        stroke={TOKENS.pulsarRing3}
-        strokeWidth={1}
+        stroke="rgba(201,168,76,0.10)"
+        strokeWidth={1.5}
       />
       <circle
         className="pulsar-ring-2"
         cx={cx}
         cy={cy}
-        r={60}
+        r={75}
         fill="none"
-        stroke={TOKENS.pulsarRing2}
-        strokeWidth={1}
+        stroke="rgba(240,208,128,0.22)"
+        strokeWidth={1.5}
       />
       <circle
         className="pulsar-ring-1"
         cx={cx}
         cy={cy}
-        r={36}
+        r={44}
         fill="none"
-        stroke={TOKENS.pulsarRing1}
-        strokeWidth={1}
+        stroke="rgba(255,255,255,0.45)"
+        strokeWidth={2}
       />
 
-      {/* Core glow */}
+      {/* Inner warm haze */}
       <circle
         cx={cx}
         cy={cy}
-        r={24}
-        fill="rgba(201,168,76,0.08)"
+        r={36}
+        fill="rgba(255,220,120,0.14)"
       />
 
-      {/* Core circle */}
+      {/* Core glow circle — gradient */}
       <circle
         cx={cx}
         cy={cy}
-        r={18}
-        fill={TOKENS.pulsarCore}
+        r={28}
+        fill="url(#core-glow)"
+      />
+
+      {/* Hard white core */}
+      <circle
+        cx={cx}
+        cy={cy}
+        r={14}
+        fill="#FFFFFF"
       />
 
       {/* "God IS Love" label */}
       <text
         x={cx}
-        y={cy + 32 + 13}
+        y={cy + 48}
         textAnchor="middle"
         fontFamily="'Cinzel', serif"
-        fontSize={13}
-        fill={TOKENS.gold}
-        letterSpacing="0.05em"
+        fontSize={14}
+        fontWeight={700}
+        fill={GOLD}
+        letterSpacing="0.08em"
       >
         God IS Love
       </text>
@@ -102,11 +135,12 @@ export default function PulsarCore({ cx, cy }: PulsarCoreProps) {
       {/* Scripture reference */}
       <text
         x={cx}
-        y={cy + 32 + 13 + 14}
+        y={cy + 64}
         textAnchor="middle"
         fontFamily="'Inter', sans-serif"
         fontSize={10}
-        fill={TOKENS.textMuted}
+        fill="rgba(255,255,255,0.45)"
+        letterSpacing="0.04em"
       >
         1 John 4:8
       </text>
