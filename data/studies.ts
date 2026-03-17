@@ -1041,6 +1041,415 @@ export const studyBooks: StudyBook[] = [
         ],
         christCentre:
           "Revelation 19:10 says 'the testimony of Jesus is the spirit of prophecy.' This means prophecy — all of it — exists to give testimony about Jesus. If you are studying prophecy and not finding Jesus, you have not yet found the point. He is the Lamb slain (Revelation 5:6), the High Priest interceding (Hebrews 7:25), the King who is coming (Revelation 19:11–16), the Judge whose verdict is grace (Daniel 7:22), and the New Creation's light (Revelation 21:23). Every study on Plain Prophecy is built on this conviction: prophecy stripped of Christ is not prophecy at all. It is map-reading with no destination.",
+        nextLesson: {
+          book: "gospel",
+          lesson: "the-sabbath",
+          title: "The Sabbath",
+        },
+      },
+      {
+        slug: "the-sabbath",
+        title: "The Sabbath",
+        scriptureRef: "Genesis 2:1–3; Mark 2:27–28",
+        readingTime: 18,
+        keyVerse:
+          "The Sabbath was made for man, not man for the Sabbath. So the Son of Man is lord even of the Sabbath.",
+        keyVerseRef: "Mark 2:27–28",
+        intro:
+          "Most debates about the Sabbath start in the wrong place — with rules, with which day, with what you can and can't do. Start here instead: what kind of God carves a day out of time and gives it to the people He loves?",
+        sections: [
+          {
+            heading: "The Sabbath Was Born From Joy, Not Law",
+            contentBlocks: [
+              {
+                label: "Genesis 2:1–3 (ESV)",
+                text: "\"Thus the heavens and the earth were finished, and all the host of them. And on the seventh day God finished his work that he had done, and he rested on the seventh day from all his work that he had done. So God blessed the seventh day and made it holy, because on it God rested from all his work that he had done in creation.\"",
+              },
+              {
+                label: "שָׁבַת shavat",
+                text: "To cease — rest from completion, not exhaustion. Gen. 2:2 — God is not tired; He is finished and satisfied. This is the rest of an artist stepping back from a masterpiece.",
+              },
+              {
+                label: "קָדַשׁ qadash",
+                text: "To sanctify — to set apart as holy. Gen. 2:3 — the only element of the creation week declared holy before the fall. Holiness precedes sin, not as a remedy for it but as an original design.",
+              },
+              {
+                label: "",
+                text: "Creation follows a pattern: God forms a space, then fills it. Sky, then birds. Sea, then fish. Land, then animals. But the seventh day breaks the pattern. God creates a space that is not material — not sky, sea, or soil — and fills it not with objects but with Himself. His presence is what the Sabbath is made of.",
+              },
+              {
+                label: "",
+                text: "Notice what this means for human beings. Adam and Eve were created on the sixth day. Their first full day of existence — before they had done a single hour of work, before they had contributed anything to creation — was the Sabbath. They rested before they worked. They received before they gave. They were loved before they could produce anything.",
+              },
+              {
+                label: "The Theology Built Into the Sequence",
+                text: "The Sabbath inscribes into the fabric of human existence the truth that the gospel would later make explicit: we are creatures of grace before we are creatures of effort. 'We love because he first loved us' (1 John 4:19). The Sabbath is not the reward after a week of good work. It is the starting point — the weekly reset back to our foundational identity as loved, not earners.",
+              },
+            ],
+          },
+          {
+            heading: "Two Foundations: Creation and Liberation",
+            contentBlocks: [
+              {
+                label: "",
+                text: "The fourth commandment appears twice in Scripture. Most people know one version. Fewer notice that the second gives a completely different reason — and the difference is not a contradiction. It is a revelation.",
+              },
+              {
+                label: "Exodus 20:8–11 — Creation Foundation",
+                text: "\"Remember the Sabbath day, to keep it holy.\" You rest because God rested — creation is the precedent. Grounded in God as Creator. Identity: you are a creature made in love.",
+              },
+              {
+                label: "Deuteronomy 5:12–15 — Liberation Foundation",
+                text: "\"Observe the Sabbath day, to keep it holy. You shall remember that you were a slave in Egypt, and the Lord your God brought you out from there with a mighty hand.\" You rest because you were once a slave who could never rest — liberation is the precedent. Grounded in God as Liberator. Identity: you are a freed person, not a slave.",
+              },
+              {
+                label: "זָכַר zakar",
+                text: "To remember — active, embodied re-enactment. Deut. 5:15 — not nostalgic recall but living memory. The Sabbath is a weekly act of re-living liberation.",
+              },
+              {
+                label: "",
+                text: "The Exodus story is about physical slavery in Egypt. But the New Testament reframes the pattern: 'Everyone who commits sin is a slave to sin' (John 8:34). The anxiety of proving your worth, the pressure to perform for acceptance, the exhaustion of producing your own security — this is bondage. The Sabbath is God interrupting that system every seven days with the same message He delivered at the Red Sea: you are already free. Stop. Receive. Rest.",
+              },
+              {
+                label: "The Sabbath as Social Justice",
+                text: "Deuteronomy 5:14 names who must rest: 'your male servant and your female servant... that your male servant and your female servant may rest as well as you.' In the ancient world, slaves worked every day with no respite. God's command that servants rest on the Sabbath was one of the earliest pieces of labour law in human history — a built-in economic equaliser. On the Sabbath, the landowner and the servant stopped together. The Sabbath was countercultural from the moment it was given.",
+              },
+            ],
+          },
+          {
+            heading: "Two Different Laws — A Framework You Need",
+            contentBlocks: [
+              {
+                label: "",
+                text: "Before we go any further, we need to establish a distinction that will answer half the objections people raise about the Sabbath. The Bible describes two separate law systems in ancient Israel — and confusing them is the source of most of the confusion about the Sabbath.",
+              },
+              {
+                label: "The Moral Law — Ten Commandments",
+                text: "Written by the finger of God in stone (Ex. 31:18; Deut. 9:10). Placed inside the ark of the covenant (Deut. 10:5). Reflects God's eternal, unchanging character. Pre-dates Sinai: the Sabbath from creation (Gen. 2:3), murder wrong before Sinai (Gen. 4:10). Governs the Creator-creature relationship universally. Not abolished at the cross — no text says it was. Jesus: 'Do not think I came to abolish the Law' (Matt. 5:17).",
+              },
+              {
+                label: "The Ceremonial Law — Laws of Moses",
+                text: "Written by Moses in a book (Deut. 31:24; 2 Chron. 35:12). Placed beside the ark — outside it (Deut. 31:26). Pointed forward to Christ's sacrifice — types and shadows. Given at Sinai specifically for Israel's ceremonial life. Regulated priesthood, sacrifices, feasts, and cleansing rites. Fulfilled and completed at the cross: Col. 2:14 — 'nailing it to the cross.' Paul: 'the law of commandments expressed in ordinances' abolished (Eph. 2:15).",
+              },
+              {
+                label: "Why This Matters",
+                text: "When Paul writes about the law being abolished, nailed to the cross, or done away with (Col. 2:14; Eph. 2:15), he is speaking about the ceremonial law — the handwritten ordinances, the sacrificial system, the annual festivals. He is not touching the Ten Commandments, written in stone by God's own finger and placed inside the ark. Every argument that uses 'Paul said the law is abolished' to remove the Sabbath must also remove 'do not murder', 'do not commit adultery', and 'honour your father and mother.' Nobody is prepared to do that — because the argument doesn't hold.",
+              },
+            ],
+          },
+          {
+            heading: "Jesus and the Sabbath: The Lord Who Kept It",
+            contentBlocks: [
+              {
+                label: "",
+                text: "Jesus is the Christian's ultimate example. Whatever He did, we are called to imitate — 'Whoever says he abides in him ought to walk in the same way in which he walked' (1 John 2:6). Jesus was a Sabbath keeper. Every week. Without exception.",
+              },
+              {
+                label: "Luke 4:16 (ESV) — His Custom",
+                text: "\"And he came to Nazareth, where he had been brought up. And as was his custom, he went to the synagogue on the Sabbath day, and he stood up to read.\"",
+              },
+              {
+                label: "εἴωθεν eiōthen",
+                text: "His custom — an ingrained, habitual practice. Luke 4:16 — the same word used of Paul's Sabbath practice in Acts 17:2. Not occasional compliance but a defining rhythm of life.",
+              },
+              {
+                label: "Matthew 5:17–19 (ESV) — He Did Not Abolish the Law",
+                text: "\"Do not think that I have come to abolish the Law or the Prophets; I have not come to abolish them but to fulfil them. For truly, I say to you, until heaven and earth pass away, not an iota, not a dot, will pass from the Law until all is accomplished. Therefore whoever relaxes one of the least of these commandments and teaches others to do the same will be called least in the kingdom of heaven.\"",
+              },
+              {
+                label: "πληρόω plēroō",
+                text: "To fulfil — to bring to full expression, complete. Matt. 5:17 — fulfil does not mean terminate. You fulfil a promise by keeping it, not by cancelling it. Jesus fulfilled the law by living it perfectly and embodying its deepest meaning.",
+              },
+              {
+                label: "The 'Fulfil = Abolish' Error",
+                text: "The most common misreading of Matthew 5:17 is to treat 'fulfil' as a synonym for 'terminate.' But this is linguistically unsupportable. Plēroō means to fill to the full — to bring something to its complete expression. When a prophecy is 'fulfilled', it is not cancelled; it is confirmed. Jesus fulfilled the moral law by living it perfectly (John 15:10 — 'I have kept my Father's commandments'). This does not end the law — it demonstrates what the law always meant when lived from the inside out.",
+              },
+              {
+                label: "Mark 2:27–28 (ESV) — Lord of the Sabbath",
+                text: "\"The Sabbath was made for man, not man for the Sabbath. So the Son of Man is lord even of the Sabbath.\" Jesus responds to the Pharisees' legalistic perversion with two statements. First: the Sabbath is a gift, not a punishment — it was made for humanity. Second: He is its Lord. This is a claim of ownership and authority, not abolition.",
+              },
+              {
+                label: "John 15:10 (ESV) — All His Father's Commandments",
+                text: "\"If you keep my commandments, you will abide in my love, just as I have kept my Father's commandments and abide in his love.\" Jesus kept His Father's commandments. The fourth commandment is the Father's commandment. The Pharisees' charges of Sabbath-breaking were false — He broke their traditions, not the commandment.",
+              },
+              {
+                label: "Sabbath Healing: Man with a withered hand (Matt. 12:9–13)",
+                text: "It is lawful to do good on the Sabbath — the day is for restoration.",
+              },
+              {
+                label: "Sabbath Healing: Bent-over woman (Luke 13:10–17)",
+                text: "Sabbath is liberation — Jesus calls her 'a daughter of Abraham bound by Satan.'",
+              },
+              {
+                label: "Sabbath Healing: Man at Bethesda (John 5:1–9)",
+                text: "The Creator gives life on His own day — Sabbath and creation power are linked.",
+              },
+              {
+                label: "Sabbath Healing: Man born blind (John 9:1–7)",
+                text: "Jesus forms clay to heal — an echo of Genesis 2:7; creation and re-creation converge on the Sabbath.",
+              },
+              {
+                label: "Sabbath Healing: Man with dropsy (Luke 14:1–6)",
+                text: "Mercy is always appropriate on the Sabbath — Jesus challenges their logic with an ox in a pit.",
+              },
+              {
+                label: "Luke 23:54–56 (ESV) — Rested in the Tomb",
+                text: "\"It was the day of Preparation, and the Sabbath was beginning... On the Sabbath they rested according to the commandment.\" After the cross — the most devastating event in cosmic history — the disciples kept the Sabbath. And Jesus Himself lay in the tomb through those sacred hours. Both great works — creation and redemption — were sealed with Sabbath rest.",
+              },
+            ],
+            christCentre:
+              "Jesus did not teach about the Sabbath from a distance. He inhabited it every week of His life. He restored its meaning by healing on it, teaching on it, and resting in it after Calvary. He is its Lord because He is its Maker — 'all things were made through him, and without him was not any thing made that was made' (John 1:3). Every Sabbath we keep is a declaration that our Creator is also our Redeemer, and that His finished work is enough.",
+          },
+          {
+            heading: "Hebrews 4:9 — The Most Overlooked Proof Text",
+            contentBlocks: [
+              {
+                label: "",
+                text: "There is a verse in the New Testament — written after the resurrection, to a Christian audience — that makes the continuing obligation of the Sabbath as explicit as language allows. It is quoted less often than it deserves to be.",
+              },
+              {
+                label: "Hebrews 4:9 (NASB)",
+                text: "\"There remains therefore a sabbatismos for the people of God.\"",
+              },
+              {
+                label: "σαββατισμός sabbatismos",
+                text: "Sabbath observance — Sabbath-keeping. Heb. 4:9 — appears nowhere else in the entire New Testament. This is not the generic Greek word for rest (anapausis or katapausis). The author chose a word that can only mean: the keeping of the Sabbath. In every known occurrence in early Christian and Jewish literature (Plutarch, Justin Martyr, Epiphanius, Martyrdom of Peter and Paul) it means the observance of the Sabbath day itself.",
+              },
+              {
+                label: "",
+                text: "The word 'remains' (Greek: apoleipetai) is equally significant. It means something that continues to be in force — something left over, not yet completed. The writer is not pointing backward to a shadow that has passed. He is pointing forward to an ongoing reality for Christians: Sabbath observance remains for the people of God.",
+              },
+              {
+                label: "What Hebrews 4 Is Actually Arguing",
+                text: "The full context of Hebrews 3–4 is an argument that the Israelites who entered Canaan under Joshua did not enter the full rest God intended — they received the land, but they failed in the spiritual rest of trusting God completely. The writer then says: that rest still remains, and the Sabbath is its ongoing sign and weekly rehearsal. Far from abolishing the Sabbath, Hebrews 4:9 reaffirms it as the continuing mark of the people who rest in God's finished work by faith.",
+              },
+            ],
+          },
+          {
+            heading: "The Disciples Kept It After the Resurrection",
+            contentBlocks: [
+              {
+                label: "",
+                text: "If the cross abolished the Sabbath, the disciples — who lived through the cross — were the first people who should have stopped keeping it. They did not.",
+              },
+              {
+                label: "Acts 13:14",
+                text: "Paul and Barnabas 'went into the synagogue on the Sabbath day and sat down.' No qualifier, no apology, no sense that this required justification.",
+              },
+              {
+                label: "Acts 13:42–44",
+                text: "After preaching, the Gentiles begged Paul to speak again 'on the next Sabbath.' The whole city gathered. If Paul believed Sunday was now the Christian day of worship, this was the perfect moment to say so. He said nothing.",
+              },
+              {
+                label: "Acts 16:13",
+                text: "'On the Sabbath day we went outside the gate to the riverside, where we supposed there was a place of prayer.' This is Philippi — a Roman colony with almost no Jewish population. Paul had no social or cultural incentive to keep the Sabbath here. He kept it anyway.",
+              },
+              {
+                label: "Acts 17:2",
+                text: "'Paul went in, as was his custom, and on three Sabbath days he reasoned with them from the Scriptures.' His custom — eiōthen, the identical word used of Jesus in Luke 4:16.",
+              },
+              {
+                label: "Acts 18:4",
+                text: "'He reasoned in the synagogue every Sabbath, and tried to persuade Jews and Greeks.' Every Sabbath, in every city, among both Jews and Gentiles. For decades.",
+              },
+              {
+                label: "The Argument from Silence",
+                text: "In the entire New Testament — covering three decades of post-resurrection apostolic life — there is not one instruction to begin worshipping on Sunday, not one statement that the Sabbath has been transferred to the first day, and not one rebuke of Sabbath observance as obsolete. The apostles simply kept it. Week after week. City after city. Jew and Gentile together. The burden of proof rests entirely with those who claim the Sabbath was changed.",
+              },
+            ],
+          },
+          {
+            heading: "The Sunday Texts — What They Actually Say",
+            contentBlocks: [
+              {
+                label: "",
+                text: "Four New Testament texts are regularly cited as evidence for Sunday worship in the apostolic era. Each requires careful examination.",
+              },
+              {
+                label: "Objection: Jesus rose on Sunday — the resurrection changed everything.",
+                text: "This sounds reasonable, but it has a fatal problem: no New Testament author ever makes it. Not one apostle, in any letter or sermon, connects the resurrection to a change of the weekly worship day. The resurrection is celebrated in the NT — but it is celebrated every day (Acts 2:46 — daily breaking of bread; Romans 6:4 — baptism as resurrection participation), not specifically on Sunday. The connection of the resurrection to Sunday as a worship day is a post-apostolic inference, not apostolic instruction.",
+              },
+              {
+                label: "Objection: Acts 20:7 — 'On the first day of the week, when we were gathered together to break bread...'",
+                text: "By Jewish reckoning — which Paul used — 'the first day of the week' began at sunset on what we call Saturday night. This was a farewell meeting the night before Paul's departure (v.7 — he was leaving the next morning). 'Breaking bread' in Acts is not restricted to any day — Acts 2:46 records the disciples breaking bread daily. Paul preached until midnight because he was leaving — this is a special farewell gathering, not a regular Sunday worship service.",
+              },
+              {
+                label: "Objection: 1 Corinthians 16:2 — 'On the first day of every week, each of you is to put something aside and store it up.'",
+                text: "Paul is instructing each person to set money aside privately — at their own home — in preparation for the collection he will gather when he arrives. There is no gathering mentioned, no corporate assembly, no worship service. This is personal financial discipline, not public corporate worship. Using it to prove Sunday worship is as logical as using 'pray without ceasing' (1 Thess. 5:17) to prove continuous worship replaces all fixed days.",
+              },
+              {
+                label: "Objection: Revelation 1:10 — 'I was in the Spirit on the Lord's Day.'",
+                text: "The Bible itself never calls Sunday 'the Lord's Day.' The only day in Scripture that God explicitly names as His own is the Sabbath — 'my holy day' (Isaiah 58:13), 'the Sabbath of the Lord your God' (Ex. 20:10). Jesus called Himself 'Lord of the Sabbath' (Mark 2:28) — making the Sabbath the Lord's Day by explicit biblical identification. The connection of 'the Lord's Day' to Sunday does not appear in Christian writing until the late second century.",
+              },
+            ],
+          },
+          {
+            heading: "Colossians 2:16 — The Ceremonial Triad",
+            contentBlocks: [
+              {
+                label: "Colossians 2:16–17 (ESV)",
+                text: "\"Therefore let no one pass judgement on you in questions of food and drink, or with regard to a festival or a new moon or a Sabbath. These are a shadow of the things to come, but the substance belongs to Christ.\"",
+              },
+              {
+                label: "",
+                text: "This is the most commonly cited text against the Sabbath. But a careful reading — with the Old Testament pattern in view — demolishes the argument. The triad 'festival / new moon / sabbath' is a technical formula in the Old Testament for the annual ceremonial calendar. It appears this way in six OT passages — always referring to the feasts and the special ceremonial sabbaths attached to them, never to the weekly creation Sabbath.",
+              },
+              {
+                label: "1 Chronicles 23:31",
+                text: "Burnt offerings on Sabbaths, new moons, and appointed feasts — Levitical temple duties. Ceremonial calendar only.",
+              },
+              {
+                label: "2 Chronicles 2:4",
+                text: "Sabbaths, new moons, and appointed feasts of the Lord — context of building the temple. Annual ceremonial schedule.",
+              },
+              {
+                label: "2 Chronicles 31:3",
+                text: "Sabbaths, new moons, and the appointed feasts — Hezekiah's reforms restoring temple ceremonial rites.",
+              },
+              {
+                label: "Nehemiah 10:33",
+                text: "Sabbaths, new moons, and appointed feasts — covenant renewal, re-instituting the ceremonial calendar.",
+              },
+              {
+                label: "Ezekiel 45:17",
+                text: "Feasts, new moons, and Sabbaths — ceremonial system in prophetic vision.",
+              },
+              {
+                label: "Hosea 2:11",
+                text: "Her feast days, her new moons, her Sabbaths — ceremonial days God would stop, not the weekly Sabbath.",
+              },
+              {
+                label: "The Shadow Argument — Turned Around",
+                text: "Paul says the ceremonial observances are 'a shadow of things to come, but the substance belongs to Christ' (v.17). The ceremonial sabbaths — Day of Atonement, Feast of Tabernacles sabbaths, etc. — were shadows pointing to Christ's work. Christ is their substance. But the weekly Sabbath from Genesis 2 is not a shadow of Christ's work — it is a memorial of creation and liberation. It does not point forward to Christ as a type; it points backward to the character of a God who creates and liberates. That is why it stands after the cross.",
+              },
+            ],
+          },
+          {
+            heading: "Galatians 4:10 — Days, Months, Seasons, and Years",
+            contentBlocks: [
+              {
+                label: "Galatians 4:8–10 (ESV)",
+                text: "\"Formerly, when you did not know God, you were enslaved to those that by nature are not gods. But now that you have come to know God... how can you turn back again to the weak and worthless elementary principles of the world, whose slaves you want to be once more? You observe days and months and seasons and years!\"",
+              },
+              {
+                label: "στοιχεῖα stoicheia",
+                text: "Elementary principles — elemental spirits of the world. Gal. 4:3,9 — Paul's term for the pagan spiritual forces and religious systems the Galatians were formerly enslaved to before knowing Christ.",
+              },
+              {
+                label: "",
+                text: "This is the passage people use to argue that Paul condemned Sabbath observance. But the context makes the interpretation untenable. Paul is writing to Galatian Gentiles who were formerly enslaved to pagan gods (v.8) and who were now being pressured by Judaising teachers into observing Jewish ceremonial rites as a condition of salvation. The 'days and months and seasons and years' are the pagan-turned-legalistic ceremonial calendar, not the creation Sabbath.",
+              },
+              {
+                label: "The Decisive Evidence",
+                text: "Paul wrote Galatians approximately AD 49. He kept the Sabbath as his custom (Acts 17:2) throughout his ministry — in cities visited after Galatians was written. If Galatians 4:10 condemned Sabbath observance, Paul immediately and consistently violated his own teaching. The only coherent reading is that Galatians 4:10 targets the pagan religious calendar or the Judaising misuse of ceremonial days as a mechanism for earning salvation — not the creation Sabbath.",
+              },
+            ],
+          },
+          {
+            heading: "The Eternal Sabbath — It Never Ends",
+            contentBlocks: [
+              {
+                label: "",
+                text: "If the Sabbath was a temporary provision for a fallen world, why will the redeemed still keep it in a world where sin, death, and the curse no longer exist?",
+              },
+              {
+                label: "Isaiah 66:22–23 (ESV)",
+                text: "\"For as the new heavens and the new earth that I make shall remain before me, says the Lord, so shall your offspring and your name remain. From new moon to new moon, and from Sabbath to Sabbath, all flesh shall come to worship before me, declares the Lord.\"",
+              },
+              {
+                label: "מִדֵּי שַׁבָּת בְּשַׁבַּתּוֹ midde Shabbat be-Shabbato",
+                text: "From Sabbath to Sabbath — recurring, rhythmic. Isa. 66:23 — the phrase denotes regular, periodic Sabbath worship in the new earth: no sin, no death, no suffering. The Sabbath is still there.",
+              },
+              {
+                label: "Three Bookends That Prove the Sabbath Was Never Merely Ceremonial",
+                text: "BEFORE SIN: God blessed the seventh day in Eden — before any human sin, before any need for a remedy (Gen. 2:1–3). The Sabbath is not a sin-management tool; it is part of the original design. WITHIN REDEMPTION: Jesus rested in the tomb on the Sabbath after completing salvation — sealing creation rest and redemption rest in the same day (Luke 23:56). AFTER SIN IS GONE: The redeemed worship from Sabbath to Sabbath in the new earth — in a world with no sin, no curse, no need for any remedial institution (Isaiah 66:22–23). If the Sabbath brackets eternity on both ends, it was never ceremonial. It is eternal.",
+              },
+            ],
+          },
+          {
+            heading: "Why Does Almost Everyone Keep Sunday? — The Historical Answer",
+            contentBlocks: [
+              {
+                label: "",
+                text: "If the Sabbath was never changed in Scripture, why has Sunday been the dominant Christian worship day for most of church history? This is the question your generation will ask — and they deserve a documented, honest answer. No New Testament text commands Sunday worship. No apostolic council decreed the change. The shift from Saturday to Sunday worship happened gradually, over centuries, driven by social, political, and anti-Semitic pressures — not by Scripture.",
+              },
+              {
+                label: "c. AD 100–150 — First hints of Sunday gathering",
+                text: "Source: Justin Martyr, Apology (c.155). Significance: A voluntary additional meeting alongside, not replacing, the Sabbath — not a commanded transfer of worship.",
+              },
+              {
+                label: "AD 321 — Constantine's Sunday law",
+                text: "Source: Codex Justinianus, III.12.2 — 'On the venerable day of the Sun let the magistrates and people... rest.' Significance: A pagan Roman emperor — not a church council — issued the first Sunday law. He calls it 'the venerable day of the Sun' — a solar cult reference, not a Christian one.",
+              },
+              {
+                label: "AD 364 — Council of Laodicea, Canon 29",
+                text: "'Christians shall not Judaize and be idle on Saturday... but shall work on that day; but the Lord's day they shall especially honour.' Significance: The first church council to explicitly forbid Saturday Sabbath observance — 330+ years after the resurrection.",
+              },
+              {
+                label: "AD 1400s — The Waldenses",
+                text: "Source: GC ch. 4; Monastier, History of the Vaudois Church. Significance: A faithful remnant kept the Sabbath through centuries of persecution — evidence the Sabbath was never forgotten, only suppressed.",
+              },
+              {
+                label: "What Constantine Actually Said",
+                text: "In his Sunday edict of AD 321, Constantine used the phrase 'venerable day of the Sun' (venerabili die Solis) — a reference to Sol Invictus, the unconquered sun god of Roman paganism. He was a sun-cult emperor who politically unified the Roman Empire by merging pagan solar worship with increasingly popular Christianity. The first Sunday law in history was issued by a man who did not become a Christian by his own account until his deathbed.",
+              },
+              {
+                label: "",
+                text: "The Ethiopian church maintained Sabbath observance for centuries after Constantine. The Celtic church in Britain and Ireland kept both Saturday and Sunday into the 6th century. The Waldenses throughout the Middle Ages were persecuted in part for their Sabbath keeping. The trail of faithful Sabbath observance runs unbroken from the creation through the apostles, through the margins of history, to the present day. It was never fully lost — only suppressed.",
+              },
+            ],
+          },
+          {
+            heading: "Revelation 14:12 — The Sabbath in the Last Days",
+            contentBlocks: [
+              {
+                label: "Revelation 14:12 (ESV)",
+                text: "\"Here is a call for the endurance of the saints, those who keep the commandments of God and their faith in Jesus.\"",
+              },
+              {
+                label: "ἐντολάς entolas",
+                text: "Commandments — the Decalogue. Rev. 14:12 — the same word used in John 15:10 where Jesus says He kept His Father's commandments. The continuity is explicit.",
+              },
+              {
+                label: "",
+                text: "Revelation 14 describes the final generation — the people God calls out in the last days before Christ returns. They are identified by two marks: they keep the commandments of God, and they hold the faith of Jesus. The Sabbath is in the commandments of God. It cannot be separated from them without removing the fourth commandment from the Decalogue.",
+              },
+              {
+                label: "",
+                text: "The three angels' messages of Revelation 14:6–12 form the final gospel proclamation to every nation, tribe, tongue, and people before Christ's return. The first angel calls all humanity to 'worship him who made heaven and earth, the sea and the springs of water' — language that is a direct quotation of the fourth commandment (Exodus 20:11). The Sabbath is the sign of the Creator precisely at the moment when the identity of the true God is the central question before the world.",
+              },
+              {
+                label: "Why the Sabbath Is the Final Issue",
+                text: "The Sabbath is the central point of conflict in the last days because it is the seal of God's authority as Creator. A counterfeit sabbath — Sunday, instituted by human authority — becomes the mark of an alternative allegiance. This is not about which day of the week you happen to rest on. It is about whose authority you acknowledge as supreme: the Creator's word written in stone, or human tradition written in canon law.",
+              },
+              {
+                label: "Revelation 1:17–18 (ESV)",
+                text: "\"Fear not, I am the first and the last, and the living one. I died, and behold I am alive forevermore, and I have the keys of Death and Hades.\" The God who commands the Sabbath is not a distant lawgiver. He is the one who entered the tomb. He is the one who lay still through those Sabbath hours. He is the one who rose — and who holds the keys of death itself.",
+              },
+            ],
+            christCentre:
+              "The Sabbath does not save you. Nothing you do saves you. But the Sabbath is a weekly declaration that you are already saved — that God's work is finished, that His love was first, that rest is the starting point of the whole story. Jesus kept it because He made it. He honoured it because He loved His Father's commandments. His disciples kept it because they walked as He walked. The apostles kept it because the resurrection did not abolish the law — it confirmed it. The redeemed will keep it in eternity because when every trace of sin is gone, the Sabbath will still be there — a relational space carved out of time, filled with the presence of a God who has always wanted to sit with His children and be known.",
+          },
+          {
+            heading: "Key Texts — Know These Cold",
+            contentBlocks: [
+              { label: "Genesis 2:1–3", text: "The origin: blessed, sanctified, before the fall." },
+              { label: "Exodus 20:8–11", text: "Remember: creation foundation." },
+              { label: "Deuteronomy 5:12–15", text: "Observe: liberation foundation — you were a slave." },
+              { label: "Isaiah 58:13–14", text: "The Sabbath connected to justice and liberation for the vulnerable." },
+              { label: "Isaiah 66:22–23", text: "Eternal: from Sabbath to Sabbath in the new earth." },
+              { label: "Matthew 5:17–19", text: "Jesus: I did not come to abolish — not one iota will pass." },
+              { label: "Mark 2:27–28", text: "Jesus: Lord of the Sabbath; it was made for man." },
+              { label: "Luke 4:16", text: "It was Jesus's custom — habitual, not occasional." },
+              { label: "John 15:10", text: "Jesus kept His Father's commandments — including the fourth." },
+              { label: "Luke 23:54–56", text: "The disciples kept the Sabbath after the crucifixion." },
+              { label: "Acts 13:14, 42–44; 16:13; 17:2; 18:4", text: "Paul's Sabbath practice: decades after the resurrection." },
+              { label: "Hebrews 4:9", text: "A sabbatismos remains for the people of God (post-resurrection, to Christians)." },
+              { label: "1 John 2:6", text: "We walk as He walked — He walked as a Sabbath keeper." },
+              { label: "Revelation 14:12", text: "The last-day people keep the commandments of God and the faith of Jesus." },
+            ],
+          },
+        ],
         nextLesson: undefined,
       }
     ]
