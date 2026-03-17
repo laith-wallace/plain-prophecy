@@ -118,6 +118,37 @@ const prophecyCards = [
 
 const reformers = ["Luther", "Calvin", "Newton", "Wesley"];
 
+const paths = [
+  {
+    label: "I'm new to this",
+    desc: "Start with the side-by-side timeline — see both prophetic frameworks laid out from Scripture.",
+    href: "/compare#timelines",
+    cta: "View Timelines →",
+    accent: "var(--sda-primary)",
+  },
+  {
+    label: "I know Futurism",
+    desc: "Go straight to the accuracy scoring — 10 criteria, evaluated against the same evidentiary standard.",
+    href: "/compare#scoring",
+    cta: "See Scoring →",
+    accent: "var(--futurist-primary)",
+  },
+  {
+    label: "Study the foundations",
+    desc: "Six in-depth guides — the day-year principle, the 70 weeks, the 1,260 years, and more. Evidence-based, exegetically grounded.",
+    href: "/learn",
+    cta: "Start Learning →",
+    accent: "#5c3d11",
+  },
+  {
+    label: "Learn by doing",
+    desc: "Swipe through 8 Daniel prophecies — commit to an answer before the reveal, then see how history and Scripture converge on Christ.",
+    href: "/prophet",
+    cta: "Start Prophet →",
+    accent: "var(--sda-accent)",
+  },
+];
+
 // ── PAGE ──────────────────────────────────────────────────────────────────────
 
 export default function HomePage() {
@@ -172,12 +203,35 @@ export default function HomePage() {
             &ldquo;Here is the patience of the saints: here are they that keep
             the commandments of God, and the faith of Jesus.&rdquo;
           </blockquote>
-          <cite className="hero-cite">Revelation 14:12</cite>
+          <span className="hero-cite">Revelation 14:12</span>
         </div>
 
         {/* Scroll hint */}
         <div className="hero-scroll-hint" aria-hidden="true">
           <div className="scroll-chevron" />
+        </div>
+      </section>
+
+      {/* ── SECTION 1.5: PATHWAYS ────────────────────────────────────────── */}
+      <section className="home-paths-section">
+        <div className="section-inner">
+          <div className="home-paths-grid">
+            {paths.map((p, i) => (
+              <div 
+                key={p.label} 
+                className="path-card"
+                data-animate
+                data-animate-delay={String(i * 100)}
+                style={{ "--path-accent": p.accent } as React.CSSProperties}
+              >
+                <div className="path-label">{p.label}</div>
+                <p className="path-desc">{p.desc}</p>
+                <Link href={p.href} className="path-cta">
+                  {p.cta}
+                </Link>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -202,6 +256,7 @@ export default function HomePage() {
 
       {/* ── SECTION 3: SCROLL HERO VIDEO ──────────────────────────────────── */}
       <ScrollHeroVideoClient />
+      
       {/* ── SECTION 3b: CHRIST PIVOT ─────────────────────────────────────── */}
       <section className="christ-pivot-section">
         <div className="christ-pivot-inner" data-animate>

@@ -1,29 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState, useCallback, useMemo } from "react";
-import { useQuery } from "convex/react";
-import { api } from "../../convex/_generated/api";
-
-
-// ─── Types ──────────────────────────────────────────────────────────────────
-
-export type Prophecy = {
-  id: string;
-  idStr: string;
-  number: number;
-  title: string;
-  subtitle: string;
-  symbol: string;
-  scripture: string;
-  connections: string[];
-  reveal: {
-    what: string;
-    history: string;
-    christ: string;
-  };
-  published: boolean;
-};
+import { useEffect, useRef, useState, useCallback, forwardRef, useImperativeHandle } from "react";
+import { prophecies, type Prophecy } from "@/data/prophecies";
 
 // ─── Connection Web Canvas ───────────────────────────────────────────────────
 
@@ -183,12 +162,35 @@ function ConnectionWeb({
     ctx.fillText("CHRIST", cx, cy + 28);
   }, [completed, prophecies]);
 
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Trap focus within modal and close on Escape
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    el.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
   return (
-    <div className="map-backdrop" onClick={onClose}>
-      <div className="map-container" onClick={(e) => e.stopPropagation()}>
+    <div className="map-backdrop" onClick={onClose} role="presentation">
+      <div
+        className="map-container"
+        onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Prophecy Connection Web"
+        ref={containerRef}
+        tabIndex={-1}
+        style={{ outline: "none" }}
+      >
         <div className="map-header">
           <div className="map-title">Prophecy Connection Web</div>
-          <button className="map-close-btn" onClick={onClose}>
+          <button className="map-close-btn" onClick={onClose} aria-label="Close connection web">
             ✕
           </button>
         </div>
@@ -240,6 +242,55 @@ function RevealPanel({
   isLast: boolean;
   totalProphecies: number;
 }) {
+  const panelRef = useRef<HTMLDivElement>(null);
+  const handleDrag = useRef({ active: false, startY: 0 });
+
+  const onHandlePointerDown = useCallback((e: React.PointerEvent) => {
+    e.currentTarget.setPointerCapture(e.pointerId);
+    handleDrag.current = { active: true, startY: e.clientY };
+  }, []);
+
+  const onHandlePointerMove = useCallback((e: React.PointerEvent) => {
+    if (!handleDrag.current.active) return;
+    const dy = Math.max(0, e.clientY - handleDrag.current.startY);
+    if (panelRef.current) {
+      panelRef.current.style.transition = "none";
+      panelRef.current.style.transform = `translateY(${dy}px)`;
+    }
+  }, []);
+
+  const onHandlePointerUp = useCallback(
+    (e: React.PointerEvent) => {
+      if (!handleDrag.current.active) return;
+      handleDrag.current.active = false;
+      const dy = e.clientY - handleDrag.current.startY;
+      if (dy > 80) {
+        if (panelRef.current) {
+          panelRef.current.style.transition = "";
+          panelRef.current.style.transform = "";
+        }
+        onClose();
+      } else {
+        if (panelRef.current) {
+          panelRef.current.style.transition =
+            "transform 0.25s cubic-bezier(0.32, 0.72, 0, 1)";
+          panelRef.current.style.transform = "";
+          setTimeout(() => {
+            if (panelRef.current) panelRef.current.style.transition = "";
+          }, 260);
+        }
+      }
+    },
+    [onClose]
+  );
+
+  // Reset panel transform when closed
+  useEffect(() => {
+    if (!isOpen && panelRef.current) {
+      panelRef.current.style.transform = "";
+    }
+  }, [isOpen]);
+
   if (!prophecy) return null;
 
   return (
@@ -249,12 +300,19 @@ function RevealPanel({
         onClick={onClose}
       />
       <div
+        ref={panelRef}
         className={`reveal-panel ${isOpen ? "open" : ""}`}
         role="dialog"
         aria-modal="true"
         aria-label={`Reveal: ${prophecy.title}`}
       >
-        <div className="reveal-panel-handle" />
+        <div
+          className="reveal-panel-handle"
+          onPointerDown={onHandlePointerDown}
+          onPointerMove={onHandlePointerMove}
+          onPointerUp={onHandlePointerUp}
+          onPointerCancel={onHandlePointerUp}
+        />
 
         <div className="reveal-panel-header">
           <div className="reveal-card-label">
@@ -294,31 +352,60 @@ function RevealPanel({
 
 // ─── Swipe Card ───────────────────────────────────────────────────────────────
 
-function SwipeCard({
-  prophecy,
-  isNext,
-  onSwipeCommit,
-  onReveal,
-  onHintUsed,
-  totalProphecies,
-}: {
-  prophecy: Prophecy;
-  isNext: boolean;
-  onSwipeCommit: (dir: "left" | "right") => void;
-  onReveal: () => void;
-  onHintUsed: () => void;
-  totalProphecies: number;
-}) {
+export interface SwipeCardHandle {
+  triggerSwipe: (dir: "left" | "right") => void;
+}
+
+const SwipeCard = forwardRef<
+  SwipeCardHandle,
+  {
+    prophecy: Prophecy;
+    isNext: boolean;
+    onSwipeCommit: (dir: "left" | "right") => void;
+    onReveal: () => void;
+    onHintUsed: () => void;
+    isFirstCard?: boolean;
+    totalProphecies: number;
+  }
+>(function SwipeCard(
+  { prophecy, isNext, onSwipeCommit, onReveal, onHintUsed, isFirstCard, totalProphecies },
+  ref
+) {
   const cardRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const overlayLabelRef = useRef<HTMLDivElement>(null);
-  const drag = useRef({ active: false, startX: 0, currentX: 0 });
+  const drag = useRef({
+    active: false,
+    startX: 0,
+    currentX: 0,
+    startTime: 0,
+    pastThreshold: false,
+  });
   const committed = useRef(false);
+  const [promoting, setPromoting] = useState(false);
+
+  // Animate card promoting from next → active
+  useEffect(() => {
+    if (!isNext) {
+      setPromoting(true);
+      const t = setTimeout(() => setPromoting(false), 380);
+      return () => clearTimeout(t);
+    }
+  }, [isNext]);
 
   // Physics constants
   const THRESHOLD_FRAC = 0.28;
   const MAX_ROTATE = 13;    // degrees — hard cap
   const PEAK_FRACTION = 0.2; // tilt peaks at 20% of threshold drag
+
+  const resetTransform = useCallback(() => {
+    const card = cardRef.current;
+    if (card) {
+      card.style.transition = "transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)";
+      card.style.transform = "";
+      setTimeout(() => { if (card) card.style.transition = ""; }, 400);
+    }
+  }, []);
 
   const applyTransform = useCallback((dx: number, flying?: "left" | "right") => {
     const card = cardRef.current;
@@ -329,8 +416,6 @@ function SwipeCard({
     const THRESHOLD = window.innerWidth * THRESHOLD_FRAC;
 
     if (flying) {
-      // Fly-off: snap to release position first, then ease-out to off-screen.
-      // "Calculate the remaining curve using drag-release position."
       const releaseX = drag.current.currentX - drag.current.startX;
       const releaseRotate = flying === "right" ? MAX_ROTATE : -MAX_ROTATE;
       const flyX = flying === "right"
@@ -340,24 +425,21 @@ function SwipeCard({
 
       card.style.transition = "none";
       card.style.transform = `translateX(${releaseX}px) rotate(${releaseRotate}deg)`;
-      card.getBoundingClientRect(); // force reflow before applying transition
+      card.getBoundingClientRect();
 
       card.style.transition =
         "transform 0.42s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.38s ease-out";
       card.style.transform = `translateX(${flyX}px) rotate(${flyRotate}deg)`;
       card.classList.add("fly-off");
-
-      overlay.style.transition = "opacity 0.1s";
-      overlay.style.opacity = "0.9";
+      overlay.style.opacity = "0.92";
+      overlay.style.justifyContent = flying === "right" ? "flex-end" : "flex-start";
       overlay.style.background =
         flying === "right" ? "rgba(26,109,60,0.75)" : "rgba(192,57,43,0.65)";
       label.textContent = flying === "right" ? "✓ Fulfilled" : "? Not sure";
+      label.style.transform = `rotate(${flying === "right" ? "-20deg" : "20deg"})`;
       return;
     }
 
-    // ── Drag phase ──
-    // Rotation reaches MAX_ROTATE at PEAK_FRACTION × THRESHOLD, then clamps.
-    // "The 13° forward tilt should reach its peak at 20% of drag length."
     const absDx = Math.abs(dx);
     const peakDx = THRESHOLD * PEAK_FRACTION;
     const rotate = Math.sign(dx) * Math.min(absDx / peakDx, 1) * MAX_ROTATE;
@@ -366,15 +448,31 @@ function SwipeCard({
     card.style.transition = "none";
     card.style.transform = `translateX(${dx}px) rotate(${rotate}deg) scale(${scale})`;
 
-    const overlayOpacity = Math.min((absDx / THRESHOLD) * 1.6, 0.85);
+    const norm = dx / THRESHOLD;
+    const overlayOpacity = Math.min(Math.abs(norm) * 1.8, 0.88);
     overlay.style.opacity = String(overlayOpacity);
-    overlay.style.background =
-      dx > 0 ? "rgba(26,109,60,0.75)" : "rgba(192,57,43,0.65)";
-    label.textContent = dx > 0 ? "✓ Fulfilled" : "? Not sure";
-  }, [THRESHOLD_FRAC, MAX_ROTATE, PEAK_FRACTION]);
 
-  // Spring snap-back — bounce intensity proportional to drag distance.
-  // "Bounce level at the bottom should be proportional to when the drag was released."
+    const pastThreshold = Math.abs(dx) > window.innerWidth * 0.28;
+    if (pastThreshold && !drag.current.pastThreshold) {
+      navigator.vibrate?.(8);
+      drag.current.pastThreshold = true;
+    } else if (!pastThreshold) {
+      drag.current.pastThreshold = false;
+    }
+
+    if (dx > 0) {
+      overlay.style.background = "rgba(26,109,60,0.75)";
+      overlay.style.justifyContent = "flex-end";
+      label.textContent = "✓ Fulfilled";
+      label.style.transform = "rotate(-20deg)";
+    } else {
+      overlay.style.background = "rgba(192,57,43,0.65)";
+      overlay.style.justifyContent = "flex-start";
+      label.textContent = "? Not sure";
+      label.style.transform = "rotate(20deg)";
+    }
+  }, [THRESHOLD_FRAC, PEAK_FRACTION, MAX_ROTATE]);
+
   const snapBack = useCallback((releaseDx: number) => {
     const card = cardRef.current;
     const overlay = overlayRef.current;
@@ -383,11 +481,9 @@ function SwipeCard({
     const THRESHOLD = window.innerWidth * THRESHOLD_FRAC;
     const dragFraction = Math.min(Math.abs(releaseDx) / THRESHOLD, 1);
     const releaseRotate = Math.sign(releaseDx) * dragFraction * MAX_ROTATE;
-    // Overshoot in the opposite direction, scaled to drag distance
     const overshootX = -Math.sign(releaseDx) * dragFraction * 14;
     const overshootRotate = -Math.sign(releaseDx) * dragFraction * 2.5;
 
-    // Use Web Animations API for frame-accurate spring curve
     card.animate(
       [
         {
@@ -400,15 +496,15 @@ function SwipeCard({
         { transform: "translateX(0) rotate(0deg) scale(1)" },
       ],
       {
-        duration: 360 + dragFraction * 220, // bigger drag → slightly longer settle
-        easing: "cubic-bezier(0.34, 1.56, 0.64, 1)", // spring overshoot
+        duration: 360 + dragFraction * 220,
+        easing: "cubic-bezier(0.34, 1.56, 0.64, 1)",
         fill: "forwards",
       }
     );
 
     overlay.style.transition = "opacity 0.22s ease-out";
     overlay.style.opacity = "0";
-
+    drag.current.pastThreshold = false;
     setTimeout(() => {
       if (card) {
         card.style.transform = "";
@@ -422,6 +518,7 @@ function SwipeCard({
       if (committed.current) return;
       committed.current = true;
       onHintUsed();
+      navigator.vibrate?.(15);
       applyTransform(0, dir);
       setTimeout(() => {
         onSwipeCommit(dir);
@@ -430,12 +527,24 @@ function SwipeCard({
     [applyTransform, onSwipeCommit, onHintUsed]
   );
 
+  useImperativeHandle(ref, () => ({
+    triggerSwipe: (dir: "left" | "right") => {
+      if (committed.current || isNext) return;
+      commitSwipe(dir);
+    },
+  }));
+
   const handlePointerDown = useCallback(
     (e: React.PointerEvent) => {
       if (isNext || committed.current) return;
       e.currentTarget.setPointerCapture(e.pointerId);
-      drag.current = { active: true, startX: e.clientX, currentX: e.clientX };
-      // Cancel any in-progress snap-back animation
+      drag.current = {
+        active: true,
+        startX: e.clientX,
+        currentX: e.clientX,
+        startTime: Date.now(),
+        pastThreshold: false,
+      };
       const card = cardRef.current;
       if (card) card.getAnimations().forEach((a) => a.cancel());
     },
@@ -456,12 +565,28 @@ function SwipeCard({
     if (!drag.current.active || committed.current) return;
     drag.current.active = false;
     const dx = drag.current.currentX - drag.current.startX;
-    if (Math.abs(dx) > window.innerWidth * THRESHOLD_FRAC) {
+    const dt = Math.max(1, Date.now() - drag.current.startTime);
+    const velocity = Math.abs(dx) / dt;
+    const DIST_THRESHOLD = window.innerWidth * 0.28;
+    const VEL_THRESHOLD = 0.45;
+
+    if (Math.abs(dx) > DIST_THRESHOLD || velocity > VEL_THRESHOLD) {
       commitSwipe(dx > 0 ? "right" : "left");
     } else {
       snapBack(dx);
     }
   }, [commitSwipe, snapBack, THRESHOLD_FRAC]);
+
+  useEffect(() => {
+    if (!isFirstCard || isNext) return;
+    const t = setTimeout(() => {
+      applyTransform(32);
+      setTimeout(() => {
+        resetTransform();
+      }, 420);
+    }, 900);
+    return () => clearTimeout(t);
+  }, [isFirstCard, isNext, applyTransform, resetTransform]);
 
   if (isNext) {
     return (
@@ -478,13 +603,21 @@ function SwipeCard({
   return (
     <div
       ref={cardRef}
-      className="swipe-card"
+      className={`swipe-card${promoting ? " promoting" : ""}`}
+      role="button"
+      tabIndex={0}
+      aria-label={`Prophecy ${prophecy.number}: ${prophecy.title}. Tap or press Enter to reveal.`}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       onPointerCancel={handlePointerUp}
-      onClick={() => {
-        // Only open reveal on simple tap (no drag)
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onReveal();
+        }
+      }}
+      onClick={(e) => {
         const totalDrag = Math.abs(drag.current.currentX - drag.current.startX);
         if (totalDrag < 8) onReveal();
       }}
@@ -505,7 +638,7 @@ function SwipeCard({
       </div>
     </div>
   );
-}
+});
 
 // ─── Completion Screen ────────────────────────────────────────────────────────
 
@@ -562,24 +695,14 @@ function CompletionScreen({
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export default function ProphetClient() {
-  const fetchedProphecies = useQuery(api.prophecies.getAll);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [completed, setCompleted] = useState<string[]>([]);
   const [revealCard, setRevealCard] = useState<Prophecy | null>(null);
   const [revealOpen, setRevealOpen] = useState(false);
   const [showMap, setShowMap] = useState(false);
   const [hintsVisible, setHintsVisible] = useState(true);
-  const [cardKey, setCardKey] = useState(0); // forces card remount after swipe
-
-  // Map idStr to id for UI compatibility.
-  const prophecies: Prophecy[] = useMemo(() => {
-    if (!fetchedProphecies) return [];
-    return fetchedProphecies.map((p) => ({
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ...(p as any),
-      id: p.idStr,
-    }));
-  }, [fetchedProphecies]);
+  const [cardKey, setCardKey] = useState(0);
+  const swipeCardRef = useRef<SwipeCardHandle>(null);
 
   const done = currentIndex >= prophecies.length && prophecies.length > 0;
   const currentProphecy = prophecies[currentIndex];
@@ -594,7 +717,6 @@ export default function ProphetClient() {
       setCompleted((prev) =>
         prev.includes(prophecy.id) ? prev : [...prev, prophecy.id]
       );
-      // Brief pause, then show reveal
       setTimeout(() => {
         setRevealCard(prophecy);
         setRevealOpen(true);
@@ -602,7 +724,7 @@ export default function ProphetClient() {
         setCurrentIndex((i) => i + 1);
       }, 60);
     },
-    [currentIndex, prophecies]
+    [currentIndex]
   );
 
   const handleReveal = useCallback(() => {
@@ -617,7 +739,6 @@ export default function ProphetClient() {
 
   const handleRevealNext = useCallback(() => {
     setRevealOpen(false);
-    // If current card wasn't swiped (opened via tap), advance now
     setCompleted((prev) => {
       if (revealCard && !prev.includes(revealCard.id)) {
         return [...prev, revealCard.id];
@@ -625,14 +746,13 @@ export default function ProphetClient() {
       return prev;
     });
     setCurrentIndex((i) => {
-      // Only advance if the reveal card matches current (tap-reveal path)
       if (revealCard && prophecies[i]?.id === revealCard.id) {
         setCardKey((k) => k + 1);
         return i + 1;
       }
       return i;
     });
-  }, [revealCard, prophecies]);
+  }, [revealCard]);
 
   const handleRestart = useCallback(() => {
     setCurrentIndex(0);
@@ -644,7 +764,6 @@ export default function ProphetClient() {
     setCardKey((k) => k + 1);
   }, []);
 
-  // Keyboard support
   useEffect(() => {
     if (!prophecies.length) return;
     const handler = (e: KeyboardEvent) => {
@@ -669,16 +788,7 @@ export default function ProphetClient() {
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, [currentIndex, revealOpen, done, hideHints, handleReveal, prophecies]);
-
-  // Loading state — only show spinner on first load, not reconnects
-  if (fetchedProphecies === undefined && prophecies.length === 0) {
-    return (
-      <div className="prophet-layout loading">
-        <div className="loading-spinner">Loading Prophecies...</div>
-      </div>
-    );
-  }
+  }, [currentIndex, revealOpen, done, hideHints, handleReveal]);
 
   if (done) {
     return (
@@ -702,7 +812,6 @@ export default function ProphetClient() {
 
   return (
     <div className="prophet-layout">
-      {/* Header */}
       <header className="prophet-header">
         <Link href="/" className="prophet-header-brand">
           Plain<span>Prophecy</span>
@@ -719,7 +828,13 @@ export default function ProphetClient() {
         </button>
       </header>
 
-      {/* Stage */}
+      <div className="prophet-progress-bar-track">
+        <div
+          className="prophet-progress-bar-fill"
+          style={{ width: `${(completed.length / prophecies.length) * 100}%` }}
+        />
+      </div>
+
       <main className="prophet-stage">
         <div
           style={{
@@ -736,7 +851,6 @@ export default function ProphetClient() {
         </div>
 
         <div className="card-stack">
-          {/* Next card (behind) */}
           {nextProphecy && (
             <SwipeCard
               key={`next-${nextProphecy.id}`}
@@ -749,21 +863,21 @@ export default function ProphetClient() {
             />
           )}
 
-          {/* Current card (top) */}
           {currentProphecy && (
             <SwipeCard
               key={`card-${currentProphecy.id}-${cardKey}`}
+              ref={swipeCardRef}
               prophecy={currentProphecy}
               isNext={false}
               onSwipeCommit={handleSwipeCommit}
               onReveal={handleReveal}
               onHintUsed={hideHints}
+              isFirstCard={currentIndex === 0 && cardKey === 0}
               totalProphecies={prophecies.length}
             />
           )}
         </div>
 
-        {/* Swipe hints */}
         <div
           className={`swipe-hints ${!hintsVisible ? "hidden" : ""}`}
           aria-hidden="true"
@@ -777,16 +891,44 @@ export default function ProphetClient() {
             <span className="hint-arrow-icon">→</span>
           </div>
         </div>
+
+        <div className="swipe-action-btns">
+          <button
+            className="swipe-action-btn swipe-action-btn--left"
+            onClick={() => {
+              hideHints();
+              swipeCardRef.current?.triggerSwipe("left");
+            }}
+            aria-label="Not sure — mark prophecy as uncertain"
+          >
+            ✕
+          </button>
+          <button
+            className="swipe-action-btn swipe-action-btn--reveal"
+            onClick={handleReveal}
+            aria-label="Reveal prophecy details"
+          >
+            ?
+          </button>
+          <button
+            className="swipe-action-btn swipe-action-btn--right"
+            onClick={() => {
+              hideHints();
+              swipeCardRef.current?.triggerSwipe("right");
+            }}
+            aria-label="Fulfilled — mark prophecy as fulfilled"
+          >
+            ✓
+          </button>
+        </div>
       </main>
 
-      {/* Footer */}
       <footer className="prophet-footer">
         <div className="prophet-footer-text">
           Tap to open study · Swipe to commit · ← → keys · Space to reveal
         </div>
       </footer>
 
-      {/* Reveal Panel */}
       <RevealPanel
         prophecy={revealCard}
         isOpen={revealOpen}
@@ -796,7 +938,6 @@ export default function ProphetClient() {
         totalProphecies={prophecies.length}
       />
 
-      {/* Connection Web Map */}
       {showMap && (
         <ConnectionWeb
           completed={completed}

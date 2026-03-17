@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Playfair_Display, IBM_Plex_Sans, IBM_Plex_Mono, Geist, Cinzel, Inter } from "next/font/google";
 import "./globals.css";
 import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
@@ -38,6 +38,12 @@ const ibmPlexMono = IBM_Plex_Mono({
   variable: "--font-ibm-plex-mono",
 });
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://plainprophecy.com"),
   title: {
@@ -60,6 +66,10 @@ export const metadata: Metadata = {
     "bible prophecy simple",
     "Revelation explained",
     "Daniel explained",
+    "Daniel studies",
+    "the 2300 days",
+    "70 weeks prophecy",
+    "little horn",
   ],
   authors: [{ name: "Plain Prophecy" }],
   creator: "Plain Prophecy",
