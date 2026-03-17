@@ -24,7 +24,7 @@ export default function PulsarMapPage() {
       style={{
         position: 'fixed',
         inset: 0,
-        background: '#06060E',
+        background: '#010408',
         overflow: 'hidden',
         display: 'flex',
         flexDirection: 'column',
