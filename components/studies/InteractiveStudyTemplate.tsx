@@ -223,9 +223,18 @@ export default function InteractiveStudyTemplate({ book, lesson, VisualComponent
         /* Fallback for traditional structure (no interactive sections) */
         <div style={{ maxWidth: '800px', margin: '0 auto', color: '#fff', padding: '0 24px 80px' }}>
           {(lesson.sections ?? []).map((section, idx) => (
-            <div key={idx} style={{ marginBottom: '40px' }} className="reveal">
-              <h2 style={{ fontFamily: 'Cinzel', fontSize: '24px', fontWeight: 700, color: 'var(--gold)', marginBottom: '16px' }}>{section.heading}</h2>
-              <p style={{ fontSize: '16px', lineHeight: 1.7, color: 'rgba(255,255,255,0.85)' }}>{section.body}</p>
+            <div key={idx} style={{ marginBottom: '48px' }} className="reveal">
+              <h2 style={{ fontFamily: 'Cinzel', fontSize: '24px', fontWeight: 700, color: 'var(--gold)', marginBottom: '20px' }}>{section.heading}</h2>
+              {section.contentBlocks && section.contentBlocks.length > 0 ? (
+                section.contentBlocks.map((block, bi) => (
+                  <div key={bi} className="section-block" style={{ marginBottom: '20px', paddingLeft: '16px', borderLeft: '2px solid rgba(201,168,76,0.25)' }}>
+                    <div className="section-label" style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--gold)', opacity: 0.75, marginBottom: '8px' }}>{block.label}</div>
+                    <p className="section-text" style={{ fontSize: '16px', lineHeight: 1.75, color: 'rgba(255,255,255,0.82)' }}>{block.text}</p>
+                  </div>
+                ))
+              ) : (
+                <p style={{ fontSize: '16px', lineHeight: 1.7, color: 'rgba(255,255,255,0.85)' }}>{section.body}</p>
+              )}
             </div>
           ))}
           

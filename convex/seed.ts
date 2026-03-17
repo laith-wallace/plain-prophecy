@@ -380,3 +380,70 @@ export const run = mutation({
     console.log("Seeding complete!");
   },
 });
+
+// Syncs the latest content from data/studies.ts into Convex.
+// Safe to run repeatedly — updates existing lessons and inserts new ones.
+export const syncStudyLessons = mutation({
+  args: {},
+  handler: async (ctx) => {
+    for (let i = 0; i < studyBooks.length; i++) {
+      const book = studyBooks[i];
+
+      // Upsert course
+      let course = await ctx.db
+        .query("studyCourses")
+        .withIndex("by_slug", (q: any) => q.eq("slug", book.slug))
+        .first();
+
+      if (!course) {
+        const courseId = await ctx.db.insert("studyCourses", {
+          slug: book.slug,
+          title: book.title,
+          description: book.description,
+          icon: book.icon,
+          hasSeparator: book.hasSeparator,
+          order: i,
+          published: true,
+        });
+        course = await ctx.db.get(courseId);
+      }
+
+      if (!course) continue;
+
+      for (let j = 0; j < book.lessons.length; j++) {
+        const lesson = book.lessons[j];
+
+        const existing = await ctx.db
+          .query("studyLessons")
+          .withIndex("by_slug", (q: any) => q.eq("slug", lesson.slug))
+          .first();
+
+        const fields = {
+          courseId: course._id,
+          slug: lesson.slug,
+          title: lesson.title,
+          order: j,
+          body: existing?.body ?? "",
+          scriptureRef: lesson.scriptureRef,
+          tags: existing?.tags ?? [],
+          published: existing?.published ?? true,
+          readingTime: lesson.readingTime,
+          keyVerse: lesson.keyVerse,
+          keyVerseRef: lesson.keyVerseRef,
+          intro: lesson.intro,
+          christCentre: lesson.christCentre,
+          nextLesson: lesson.nextLesson,
+          sections: lesson.sections,
+        };
+
+        if (existing) {
+          await ctx.db.patch(existing._id, fields);
+        } else {
+          await ctx.db.insert("studyLessons", fields);
+        }
+      }
+    }
+
+    console.log("Study sync complete!");
+  },
+});
