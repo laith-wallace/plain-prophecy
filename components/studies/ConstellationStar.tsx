@@ -12,9 +12,16 @@ interface ConstellationStarProps {
 }
 
 const CATEGORY_COLOURS: Record<StarCategory, string> = {
-  gospel: '#C9A84C',
+  gospel:   '#C9A84C',
   prophecy: '#7A9ABB',
   doctrine: '#B8906A',
+}
+
+// Glow colours — slightly lighter/warmer for the bloom
+const GLOW_COLOURS: Record<StarCategory, string> = {
+  gospel:   'rgba(240,208,128,0.5)',
+  prophecy: 'rgba(130,175,220,0.5)',
+  doctrine: 'rgba(200,160,110,0.5)',
 }
 
 export default function ConstellationStar({
@@ -26,13 +33,22 @@ export default function ConstellationStar({
 }: ConstellationStarProps) {
   const [hovered, setHovered] = useState(false)
 
-  const colour = CATEGORY_COLOURS[star.category]
+  const colour      = CATEGORY_COLOURS[star.category]
+  const glowColour  = GLOW_COLOURS[star.category]
   const isComingSoon = star.status === 'coming-soon'
+  const isHighlit   = isActive || hovered
 
-  const radius = isActive ? 12 : hovered ? 9 : isComingSoon ? 5 : 6
-  const fillOpacity = isComingSoon ? 0.4 : isActive ? 1 : hovered ? 1 : 0.6
-  const labelOpacity = isActive || hovered ? 1 : 0
-  const labelY = cy - (isActive || hovered ? 20 : 16)
+  // Sizes — much bigger for visual impact
+  const coreR   = isActive ? 14 : hovered ? 11 : isComingSoon ? 6 : 8
+  const glowR   = isActive ? 28 : hovered ? 20 : 14
+  const glowOp  = isActive ? 0.55 : hovered ? 0.40 : 0.18
+  const coreOp  = isComingSoon ? 0.45 : 1
+
+  const labelOp = isHighlit ? 1 : 0.35
+  const labelY  = cy - coreR - 10
+
+  const glowId = `glow-${star.id}`
+  const glowFillId = `glow-fill-${star.id}`
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
@@ -44,12 +60,8 @@ export default function ConstellationStar({
     [onClick]
   )
 
-  // Glow filter id — unique per star
-  const glowId = `glow-${star.id}`
-
   return (
     <g
-      className="constellation-star"
       role="button"
       aria-label={`${star.label}${isComingSoon ? ' (coming soon)' : ''}`}
       aria-pressed={isActive}
@@ -63,8 +75,13 @@ export default function ConstellationStar({
       onBlur={() => setHovered(false)}
     >
       <defs>
-        <filter id={glowId} x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation={isActive ? 6 : 3} result="blur" />
+        <radialGradient id={glowFillId} cx="50%" cy="50%" r="50%">
+          <stop offset="0%"   stopColor={colour} stopOpacity={0.9} />
+          <stop offset="60%"  stopColor={colour} stopOpacity={0.3} />
+          <stop offset="100%" stopColor={colour} stopOpacity={0} />
+        </radialGradient>
+        <filter id={glowId} x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation={isActive ? 10 : 5} result="blur" />
           <feMerge>
             <feMergeNode in="blur" />
             <feMergeNode in="SourceGraphic" />
@@ -75,37 +92,42 @@ export default function ConstellationStar({
       {/* 44×44px invisible touch target */}
       <circle cx={cx} cy={cy} r={22} fill="transparent" />
 
-      {/* Visual star circle */}
+      {/* Soft glow bloom */}
       <circle
         cx={cx}
         cy={cy}
-        r={radius}
-        fill={colour}
-        fillOpacity={fillOpacity}
-        stroke={isComingSoon ? colour : 'none'}
-        strokeWidth={isComingSoon ? 1 : 0}
-        strokeDasharray={isComingSoon ? '3 2' : undefined}
-        filter={isActive || hovered ? `url(#${glowId})` : undefined}
-        style={{
-          transition: 'r 0.2s ease, fill-opacity 0.2s ease',
-        }}
+        r={glowR}
+        fill={glowColour}
+        opacity={glowOp}
+        style={{ transition: 'r 0.2s ease, opacity 0.2s ease' }}
       />
 
-      {/* Star label — SVG text above the star */}
+      {/* Core star circle */}
+      <circle
+        cx={cx}
+        cy={cy}
+        r={coreR}
+        fill={colour}
+        fillOpacity={coreOp}
+        stroke={isComingSoon ? colour : 'none'}
+        strokeWidth={isComingSoon ? 1.5 : 0}
+        strokeDasharray={isComingSoon ? '3 3' : undefined}
+        strokeOpacity={isComingSoon ? 0.6 : 0}
+        filter={isHighlit ? `url(#${glowId})` : undefined}
+        style={{ transition: 'r 0.2s ease, fill-opacity 0.2s ease' }}
+      />
+
+      {/* Star label */}
       <text
         x={cx}
         y={labelY}
         textAnchor="middle"
         fontFamily="'Cinzel', serif"
-        fontSize={10}
-        fill={isComingSoon ? 'rgba(255,255,255,0.4)' : '#FFFFFF'}
+        fontSize={11}
+        fill={isComingSoon ? 'rgba(255,255,255,0.45)' : '#FFFFFF'}
         fontStyle={isComingSoon ? 'italic' : 'normal'}
-        opacity={labelOpacity}
-        style={{
-          transition: 'opacity 0.2s ease',
-          pointerEvents: 'none',
-          userSelect: 'none',
-        }}
+        opacity={labelOp}
+        style={{ transition: 'opacity 0.2s ease', pointerEvents: 'none', userSelect: 'none' }}
       >
         {star.label}
       </text>

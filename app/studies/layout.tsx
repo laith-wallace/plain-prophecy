@@ -14,6 +14,13 @@ export default function StudiesShellLayout({
 }) {
   const pathname = usePathname();
   const isIndex = pathname === "/studies";
+  const isMap = pathname === "/studies/map";
+
+  // Map gets fullscreen — no sidebar
+  if (isMap) {
+    return <>{children}</>;
+  }
+
   return (
     <StudiesLayout
       defaultSidebarOpen={!isIndex}

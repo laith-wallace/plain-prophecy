@@ -11,9 +11,9 @@ interface PulsarMapProps {
   data: PulsarMapData
 }
 
-const CANVAS_SIZE = 800
-const CENTRE = CANVAS_SIZE / 2       // 400
-const MAX_RADIUS = CANVAS_SIZE * 0.42 // 336px
+const CANVAS_SIZE = 1000
+const CENTRE = CANVAS_SIZE / 2        // 500
+const MAX_RADIUS = CANVAS_SIZE * 0.40  // 400px
 
 function starCoords(angle: number, distance: number) {
   const radians = ((angle - 90) * Math.PI) / 180
@@ -23,38 +23,39 @@ function starCoords(angle: number, distance: number) {
   }
 }
 
-// Static starfield — radial gradient dots to suggest depth
+// Static starfield background — varying sizes for depth
 function StarfieldBackground() {
-  // A set of fixed "background star" positions for depth effect
-  const staticStars = [
-    { x: 120, y: 80, r: 1 }, { x: 680, y: 100, r: 0.8 }, { x: 200, y: 300, r: 1.2 },
-    { x: 720, y: 250, r: 0.7 }, { x: 60, y: 500, r: 1 }, { x: 750, y: 560, r: 0.9 },
-    { x: 150, y: 680, r: 1.1 }, { x: 640, y: 720, r: 0.8 }, { x: 380, y: 50, r: 0.7 },
-    { x: 420, y: 760, r: 1 }, { x: 50, y: 180, r: 0.8 }, { x: 760, y: 400, r: 0.6 },
-    { x: 280, y: 130, r: 0.9 }, { x: 560, y: 650, r: 1.1 }, { x: 100, y: 620, r: 0.7 },
-    { x: 700, y: 170, r: 1 }, { x: 320, y: 740, r: 0.8 }, { x: 460, y: 90, r: 0.6 },
-    { x: 80, y: 350, r: 1.2 }, { x: 730, y: 680, r: 0.9 }, { x: 190, y: 450, r: 0.7 },
-    { x: 610, y: 120, r: 1 }, { x: 50, y: 720, r: 0.8 }, { x: 760, y: 320, r: 0.6 },
-    { x: 340, y: 30, r: 0.9 }, { x: 500, y: 770, r: 1.1 },
+  const stars = [
+    { x: 48,  y: 62,  r: 1.5, o: 0.6 }, { x: 142, y: 38,  r: 0.8, o: 0.4 },
+    { x: 234, y: 110, r: 1.2, o: 0.5 }, { x: 312, y: 28,  r: 0.6, o: 0.35 },
+    { x: 415, y: 55,  r: 1.8, o: 0.7 }, { x: 520, y: 18,  r: 0.9, o: 0.45 },
+    { x: 634, y: 72,  r: 1.3, o: 0.55 }, { x: 728, y: 35,  r: 0.7, o: 0.4 },
+    { x: 820, y: 88,  r: 1.6, o: 0.6 }, { x: 912, y: 44,  r: 1.0, o: 0.5 },
+    { x: 968, y: 130, r: 0.8, o: 0.35 }, { x: 22,  y: 200, r: 1.4, o: 0.55 },
+    { x: 88,  y: 310, r: 0.7, o: 0.3 }, { x: 25,  y: 450, r: 1.9, o: 0.65 },
+    { x: 72,  y: 580, r: 0.8, o: 0.4 }, { x: 18,  y: 700, r: 1.2, o: 0.5 },
+    { x: 55,  y: 820, r: 0.6, o: 0.35 }, { x: 30,  y: 930, r: 1.5, o: 0.6 },
+    { x: 950, y: 220, r: 1.1, o: 0.5 }, { x: 980, y: 380, r: 0.7, o: 0.35 },
+    { x: 960, y: 520, r: 1.8, o: 0.7 }, { x: 975, y: 650, r: 0.9, o: 0.45 },
+    { x: 945, y: 780, r: 1.3, o: 0.55 }, { x: 965, y: 900, r: 0.6, o: 0.3 },
+    { x: 160, y: 940, r: 1.7, o: 0.65 }, { x: 280, y: 970, r: 0.8, o: 0.4 },
+    { x: 400, y: 950, r: 1.2, o: 0.5 }, { x: 530, y: 978, r: 0.7, o: 0.35 },
+    { x: 660, y: 955, r: 1.5, o: 0.6 }, { x: 790, y: 968, r: 1.0, o: 0.45 },
+    { x: 880, y: 942, r: 0.8, o: 0.35 }, { x: 180, y: 180, r: 0.9, o: 0.3 },
+    { x: 780, y: 160, r: 1.1, o: 0.45 }, { x: 820, y: 820, r: 0.8, o: 0.35 },
+    { x: 190, y: 810, r: 1.3, o: 0.5 }, { x: 340, y: 870, r: 0.7, o: 0.3 },
+    { x: 680, y: 860, r: 1.0, o: 0.4 }, { x: 120, y: 550, r: 0.6, o: 0.25 },
+    { x: 880, y: 490, r: 1.2, o: 0.5 }, { x: 760, y: 680, r: 0.8, o: 0.35 },
+    { x: 240, y: 640, r: 1.4, o: 0.55 }, { x: 860, y: 300, r: 0.7, o: 0.3 },
+    { x: 148, y: 748, r: 1.0, o: 0.4 }, { x: 740, y: 420, r: 0.6, o: 0.25 },
+    { x: 390, y: 140, r: 1.6, o: 0.6 }, { x: 610, y: 880, r: 0.9, o: 0.4 },
+    { x: 500, y: 160, r: 0.7, o: 0.3 }, { x: 470, y: 840, r: 1.1, o: 0.45 },
   ]
 
   return (
     <g aria-hidden="true">
-      <rect
-        x={0}
-        y={0}
-        width={CANVAS_SIZE}
-        height={CANVAS_SIZE}
-        fill="radial-gradient(ellipse at center, #0D0D1A 0%, #08080F 100%)"
-      />
-      {staticStars.map((s, i) => (
-        <circle
-          key={i}
-          cx={s.x}
-          cy={s.y}
-          r={s.r}
-          fill="rgba(255,255,255,0.25)"
-        />
+      {stars.map((s, i) => (
+        <circle key={i} cx={s.x} cy={s.y} r={s.r} fill={`rgba(255,255,255,${s.o})`} />
       ))}
     </g>
   )
@@ -75,7 +76,7 @@ export default function PulsarMap({ data }: PulsarMapProps) {
     setActiveStarId(null)
   }, [])
 
-  // Close card on Escape key
+  // Escape key closes card
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setActiveStarId(null)
@@ -85,152 +86,130 @@ export default function PulsarMap({ data }: PulsarMapProps) {
   }, [])
 
   return (
-    <>
+    <div
+      style={{
+        position: 'relative',
+        width: '100%',
+        height: '100%',
+        flex: 1,
+        minHeight: 0,
+      }}
+    >
+      {/* Fullscreen SVG canvas */}
+      <svg
+        viewBox={`0 0 ${CANVAS_SIZE} ${CANVAS_SIZE}`}
+        preserveAspectRatio="xMidYMid meet"
+        xmlns="http://www.w3.org/2000/svg"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+        }}
+        role="img"
+        aria-label="God IS Love constellation map — every study orbiting a central truth"
+      >
+        <defs>
+          {/* Deep space background */}
+          <radialGradient id="bg-deep" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#0E0C1A" />
+            <stop offset="100%" stopColor="#050508" />
+          </radialGradient>
+
+          {/* Central nebula glow — warm gold emanating from pulsar */}
+          <radialGradient id="nebula-core" cx="50%" cy="50%" r="50%">
+            <stop offset="0%"  stopColor="rgba(201,168,76,0.18)" />
+            <stop offset="18%" stopColor="rgba(160,100,30,0.10)" />
+            <stop offset="40%" stopColor="rgba(60,40,100,0.07)" />
+            <stop offset="70%" stopColor="rgba(20,15,50,0.04)" />
+            <stop offset="100%" stopColor="rgba(0,0,0,0)" />
+          </radialGradient>
+
+          {/* Ambient purple nebula off-centre for depth */}
+          <radialGradient id="nebula-ambient" cx="35%" cy="60%" r="50%">
+            <stop offset="0%"  stopColor="rgba(80,50,160,0.09)" />
+            <stop offset="50%" stopColor="rgba(40,25,80,0.05)" />
+            <stop offset="100%" stopColor="rgba(0,0,0,0)" />
+          </radialGradient>
+        </defs>
+
+        {/* Base background */}
+        <rect x={0} y={0} width={CANVAS_SIZE} height={CANVAS_SIZE} fill="url(#bg-deep)" />
+
+        {/* Ambient purple nebula */}
+        <rect x={0} y={0} width={CANVAS_SIZE} height={CANVAS_SIZE} fill="url(#nebula-ambient)" />
+
+        {/* Central gold nebula glow */}
+        <rect x={0} y={0} width={CANVAS_SIZE} height={CANVAS_SIZE} fill="url(#nebula-core)" />
+
+        {/* Starfield */}
+        <StarfieldBackground />
+
+        {/* Constellation lines — behind stars */}
+        {data.stars.map(star => {
+          const { x, y } = starCoords(star.angle, star.distance)
+          return (
+            <ConstellationLine
+              key={star.id}
+              x1={CENTRE}
+              y1={CENTRE}
+              x2={x}
+              y2={y}
+              active={activeStarId === star.id}
+              category={star.category}
+            />
+          )
+        })}
+
+        {/* Star nodes — on top of lines */}
+        {data.stars.map(star => {
+          const { x, y } = starCoords(star.angle, star.distance)
+          return (
+            <ConstellationStar
+              key={star.id}
+              star={star}
+              cx={x}
+              cy={y}
+              isActive={activeStarId === star.id}
+              onClick={() => handleStarClick(star.id)}
+            />
+          )
+        })}
+
+        {/* Pulsar core — always on top */}
+        <PulsarCore cx={CENTRE} cy={CENTRE} />
+      </svg>
+
+      {/* Star card — outside SVG, positioned absolutely */}
+      {activeStar && (
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            zIndex: 50,
+            padding: '0 16px 24px',
+          }}
+          className="star-card-wrap"
+        >
+          <StarCard star={activeStar} onClose={handleClose} />
+        </div>
+      )}
+
       <style>{`
-        .pulsar-map-wrap {
-          position: relative;
-          width: 100%;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 0;
-        }
-
-        .pulsar-canvas-container {
-          width: 100%;
-          max-width: min(100vw, 480px);
-        }
-
-        .pulsar-canvas {
-          display: block;
-          width: 100%;
-          aspect-ratio: 1;
-        }
-
-        /* Star card — mobile: fixed bottom sheet */
-        .star-card-wrap {
-          position: fixed;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          z-index: 50;
-          padding: 0 16px 24px;
-          max-height: 85vh;
-          overflow-y: auto;
-        }
-
-        /* Desktop: side-by-side layout */
         @media (min-width: 768px) {
-          .pulsar-map-wrap {
-            flex-direction: row;
-            align-items: flex-start;
-            justify-content: center;
-            gap: 32px;
-          }
-
-          .pulsar-canvas-container {
-            flex: 0 0 60%;
-            max-width: 60%;
-          }
-
           .star-card-wrap {
-            position: sticky;
-            top: 80px;
-            bottom: auto;
-            left: auto;
-            right: auto;
-            flex: 0 0 38%;
-            max-width: 38%;
-            padding: 0;
-            max-height: calc(100vh - 120px);
-            overflow-y: auto;
-            z-index: 1;
-          }
-        }
-
-        @media (min-width: 1280px) {
-          .pulsar-canvas-container {
-            max-width: 560px;
-          }
-
-          .star-card-wrap {
-            max-width: 380px;
+            top: 50% !important;
+            bottom: auto !important;
+            left: auto !important;
+            right: 24px !important;
+            transform: translateY(-50%);
+            width: 360px;
+            padding: 0 !important;
           }
         }
       `}</style>
-
-      <div className="pulsar-map-wrap">
-        {/* SVG canvas */}
-        <div className="pulsar-canvas-container">
-          <svg
-            className="pulsar-canvas"
-            viewBox={`0 0 ${CANVAS_SIZE} ${CANVAS_SIZE}`}
-            xmlns="http://www.w3.org/2000/svg"
-            role="img"
-            aria-label="God IS Love constellation map — every study orbiting a central truth"
-          >
-            <defs>
-              <radialGradient id="bg-gradient" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="#0D0D1A" />
-                <stop offset="100%" stopColor="#08080F" />
-              </radialGradient>
-            </defs>
-
-            {/* Background */}
-            <rect
-              x={0}
-              y={0}
-              width={CANVAS_SIZE}
-              height={CANVAS_SIZE}
-              fill="url(#bg-gradient)"
-            />
-
-            {/* Static starfield */}
-            <StarfieldBackground />
-
-            {/* Constellation lines — behind stars */}
-            {data.stars.map(star => {
-              const { x, y } = starCoords(star.angle, star.distance)
-              return (
-                <ConstellationLine
-                  key={star.id}
-                  x1={CENTRE}
-                  y1={CENTRE}
-                  x2={x}
-                  y2={y}
-                  active={activeStarId === star.id}
-                  category={star.category}
-                />
-              )
-            })}
-
-            {/* Star nodes — on top of lines */}
-            {data.stars.map(star => {
-              const { x, y } = starCoords(star.angle, star.distance)
-              return (
-                <ConstellationStar
-                  key={star.id}
-                  star={star}
-                  cx={x}
-                  cy={y}
-                  isActive={activeStarId === star.id}
-                  onClick={() => handleStarClick(star.id)}
-                />
-              )
-            })}
-
-            {/* Pulsar core — always on top */}
-            <PulsarCore cx={CENTRE} cy={CENTRE} />
-          </svg>
-        </div>
-
-        {/* Star card — outside SVG */}
-        {activeStar && (
-          <div className="star-card-wrap">
-            <StarCard star={activeStar} onClose={handleClose} />
-          </div>
-        )}
-      </div>
-    </>
+    </div>
   )
 }
