@@ -1,14 +1,17 @@
+import { NextRequest } from "next/server";
 import {
   convexAuthNextjsMiddleware,
   createRouteMatcher,
   nextjsMiddlewareRedirect,
+  ConvexAuthNextjsMiddlewareContext,
 } from "@convex-dev/auth/nextjs/server";
 
 const isAdminRoute = createRouteMatcher(["/admin(.*)"]);
 const isLoginRoute = createRouteMatcher(["/admin/login"]);
 
-export default convexAuthNextjsMiddleware(async (request, { convexAuth }) => {
-  const isAuthenticated = await convexAuth.isAuthenticated();
+export default convexAuthNextjsMiddleware(
+  async (request: NextRequest, { convexAuth }: { convexAuth: ConvexAuthNextjsMiddlewareContext }) => {
+    const isAuthenticated = await convexAuth.isAuthenticated();
 
   // Redirect authenticated users away from the login page
   if (isLoginRoute(request) && isAuthenticated) {
