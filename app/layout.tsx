@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display, IBM_Plex_Sans, IBM_Plex_Mono, Geist } from "next/font/google";
+import { Playfair_Display, IBM_Plex_Sans, IBM_Plex_Mono, Geist, Cinzel, Inter } from "next/font/google";
 import "./globals.css";
 import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
 import PublicShell from "@/components/layout/PublicShell";
@@ -7,6 +7,18 @@ import { ConvexClientProvider } from "@/components/providers/ConvexClientProvide
 import { cn } from "@/lib/utils";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+
+const cinzel = Cinzel({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-cinzel",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-inter",
+});
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -103,7 +115,7 @@ export default function RootLayout({
     <ConvexAuthNextjsServerProvider>
       <html
         lang="en-GB"
-        className={cn(playfair.variable, ibmPlexSans.variable, ibmPlexMono.variable, "font-sans", geist.variable)}
+        className={cn(playfair.variable, ibmPlexSans.variable, ibmPlexMono.variable, "font-sans", geist.variable, cinzel.variable, inter.variable)}
         suppressHydrationWarning
       >
         <body className="antialiased" suppressHydrationWarning>
