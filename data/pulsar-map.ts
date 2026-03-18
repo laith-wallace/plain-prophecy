@@ -101,7 +101,7 @@ export const pulsarMapData: PulsarMapData = {
       scripture: 'Daniel 2:44',
       scriptureText: 'The God of heaven will set up a kingdom that will never be destroyed.',
       summary: 'A Babylonian king dreams of a statue made of four metals. Daniel interprets it. Six centuries later, every empire in the sequence had risen and fallen exactly as predicted. And the final kingdom — the Stone — is still coming.',
-      href: '/studies/prophecy/daniel-2',
+      href: '/studies/daniel/daniel-2',
     },
     {
       id: 'daniel-7',
@@ -114,7 +114,7 @@ export const pulsarMapData: PulsarMapData = {
       scripture: 'Daniel 7:13',
       scriptureText: 'One like a son of man, coming with the clouds of heaven.',
       summary: 'Daniel sees four terrifying beasts rise from a stormy sea — the same empires as Daniel 2, now seen from God\'s perspective. But the vision does not end with the beasts. It ends with a heavenly courtroom, a throne of fire, and a figure called the Son of Man receiving an everlasting kingdom.',
-      href: '/studies/prophecy/daniel-7',
+      href: '/studies/daniel/daniel-7',
     },
     {
       id: 'daniel-9',
@@ -127,7 +127,7 @@ export const pulsarMapData: PulsarMapData = {
       scripture: 'Daniel 9:25',
       scriptureText: 'From the going out of the word to restore Jerusalem to the coming of an anointed one.',
       summary: 'The 70-week prophecy is the most mathematically precise prophecy in Scripture. Starting with a Persian decree in 457 BC, it predicts the exact year of Jesus\' baptism, the year of His crucifixion, and the moment the Gospel goes to the Gentile world. The numbers land exactly.',
-      href: '/studies/prophecy/daniel-9',
+      href: '/studies/daniel/daniel-9',
     },
     {
       id: 'daniel-8',

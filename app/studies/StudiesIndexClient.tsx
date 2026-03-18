@@ -64,6 +64,11 @@ export default function StudiesIndexClient() {
             ✦ The Map
           </Link>
 
+          {/* Evidence link */}
+          <Link href="/evidence" className="si-map-btn">
+            ✦ Evidence
+          </Link>
+
           {/* Card / List toggle */}
           <StudiesViewToggle view={view} onChange={handleViewChange} />
         </div>

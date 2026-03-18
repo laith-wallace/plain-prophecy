@@ -123,7 +123,7 @@ export default function ConstellationStar({
         y={labelY}
         textAnchor="middle"
         fontFamily="'Cinzel', serif"
-        fontSize={11}
+        fontSize={16}
         fill={isComingSoon ? 'rgba(255,255,255,0.45)' : '#FFFFFF'}
         fontStyle={isComingSoon ? 'italic' : 'normal'}
         opacity={labelOp}
