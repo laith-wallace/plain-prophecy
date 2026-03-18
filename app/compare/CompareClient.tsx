@@ -103,7 +103,7 @@ export default function CompareClient() {
             </div>
             <div style={{ borderLeft: "3px solid var(--sda-primary, #2c5f2e)", paddingLeft: "1rem" }}>
               <div style={{ fontWeight: 700, fontSize: "0.85rem", marginBottom: "0.25rem" }}>Historicism</div>
-              <div style={{ fontSize: "0.85rem", color: "var(--neutral)" }}>Prophecy unfolds across church history — from Christ's first coming to His return. The Reformation consensus.</div>
+              <div style={{ fontSize: "0.85rem", color: "var(--neutral)" }}>Prophecy unfolds across church history — from Christ&rsquo;s first coming to His return. The Reformation consensus.</div>
             </div>
           </div>
         </div>

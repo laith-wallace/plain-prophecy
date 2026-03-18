@@ -767,10 +767,6 @@ export default function ProphetClient() {
   const [cardKey, setCardKey] = useState(0);
   const swipeCardRef = useRef<SwipeCardHandle>(null);
 
-  if (mode === null) {
-    return <GamePicker onSelect={setMode} />;
-  }
-
   const done = currentIndex >= prophecies.length && prophecies.length > 0;
   const currentProphecy = prophecies[currentIndex];
   const nextProphecy = prophecies[currentIndex + 1];
@@ -856,6 +852,10 @@ export default function ProphetClient() {
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, [currentIndex, revealOpen, done, hideHints, handleReveal]);
+
+  if (mode === null) {
+    return <GamePicker onSelect={setMode} />;
+  }
 
   if (done) {
     return (

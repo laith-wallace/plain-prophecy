@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useCallback, useEffect, useRef } from 'react'
-import { PulsarMapData, PulsarStar } from '@/data/pulsar-map'
+import { PulsarMapData } from '@/data/pulsar-map'
 import PulsarCore from './PulsarCore'
 import ConstellationLine from './ConstellationLine'
 import ConstellationStar from './ConstellationStar'
