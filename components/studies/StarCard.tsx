@@ -246,7 +246,7 @@ export default function StarCard({ star, onClose }: StarCardProps) {
           <Link
             href={star.href}
             style={{
-              display: 'inline-block',
+              display: 'block',
               fontFamily: "'Inter', sans-serif",
               fontSize: 13,
               fontWeight: 600,
@@ -267,21 +267,24 @@ export default function StarCard({ star, onClose }: StarCardProps) {
               (e.currentTarget.style.background = 'transparent')
             }
           >
-            Explore this study →
+            Start study →
           </Link>
         ) : (
           <div
             style={{
               fontFamily: "'Inter', sans-serif",
               fontSize: 13,
-              color: 'rgba(255,255,255,0.35)',
+              fontWeight: 600,
+              color: 'rgba(255,255,255,0.2)',
               border: '1px solid rgba(255,255,255,0.08)',
               borderRadius: 8,
               padding: '10px 18px',
               textAlign: 'center',
+              letterSpacing: '0.02em',
+              cursor: 'default',
             }}
           >
-            Coming soon — drop your email to get notified
+            Coming soon
           </div>
         )}
       </div>

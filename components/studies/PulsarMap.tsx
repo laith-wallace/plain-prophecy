@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 import { PulsarMapData, PulsarStar } from '@/data/pulsar-map'
 import PulsarCore from './PulsarCore'
 import ConstellationLine from './ConstellationLine'
@@ -172,14 +172,27 @@ function StarfieldBackground() {
   )
 }
 
+const DRAG_THRESHOLD = 4 // px — movement required to count as a drag
+
 export default function PulsarMap({ data }: PulsarMapProps) {
   const [activeStarId, setActiveStarId] = useState<string | null>(null)
+  const [pan, setPan] = useState({ x: 0, y: 0 })
+  const [isDragging, setIsDragging] = useState(false)
+  const dragStart = useRef<{ px: number; py: number; ox: number; oy: number } | null>(null)
+  const hasDragged = useRef(false)
+  // Stable ref to current pan so the window listener doesn't need pan as a dep
+  const panRef = useRef(pan)
+  panRef.current = pan
 
   const activeStar: PulsarStar | undefined = activeStarId
     ? data.stars.find(s => s.id === activeStarId)
     : undefined
 
   const handleStarClick = useCallback((id: string) => {
+    if (hasDragged.current) {
+      hasDragged.current = false
+      return
+    }
     setActiveStarId((prev: string | null) => (prev === id ? null : id))
   }, [])
 
@@ -187,29 +200,64 @@ export default function PulsarMap({ data }: PulsarMapProps) {
     setActiveStarId(null)
   }, [])
 
+  const handlePointerDown = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    if ((e.target as Element).closest('a, button')) return
+    const { x, y } = panRef.current
+    dragStart.current = { px: e.clientX, py: e.clientY, ox: x, oy: y }
+    hasDragged.current = false
+  }, [])
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setActiveStarId(null)
     }
+    const onMove = (e: PointerEvent) => {
+      if (!dragStart.current) return
+      const dx = e.clientX - dragStart.current.px
+      const dy = e.clientY - dragStart.current.py
+      if (!hasDragged.current && Math.hypot(dx, dy) < DRAG_THRESHOLD) return
+      hasDragged.current = true
+      if (!isDragging) setIsDragging(true)
+      setPan({ x: dragStart.current.ox + dx, y: dragStart.current.oy + dy })
+    }
+    const onUp = () => {
+      if (dragStart.current) {
+        dragStart.current = null
+        setIsDragging(false)
+      }
+    }
     window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [])
+    window.addEventListener('pointermove', onMove)
+    window.addEventListener('pointerup', onUp)
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      window.removeEventListener('pointermove', onMove)
+      window.removeEventListener('pointerup', onUp)
+    }
+  }, [isDragging])
 
   return (
     <div
+      onPointerDown={handlePointerDown}
       style={{
         position: 'relative',
         width: '100%',
         height: '100%',
         flex: 1,
         minHeight: 0,
+        overflow: 'hidden',
+        cursor: isDragging ? 'grabbing' : 'grab',
       }}
     >
       <svg
         viewBox={`0 0 ${CANVAS_SIZE} ${CANVAS_SIZE}`}
         preserveAspectRatio="xMidYMid meet"
         xmlns="http://www.w3.org/2000/svg"
-        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
+        style={{
+          position: 'absolute', inset: 0, width: '100%', height: '100%',
+          transform: `translate(${pan.x}px, ${pan.y}px)`,
+          willChange: 'transform',
+        }}
         role="img"
         aria-label="God IS Love constellation map — every study orbiting a central truth"
       >

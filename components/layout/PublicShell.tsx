@@ -8,12 +8,15 @@ import { ReactNode } from "react";
 export default function PublicShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const isAdmin = pathname?.startsWith("/admin");
+  const isMap = pathname === "/studies/map";
+
+  if (isAdmin || isMap) return <>{children}</>;
 
   return (
     <>
-      {!isAdmin && <SiteNav />}
+      <SiteNav />
       {children}
-      {!isAdmin && <SiteFooter />}
+      <SiteFooter />
     </>
   );
 }

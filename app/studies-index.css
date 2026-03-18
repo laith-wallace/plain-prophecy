@@ -154,6 +154,28 @@
   50% { opacity: 1; }
 }
 
+/* ── Map button ───────────────────────────────────────────────────────────── */
+.si-map-btn {
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #C9A84C;
+  border: 1px solid rgba(201,168,76,0.4);
+  border-radius: 20px;
+  padding: 5px 14px;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.15s;
+  height: 36px;
+  display: flex;
+  align-items: center;
+}
+.si-map-btn:hover {
+  background: rgba(201,168,76,0.1);
+}
+
 /* ── View Toggle ──────────────────────────────────────────────────────────── */
 .svt-root {
   display: flex;

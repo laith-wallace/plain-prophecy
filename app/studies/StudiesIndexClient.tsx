@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import StudyCardDeck from "@/components/studies/StudyCardDeck";
 import StudyListView from "@/components/studies/StudyListView";
@@ -57,6 +58,11 @@ export default function StudiesIndexClient() {
             </select>
             <span className="si-filter-chevron" aria-hidden="true">›</span>
           </div>
+
+          {/* Map link */}
+          <Link href="/studies/map" className="si-map-btn">
+            ✦ The Map
+          </Link>
 
           {/* Card / List toggle */}
           <StudiesViewToggle view={view} onChange={handleViewChange} />
