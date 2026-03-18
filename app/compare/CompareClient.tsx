@@ -77,14 +77,34 @@ export default function CompareClient() {
             Biblical Prophecy · Hermeneutical Comparison · Scholarly Analysis
           </div>
           <h1 style={{ fontFamily: "var(--font-playfair)", fontSize: "clamp(1.6rem, 4vw, 3rem)", fontWeight: 900, lineHeight: 1.1, letterSpacing: "-0.02em" }}>
-            Evangelical Futurism
-            <span style={{ fontSize: "0.55em", fontWeight: 400, fontStyle: "italic", color: "var(--neutral)", display: "inline", margin: "0 0.4em" }}>·</span>
-            Preterism
-            <span style={{ fontSize: "0.55em", fontWeight: 400, fontStyle: "italic", color: "var(--neutral)", display: "inline", margin: "0 0.4em" }}>·</span>
-            SDA Historicism
+            Futurism vs Preterism vs Historicism
           </h1>
           <div style={{ fontSize: "0.9rem", color: "var(--neutral)", marginTop: "0.75rem", fontStyle: "italic" }}>
             A comparative analysis of prophetic timelines and their biblical foundations
+          </div>
+        </div>
+
+        {/* Central Hermeneutical Divide Card */}
+        <div style={{ background: "var(--surface, #f8f5ef)", border: "2px solid var(--ink)", borderRadius: "0.5rem", padding: "2rem 2.5rem", marginBottom: "3rem", position: "relative" }}>
+          <div style={{ fontFamily: "var(--font-ibm-plex-mono)", fontSize: "0.65rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--neutral)", marginBottom: "0.75rem" }}>
+            ⚑ The Central Hermeneutical Divide
+          </div>
+          <p style={{ fontFamily: "var(--font-playfair)", fontSize: "clamp(1rem, 2vw, 1.2rem)", lineHeight: 1.6, margin: "0 0 1rem" }}>
+            Every prophetic system stands or falls on one question: <em>when do the prophecies of Daniel and Revelation find their fulfilment?</em>
+          </p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1rem", marginTop: "1.25rem" }}>
+            <div style={{ borderLeft: "3px solid var(--futurist-primary, #c0392b)", paddingLeft: "1rem" }}>
+              <div style={{ fontWeight: 700, fontSize: "0.85rem", marginBottom: "0.25rem" }}>Futurism</div>
+              <div style={{ fontSize: "0.85rem", color: "var(--neutral)" }}>Most prophecy is still future — a 7-year tribulation, a literal rebuilt temple, a rapture before the end.</div>
+            </div>
+            <div style={{ borderLeft: "3px solid var(--preterist-primary, #7f8c8d)", paddingLeft: "1rem" }}>
+              <div style={{ fontWeight: 700, fontSize: "0.85rem", marginBottom: "0.25rem" }}>Preterism</div>
+              <div style={{ fontSize: "0.85rem", color: "var(--neutral)" }}>Most prophecy was fulfilled in the 1st century — the destruction of Jerusalem in 70 AD.</div>
+            </div>
+            <div style={{ borderLeft: "3px solid var(--sda-primary, #2c5f2e)", paddingLeft: "1rem" }}>
+              <div style={{ fontWeight: 700, fontSize: "0.85rem", marginBottom: "0.25rem" }}>Historicism</div>
+              <div style={{ fontSize: "0.85rem", color: "var(--neutral)" }}>Prophecy unfolds across church history — from Christ's first coming to His return. The Reformation consensus.</div>
+            </div>
           </div>
         </div>
 

@@ -217,8 +217,9 @@ export default function HomePage() {
         <div className="section-inner">
           <div className="home-paths-grid">
             {paths.map((p, i) => (
-              <div 
-                key={p.label} 
+              <Link
+                key={p.label}
+                href={p.href}
                 className="path-card"
                 data-animate
                 data-animate-delay={String(i * 100)}
@@ -226,10 +227,10 @@ export default function HomePage() {
               >
                 <div className="path-label">{p.label}</div>
                 <p className="path-desc">{p.desc}</p>
-                <Link href={p.href} className="path-cta">
+                <span className="path-cta">
                   {p.cta}
-                </Link>
-              </div>
+                </span>
+              </Link>
             ))}
           </div>
         </div>
