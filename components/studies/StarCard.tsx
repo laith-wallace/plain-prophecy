@@ -58,17 +58,35 @@ export default function StarCard({ star, onClose }: StarCardProps) {
             transform: none;
           }
         }
+        /* Mobile: constrain card height, allow inner scroll, round top corners */
+        @media (max-width: 767px) {
+          .star-card {
+            max-height: 70vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 20px 20px 0 0 !important;
+            padding-bottom: max(16px, env(safe-area-inset-bottom)) !important;
+          }
+          .star-card h2 {
+            font-size: 20px !important;
+          }
+        }
+        /* Desktop: no backdrop (card sits beside the map) */
+        @media (min-width: 768px) {
+          .star-card-backdrop {
+            display: none !important;
+          }
+        }
       `}</style>
 
-      {/* Mobile backdrop */}
+      {/* Mobile backdrop — visible only on small screens */}
       <div
         className="star-card-backdrop"
         style={{
           position: 'fixed',
           inset: 0,
           zIndex: 40,
-          background: 'rgba(0,0,0,0.5)',
-          display: 'none',
+          background: 'rgba(0,0,0,0.6)',
         }}
         onClick={onClose}
         aria-hidden="true"

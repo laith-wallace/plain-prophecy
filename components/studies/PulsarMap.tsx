@@ -205,7 +205,11 @@ export default function PulsarMap({ data }: PulsarMapProps) {
     if (!el) return
     const { width: W, height: H } = el.getBoundingClientRect()
     if (!W || !H) return
-    const k = Math.min(W / CANVAS_SIZE, H / CANVAS_SIZE) * 0.85
+    const isMobile = W < 768
+    // Mobile: zoom in so the core + nearest stars fill the viewport width.
+    // Desktop: show the whole map with breathing room.
+    const fitK = Math.min(W / CANVAS_SIZE, H / CANVAS_SIZE)
+    const k = isMobile ? fitK * 1.35 : fitK * 0.85
     const x = (W - CANVAS_SIZE * k) / 2
     const y = (H - CANVAS_SIZE * k) / 2
     T.current    = { x, y, k }
@@ -336,6 +340,9 @@ export default function PulsarMap({ data }: PulsarMapProps) {
         cursor: 'grab',
         background: '#010408',
         touchAction: 'none',
+        userSelect: 'none',
+        WebkitUserSelect: 'none',
+        overscrollBehavior: 'none',
       }}
     >
       {/* ── SVG — fills container, no preserveAspectRatio, we own all transforms ── */}
@@ -457,6 +464,7 @@ export default function PulsarMap({ data }: PulsarMapProps) {
 
       {/* ── Zoom controls ── */}
       <div
+        className={`zoom-controls${activeStarId ? ' card-open' : ''}`}
         style={{ position: 'absolute', bottom: 88, right: 16, zIndex: 30, display: 'flex', flexDirection: 'column', gap: 4 }}
         aria-label="Zoom controls"
       >
@@ -494,6 +502,19 @@ export default function PulsarMap({ data }: PulsarMapProps) {
       </div>
 
       <style>{`
+        /* ── Mobile: card slides up from bottom ── */
+        .star-card-wrap {
+          padding-bottom: max(24px, env(safe-area-inset-bottom)) !important;
+        }
+
+        /* ── Mobile: move zoom controls above the open card ── */
+        @media (max-width: 767px) {
+          .zoom-controls.card-open {
+            bottom: calc(72vh + 8px) !important;
+          }
+        }
+
+        /* ── Desktop: card floats on the right side ── */
         @media (min-width: 768px) {
           .star-card-wrap {
             top: 50% !important;

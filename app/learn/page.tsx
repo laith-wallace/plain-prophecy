@@ -251,7 +251,7 @@ export default function LearnPage() {
               Compare Frameworks →
             </Link>
             <Link
-              href="/prophet"
+              href="/games"
               style={{
                 display: "inline-block",
                 border: "2px solid var(--ink)",
@@ -264,7 +264,7 @@ export default function LearnPage() {
                 textDecoration: "none",
               }}
             >
-              Try Prophet →
+              Try Games →
             </Link>
           </div>
         </div>

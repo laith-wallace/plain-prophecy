@@ -41,7 +41,7 @@ export default function PulsarMapPage() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          padding: '28px 24px 0',
+          padding: 'clamp(14px, 3vw, 28px) 16px 0',
           pointerEvents: 'none',
         }}
       >
@@ -130,11 +130,11 @@ export default function PulsarMapPage() {
           left: 0,
           right: 0,
           zIndex: 10,
-          padding: '0 24px 20px',
+          padding: 'clamp(0px, 2vw, 0px) 16px max(16px, env(safe-area-inset-bottom))',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: 12,
+          gap: 10,
           pointerEvents: 'none',
         }}
       >

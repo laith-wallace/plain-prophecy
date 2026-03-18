@@ -1290,6 +1290,10 @@ body {
     cursor: pointer;
     transition: background 0.15s;
     border-radius: 2px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
 }
 
 .prophet-map-btn:hover {
@@ -1514,13 +1518,17 @@ body {
     right: 0;
     background: var(--paper);
     color: var(--ink);
-    max-height: 85vh;
-    overflow-y: auto;
+    /* Use dvh so browser chrome doesn't cause overflow */
+    max-height: 92dvh;
+    display: flex;
+    flex-direction: column;
     z-index: 51;
-    border-radius: 8px 8px 0 0;
+    border-radius: 12px 12px 0 0;
     box-shadow: 0 -8px 40px rgba(0,0,0,0.5);
     transform: translateY(100%);
     transition: transform 0.32s cubic-bezier(0.32, 0.72, 0, 1);
+    /* Prevent body scroll bleed on iOS */
+    overscroll-behavior: contain;
 }
 
 .reveal-panel.open {
@@ -1566,6 +1574,14 @@ body {
     text-transform: uppercase;
     color: var(--neutral);
     margin-top: 0.4rem;
+}
+
+/* Scrollable body — grows to fill panel, actions stay pinned below */
+.reveal-scrollable {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
 }
 
 .reveal-section {
@@ -1623,11 +1639,73 @@ body {
     color: rgba(247,243,236,0.9);
 }
 
-.reveal-actions {
-    padding: 1.25rem 1.75rem calc(2rem + env(safe-area-inset-bottom, 0px));
+/* Love of God section — warm gold strip */
+.reveal-love-section {
+    background: rgba(201, 168, 76, 0.08);
+    border-top: 2px solid rgba(201, 168, 76, 0.3);
+    padding: 1.25rem 1.75rem 1.5rem;
+}
+
+.reveal-love-eyebrow {
+    font-family: var(--font-ibm-plex-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #9a7a28;
+    margin-bottom: 0.6rem;
     display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.reveal-love-eyebrow::before {
+    content: '♥';
+    font-size: 0.7rem;
+    color: #C9A84C;
+}
+
+.reveal-love-section p {
+    font-family: var(--font-playfair);
+    font-size: 0.95rem;
+    font-style: italic;
+    line-height: 1.7;
+    color: #5a4510;
+}
+
+/* Actions — sticky at the bottom of the panel */
+.reveal-actions {
+    flex-shrink: 0;
+    padding: 1rem 1.25rem calc(1.25rem + env(safe-area-inset-bottom, 0px));
+    display: flex;
+    gap: 0.6rem;
+    border-top: 1px solid var(--divider);
+    background: var(--paper);
+}
+
+.reveal-study-link {
+    flex: 1;
+    background: none;
+    border: 2px solid var(--ink);
+    color: var(--ink);
+    font-family: var(--font-ibm-plex-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.85rem 0.75rem;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    font-weight: 600;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 48px;
+}
+
+.reveal-study-link:hover {
+    background: var(--ink);
+    color: var(--paper);
 }
 
 .reveal-close-btn {
@@ -1664,6 +1742,7 @@ body {
     cursor: pointer;
     font-weight: 700;
     transition: opacity 0.15s;
+    min-height: 48px;
 }
 
 .reveal-next-btn:hover {
@@ -1689,7 +1768,7 @@ body {
     border-radius: 6px;
     padding: 1.25rem;
     width: min(500px, 100%);
-    max-height: 85vh;
+    max-height: 85dvh;
     display: flex;
     flex-direction: column;
 }
@@ -1718,6 +1797,11 @@ body {
     padding: 0.25rem;
     line-height: 1;
     transition: color 0.15s;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .map-close-btn:hover {
@@ -1842,6 +1926,10 @@ body {
     padding: 0.85rem 1.75rem;
     cursor: pointer;
     transition: border-color 0.15s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
 }
 
 .completion-map-btn:hover {
@@ -1850,33 +1938,42 @@ body {
 
 @media (max-width: 480px) {
     .card-stack {
-        height: 440px;
+        height: 420px;
     }
     .reveal-panel {
-        max-height: 90vh;
-        border-radius: 10px 10px 0 0;
+        /* On small phones allow the panel to be nearly full screen */
+        max-height: 96dvh;
     }
     .swipe-card-inner {
-        padding: 1.5rem 1.5rem 1.25rem;
+        padding: 1.5rem 1.25rem 1.25rem;
     }
     .card-symbol {
-        font-size: 3rem;
-        margin-bottom: 1.25rem;
+        font-size: 2.8rem;
+        margin-bottom: 1rem;
     }
     .card-title {
-        font-size: 1.45rem;
+        font-size: 1.4rem;
     }
     .reveal-section {
-        padding: 1rem 1.25rem;
+        padding: 0.9rem 1.1rem;
     }
     .reveal-panel-header {
-        padding: 1rem 1.25rem 0.85rem;
+        padding: 0.9rem 1.1rem 0.75rem;
     }
     .reveal-christ-anchor {
-        padding: 1.25rem;
+        padding: 1.1rem;
+    }
+    .reveal-love-section {
+        padding: 1rem 1.1rem 1.25rem;
     }
     .reveal-actions {
-        padding: 1rem 1.25rem calc(1.75rem + env(safe-area-inset-bottom, 0px));
+        padding: 0.85rem 1rem calc(0.85rem + env(safe-area-inset-bottom, 0px));
+        gap: 0.5rem;
+    }
+    .reveal-study-link,
+    .reveal-next-btn {
+        font-size: 0.62rem;
+        padding: 0.8rem 0.5rem;
     }
 }
 
@@ -1966,4 +2063,248 @@ body {
     height: 100%;
     background: var(--sda-accent);
     transition: width 0.4s ease;
+}
+
+/* ===== GAME PICKER ===== */
+
+.game-picker {
+    min-height: 100dvh;
+    background: var(--ink);
+    color: var(--paper);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(1.5rem, 5vw, 4rem) 1.25rem max(1.5rem, env(safe-area-inset-bottom));
+    text-align: center;
+    overflow-y: auto;
+}
+
+.game-picker-eyebrow {
+    font-family: var(--font-ibm-plex-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(201,168,76,0.55);
+    margin-bottom: 1.25rem;
+}
+
+.game-picker-title {
+    font-family: var(--font-playfair);
+    font-size: clamp(1.9rem, 5vw, 3rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1.12;
+    margin-bottom: 0.85rem;
+}
+
+.game-picker-title span {
+    color: var(--sda-accent);
+}
+
+.game-picker-subtitle {
+    font-size: 0.9rem;
+    line-height: 1.65;
+    opacity: 0.5;
+    max-width: 400px;
+    margin-bottom: 2.5rem;
+}
+
+.game-picker-cards {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    max-width: 640px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.game-picker-card {
+    flex: 1;
+    min-width: min(260px, 90vw);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    padding: 1.75rem 1.5rem;
+    cursor: pointer;
+    text-align: left;
+    text-decoration: none;
+    color: var(--paper);
+    transition: background 0.18s, border-color 0.18s, transform 0.12s;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.game-picker-card:hover,
+.game-picker-card:focus-visible {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.28);
+    transform: translateY(-2px);
+    outline: none;
+}
+
+.game-picker-card:active {
+    transform: translateY(0);
+}
+
+.game-picker-card--gospel {
+    border-color: rgba(201,168,76,0.25);
+    background: rgba(201,168,76,0.05);
+}
+
+.game-picker-card--gospel:hover,
+.game-picker-card--gospel:focus-visible {
+    border-color: rgba(201,168,76,0.55);
+    background: rgba(201,168,76,0.1);
+}
+
+.game-picker-card-symbol {
+    font-size: 2.2rem;
+    line-height: 1;
+    margin-bottom: 0.75rem;
+}
+
+.game-picker-card-label {
+    font-family: var(--font-ibm-plex-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.45;
+    margin-bottom: 0.2rem;
+}
+
+.game-picker-card--gospel .game-picker-card-label {
+    color: #C9A84C;
+    opacity: 0.8;
+}
+
+.game-picker-card-title {
+    font-family: var(--font-playfair);
+    font-size: 1.3rem;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+}
+
+.game-picker-card-desc {
+    font-size: 0.82rem;
+    line-height: 1.6;
+    opacity: 0.55;
+    flex: 1;
+}
+
+.game-picker-card-meta {
+    font-family: var(--font-ibm-plex-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.35;
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.game-picker-card--gospel .game-picker-card-meta {
+    border-top-color: rgba(201,168,76,0.18);
+    color: #C9A84C;
+    opacity: 0.6;
+}
+
+/* Revelation picker card — blue-grey variant */
+.game-picker-card--revelation {
+    border-color: rgba(122,154,187,0.25);
+    background: rgba(122,154,187,0.05);
+}
+
+.game-picker-card--revelation:hover,
+.game-picker-card--revelation:focus-visible {
+    border-color: rgba(122,154,187,0.55);
+    background: rgba(122,154,187,0.12);
+}
+
+.game-picker-card--revelation .game-picker-card-label {
+    color: #7A9ABB;
+    opacity: 0.85;
+}
+
+.game-picker-card--revelation .game-picker-card-meta {
+    border-top-color: rgba(122,154,187,0.18);
+    color: #7A9ABB;
+    opacity: 0.6;
+}
+
+.game-picker-footer {
+    margin-top: 0.5rem;
+}
+
+.game-picker-map-link {
+    font-family: var(--font-ibm-plex-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(201,168,76,0.5);
+    text-decoration: none;
+    transition: color 0.15s;
+}
+
+.game-picker-map-link:hover {
+    color: rgba(201,168,76,0.85);
+}
+
+/* ===== GOSPEL CARD — warm cream variant ===== */
+
+/* Gospel swipe cards use a warm parchment background with gold accent */
+.gospel-swipe-card {
+    background: #FDFAF3;
+}
+
+.gospel-swipe-card .card-symbol {
+    color: #C9A84C;
+}
+
+.gospel-swipe-card .card-title {
+    color: #1a1410;
+}
+
+.gospel-swipe-card .card-subtitle {
+    color: rgba(26, 20, 16, 0.6);
+}
+
+.gospel-swipe-card .card-scripture {
+    color: #C9A84C;
+    border-top-color: rgba(201, 168, 76, 0.25);
+    opacity: 1;
+}
+
+/* ===== REVELATION CARD — deep blue-night variant ===== */
+
+.revelation-swipe-card {
+    background: #0E1B2E;
+    color: #E8E4DC;
+}
+
+.revelation-swipe-card .card-number {
+    color: rgba(122,154,187,0.6);
+    opacity: 1;
+}
+
+.revelation-swipe-card .card-symbol {
+    color: #7A9ABB;
+}
+
+.revelation-swipe-card .card-title {
+    color: #F7F3EC;
+}
+
+.revelation-swipe-card .card-subtitle {
+    color: rgba(232,228,220,0.55);
+}
+
+.revelation-swipe-card .card-scripture {
+    color: #7A9ABB;
+    border-top-color: rgba(122,154,187,0.25);
+    opacity: 1;
 }

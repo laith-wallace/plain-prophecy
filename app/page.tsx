@@ -143,8 +143,8 @@ const paths = [
   {
     label: "Learn by doing",
     desc: "Swipe through 8 Daniel prophecies — commit to an answer before the reveal, then see how history and Scripture converge on Christ.",
-    href: "/prophet",
-    cta: "Start Prophet →",
+    href: "/games",
+    cta: "Start Games →",
     accent: "var(--sda-accent)",
   },
 ];

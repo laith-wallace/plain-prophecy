@@ -6,7 +6,7 @@ const exploreLinks = [
   { href: "/evidence", label: "Evidence" },
   { href: "/doctrine", label: "Doctrine" },
   { href: "/blog", label: "Blog" },
-  { href: "/prophet", label: "Prophet" },
+  { href: "/games", label: "Games" },
 ];
 
 const learnLinks = [

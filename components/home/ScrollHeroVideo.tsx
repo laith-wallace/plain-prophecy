@@ -118,7 +118,7 @@ export default function ScrollHeroVideo() {
               <br />
               See how Scripture and archaeology converge on Christ.
             </p>
-            <Link href="/prophet" className="scroll-hero-cta scroll-hero-visible">
+            <Link href="/games" className="scroll-hero-cta scroll-hero-visible">
               Explore the Prophecies →
             </Link>
           </div>
@@ -160,7 +160,7 @@ export default function ScrollHeroVideo() {
             <br />
             See how Scripture and archaeology converge on Christ.
           </p>
-          <Link href="/prophet" ref={ctaRef} className="scroll-hero-cta">
+          <Link href="/games" ref={ctaRef} className="scroll-hero-cta">
             Explore the Prophecies →
           </Link>
         </div>

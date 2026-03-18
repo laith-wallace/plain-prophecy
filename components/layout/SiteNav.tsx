@@ -9,7 +9,7 @@ const links = [
   { href: "/studies/map", label: "Map" },
   { href: "/compare", label: "Compare" },
   { href: "/learn", label: "Learn" },
-  { href: "/prophet", label: "Prophet" },
+  { href: "/games", label: "Games" },
   { href: "/about", label: "About" },
 ];
 

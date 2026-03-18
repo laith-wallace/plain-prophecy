@@ -99,6 +99,23 @@ The site is written from a **Seventh-day Adventist perspective**. This is not hi
 
 ---
 
+## Design Philosophy
+
+### Mobile-first, always
+**Every UI component, page, and feature must be designed mobile-first.** Our audience (16–24 year olds) primarily accesses this site on their phones. This is the law:
+
+- **Design and build for mobile first, then enhance for desktop.** If it looks great on desktop but broken on mobile, it is broken, full stop.
+- Use `clamp()`, `min()`, `max()`, and responsive units (`dvh`, `dvw`, `svh`) rather than fixed pixel sizes wherever the layout may differ across screen sizes.
+- Always handle `env(safe-area-inset-bottom)` and `env(safe-area-inset-top)` for full-screen layouts — iPhones have notches and home indicators.
+- Touch interactions must be deliberate: tap targets minimum 44×44px, appropriate `touchAction`, and smooth pinch/pan for any zoomable canvas.
+- Test at 390px width (iPhone 15) as the baseline viewport before checking desktop.
+- Scrollable containers on mobile must use `-webkit-overflow-scrolling: touch` and sensible `max-height` constraints.
+- `position: fixed` full-screen overlays must account for browser chrome — prefer `100dvh` over `100vh`.
+
+**Beautiful desktop is a bonus. Working mobile is the baseline.**
+
+---
+
 ## Tech Stack
 
 ### Approved stack
