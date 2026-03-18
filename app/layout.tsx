@@ -4,6 +4,9 @@ import "./globals.css";
 import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
 import PublicShell from "@/components/layout/PublicShell";
 import { ConvexClientProvider } from "@/components/providers/ConvexClientProvider";
+import PostHogProvider from "@/components/providers/PostHogProvider";
+import PostHogPageView from "@/components/providers/PostHogPageView";
+import { Suspense } from "react";
 import { cn } from "@/lib/utils";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
@@ -129,11 +132,16 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <body className="antialiased" suppressHydrationWarning>
-          <ConvexClientProvider>
-            <PublicShell>
-              {children}
-            </PublicShell>
-          </ConvexClientProvider>
+          <PostHogProvider>
+            <ConvexClientProvider>
+              <PublicShell>
+                <Suspense fallback={null}>
+                  <PostHogPageView />
+                </Suspense>
+                {children}
+              </PublicShell>
+            </ConvexClientProvider>
+          </PostHogProvider>
         </body>
       </html>
     </ConvexAuthNextjsServerProvider>

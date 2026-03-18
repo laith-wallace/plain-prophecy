@@ -65,6 +65,7 @@ export default function SiteNav() {
             <Link
               key={l.href}
               href={l.href}
+              prefetch={true}
               style={{
                 fontFamily: "var(--font-ibm-plex-mono)",
                 fontSize: "0.7rem",
@@ -118,6 +119,7 @@ export default function SiteNav() {
             <Link
               key={l.href}
               href={l.href}
+              prefetch={true}
               onClick={() => setOpen(false)}
               style={{
                 fontFamily: "var(--font-ibm-plex-mono)",

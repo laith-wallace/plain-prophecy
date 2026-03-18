@@ -9,6 +9,7 @@ interface ConstellationStarProps {
   cy: number
   isActive: boolean
   onClick: () => void
+  dimmed?: boolean
 }
 
 const CATEGORY_COLOURS: Record<StarCategory, string> = {
@@ -30,6 +31,7 @@ export default function ConstellationStar({
   cy,
   isActive,
   onClick,
+  dimmed = false,
 }: ConstellationStarProps) {
   const [hovered, setHovered] = useState(false)
 
@@ -66,7 +68,7 @@ export default function ConstellationStar({
       aria-label={`${star.label}${isComingSoon ? ' (coming soon)' : ''}`}
       aria-pressed={isActive}
       tabIndex={0}
-      style={{ cursor: 'pointer', outline: 'none' }}
+      style={{ cursor: 'pointer', outline: 'none', opacity: dimmed ? 0.1 : 1, transition: 'opacity 0.3s ease' }}
       onClick={onClick}
       onKeyDown={handleKeyDown}
       onMouseEnter={() => setHovered(true)}

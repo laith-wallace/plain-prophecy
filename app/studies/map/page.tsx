@@ -8,12 +8,6 @@ export const metadata: Metadata = {
   description: 'Every study. Every prophecy. Every doctrine. One truth at the centre.',
 }
 
-const CATEGORY_LEGEND = [
-  { label: 'The Gospel', colour: '#C9A84C', bg: 'rgba(201,168,76,0.12)' },
-  { label: 'Prophecy',   colour: '#7A9ABB', bg: 'rgba(90,130,170,0.12)' },
-  { label: 'Doctrine',   colour: '#B8906A', bg: 'rgba(180,140,100,0.12)' },
-]
-
 export default function PulsarMapPage() {
   return (
     /*
@@ -119,99 +113,8 @@ export default function PulsarMapPage() {
         </p>
       </header>
 
-      {/* ── Map fills the rest ── */}
+      {/* ── Map fills the rest (psalm + filter pills rendered inside PulsarMap) ── */}
       <PulsarMap data={pulsarMapData} />
-
-      {/* ── Bottom overlay: scripture + legend ── */}
-      <footer
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          zIndex: 10,
-          padding: 'clamp(0px, 2vw, 0px) 16px max(16px, env(safe-area-inset-bottom))',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: 10,
-          pointerEvents: 'none',
-        }}
-      >
-        {/* Psalm quote */}
-        <p
-          style={{
-            fontFamily: "'Cinzel', serif",
-            fontSize: 'clamp(10px, 1.2vw, 12px)',
-            fontStyle: 'italic',
-            color: 'rgba(255,255,255,0.28)',
-            margin: 0,
-            textAlign: 'center',
-            letterSpacing: '0.04em',
-          }}
-        >
-          &ldquo;He determines the number of the stars and calls them each by name.&rdquo;
-          <span
-            style={{
-              display: 'inline-block',
-              marginLeft: 8,
-              color: 'rgba(201,168,76,0.5)',
-              fontStyle: 'normal',
-              fontSize: '0.85em',
-            }}
-          >
-            Psalm 147:4
-          </span>
-        </p>
-
-        {/* Legend pills */}
-        <div
-          style={{
-            display: 'flex',
-            gap: 8,
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            pointerEvents: 'auto',
-          }}
-          aria-label="Map legend"
-        >
-          {CATEGORY_LEGEND.map(cat => (
-            <div
-              key={cat.label}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 6,
-                background: cat.bg,
-                border: `1px solid ${cat.colour}30`,
-                borderRadius: 20,
-                padding: '4px 12px',
-              }}
-            >
-              <span
-                style={{
-                  display: 'inline-block',
-                  width: 7,
-                  height: 7,
-                  borderRadius: '50%',
-                  background: cat.colour,
-                }}
-              />
-              <span
-                style={{
-                  fontFamily: "'Inter', sans-serif",
-                  fontSize: 11,
-                  fontWeight: 600,
-                  color: cat.colour,
-                  letterSpacing: '0.04em',
-                }}
-              >
-                {cat.label}
-              </span>
-            </div>
-          ))}
-        </div>
-      </footer>
     </div>
   )
 }

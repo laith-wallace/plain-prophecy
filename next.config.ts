@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
     ]
   },
   experimental: {
-    optimizePackageImports: ["lucide-react", "@convex-dev/auth"],
+    optimizePackageImports: ["lucide-react", "@convex-dev/auth", "posthog-js"],
   },
   images: {
     formats: ["image/avif", "image/webp"],

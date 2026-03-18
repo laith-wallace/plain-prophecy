@@ -1,7 +1,16 @@
 'use client'
 
 import { useState, useCallback, useEffect, useRef } from 'react'
-import { PulsarMapData } from '@/data/pulsar-map'
+import { PulsarMapData, StarCategory } from '@/data/pulsar-map'
+
+type FilterOption = 'all' | StarCategory
+
+const FILTER_OPTIONS: { key: FilterOption; label: string; colour: string; bg: string }[] = [
+  { key: 'all',      label: 'All',         colour: 'rgba(255,255,255,0.75)', bg: 'rgba(255,255,255,0.08)' },
+  { key: 'gospel',   label: 'The Gospel',  colour: '#C9A84C',                bg: 'rgba(201,168,76,0.12)' },
+  { key: 'prophecy', label: 'Prophecy',    colour: '#7A9ABB',                bg: 'rgba(90,130,170,0.12)' },
+  { key: 'doctrine', label: 'Doctrine',    colour: '#B8906A',                bg: 'rgba(180,140,100,0.12)' },
+]
 import PulsarCore from './PulsarCore'
 import ConstellationLine from './ConstellationLine'
 import ConstellationStar from './ConstellationStar'
@@ -150,8 +159,9 @@ export default function PulsarMap({ data }: PulsarMapProps) {
   const raf  = useRef<number | null>(null)
 
   // ── Minimal React state ──────────────────────────────────────────────────
-  const [activeStarId, setActiveStarId] = useState<string | null>(null)
-  const [showReset,    setShowReset]    = useState(false)
+  const [activeStarId, setActiveStarId]   = useState<string | null>(null)
+  const [activeFilter, setActiveFilter]   = useState<FilterOption>('all')
+  const [showReset,    setShowReset]      = useState(false)
   const showResetRef = useRef(false)
 
   // ── Drag / pinch refs ────────────────────────────────────────────────────
@@ -325,6 +335,9 @@ export default function PulsarMap({ data }: PulsarMapProps) {
     setActiveStarId(prev => prev === id ? null : id)
   }, [])
 
+  const isDimmed = useCallback((category: StarCategory) =>
+    activeFilter !== 'all' && activeFilter !== category, [activeFilter])
+
   const activeStar = activeStarId ? data.stars.find(s => s.id === activeStarId) : undefined
 
   return (
@@ -429,6 +442,7 @@ export default function PulsarMap({ data }: PulsarMapProps) {
                 x2={x} y2={y}
                 active={activeStarId === star.id}
                 category={star.category}
+                dimmed={isDimmed(star.category)}
               />
             )
           })}
@@ -443,6 +457,7 @@ export default function PulsarMap({ data }: PulsarMapProps) {
                 cx={x} cy={y}
                 isActive={activeStarId === star.id}
                 onClick={() => handleStarClick(star.id)}
+                dimmed={isDimmed(star.category)}
               />
             )
           })}
@@ -461,6 +476,106 @@ export default function PulsarMap({ data }: PulsarMapProps) {
           <StarCard star={activeStar} onClose={() => setActiveStarId(null)} />
         </div>
       )}
+
+      {/* ── Psalm + category filter pills ── */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          zIndex: 10,
+          padding: '0 16px max(16px, env(safe-area-inset-bottom))',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: 10,
+          pointerEvents: 'none',
+        }}
+      >
+        <p
+          style={{
+            fontFamily: "'Cinzel', serif",
+            fontSize: 'clamp(10px, 1.2vw, 12px)',
+            fontStyle: 'italic',
+            color: 'rgba(255,255,255,0.28)',
+            margin: 0,
+            textAlign: 'center',
+            letterSpacing: '0.04em',
+          }}
+        >
+          &ldquo;He determines the number of the stars and calls them each by name.&rdquo;
+          <span
+            style={{
+              display: 'inline-block',
+              marginLeft: 8,
+              color: 'rgba(201,168,76,0.5)',
+              fontStyle: 'normal',
+              fontSize: '0.85em',
+            }}
+          >
+            Psalm 147:4
+          </span>
+        </p>
+
+        {/* Filter pills */}
+        <div
+          style={{
+            display: 'flex',
+            gap: 8,
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            pointerEvents: 'auto',
+          }}
+          aria-label="Filter by category"
+        >
+          {FILTER_OPTIONS.map(opt => {
+            const isActive = activeFilter === opt.key
+            return (
+              <button
+                key={opt.key}
+                onClick={() => setActiveFilter(isActive ? 'all' : opt.key)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 6,
+                  background: isActive ? opt.bg.replace('0.12', '0.25').replace('0.08', '0.20') : opt.bg,
+                  border: `${isActive ? 1.5 : 1}px solid ${isActive ? opt.colour : opt.colour + '30'}`,
+                  borderRadius: 20,
+                  padding: '5px 12px',
+                  cursor: 'pointer',
+                  transition: 'border-color 0.2s, background 0.2s, opacity 0.2s',
+                  opacity: activeFilter !== 'all' && !isActive ? 0.45 : 1,
+                }}
+                aria-pressed={isActive}
+              >
+                {opt.key !== 'all' && (
+                  <span
+                    style={{
+                      display: 'inline-block',
+                      width: 7,
+                      height: 7,
+                      borderRadius: '50%',
+                      background: opt.colour,
+                    }}
+                  />
+                )}
+                <span
+                  style={{
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: 11,
+                    fontWeight: 600,
+                    color: opt.colour,
+                    letterSpacing: '0.04em',
+                  }}
+                >
+                  {opt.label}
+                </span>
+              </button>
+            )
+          })}
+        </div>
+      </div>
 
       {/* ── Zoom controls ── */}
       <div

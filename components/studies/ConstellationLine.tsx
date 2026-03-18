@@ -9,6 +9,7 @@ interface ConstellationLineProps {
   y2: number
   active: boolean
   category: StarCategory
+  dimmed?: boolean
 }
 
 const CATEGORY_COLOURS: Record<StarCategory, string> = {
@@ -18,14 +19,14 @@ const CATEGORY_COLOURS: Record<StarCategory, string> = {
 }
 
 export default function ConstellationLine({
-  x1, y1, x2, y2, active, category,
+  x1, y1, x2, y2, active, category, dimmed = false,
 }: ConstellationLineProps) {
   const colour = CATEGORY_COLOURS[category]
   const lineId = `lp-${x2.toFixed(0)}-${y2.toFixed(0)}`
   const pathD  = `M ${x1} ${y1} L ${x2} ${y2}`
 
   return (
-    <g>
+    <g opacity={dimmed ? 0.1 : 1} style={{ transition: 'opacity 0.3s ease' }}>
       <line
         x1={x1} y1={y1} x2={x2} y2={y2}
         stroke={active ? `${colour}CC` : 'rgba(201,168,76,0.22)'}

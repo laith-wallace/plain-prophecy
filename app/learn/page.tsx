@@ -196,6 +196,118 @@ export default function LearnPage() {
           ))}
         </div>
 
+        {/* Reformation Partner Card */}
+        <div style={{ marginTop: "3rem" }}>
+          <div
+            style={{
+              fontFamily: "var(--font-ibm-plex-mono)",
+              fontSize: "0.6rem",
+              letterSpacing: "0.25em",
+              textTransform: "uppercase",
+              color: "var(--neutral)",
+              marginBottom: "0.75rem",
+            }}
+          >
+            Go Deeper
+          </div>
+          <a
+            href="https://lineagejourney.com/timeline-details/TheReformation"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              background: "var(--ink)",
+              color: "var(--paper)",
+              border: "2px solid var(--ink)",
+              textDecoration: "none",
+              transition: "box-shadow 0.18s, transform 0.18s",
+            }}
+            className="reformation-card"
+          >
+            {/* Header */}
+            <div
+              style={{
+                padding: "1.5rem",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "flex-start",
+                borderBottom: "1px solid rgba(255,255,255,0.1)",
+              }}
+            >
+              <div style={{ display: "flex", gap: "1rem", alignItems: "flex-start" }}>
+                <span style={{ fontSize: "2rem", lineHeight: 1, flexShrink: 0 }}>✝</span>
+                <div>
+                  <div
+                    style={{
+                      fontFamily: "var(--font-ibm-plex-mono)",
+                      fontSize: "0.58rem",
+                      letterSpacing: "0.15em",
+                      textTransform: "uppercase",
+                      opacity: 0.5,
+                      marginBottom: "0.4rem",
+                    }}
+                  >
+                    Partner Resource · lineagejourney.com
+                  </div>
+                  <div
+                    style={{
+                      fontFamily: "var(--font-playfair)",
+                      fontSize: "1.4rem",
+                      fontWeight: 900,
+                      lineHeight: 1.1,
+                    }}
+                  >
+                    The Reformation
+                  </div>
+                </div>
+              </div>
+              <span
+                style={{
+                  fontFamily: "var(--font-ibm-plex-mono)",
+                  fontSize: "0.9rem",
+                  opacity: 0.35,
+                  flexShrink: 0,
+                  marginLeft: "1rem",
+                }}
+              >
+                ↗
+              </span>
+            </div>
+
+            {/* Body */}
+            <div
+              style={{
+                padding: "1.25rem 1.5rem",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "flex-end",
+                gap: "2rem",
+                flexWrap: "wrap",
+              }}
+            >
+              <p style={{ fontSize: "0.85rem", lineHeight: 1.75, opacity: 0.75, maxWidth: 620, margin: 0 }}>
+                The Reformation is the hinge moment of prophetic history — the century when the historicist
+                reading of Scripture was recovered, proclaimed, and paid for in blood. Lineage Journey
+                documents that story in full. We send you there for the history; we stay here for the prophecy.
+              </p>
+              <span
+                style={{
+                  fontFamily: "var(--font-ibm-plex-mono)",
+                  fontSize: "0.62rem",
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  opacity: 0.55,
+                  whiteSpace: "nowrap",
+                  flexShrink: 0,
+                }}
+              >
+                Explore at Lineage Journey →
+              </span>
+            </div>
+          </a>
+        </div>
+
         {/* Callout footer */}
         <div
           style={{
@@ -269,6 +381,13 @@ export default function LearnPage() {
           </div>
         </div>
       </section>
+
+      <style>{`
+        .reformation-card:hover {
+          box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+          transform: translateY(-2px);
+        }
+      `}</style>
     </main>
   );
 }
