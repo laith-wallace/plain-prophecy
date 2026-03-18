@@ -72,7 +72,7 @@ export default function CompareClient() {
 
       <div className="compare-wrapper">
         {/* Masthead */}
-        <div style={{ textAlign: "center", borderBottom: "3px double var(--ink)", paddingBottom: "2rem", marginBottom: "3rem" }}>
+        <div className="compare-masthead" style={{ textAlign: "center", borderBottom: "3px double var(--ink)", paddingBottom: "2rem", marginBottom: "3rem" }}>
           <div style={{ fontFamily: "var(--font-ibm-plex-mono)", fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", color: "var(--neutral)", marginBottom: "0.75rem" }}>
             Biblical Prophecy · Hermeneutical Comparison · Scholarly Analysis
           </div>
@@ -85,7 +85,7 @@ export default function CompareClient() {
         </div>
 
         {/* Central Hermeneutical Divide Card */}
-        <div style={{ background: "var(--surface, #f8f5ef)", border: "2px solid var(--ink)", borderRadius: "0.5rem", padding: "2rem 2.5rem", marginBottom: "3rem", position: "relative" }}>
+        <div className="herm-divide-card" style={{ background: "var(--surface, #f8f5ef)", border: "2px solid var(--ink)", borderRadius: "0.5rem", padding: "2rem 2.5rem", marginBottom: "3rem", position: "relative" }}>
           <div style={{ fontFamily: "var(--font-ibm-plex-mono)", fontSize: "0.65rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--neutral)", marginBottom: "0.75rem" }}>
             ⚑ The Central Hermeneutical Divide
           </div>
@@ -124,7 +124,7 @@ export default function CompareClient() {
         {/* ===== TAB 1: TIMELINES ===== */}
         {activeTab === "timelines" && (
           <div style={{ animation: "fadeTab 0.2s ease forwards" }}>
-            <div className="comparison-grid" style={{ gridTemplateColumns: "1fr 1fr 1fr" }}>
+            <div className="comparison-grid">
               {/* Futurist Column */}
               <div className="timeline-column">
                 <div className="col-header futurist">
@@ -342,7 +342,7 @@ export default function CompareClient() {
               ))}
             </div>
 
-            <div className="verdict-panel" style={{ gridTemplateColumns: "1fr 1fr 1fr" }}>
+            <div className="verdict-panel">
               <div className="verdict-side futurist-v">
                 <h3><span className="v-tag futurist-tag">Futurist</span> Critical Weaknesses</h3>
                 <ul>

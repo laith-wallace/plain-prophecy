@@ -317,7 +317,7 @@ body {
 /* Timeline comparison */
 .comparison-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 2rem;
     align-items: start;
 }
@@ -1109,6 +1109,14 @@ body {
     .compare-wrapper {
         padding: 1.5rem 1rem 5rem;
     }
+    .compare-masthead {
+        padding-bottom: 1.25rem !important;
+        margin-bottom: 1.75rem !important;
+    }
+    .herm-divide-card {
+        padding: 1.25rem 1rem !important;
+        margin-bottom: 2rem !important;
+    }
     .comparison-grid {
         grid-template-columns: 1fr;
         gap: 1.25rem;
@@ -1225,9 +1233,18 @@ body {
 
     #share-bar {
         padding: 0.55rem 0.75rem;
+        gap: 0.4rem;
     }
     .sb-lbl {
         display: none;
+    }
+    .share-btn {
+        padding: 0.35rem 0.6rem;
+        font-size: 0.58rem;
+    }
+    /* Prevent scroll-top btn from overlapping share bar */
+    #scroll-top {
+        bottom: 4rem;
     }
 }
 
