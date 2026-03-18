@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
@@ -40,18 +41,15 @@ export default function SiteNav() {
         }}
       >
         {/* Brand */}
-        <Link
-          href="/"
-          style={{
-            fontFamily: "var(--font-playfair)",
-            fontWeight: 900,
-            fontSize: "1.1rem",
-            color: "var(--paper)",
-            textDecoration: "none",
-            letterSpacing: "-0.01em",
-          }}
-        >
-          Plain<span style={{ color: "var(--sda-accent)" }}>Prophecy</span>
+        <Link href="/" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
+          <Image
+            src="/plain-prophecy-logo.svg"
+            alt="Plain Prophecy"
+            width={70}
+            height={16}
+            priority
+            style={{ height: 16, width: "auto" }}
+          />
         </Link>
 
         {/* Desktop Links */}
