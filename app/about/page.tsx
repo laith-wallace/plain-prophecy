@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import JsonLd from "@/components/seo/JsonLd";
 
 export const metadata: Metadata = {
@@ -111,6 +112,47 @@ export default function AboutPage() {
           A Christ-centred resource for understanding biblical prophecy rigorously — without sensationalism as the goal is to produce faithfulness not fear and a deeper love for Jesus Christ.
         </p>
       </div>
+
+      {/* Meet Laith */}
+      <section
+        style={{
+          display: "flex",
+          gap: "2rem",
+          alignItems: "flex-start",
+          marginBottom: "3rem",
+          flexWrap: "wrap",
+        }}
+      >
+        <div style={{ flexShrink: 0, width: "clamp(140px, 30%, 200px)" }}>
+          <Image
+            src="/laith-speaker.jpg"
+            alt="Laith — speaker and creator of Plain Prophecy"
+            width={400}
+            height={500}
+            style={{ width: "100%", height: "auto", display: "block", objectFit: "cover" }}
+            priority
+          />
+        </div>
+        <div style={{ flex: 1, minWidth: 220 }}>
+          <div style={{ fontFamily: "var(--font-ibm-plex-mono)", fontSize: "0.65rem", letterSpacing: "0.25em", textTransform: "uppercase", color: "var(--neutral)", marginBottom: "0.5rem" }}>
+            The Person Behind It
+          </div>
+          <h2 style={{ fontFamily: "var(--font-playfair)", fontSize: "1.4rem", fontWeight: 700, marginBottom: "1rem" }}>
+            Hi, I&apos;m Laith
+          </h2>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", fontSize: "0.9rem", lineHeight: 1.8, color: "#3a3530" }}>
+            <p>
+              I&apos;m a speaker, designer, and teacher — and sharing the Bible with people is one of the things I love most. I&apos;ve been an elder in my church for over ten years.
+            </p>
+            <p>
+              I built Plain Prophecy for my children. I wanted them to have somewhere they could go to actually understand how to read prophecy — not to be scared by it, but to see Jesus in it. That&apos;s the whole point.
+            </p>
+            <p>
+              If you find it useful too, that&apos;s everything I could hope for.
+            </p>
+          </div>
+        </div>
+      </section>
 
       {/* What this is */}
       <section style={{ marginBottom: "3rem" }}>

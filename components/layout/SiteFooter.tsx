@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const exploreLinks = [
   { href: "/studies", label: "Studies" },
@@ -44,18 +45,14 @@ export default function SiteFooter() {
       >
         {/* Col 1 — Brand + mission */}
         <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-          <Link
-            href="/"
-            style={{
-              fontFamily: "var(--font-playfair)",
-              fontWeight: 900,
-              fontSize: "1.15rem",
-              color: "var(--paper)",
-              textDecoration: "none",
-              letterSpacing: "-0.01em",
-            }}
-          >
-            Plain<span style={{ color: "var(--sda-accent)" }}>Prophecy</span>
+          <Link href="/" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
+            <Image
+              src="/plain-prophecy-logo.svg"
+              alt="Plain Prophecy"
+              width={105}
+              height={24}
+              style={{ height: 24, width: "auto" }}
+            />
           </Link>
           <p
             style={{
