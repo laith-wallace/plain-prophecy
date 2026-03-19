@@ -581,7 +581,7 @@ const SwipeCard = forwardRef<
     } else {
       snapBack(dx);
     }
-  }, [commitSwipe, snapBack, THRESHOLD_FRAC]);
+  }, [commitSwipe, snapBack]);
 
   useEffect(() => {
     if (!isFirstCard || isNext) return;

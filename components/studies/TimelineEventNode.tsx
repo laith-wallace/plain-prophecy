@@ -13,7 +13,6 @@ interface TimelineEventNodeProps {
 const TIER_RADIUS: Record<1 | 2 | 3, number> = { 1: 55, 2: 40, 3: 26 }
 
 // ── Vertical milestone line extents ─────────────────────────────────────────
-const LINE_BOTTOM_Y = 995  // extends through all three bands (bands end ~990)
 
 // ── 5-row label system — rows spread across the full 400px label area above axis ──
 // Row 1 = just above the axis rail; Row 5 = near the top of the canvas
