@@ -14,10 +14,10 @@ export default function StudiesShellLayout({
 }) {
   const pathname = usePathname();
   const isIndex = pathname === "/studies";
-  const isMap = pathname === "/studies/map";
+  const isFullscreen = pathname === "/studies/map" || pathname === "/studies/timeline";
 
-  // Map gets fullscreen — no sidebar
-  if (isMap) {
+  // Fullscreen pages — no sidebar
+  if (isFullscreen) {
     return <>{children}</>;
   }
 

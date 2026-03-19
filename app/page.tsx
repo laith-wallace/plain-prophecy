@@ -127,8 +127,8 @@ const paths = [
     accent: "var(--sda-primary)",
   },
   {
-    label: "I know Futurism",
-    desc: "Go straight to the accuracy scoring — 10 criteria, evaluated against the same evidentiary standard.",
+    label: "Learn the prophecy frameworks",
+    desc: "See how different people understand prophecy and what is the most acurate way to understand it biblically.",
     href: "/compare#scoring",
     cta: "See Scoring →",
     accent: "var(--futurist-primary)",

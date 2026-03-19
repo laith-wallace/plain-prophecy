@@ -39,12 +39,15 @@ export default function PulsarMapPage() {
           pointerEvents: 'none',
         }}
       >
-        {/* Back link — re-enables pointer events */}
+        {/* Back link + Timeline link row — re-enables pointer events */}
         <div
           style={{
             alignSelf: 'flex-start',
             pointerEvents: 'auto',
             marginBottom: 8,
+            display: 'flex',
+            alignItems: 'center',
+            gap: 20,
           }}
         >
           <Link
@@ -63,6 +66,20 @@ export default function PulsarMapPage() {
             }}
           >
             ← Studies
+          </Link>
+          <Link
+            href="/studies/timeline"
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: 11,
+              fontWeight: 600,
+              letterSpacing: '0.14em',
+              textTransform: 'uppercase',
+              color: 'rgba(201,168,76,0.45)',
+              textDecoration: 'none',
+            }}
+          >
+            Timeline →
           </Link>
         </div>
 
