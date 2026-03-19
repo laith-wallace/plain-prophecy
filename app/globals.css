@@ -317,7 +317,7 @@ body {
 /* Timeline comparison */
 .comparison-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 2rem;
     align-items: start;
 }
@@ -1109,6 +1109,19 @@ body {
     .compare-wrapper {
         padding: 1.5rem 1rem 5rem;
     }
+
+    /* ── Tab nav ── */
+    .tab-nav {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    .tab-btn {
+        font-size: 0.6rem;
+        padding: 0.75rem 0.9rem;
+        min-height: 44px;
+    }
+
+    /* ── Timelines: stack columns ── */
     .comparison-grid {
         grid-template-columns: 1fr;
         gap: 1.25rem;
@@ -1130,6 +1143,7 @@ body {
         padding: 0.85rem 1rem;
     }
 
+    /* ── Scoring table: card-per-row layout ── */
     .criteria-table thead {
         display: none;
     }
@@ -1177,6 +1191,7 @@ body {
         padding: 0.2rem 0.6rem;
     }
 
+    /* ── Pillars + verdict panel: stack ── */
     .pillars-grid {
         grid-template-columns: 1fr;
         gap: 1rem;
@@ -1196,6 +1211,7 @@ body {
         padding: 1.25rem;
     }
 
+    /* ── Evidence tab ── */
     .ev-columns {
         grid-template-columns: 1fr;
     }
@@ -1210,9 +1226,12 @@ body {
         grid-template-columns: 1fr 1fr;
     }
 
+    /* ── Media cards ── */
     .media-cards {
         grid-template-columns: 1fr 1fr;
     }
+
+    /* ── Scoring explainer ── */
     .se-criteria-grid {
         grid-template-columns: 1fr;
     }
@@ -1223,6 +1242,7 @@ body {
         padding: 1.1rem 1rem;
     }
 
+    /* ── Share bar ── */
     #share-bar {
         padding: 0.55rem 0.75rem;
     }

@@ -124,7 +124,7 @@ export default function CompareClient() {
         {/* ===== TAB 1: TIMELINES ===== */}
         {activeTab === "timelines" && (
           <div style={{ animation: "fadeTab 0.2s ease forwards" }}>
-            <div className="comparison-grid" style={{ gridTemplateColumns: "1fr 1fr 1fr" }}>
+            <div className="comparison-grid">
               {/* Futurist Column */}
               <div className="timeline-column">
                 <div className="col-header futurist">
@@ -342,7 +342,7 @@ export default function CompareClient() {
               ))}
             </div>
 
-            <div className="verdict-panel" style={{ gridTemplateColumns: "1fr 1fr 1fr" }}>
+            <div className="verdict-panel">
               <div className="verdict-side futurist-v">
                 <h3><span className="v-tag futurist-tag">Futurist</span> Critical Weaknesses</h3>
                 <ul>
