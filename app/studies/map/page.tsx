@@ -111,9 +111,9 @@ export default function PulsarMapPage() {
             textShadow: '0 0 40px rgba(201,168,76,0.25)',
           }}
         >
-          He{' '}
-          <span style={{ color: '#C9A84C' }}>Calls Them</span>{' '}
-          Each by Name
+          The{' '}
+          <span style={{ color: '#C9A84C' }}>Constellation</span>{' '}
+          of Truth
         </h1>
 
         {/* Subtitle */}
