@@ -61,7 +61,7 @@ export default function HeroVideo() {
       <video
         ref={videoRef}
         className={`hero-video${loaded ? " hero-video--visible" : ""}`}
-        src="/videos/hero-bible-study-compressed.mp4"
+        src="/plain-prophecy-bible-hero.mp4"
         poster="/videos/hero-bible-study-poster.jpg"
         muted
         loop
