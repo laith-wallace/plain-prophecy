@@ -15,7 +15,7 @@ export default function InteractiveStudyTemplate({ book, lesson, VisualComponent
   const interactiveSections = (lesson.sections ?? []).filter(s => s.id);
   const hasInteractive = interactiveSections.length > 0;
   
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [activeIndex, setActiveIndex] = useState<number | null>(hasInteractive ? 0 : null);
   const activeSectionId = activeIndex !== null ? interactiveSections[activeIndex].id! : "none";
   const activeSection = activeIndex !== null ? interactiveSections[activeIndex] : null;
 
@@ -124,38 +124,42 @@ export default function InteractiveStudyTemplate({ book, lesson, VisualComponent
               ↑ Tap any part of the image ↑
             </div>
 
-            {/* Nav dots */}
-            <div className="nav-dots">
-              {interactiveSections.map((sec, idx) => (
-                <div 
-                  key={sec.id}
-                  className={`nav-dot ${activeIndex === idx ? 'active' : ''}`}
-                  onClick={() => setActiveIndex(idx)}
-                />
-              ))}
-            </div>
+            {/* Nav dots - Hidden for Daniel 2 as it has its own carousel indicators */}
+            {lesson.slug !== 'daniel-2' && (
+              <div className="nav-dots">
+                {interactiveSections.map((sec, idx) => (
+                  <div 
+                    key={sec.id}
+                    className={`nav-dot ${activeIndex === idx ? 'active' : ''}`}
+                    onClick={() => setActiveIndex(idx)}
+                  />
+                ))}
+              </div>
+            )}
 
-            {/* Prev / Next navigation arrows */}
-            <div className="nav-arrows" style={{ display: 'flex', justifyContent: 'center', gap: '12px', marginTop: '16px', position: 'relative', zIndex: 10 }}>
-              <button 
-                className="nav-btn" 
-                style={{ width: '40px', height: '40px', borderRadius: '50%', border: '1.5px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.04)', color: 'rgba(255,255,255,0.55)', fontSize: '18px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s ease', lineHeight: 1 }}
-                onClick={() => stepKingdom(-1)} 
-                disabled={activeIndex === null || activeIndex === 0}
-                title="Previous"
-              >
-                &#8592;
-              </button>
-              <button 
-                className="nav-btn" 
-                style={{ width: '40px', height: '40px', borderRadius: '50%', border: '1.5px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.04)', color: 'rgba(255,255,255,0.55)', fontSize: '18px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s ease', lineHeight: 1 }}
-                onClick={() => stepKingdom(1)}  
-                disabled={activeIndex !== null && activeIndex === interactiveSections.length - 1}
-                title="Next"
-              >
-                &#8594;
-              </button>
-            </div>
+            {/* Prev / Next navigation arrows - Hidden for Daniel 2 as it has its own carousel arrows */}
+            {lesson.slug !== 'daniel-2' && (
+              <div className="nav-arrows" style={{ display: 'flex', justifyContent: 'center', gap: '12px', marginTop: '16px', position: 'relative', zIndex: 10 }}>
+                <button 
+                  className="nav-btn" 
+                  style={{ width: '40px', height: '40px', borderRadius: '50%', border: '1.5px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.04)', color: 'rgba(255,255,255,0.55)', fontSize: '18px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s ease', lineHeight: 1 }}
+                  onClick={() => stepKingdom(-1)}
+                  disabled={activeIndex === null || activeIndex === 0}
+                  title="Previous"
+                >
+                  &#8592;
+                </button>
+                <button 
+                  className="nav-btn" 
+                  style={{ width: '40px', height: '40px', borderRadius: '50%', border: '1.5px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.04)', color: 'rgba(255,255,255,0.55)', fontSize: '18px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s ease', lineHeight: 1 }}
+                  onClick={() => stepKingdom(1)}  
+                  disabled={activeIndex !== null && activeIndex === interactiveSections.length - 1}
+                  title="Next"
+                >
+                  &#8594;
+                </button>
+              </div>
+            )}
           </div>
 
           {/* INFO / CONTENT COLUMN */}

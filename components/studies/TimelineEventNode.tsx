@@ -18,11 +18,11 @@ const LINE_BOTTOM_Y = 995  // extends through all three bands (bands end ~990)
 // ── 5-row label system — rows spread across the full 400px label area above axis ──
 // Row 1 = just above the axis rail; Row 5 = near the top of the canvas
 const LABEL_ROW_Y: Record<1 | 2 | 3 | 4 | 5, number> = {
-  1: 370,
-  2: 295,
-  3: 215,
-  4: 130,
-  5: 45,
+  1: 260,
+  2: 205,
+  3: 150,
+  4: 95,
+  5: 40,
 }
 
 // ── Badge/dot colours — vivid ────────────────────────────────────────────────
@@ -55,16 +55,19 @@ export default function TimelineEventNode({
   const showTier2Label  = zoomTier >= 4 && event.tier === 2
   const showDateSublabel = zoomTier >= 4 && event.tier === 1
 
-  // Label Y from the 5-row system; date sublabel sits 55 SVG units below the main label
+  // Label Y from the 5-row system; date sublabel sits 45 SVG units below the main label
   const labelY     = LABEL_ROW_Y[event.labelRow]
-  const dateLabelY = Math.min(labelY + 55, AXIS_Y - 20)
+  const dateLabelY = Math.min(labelY + 45, AXIS_Y - 75)
 
-  // Line starts at the label row when a label is visible; short stub otherwise
-  const lineTopY = (showFullLabel || showTier2Label)
+  // Stalk starts at AXIS_Y and goes UP to labelY
+  const stalkTopY = (showFullLabel || showTier2Label)
     ? labelY
     : showShortTag
       ? AXIS_Y - 75
       : AXIS_Y - 60
+
+  // Diamond radius for the polygon points
+  const dr = r * 1.2
 
   return (
     <g
@@ -79,76 +82,68 @@ export default function TimelineEventNode({
     >
       {/* ── Large invisible touch / click target spanning the milestone line ── */}
       <rect
-        x={x - 30}
-        y={0}
-        width={60}
-        height={LINE_BOTTOM_Y}
+        x={x - 40}
+        y={Math.min(stalkTopY, AXIS_Y - 50)}
+        width={80}
+        height={Math.max(AXIS_Y - stalkTopY + 100, 150)}
         fill="transparent"
       />
 
-      {/* ── Vertical milestone line ── */}
+      {/* ── Vertical milestone stalk (extending UP from axis) ── */}
       <line
         x1={x}
-        y1={lineTopY}
+        y1={AXIS_Y}
         x2={x}
-        y2={LINE_BOTTOM_Y}
+        y2={stalkTopY}
         stroke={isActive ? accentColour : 'rgba(255,255,255,0.22)'}
-        strokeWidth={isActive ? 8 : 5}
+        strokeWidth={isActive ? 8 : 4}
         strokeDasharray={isFuture ? '24,16' : undefined}
         opacity={isActive ? 1 : 0.7}
       />
 
-      {/* ── Glow halo behind circle when active ── */}
+      {/* ── Glow halo behind diamond when active ── */}
       {isActive && (
-        <circle
-          cx={x}
-          cy={AXIS_Y}
-          r={r + 35}
+        <polygon
+          points={`${x},${AXIS_Y - (dr + 35)} ${x + (dr + 35)},${AXIS_Y} ${x},${AXIS_Y + (dr + 35)} ${x - (dr + 35)},${AXIS_Y}`}
           fill={`${dotColour}1a`}
           stroke={`${dotColour}44`}
           strokeWidth={4}
         />
       )}
 
-      {/* ── Dark background circle to mask overlapping stalks/axis ── */}
-      <circle
-        cx={x}
-        cy={AXIS_Y}
-        r={r + 8}
+      {/* ── Dark background diamond to mask axis ── */}
+      <polygon
+        points={`${x},${AXIS_Y - (dr + 8)} ${x + (dr + 8)},${AXIS_Y} ${x},${AXIS_Y + (dr + 8)} ${x - (dr + 8)},${AXIS_Y}`}
         fill="#010408"
       />
 
-      {/* ── Milestone circle on the axis ── */}
-      <circle
-        cx={x}
-        cy={AXIS_Y}
-        r={r}
+      {/* ── Milestone diamond on the axis ── */}
+      <polygon
+        points={`${x},${AXIS_Y - dr} ${x + dr},${AXIS_Y} ${x},${AXIS_Y + dr} ${x - dr},${AXIS_Y}`}
         fill={dotColour}
         stroke={isActive ? '#ffffff' : 'rgba(255,255,255,0.55)'}
         strokeWidth={isActive ? 7 : 5}
       />
 
-      {/* ── Today pulsing ring ── */}
+      {/* ── Today pulsing ring (diamond style) ── */}
       {isToday && (
-        <circle
-          cx={x}
-          cy={AXIS_Y}
-          r={r + 20}
+        <polygon
+          points={`${x},${AXIS_Y - (dr + 25)} ${x + (dr + 25)},${AXIS_Y} ${x},${AXIS_Y + (dr + 25)} ${x - (dr + 25)},${AXIS_Y}`}
           fill="none"
           stroke="rgba(255,255,255,0.30)"
           strokeWidth={5}
-          strokeDasharray="14,10"
+          strokeDasharray="20,15"
         />
       )}
 
-      {/* ── Short tag on circle (zoomed out) — just the year ── */}
+      {/* ── Short tag on diamond (zoomed out) — just the year ── */}
       {showShortTag && (
         <text
           x={x}
-          y={AXIS_Y + 14}
+          y={AXIS_Y + 12}
           textAnchor="middle"
           fontFamily="'Inter', sans-serif"
-          fontSize={42}
+          fontSize={38}
           fontWeight={700}
           fill={isActive ? '#ffffff' : 'rgba(0,0,0,0.85)'}
           style={{ userSelect: 'none', pointerEvents: 'none' }}
@@ -157,15 +152,15 @@ export default function TimelineEventNode({
         </text>
       )}
 
-      {/* ── Full event label (tier 1 at zoomTier ≥ 3, tier 2 at zoomTier ≥ 4) ── */}
+      {/* ── Full event label (Titles unified at size 65) ── */}
       {(showFullLabel || showTier2Label) && (
         <text
           x={x}
-          y={labelY}
+          y={labelY - 20} // Positioned slightly above the stalk end
           textAnchor="middle"
           fontFamily="'Inter', sans-serif"
-          fontSize={event.tier === 1 ? 75 : 60}
-          fontWeight={event.tier === 1 ? 700 : 500}
+          fontSize={65}
+          fontWeight={700}
           fill={isActive ? accentColour : 'rgba(255,255,255,0.88)'}
           style={{ 
             userSelect: 'none', 
@@ -181,7 +176,7 @@ export default function TimelineEventNode({
         </text>
       )}
 
-      {/* ── Date sublabel (tier 1 only, zoomTier ≥ 4) ── */}
+      {/* ── Date sublabel (consistent style) ── */}
       {showDateSublabel && (
         <text
           x={x}
@@ -204,6 +199,7 @@ export default function TimelineEventNode({
           {event.dateLabel}
         </text>
       )}
+
     </g>
   )
 }
