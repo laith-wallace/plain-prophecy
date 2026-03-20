@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { lessons } from "@/data/lessons";
 import JsonLd from "@/components/seo/JsonLd";
 
@@ -281,29 +282,52 @@ export default function LearnPage() {
                 padding: "1.25rem 1.5rem",
                 display: "flex",
                 justifyContent: "space-between",
-                alignItems: "flex-end",
+                alignItems: "center",
                 gap: "2rem",
                 flexWrap: "wrap",
               }}
             >
-              <p style={{ fontSize: "0.85rem", lineHeight: 1.75, opacity: 0.75, maxWidth: 620, margin: 0 }}>
-                The Reformation is the hinge moment of prophetic history — the century when the historicist
-                reading of Scripture was recovered, proclaimed, and paid for in blood. Lineage Journey
-                documents that story in full. We send you there for the history; we stay here for the prophecy.
-              </p>
-              <span
+              <div style={{ flex: "1 1 500px" }}>
+                <p style={{ fontSize: "0.85rem", lineHeight: 1.75, opacity: 0.75, maxWidth: 620, margin: "0 0 1.25rem" }}>
+                  The Reformation is the hinge moment of prophetic history — the century when the historicist
+                  reading of Scripture was recovered, proclaimed, and paid for in blood. Lineage Journey
+                  documents that story in full. We send you there for the history; we stay here for the prophecy.
+                </p>
+                <span
+                  style={{
+                    fontFamily: "var(--font-ibm-plex-mono)",
+                    fontSize: "0.62rem",
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    opacity: 0.55,
+                    whiteSpace: "nowrap",
+                    flexShrink: 0,
+                  }}
+                >
+                  Explore at Lineage Journey →
+                </span>
+              </div>
+              <div
+                className="reformation-logo-container"
                 style={{
-                  fontFamily: "var(--font-ibm-plex-mono)",
-                  fontSize: "0.62rem",
-                  letterSpacing: "0.1em",
-                  textTransform: "uppercase",
-                  opacity: 0.55,
-                  whiteSpace: "nowrap",
                   flexShrink: 0,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  background: "rgba(255,255,255,0.03)",
+                  padding: "1rem",
+                  borderRadius: "8px",
+                  border: "1px solid rgba(255,255,255,0.05)",
                 }}
               >
-                Explore at Lineage Journey →
-              </span>
+                <Image
+                  src="/lineage-journey-logo.png"
+                  alt="Lineage Journey Logo"
+                  width={140}
+                  height={50}
+                  style={{ opacity: 0.9, objectFit: "contain" }}
+                />
+              </div>
             </div>
           </a>
         </div>
@@ -386,6 +410,12 @@ export default function LearnPage() {
         .reformation-card:hover {
           box-shadow: 0 8px 32px rgba(0,0,0,0.18);
           transform: translateY(-2px);
+        }
+        @media (max-width: 600px) {
+          .reformation-logo-container {
+            margin: 0 auto;
+            width: 100%;
+          }
         }
       `}</style>
     </main>
