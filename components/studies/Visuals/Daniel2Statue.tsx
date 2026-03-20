@@ -14,7 +14,7 @@ const STATUE_IMAGES = [
   { id: "bronze", src: "/daniel 2 pngs/3. Greece.png", label: "Bronze (Greece)" },
   { id: "iron", src: "/daniel 2 pngs/4. legs of iron.png", label: "Iron (Rome)" },
   { id: "clay", src: "/daniel 2 pngs/5. feet-iron-clay.png", label: "Iron & Clay (Divided Europe)" },
-  { id: "stone", src: "/daniel 2 pngs/5. feet-iron-clay.png", label: "The Stone (Eternal Kingdom)" },
+  { id: "stone", src: "/daniel 2 pngs/6. stone-without-hands.png", label: "The Stone (Eternal Kingdom)" },
 ];
 
 export default function Daniel2Statue({ activeSection, onSectionSelect }: Daniel2StatueProps) {

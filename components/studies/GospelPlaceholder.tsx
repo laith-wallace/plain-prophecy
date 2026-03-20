@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import { toast } from "sonner";
 
 export interface GospelPlaceholderProps {
   eyebrow: string;
@@ -84,7 +85,7 @@ export default function GospelPlaceholder({
         {/* Email Capture Teaser */}
         <div className="text-center mb-24">
           <button 
-            onClick={() => console.log("notify clicked")}
+            onClick={() => toast.success("We'll let you know when this study is ready!")}
             className="group relative inline-flex items-center justify-center px-8 py-4 font-serif text-slate-300 transition-all duration-300 hover:text-white"
           >
             <span className="absolute inset-0 border border-[#C9A84C]/50 rounded-full group-hover:border-[#C9A84C] transition-colors duration-300"></span>

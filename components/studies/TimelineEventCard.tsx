@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { TimelineEvent } from '@/data/timeline-visual'
+import { ScriptureRef } from '@/components/ui/ScriptureRef'
 
 interface TimelineEventCardProps {
   event: TimelineEvent
@@ -172,7 +173,14 @@ export default function TimelineEventCard({ event, accentColour, onClose }: Time
             opacity: 0.8,
             letterSpacing: '0.02em',
           }}>
-            {event.refs}
+            {event.refs.split(' · ').map((ref, i, arr) => (
+              <span key={ref}>
+                <ScriptureRef style={{ color: accentColour }}>{ref.trim()}</ScriptureRef>
+                {i < arr.length - 1 && (
+                  <span style={{ opacity: 0.5 }}> · </span>
+                )}
+              </span>
+            ))}
           </p>
         )}
       </div>

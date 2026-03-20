@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { lessons } from "@/data/lessons";
 import JsonLd from "@/components/seo/JsonLd";
+import ReadingProgress from "@/components/ui/ReadingProgress";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -53,6 +54,7 @@ export default async function LessonPage({ params }: Props) {
 
   return (
     <main>
+      <ReadingProgress />
       <JsonLd schema={articleSchema} />
 
       {/* Hero */}

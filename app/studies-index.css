@@ -480,8 +480,17 @@
     inset 0 1px 0 rgba(255,255,255,0.08);
 }
 
+.scb-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.scb-share,
 .scb-close {
-  align-self: flex-end;
   background: rgba(255,255,255,0.1);
   border: none;
   color: rgba(255,255,255,0.7);
@@ -494,11 +503,10 @@
   align-items: center;
   justify-content: center;
   transition: background 0.15s;
-  position: relative;
-  z-index: 1;
   flex-shrink: 0;
 }
 
+.scb-share:hover,
 .scb-close:hover { background: rgba(255,255,255,0.18); }
 
 .scb-header {
@@ -867,8 +875,8 @@
   .scf-emoji { font-size: clamp(3.5rem, 18vw, 5.5rem); }
   /* Card title smaller */
   .scf-title { font-size: clamp(1.3rem, 5.5vw, 1.7rem); }
-  /* Back card close button larger tap target */
-  .scb-close { width: 38px; height: 38px; font-size: 1rem; }
+  /* Back card action buttons — larger tap target on phones */
+  .scb-share, .scb-close { width: 38px; height: 38px; font-size: 1rem; }
 
   /* List view: full width on phones */
   .slv-root { padding: 0.5rem 0.75rem 5rem; }

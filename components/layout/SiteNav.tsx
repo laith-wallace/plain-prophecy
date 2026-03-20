@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { Search } from "lucide-react";
 
 const links = [
   { href: "/", label: "Home" },
@@ -15,7 +16,7 @@ const links = [
   { href: "/about", label: "About" },
 ];
 
-export default function SiteNav() {
+export default function SiteNav({ onSearchOpen }: { onSearchOpen?: () => void }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
@@ -75,7 +76,7 @@ export default function SiteNav() {
                 color:
                   pathname === l.href || (l.href !== "/" && pathname.startsWith(l.href))
                     ? "var(--sda-accent)"
-                    : "rgba(255,255,255,0.65)",
+                    : "#ffffff",
                 textDecoration: "none",
                 transition: "color 0.15s",
               }}
@@ -85,23 +86,56 @@ export default function SiteNav() {
           ))}
         </div>
 
-        {/* Hamburger */}
-        <button
-          onClick={() => setOpen(!open)}
-          aria-label="Toggle menu"
-          style={{
-            background: "none",
-            border: "none",
-            color: "var(--paper)",
-            cursor: "pointer",
-            fontSize: "1.3rem",
-            padding: "0.25rem",
-            display: "none",
-          }}
-          className="hamburger"
-        >
-          {open ? "✕" : "☰"}
-        </button>
+        {/* Right controls */}
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <button
+            onClick={onSearchOpen}
+            aria-label="Search"
+            style={{
+              background: "none",
+              border: "1px solid rgba(255,255,255,0.12)",
+              borderRadius: 6,
+              color: "rgba(255,255,255,0.55)",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.4rem",
+              padding: "4px 8px",
+              transition: "border-color 0.15s, color 0.15s",
+            }}
+          >
+            <Search size={13} />
+            <span
+              className="search-hint"
+              style={{
+                fontFamily: "var(--font-ibm-plex-mono)",
+                fontSize: "0.6rem",
+                letterSpacing: "0.05em",
+                color: "rgba(255,255,255,0.3)",
+              }}
+            >
+              ⌘K
+            </span>
+          </button>
+
+          {/* Hamburger */}
+          <button
+            onClick={() => setOpen(!open)}
+            aria-label="Toggle menu"
+            style={{
+              background: "none",
+              border: "none",
+              color: "var(--paper)",
+              cursor: "pointer",
+              fontSize: "1.3rem",
+              padding: "0.25rem",
+              display: "none",
+            }}
+            className="hamburger"
+          >
+            {open ? "✕" : "☰"}
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}
@@ -130,7 +164,7 @@ export default function SiteNav() {
                 color:
                   pathname === l.href || (l.href !== "/" && pathname.startsWith(l.href))
                     ? "var(--sda-accent)"
-                    : "rgba(255,255,255,0.75)",
+                    : "#ffffff",
                 textDecoration: "none",
               }}
             >
@@ -144,6 +178,7 @@ export default function SiteNav() {
         @media (max-width: 640px) {
           .desktop-nav { display: none !important; }
           .hamburger { display: block !important; }
+          .search-hint { display: none !important; }
         }
       `}</style>
     </nav>

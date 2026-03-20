@@ -1,0 +1,188 @@
+/* ── Share Card Modal ─────────────────────────────────────────────────────── */
+/* Prefix: scm- (Scripture Card Modal)                                        */
+/* Dialog primitives (Backdrop, Popup) use inline styles — see SearchDialog   */
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
+.scm-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem 0.75rem;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.scm-title {
+  font-family: var(--font-ibm-plex-mono, monospace);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+}
+
+.scm-close {
+  background: rgba(255,255,255,0.08);
+  border: none;
+  color: rgba(255,255,255,0.6);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+.scm-close:hover { background: rgba(255,255,255,0.15); }
+
+/* ── Format selector ─────────────────────────────────────────────────────── */
+.scm-format-row {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.875rem 1.25rem 0.625rem;
+}
+
+.scm-format-btn {
+  flex: 1;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.5);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  font-family: var(--font-ibm-plex-mono, monospace);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  min-height: 44px;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.scm-format-btn--active {
+  background: rgba(201, 168, 76, 0.12);
+  border-color: #C9A84C;
+  color: #C9A84C;
+}
+
+.scm-format-btn:hover:not(.scm-format-btn--active) {
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.7);
+}
+
+/* ── Preview area ────────────────────────────────────────────────────────── */
+.scm-preview-wrap {
+  padding: 0 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 140px;
+}
+
+.scm-preview {
+  display: block;
+  max-width: 100%;
+  max-height: min(320px, 42dvh);
+  width: auto;
+  height: auto;
+  border-radius: 10px;
+  object-fit: contain;
+}
+
+/* Portrait card: taller aspect ratio — need more height budget */
+.scm-preview-wrap--portrait .scm-preview {
+  max-height: min(380px, 50dvh);
+}
+
+.scm-preview-skeleton {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-height: min(320px, 42dvh);
+  border-radius: 10px;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.05) 0%,
+    rgba(255,255,255,0.09) 50%,
+    rgba(255,255,255,0.05) 100%
+  );
+  background-size: 200% 100%;
+  animation: scm-shimmer 1.4s ease-in-out infinite;
+}
+
+.scm-preview-skeleton--portrait {
+  aspect-ratio: 9 / 16;
+  max-height: min(380px, 50dvh);
+}
+
+@keyframes scm-shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+/* ── Action buttons ──────────────────────────────────────────────────────── */
+.scm-actions {
+  display: flex;
+  gap: 0.625rem;
+  padding: 0.875rem 1.25rem 0.5rem;
+}
+
+.scm-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  transition: opacity 0.15s, transform 0.12s;
+  flex: 1;
+}
+
+.scm-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.scm-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.scm-btn--primary {
+  background: #f7f3ec;
+  color: #0f0e0c;
+}
+
+.scm-btn--primary:hover:not(:disabled) {
+  background: #ffffff;
+}
+
+/* ── Hint text ───────────────────────────────────────────────────────────── */
+.scm-hint {
+  text-align: center;
+  font-family: var(--font-ibm-plex-mono, monospace);
+  font-size: 0.6rem;
+  color: rgba(255,255,255,0.22);
+  padding: 0 1.25rem 1rem;
+  letter-spacing: 0.04em;
+}
+
+/* ── Mobile ──────────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .scm-preview {
+    max-height: min(260px, 38dvh);
+  }
+  .scm-preview-wrap--portrait .scm-preview {
+    max-height: min(320px, 44dvh);
+  }
+  .scm-preview-skeleton {
+    max-height: min(260px, 38dvh);
+  }
+  .scm-preview-skeleton--portrait {
+    max-height: min(320px, 44dvh);
+  }
+}

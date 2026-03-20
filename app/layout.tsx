@@ -8,6 +8,7 @@ import PostHogProvider from "@/components/providers/PostHogProvider";
 import PostHogPageView from "@/components/providers/PostHogPageView";
 import { Suspense } from "react";
 import { cn } from "@/lib/utils";
+import { Toaster } from "@/components/ui/sonner";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
@@ -45,6 +46,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
+  themeColor: "#0f172a",
 };
 
 export const metadata: Metadata = {
@@ -139,6 +141,7 @@ export default function RootLayout({
                   <PostHogPageView />
                 </Suspense>
                 {children}
+                <Toaster />
               </PublicShell>
             </ConvexClientProvider>
           </PostHogProvider>

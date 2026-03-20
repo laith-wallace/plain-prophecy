@@ -3,6 +3,7 @@
 import React from "react";
 import type { StudyLesson } from "@/data/studies";
 import type { StudyCardMeta } from "@/data/studyCardMeta";
+import { ScriptureRef } from "@/components/ui/ScriptureRef";
 
 interface Props {
   lesson: StudyLesson;
@@ -23,7 +24,7 @@ export default function StudyCardFront({ lesson, meta }: Props) {
       {/* Top badges row */}
       <div className="scf-badges">
         {meta.isNew && <span className="scf-badge scf-badge--new">New</span>}
-        <span className="scf-badge scf-badge--ref">{lesson.scriptureRef}</span>
+        <ScriptureRef className="scf-badge scf-badge--ref">{lesson.scriptureRef}</ScriptureRef>
       </div>
 
       {/* Central emoji illustration */}
