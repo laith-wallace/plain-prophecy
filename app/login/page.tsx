@@ -4,6 +4,7 @@ import { useAuthActions } from "@convex-dev/auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
+import confetti from "canvas-confetti";
 import '@/app/profile/profile.css';
 
 export default function LoginPage() {
@@ -20,6 +21,11 @@ export default function LoginPage() {
     try {
       const formData = new FormData(e.currentTarget);
       await signIn("password", formData);
+      confetti({
+        particleCount: 150,
+        spread: 80,
+        origin: { y: 0.6 },
+      });
       router.push("/profile");
     } catch (err) {
       console.error(err);

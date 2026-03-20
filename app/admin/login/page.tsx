@@ -3,6 +3,7 @@
 import { useAuthActions } from "@convex-dev/auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import confetti from "canvas-confetti";
 
 export default function AdminLoginPage() {
   const { signIn } = useAuthActions();
@@ -18,6 +19,11 @@ export default function AdminLoginPage() {
     try {
       const formData = new FormData(e.currentTarget);
       await signIn("password", formData);
+      confetti({
+        particleCount: 150,
+        spread: 80,
+        origin: { y: 0.6 },
+      });
       router.push("/admin");
     } catch {
       setError(flow === "signIn" ? "Invalid email or password." : "Could not create account.");
