@@ -150,52 +150,62 @@ export function ScriptureRef({ children, className, style }: ScriptureRefProps) 
             </div>
 
             {/* Content area */}
-            {loading && <LoadingSkeleton />}
+            <div
+              className="pr-1 custom-scrollbar"
+              style={{
+                maxHeight: 320,
+                overflowY: "auto",
+                scrollbarGutter: "stable",
+                paddingRight: "4px",
+              }}
+            >
+              {loading && <LoadingSkeleton />}
 
-            {error && (
-              <p
-                style={{
-                  fontFamily: "'Inter', sans-serif",
-                  fontSize: 13,
-                  color: "rgba(255,255,255,0.45)",
-                  lineHeight: 1.6,
-                  margin: 0,
-                  fontStyle: "italic",
-                }}
-              >
-                Verse unavailable — open a Bible app to read this passage.
-              </p>
-            )}
-
-            {verse && !loading && (
-              <>
+              {error && (
                 <p
                   style={{
-                    fontFamily: "'Playfair Display', serif",
-                    fontSize: 14,
-                    color: "rgba(255,255,255,0.88)",
-                    lineHeight: 1.72,
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: 13,
+                    color: "rgba(255,255,255,0.45)",
+                    lineHeight: 1.6,
                     margin: 0,
                     fontStyle: "italic",
                   }}
                 >
-                  &ldquo;{verse.text}&rdquo;
+                  Verse unavailable — open a Bible app to read this passage.
                 </p>
-                {verse.truncated && (
+              )}
+
+              {verse && !loading && (
+                <>
                   <p
                     style={{
-                      fontFamily: "'IBM Plex Mono', monospace",
-                      fontSize: 10,
-                      color: "rgba(255,255,255,0.3)",
-                      marginTop: 8,
-                      marginBottom: 0,
+                      fontFamily: "'Inter', sans-serif",
+                      fontSize: 16,
+                      color: "rgba(255,255,255,0.88)",
+                      lineHeight: 1.72,
+                      margin: 0,
+                      fontStyle: "italic",
                     }}
                   >
-                    (showing first verse only)
+                    &ldquo;{verse.text}&rdquo;
                   </p>
-                )}
-              </>
-            )}
+                  {verse.truncated && (
+                    <p
+                      style={{
+                        fontFamily: "'IBM Plex Mono', monospace",
+                        fontSize: 10,
+                        color: "rgba(255,255,255,0.3)",
+                        marginTop: 8,
+                        marginBottom: 0,
+                      }}
+                    >
+                      (showing first verse only)
+                    </p>
+                  )}
+                </>
+              )}
+            </div>
           </PopoverPrimitive.Popup>
         </PopoverPrimitive.Positioner>
       </PopoverPrimitive.Portal>
