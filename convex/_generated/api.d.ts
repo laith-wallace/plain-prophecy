@@ -17,6 +17,7 @@ import type * as evidence from "../evidence.js";
 import type * as files from "../files.js";
 import type * as http from "../http.js";
 import type * as pillars from "../pillars.js";
+import type * as profile from "../profile.js";
 import type * as prophecies from "../prophecies.js";
 import type * as seed from "../seed.js";
 import type * as studyCourses from "../studyCourses.js";
@@ -40,6 +41,7 @@ declare const fullApi: ApiFromModules<{
   files: typeof files;
   http: typeof http;
   pillars: typeof pillars;
+  profile: typeof profile;
   prophecies: typeof prophecies;
   seed: typeof seed;
   studyCourses: typeof studyCourses;

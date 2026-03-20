@@ -449,5 +449,18 @@ export const pulsarMapData: PulsarMapData = {
       summary: 'Is the law grace or demand? The Bible\'s answer is both — and neither contradicts the other. This study shows why Jesus said he came not to abolish the law but to fulfil it, and what that means for how we live now.',
       href: '/studies/doctrine/the-law',
     },
+    {
+      id: "antichrist-development",
+      label: "Antichrist Development",
+      category: "doctrine",
+      status: "live",
+      angle: 345,
+      distance: 0.58,
+      loveConnection: "Identifying the counterfeit is the first step in clinging to the authentic love of Christ.",
+      scripture: "1 John 2:18",
+      scriptureText: "Children, it is the last hour... now many antichrists have appeared.",
+      summary: "What does 'Antichrist' actually mean? This study goes beyond the headlines to the biblical core — exploring the definition of 'anti' as 'in place of,' the apostolic warnings about wolves from within, and the historical sifting that highlights truth against error.",
+      href: "/studies/gospel/antichrist-development",
+    },
   ],
 }

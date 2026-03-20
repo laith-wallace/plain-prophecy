@@ -7,19 +7,23 @@ import {
 } from "@convex-dev/auth/nextjs/server";
 
 const isAdminRoute = createRouteMatcher(["/admin(.*)"]);
-const isLoginRoute = createRouteMatcher(["/admin/login"]);
+const isAdminLoginRoute = createRouteMatcher(["/admin/login"]);
+const isUserLoginRoute = createRouteMatcher(["/login"]);
 
 export default convexAuthNextjsMiddleware(
   async (request: NextRequest, { convexAuth }: { convexAuth: ConvexAuthNextjsMiddlewareContext }) => {
     const isAuthenticated = await convexAuth.isAuthenticated();
 
   // Redirect authenticated users away from the login page
-  if (isLoginRoute(request) && isAuthenticated) {
+  if (isAdminLoginRoute(request) && isAuthenticated) {
     return nextjsMiddlewareRedirect(request, "/admin");
+  }
+  if (isUserLoginRoute(request) && isAuthenticated) {
+    return nextjsMiddlewareRedirect(request, "/profile");
   }
 
   // Redirect unauthenticated users away from admin pages
-  if (isAdminRoute(request) && !isLoginRoute(request) && !isAuthenticated) {
+  if (isAdminRoute(request) && !isAdminLoginRoute(request) && !isAuthenticated) {
     return nextjsMiddlewareRedirect(request, "/admin/login");
   }
 });

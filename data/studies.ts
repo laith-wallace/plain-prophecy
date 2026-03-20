@@ -1450,6 +1450,75 @@ export const studyBooks: StudyBook[] = [
             ],
           },
         ],
+        nextLesson: {
+          book: "gospel",
+          lesson: "antichrist-development",
+          title: "Antichrist Study Development",
+        },
+      },
+      {
+        slug: "antichrist-development",
+        title: "Antichrist Study Development",
+        scriptureRef: "1 John 2:18-19; 2 Thessalonians 2:3-4",
+        readingTime: 12,
+        keyVerse: "Children, it is the last hour, and as you have heard that antichrist is coming, so now many antichrists have appeared.",
+        keyVerseRef: "1 John 2:18",
+        intro: "The word 'Antichrist' is one of the most misunderstood terms in the Bible. To some, it is a figure from a horror movie; to others, a political leader. But the Bible presents a much more sophisticated — and much more personal — development of this mystery.",
+        sections: [
+          {
+            heading: "The Origin of the Term: Not Against, but In Place Of",
+            contentBlocks: [
+              {
+                label: "ἀντίχριστος / antichristos",
+                text: "The Greek prefix 'anti' primarily means 'in place of' or 'a substitute for.' While it includes the idea of opposition, its core meaning is a replacement. The Antichrist is not a figure who openly hates Christ; he is a figure who seeks to stand in the place of Christ.",
+              },
+              {
+                label: "The First Appearance (1 John 2:18-19)",
+                text: "John is the only biblical author to use the specific word 'antichrist.' He notes that 'many antichrists have appeared' already in his day. This tells us that the spirit of antichrist is not just a future threat, but an active principle operating inside the history of the church.",
+              },
+            ],
+          },
+          {
+            heading: "The Apostolic Warning: Wolves From Within",
+            contentBlocks: [
+              {
+                label: "Acts 20:27-32",
+                text: "Paul warned the elders at Ephesus: 'from among your own selves will arise men speaking twisted things, to draw away the disciples after them.' The greatest danger to the church was not external persecution from Rome, but internal subversion from within the leadership.",
+              },
+              {
+                label: "2 Thessalonians 2:3-4",
+                text: "Paul describes a 'falling away' (apostasy) that must happen before the 'man of lawlessness' is revealed. This development takes place 'in the temple of God' — that is, within the professing body of Christ.",
+              },
+            ],
+          },
+          {
+            heading: "The Historical Context: The Gnostic Heresy",
+            contentBlocks: [
+              {
+                label: "Denying the Flesh",
+                text: "The early church faced Gnosticism, which taught that matter was evil and spirit was good. Consequently, they denied that Jesus had truly come in human flesh (1 John 4:2-3). John identifies this specific denial as the 'spirit of the antichrist.'",
+              },
+              {
+                label: "Counterfeit Divinity",
+                text: "By denying the humanity of Christ, the Gnostics effectively removed the bridge between God and man, replacing the true Mediator with a series of spiritual 'emanations' or human substitutes.",
+              },
+            ],
+          },
+          {
+            heading: "The Purpose of Separation: Truth vs Error",
+            contentBlocks: [
+              {
+                label: "1 John 2:19",
+                text: "'They went out from us, but they were not of us; for if they had been of us, they would have continued with us.' The departure of the antichrists was a necessary separation to make clear who truly belonged to the apostolic faith.",
+              },
+              {
+                label: "The Sifting Process",
+                text: "God allows error to develop so that the truth might be more clearly defined. The development of the 'mystery of lawlessness' is the backdrop against which the 'mystery of godliness' (Christ) is most beautifully revealed.",
+              },
+            ],
+          },
+        ],
+        christCentre: "The study of the Antichrist is not about the study of evil; it is about the protection of the true Christ. We identify the counterfeit only so that we may more clearly cling to the original. Jesus is the only Mediator, the only High Priest, and the only Head of the Church. Any person, system, or tradition that seeks to occupy that space — even with the best of intentions — is operating in the spirit of antichrist. Our safety is found not in tracking every move of the enemy, but in knowing the voice of the Shepherd so well that no substitute can ever deceive us.",
         nextLesson: undefined,
       }
     ]

@@ -447,3 +447,31 @@ export const syncStudyLessons = mutation({
     console.log("Study sync complete!");
   },
 });
+// Syncs the latest content from data/doctrines.ts into Convex.
+export const syncDoctrines = mutation({
+  args: {},
+  handler: async (ctx) => {
+    for (let i = 0; i < doctrines.length; i++) {
+      const d = doctrines[i];
+
+      const existing = await ctx.db
+        .query("doctrines")
+        .withIndex("by_slug", (q: any) => q.eq("slug", d.slug))
+        .first();
+
+      const fields = {
+        ...d,
+        published: existing?.published ?? true,
+        order: i,
+      };
+
+      if (existing) {
+        await ctx.db.patch(existing._id, fields);
+      } else {
+        await ctx.db.insert("doctrines", fields);
+      }
+    }
+
+    console.log("Doctrine sync complete!");
+  },
+});

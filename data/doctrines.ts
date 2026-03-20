@@ -483,6 +483,92 @@ export const doctrines: DoctrinePage[] = [
       "The seven-year tribulation is built on a gap that does not exist, for a church that will not be removed, featuring an antichrist who has already risen. Scripture's actual promise to the saints is not escape but endurance — and the One who walked with Shadrach in the furnace is the same One who walks with His people through every tribulation.",
     verdict:
       "The seven-year tribulation has no independent scriptural basis. It is an architectural consequence of the Gap Theory, and it collapses without it.",
+    nextDoctrine: {
+      slug: "antichrist-development",
+      title: "Antichrist Study Development",
+    },
+  },
+  {
+    slug: "antichrist-development",
+    title: "Antichrist Study Development",
+    subtitle: "The word 'Anti' means 'In Place Of' — a counterfeit, not just an opponent",
+    scriptureRef: "1 John 2:18-19; Acts 20:27-32",
+    category: "antichrist",
+    intro: "The term 'Antichrist' is often shrouded in mystery and fear. But to understand its true biblical meaning, we must go back to the original context — to the warnings of the apostles and the historical challenges faced by the early church.",
+    sections: [
+      {
+        id: "origin",
+        heading: "The Origin of the Term",
+        badge: "1 John 2:18-19",
+        contentBlocks: [
+          {
+            label: "Many Antichrists have appeared",
+            text: "John warns that 'many antichrists' had already appeared in his day. This suggests that the spirit of antichrist is not just a future individual, but a persistent force operating even within the early church context. It was not a distant threat, but a present reality.",
+          },
+        ],
+        keyVerse: {
+          text: "Children, it is the last hour, and as you have heard that antichrist is coming, so now many antichrists have appeared.",
+          ref: "1 John 2:18",
+        },
+      },
+      {
+        id: "warning",
+        heading: "The Apostolic Warning",
+        badge: "Acts 20:27-32",
+        contentBlocks: [
+          {
+            label: "Wolves from within",
+            text: "Paul warned the elders at Ephesus that 'fierce wolves' would arise from among themselves. The danger wasn't just external persecution from Rome, but internal departure from the truth. The 'twisted things' spoken by these leaders would draw away disciples after them.",
+          },
+        ],
+      },
+      {
+        id: "context",
+        heading: "Historical Context: The Gnostic Challenge",
+        badge: "Gnosticism",
+        contentBlocks: [
+          {
+            label: "Denying the Flesh",
+            text: "The early church faced Gnosticism — a heresy that denied Jesus had come in actual flesh. To John, anyone who denied the humanity or divinity of Christ carried the spirit of antichrist. This established a pattern: the antichrist spirit seeks to redefine Christ according to human philosophy.",
+          },
+        ],
+      },
+      {
+        id: "definition",
+        heading: "Linguistic Definition: 'In Place Of'",
+        badge: "Linguistics",
+        contentBlocks: [
+          {
+            label: "ἀντί / anti",
+            text: "In Greek, the prefix 'anti' primarily means 'in place of' or 'a substitute for.' The antichrist is a counterfeit — a placeholder that seeks to swap the true Christ for a human substitute. It is not necessarily 'against' Christ in an obvious way, but 'in the place of' Christ in a deceptive way.",
+          },
+        ],
+      },
+      {
+        id: "falling-away",
+        heading: "The Falling Away",
+        badge: "2 Thessalonians 2",
+        contentBlocks: [
+          {
+            label: "The Great Apostasy",
+            text: "Paul speaks of a 'falling away' (apostasy) that must happen before the man of sin is revealed. The antichrist development is inseparable from this departure from the gospel within the professing church. It is a slow, steady drift from apostolic truth into institutional error.",
+          },
+        ],
+      },
+      {
+        id: "separation",
+        heading: "The Purpose of Separation",
+        badge: "Highlighting Truth",
+        contentBlocks: [
+          {
+            label: "Manifesting the Truth",
+            text: "John notes that those who left 'were not of us.' This separation, though painful, served a divine purpose: to make it manifest who truly belonged to the truth, highlighting the contrast between the counterfeit and the real. The error serves as a backdrop to see the truth more clearly.",
+          },
+        ],
+      },
+    ],
+    christCentre: "The study of the Antichrist is ultimately a study of the true Christ. We identify the counterfeit only so we can more clearly cling to the original. Jesus is our only Mediator, High Priest, and Head. Any system that seeks to occupy that space — even with good intentions — operates in the spirit of antichrist. Our safety is found in knowing the voice of the Shepherd so well that no substitute can deceive us.",
+    verdict: "The Antichrist is first and foremost a spirit of substitution that works within the church to replace the true Christ with human traditions and authority. It is the 'mystery of lawlessness' that began in the first century and continues today.",
     nextDoctrine: undefined,
   },
 ];

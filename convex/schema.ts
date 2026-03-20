@@ -186,4 +186,15 @@ export default defineSchema({
     text: v.string(),
     order: v.number(),
   }).index("by_type_order", ["type", "order"]),
+  users: defineTable({
+    name: v.optional(v.string()),
+    image: v.optional(v.string()),
+    email: v.optional(v.string()),
+    // Added for Profile & Funnel
+    spiritualLevel: v.optional(v.union(v.literal("beginner"), v.literal("intermediate"), v.literal("advanced"))),
+    interests: v.optional(v.array(v.string())),
+    funnelLevel: v.optional(v.union(v.literal("basic"), v.literal("intermediate"), v.literal("advanced"))),
+    onboardingComplete: v.optional(v.boolean()),
+    lastLessonId: v.optional(v.id("studyLessons")),
+  }),
 });
