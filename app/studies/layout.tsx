@@ -14,6 +14,7 @@ export default function StudiesShellLayout({
 }) {
   const pathname = usePathname();
   const isIndex = pathname === "/studies";
+  const isParallels = pathname === "/studies/parallels";
   const isFullscreen =
     pathname === "/studies/map" ||
     pathname === "/studies/timeline" ||
@@ -26,8 +27,8 @@ export default function StudiesShellLayout({
 
   return (
     <StudiesLayout
-      defaultSidebarOpen={!isIndex}
-      collapsibleMode={isIndex ? "offcanvas" : "icon"}
+      defaultSidebarOpen={!isIndex && !isParallels}
+      collapsibleMode={(isIndex || isParallels) ? "offcanvas" : "icon"}
     >
       {children}
     </StudiesLayout>

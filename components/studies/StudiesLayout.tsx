@@ -180,8 +180,16 @@ export default function StudiesLayout({
   defaultSidebarOpen = true,
   collapsibleMode = "icon",
 }: StudiesLayoutProps) {
+  const [open, setOpen] = useState(defaultSidebarOpen);
+
+  // When defaultSidebarOpen changes (due to navigation in the parent layout),
+  // we force the sidebar to sync with that preference.
+  React.useEffect(() => {
+    setOpen(defaultSidebarOpen);
+  }, [defaultSidebarOpen]);
+
   return (
-    <SidebarProvider defaultOpen={defaultSidebarOpen} className="studies-root">
+    <SidebarProvider open={open} onOpenChange={setOpen} className="studies-root">
       <Sidebar
         className="studies-sidebar-shadcn"
         collapsible={collapsibleMode}
