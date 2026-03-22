@@ -2348,3 +2348,43 @@ body {
   scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
 }
 
+/* ===== APP SIDEBAR — ICON-COLLAPSE OVERRIDES =====
+ * The sidebar.tsx component uses Tailwind v4-only syntax (w-(--sidebar-width-icon),
+ * size-8!) which are not compiled by this project's Tailwind v3 build.
+ * These plain CSS rules replicate the icon-collapse behaviour via data attributes
+ * that the shadcn sidebar already sets correctly on the DOM.
+ * ================================================= */
+
+/* Shrink the gap placeholder and fixed container to icon width */
+[data-slot="sidebar"][data-collapsible="icon"] [data-slot="sidebar-gap"],
+[data-slot="sidebar"][data-collapsible="icon"] [data-slot="sidebar-container"] {
+  width: 3.5rem;
+  transition: width 0.2s linear;
+}
+
+/* Clip overflow so text labels don't bleed out */
+[data-slot="sidebar"][data-collapsible="icon"] [data-sidebar="content"] {
+  overflow: hidden;
+}
+
+/* Collapse nav menu buttons to 32×32 centred icons */
+[data-slot="sidebar"][data-collapsible="icon"] [data-slot="sidebar-menu-button"] {
+  width: 2rem !important;
+  height: 2rem !important;
+  padding: 0.5rem !important;
+  justify-content: center;
+}
+
+/* Hide text spans and group labels */
+[data-slot="sidebar"][data-collapsible="icon"] [data-slot="sidebar-menu-button"] > span,
+[data-slot="sidebar"][data-collapsible="icon"] [data-slot="sidebar-group-label"] {
+  display: none;
+}
+
+/* Footer user button (size="lg") — keep avatar centred */
+[data-slot="sidebar"][data-collapsible="icon"] [data-size="lg"][data-slot="sidebar-menu-button"] {
+  height: 2.5rem !important;
+  padding: 0 !important;
+  justify-content: center;
+}
+

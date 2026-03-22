@@ -196,5 +196,13 @@ export default defineSchema({
     funnelLevel: v.optional(v.union(v.literal("basic"), v.literal("intermediate"), v.literal("advanced"))),
     onboardingComplete: v.optional(v.boolean()),
     lastLessonId: v.optional(v.id("studyLessons")),
+    // Raw onboarding survey answers for user personalisation data
+    onboardingAnswers: v.optional(v.object({
+      motivation: v.optional(v.string()),
+      foundation: v.optional(v.string()),
+      methodology: v.optional(v.string()),
+      background: v.optional(v.string()),
+      goal: v.optional(v.string()),
+    })),
   }),
 });

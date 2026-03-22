@@ -85,6 +85,9 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
+  min-height: 100dvh;
+  background: var(--dash-bg);
+  color: #fff;
 }
 
 .dashboard-header {
@@ -114,6 +117,35 @@
   color: var(--dash-text-muted);
 }
 
+.header-search {
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.header-search:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.header-search-placeholder {
+  flex: 1;
+  font-size: 0.85rem;
+  color: var(--dash-text-muted);
+  user-select: none;
+}
+
+.header-search-kbd {
+  font-family: var(--font-ibm-plex-mono, monospace);
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  padding: 1px 5px;
+  flex-shrink: 0;
+}
+
+/* legacy — keep in case anything still uses it */
 .header-search input {
   background: none;
   border: none;

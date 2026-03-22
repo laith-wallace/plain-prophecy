@@ -1,6 +1,8 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 import StudiesLayout from "@/components/studies/StudiesLayout";
 
 import "../sidebar.css";
@@ -13,6 +15,7 @@ export default function StudiesShellLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const user = useQuery(api.users.viewer);
   const isIndex = pathname === "/studies";
   const isParallels = pathname === "/studies/parallels";
   const isFullscreen =
@@ -25,6 +28,13 @@ export default function StudiesShellLayout({
     return <>{children}</>;
   }
 
+  // Authenticated users: AppSidebar (in PublicShell) already provides the
+  // studies subnav — skip StudiesLayout to avoid a double SidebarProvider
+  if (user) {
+    return <>{children}</>;
+  }
+
+  // Guest or loading: use the standalone studies sidebar layout
   return (
     <StudiesLayout
       defaultSidebarOpen={!isIndex && !isParallels}

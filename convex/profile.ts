@@ -2,6 +2,14 @@ import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
 import { getAuthUserId } from "@convex-dev/auth/server";
 
+const answersArg = v.optional(v.object({
+  motivation: v.optional(v.string()),
+  foundation: v.optional(v.string()),
+  methodology: v.optional(v.string()),
+  background: v.optional(v.string()),
+  goal: v.optional(v.string()),
+}));
+
 export const updateProfile = mutation({
   args: {
     spiritualLevel: v.optional(v.union(v.literal("beginner"), v.literal("intermediate"), v.literal("advanced"))),
@@ -9,6 +17,7 @@ export const updateProfile = mutation({
     funnelLevel: v.optional(v.union(v.literal("basic"), v.literal("intermediate"), v.literal("advanced"))),
     onboardingComplete: v.optional(v.boolean()),
     lastLessonId: v.optional(v.id("studyLessons")),
+    answers: answersArg,
   },
   handler: async (ctx, args) => {
     const userId = await getAuthUserId(ctx);
@@ -16,9 +25,29 @@ export const updateProfile = mutation({
       throw new Error("Not authenticated");
     }
 
+    const { answers, ...rest } = args;
     await ctx.db.patch(userId, {
-      ...args,
+      ...rest,
+      ...(answers !== undefined ? { onboardingAnswers: answers } : {}),
     });
+  },
+});
+
+export const updateProfileImage = mutation({
+  args: { image: v.string() },
+  handler: async (ctx, { image }) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) throw new Error("Not authenticated");
+    await ctx.db.patch(userId, { image });
+  },
+});
+
+export const resetOnboarding = mutation({
+  args: {},
+  handler: async (ctx) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) throw new Error("Not authenticated");
+    await ctx.db.patch(userId, { onboardingComplete: false });
   },
 });
 
@@ -36,7 +65,7 @@ export const getTailoredContent = query({
 
     // Simple logic to find matching lessons
     const allLessons = await ctx.db.query("studyLessons").filter(q => q.eq(q.field("published"), true)).collect();
-    
+
     // Map interests to lesson slugs or tags
     const interestMap: Record<string, string[]> = {
       evidence: ["day-year-principle", "seventy-weeks-decoded"],
@@ -60,7 +89,7 @@ export const getTailoredContent = query({
     }
 
     const filteredLessons = allLessons.filter(l => recommendedSlugs.has(l.slug));
-    
+
     const lessonsWithCourse = await Promise.all(filteredLessons.map(async (l) => {
       const course = await ctx.db.get(l.courseId);
       return { ...l, courseSlug: course?.slug || "" };

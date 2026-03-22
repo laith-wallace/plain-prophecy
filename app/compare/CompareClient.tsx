@@ -70,7 +70,7 @@ export default function CompareClient() {
         <button id="share-dismiss" onClick={() => { const el = document.getElementById("share-bar"); if (el) el.style.display = "none"; }} title="Dismiss">✕</button>
       </div>
 
-      <div className="compare-wrapper">
+      <div className="compare-wrapper" style={{ background: "var(--paper)", color: "var(--ink)" }}>
         {/* Masthead */}
         <div style={{ textAlign: "center", borderBottom: "3px double var(--ink)", paddingBottom: "2rem", marginBottom: "3rem" }}>
           <div style={{ fontFamily: "var(--font-ibm-plex-mono)", fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", color: "var(--neutral)", marginBottom: "0.75rem" }}>
