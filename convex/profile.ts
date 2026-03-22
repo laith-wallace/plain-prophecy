@@ -98,3 +98,24 @@ export const getTailoredContent = query({
     return lessonsWithCourse;
   },
 });
+
+export const getLastLesson = query({
+  args: {},
+  handler: async (ctx) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) return null;
+    const user = await ctx.db.get(userId);
+    if (!user?.lastLessonId) return null;
+    const lesson = await ctx.db.get(user.lastLessonId);
+    if (!lesson) return null;
+    const course = await ctx.db.get(lesson.courseId);
+    return {
+      title: lesson.title,
+      slug: lesson.slug,
+      courseSlug: course?.slug ?? "",
+      courseTitle: course?.title ?? "",
+      intro: lesson.intro ?? null,
+      readingTime: lesson.readingTime ?? null,
+    };
+  },
+});

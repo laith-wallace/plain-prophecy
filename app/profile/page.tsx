@@ -13,8 +13,6 @@ import {
   Award,
   ChevronRight,
   Search,
-  Calendar,
-  Bell,
   User as UserIcon
 } from "lucide-react";
 import { motion } from "framer-motion";
@@ -24,6 +22,8 @@ export default function ProfilePage() {
   const [onboardingDone, setOnboardingDone] = useState(false);
   const user = useQuery(api.users.viewer);
   const tailoredContent = useQuery(api.profile.getTailoredContent);
+  const allCoursesWithLessons = useQuery(api.studyCourses.getAllWithLessons);
+  const lastLesson = useQuery(api.profile.getLastLesson);
 
   if (user === undefined) {
     return (
@@ -60,12 +60,36 @@ export default function ProfilePage() {
     return <ProfileOnboarding onComplete={() => setOnboardingDone(true)} />;
   }
 
-  // Mock stats
+  const totalLessons = allCoursesWithLessons?.reduce((acc, c) => acc + c.lessons.length, 0);
+  const levelLabel = user.spiritualLevel
+    ? user.spiritualLevel.charAt(0).toUpperCase() + user.spiritualLevel.slice(1)
+    : "Beginner";
+
   const stats = [
-    { label: "Lessons Started", value: "3", sub: "/ 12 Total", icon: <BookOpen size={20} /> },
-    { label: "Prophecies Found", value: "8", sub: "/ 25 Revealed", icon: <Compass size={20} /> },
-    { label: "Study Streak", value: "5", sub: "Days Active", icon: <Activity size={20} /> },
-    { label: "Sanctuary Rank", value: "Seeker", sub: "Level 2", icon: <Award size={20} /> },
+    {
+      label: "Study Library",
+      value: allCoursesWithLessons === undefined ? "—" : String(totalLessons),
+      sub: "lessons available",
+      icon: <BookOpen size={20} />,
+    },
+    {
+      label: "Your Path",
+      value: tailoredContent === undefined ? "—" : String(tailoredContent?.length ?? 0),
+      sub: "tailored for you",
+      icon: <Compass size={20} />,
+    },
+    {
+      label: "Your Foundation",
+      value: levelLabel,
+      sub: "spiritual level",
+      icon: <Award size={20} />,
+    },
+    {
+      label: "Your Interests",
+      value: String(user.interests?.length ?? 0),
+      sub: user.interests?.length === 1 ? "topic chosen" : "topics chosen",
+      icon: <Activity size={20} />,
+    },
   ];
 
   return (
@@ -82,8 +106,6 @@ export default function ProfilePage() {
           <kbd className="header-search-kbd">⌘K</kbd>
         </button>
         <div className="header-actions">
-          <button className="icon-btn"><Bell size={20} /></button>
-          <button className="icon-btn"><Calendar size={20} /></button>
           <div className="header-user-summary">
             <div className="header-avatar-mini">
               {user.image ? (
@@ -150,37 +172,44 @@ export default function ProfilePage() {
               </div>
             </section>
 
-            {/* Weekly Progress Chart Mockup */}
+            {/* Continue Studying */}
             <section className="dashboard-section card-box">
               <div className="section-header-row">
-                <h2>Study Intensity</h2>
-                <div className="chart-legend">
-                  <span className="dot"></span>
-                  <span>Last 7 Days</span>
-                </div>
+                <h2>{lastLesson ? "Continue Studying" : "Start Your Journey"}</h2>
               </div>
-              <div className="chart-placeholder">
-                <svg className="chart-svg" viewBox="0 0 400 100">
-                  <path
-                    className="chart-path"
-                    d="M0,80 Q50,60 100,75 T200,40 T300,60 T400,20"
-                    fill="none"
-                    stroke="var(--sda-accent)"
-                    strokeWidth="2"
-                  />
-                  <path
-                    className="chart-path-glow"
-                    d="M0,80 Q50,60 100,75 T200,40 T300,60 T400,20"
-                    fill="none"
-                    stroke="var(--sda-accent)"
-                    strokeWidth="4"
-                    opacity="0.3"
-                  />
-                </svg>
-                <div className="chart-labels">
-                  <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+              {lastLesson === undefined ? (
+                <div className="content-loading">Loading...</div>
+              ) : lastLesson === null ? (
+                <div className="continue-card">
+                  <p style={{ color: "var(--dash-text-muted)", fontSize: "0.875rem", lineHeight: 1.6 }}>
+                    You haven&apos;t started a lesson yet. Explore the study library and begin your first lesson.
+                  </p>
+                  <div className="continue-card-footer">
+                    <Link href="/studies" className="dashboard-btn primary small">
+                      Browse Studies <ChevronRight size={14} />
+                    </Link>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div className="continue-card">
+                  <p className="continue-card-course">{lastLesson.courseTitle}</p>
+                  <h3 className="continue-card-title">{lastLesson.title}</h3>
+                  {lastLesson.intro && (
+                    <p className="continue-card-intro">{lastLesson.intro}</p>
+                  )}
+                  {lastLesson.readingTime && (
+                    <p className="continue-card-meta">~{lastLesson.readingTime} min read</p>
+                  )}
+                  <div className="continue-card-footer">
+                    <Link
+                      href={`/studies/${lastLesson.courseSlug}/${lastLesson.slug}`}
+                      className="dashboard-btn primary small"
+                    >
+                      Resume Lesson <ChevronRight size={14} />
+                    </Link>
+                  </div>
+                </div>
+              )}
             </section>
           </div>
 
@@ -213,7 +242,11 @@ export default function ProfilePage() {
                 </div>
                 <div className="meta-item">
                   <span className="label">Member Since</span>
-                  <span className="value">March 2026</span>
+                  <span className="value">
+                    {new Intl.DateTimeFormat("en-GB", { month: "long", year: "numeric" }).format(
+                      new Date((user as any)._creationTime)
+                    )}
+                  </span>
                 </div>
               </div>
             </section>
