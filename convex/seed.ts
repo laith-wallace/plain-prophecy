@@ -1,4 +1,6 @@
+import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
+import { api } from "./_generated/api";
 import { futuristTimeline, preteristTimeline, sdaTimeline } from "../data/timelines";
 import { prophecies } from "../data/prophecies";
 import { doctrines } from "../data/doctrines";
@@ -373,7 +375,19 @@ export const run = mutation({
             nextLesson: lesson.nextLesson,
             sections: lesson.sections,
           });
-        }
+      }
+    }
+    }
+
+    // 8. Seed Blog Posts
+    const { blogPosts } = await import("../data/blog-posts");
+    for (const post of blogPosts) {
+      const existing = await ctx.db
+        .query("blogPosts")
+        .withIndex("by_slug", (q: any) => q.eq("slug", post.slug))
+        .first();
+      if (!existing) {
+        await ctx.db.insert("blogPosts", { ...post, published: true });
       }
     }
 

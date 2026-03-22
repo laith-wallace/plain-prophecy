@@ -1,6 +1,7 @@
 import { v } from "convex/values";
 import { query, mutation } from "./_generated/server";
 import { getAuthUserId } from "@convex-dev/auth/server";
+import { blogPosts } from "../data/blog-posts";
 
 export const getAllPosts = query({
   handler: async (ctx) => {
@@ -91,5 +92,29 @@ export const remove = mutation({
     const userId = await getAuthUserId(ctx);
     if (!userId) throw new Error("Unauthenticated");
     await ctx.db.delete(id);
+  },
+});
+
+export const syncBlogPosts = mutation({
+  args: {},
+  handler: async (ctx) => {
+    for (const post of blogPosts) {
+      const existing = await ctx.db
+        .query("blogPosts")
+        .withIndex("by_slug", (q) => q.eq("slug", post.slug))
+        .first();
+
+      const fields = {
+        ...post,
+        published: true,
+      };
+
+      if (existing) {
+        await ctx.db.patch(existing._id, fields);
+      } else {
+        await ctx.db.insert("blogPosts", fields);
+      }
+    }
+    console.log("Blog posts sync complete!");
   },
 });
