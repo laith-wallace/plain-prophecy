@@ -1,4 +1,4 @@
-import { mutation } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 import { futuristTimeline, preteristTimeline, sdaTimeline } from "../data/timelines";
 import { prophecies } from "../data/prophecies";
 import { doctrines } from "../data/doctrines";
@@ -473,5 +473,75 @@ export const syncDoctrines = mutation({
     }
 
     console.log("Doctrine sync complete!");
+  },
+});
+
+export const seedUniversalUser = mutation({
+  args: {},
+  handler: async (ctx) => {
+    const email = "laithwallace@gmail.com";
+    
+    // Check if user already exists
+    const existingUser = await ctx.db
+      .query("users")
+      .filter((q) => q.eq(q.field("email"), email))
+      .first();
+
+    if (!existingUser) {
+      await ctx.db.insert("users", {
+        email,
+        name: "Laith Wallace",
+        onboardingComplete: true,
+      });
+      console.log(`User ${email} seeded!`);
+      // Note: Hashing passwords for @convex-dev/auth is usually handled by the provider.
+      // We are seeding the user record; the password can be set by signing up once or 
+      // by the system if we had the hash.
+    } else {
+      console.log(`User ${email} already exists.`);
+    }
+  },
+});
+
+export const resetDemoUser = mutation({
+  args: {},
+  handler: async (ctx) => {
+    const email = "laithwallace@gmail.com";
+    const user = await ctx.db
+      .query("users")
+      .filter((q) => q.eq(q.field("email"), email))
+      .first();
+
+    if (user) {
+      // Find associated accounts if possible, or just delete the user
+      // Note: In @convex-dev/auth, accounts are linked to users.
+      // We'll delete the user; cascade depends on schema but usually we need to delete accounts too.
+      // For now, let's try deleting the user.
+      await ctx.db.delete(user._id);
+      
+      // Also try to find and delete the account in the system-managed accounts table
+      // Usually named "accounts" in the authTables
+      const account = await ctx.db
+        .query("accounts" as any)
+        .filter((q) => q.eq(q.field("providerKey" as any), email))
+        .first();
+      if (account) {
+        await ctx.db.delete(account._id);
+      }
+      
+      console.log(`User and account for ${email} have been reset.`);
+    } else {
+      console.log(`User ${email} not found.`);
+    }
+  },
+});
+
+export const getAuthSecretDebug = query({
+  args: {},
+  handler: async () => {
+    return {
+      hasSecret: !!process.env.CONVEX_AUTH_SECRET,
+      secretLength: process.env.CONVEX_AUTH_SECRET?.length || 0,
+    };
   },
 });

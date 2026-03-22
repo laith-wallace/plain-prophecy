@@ -126,7 +126,7 @@ export default function SiteNav({ onSearchOpen }: { onSearchOpen?: () => void })
           </button>
 
           <Link 
-            href="/profile" 
+            href={user ? "/profile" : "/login"} 
             style={{ 
               display: "flex", 
               alignItems: "center", 
@@ -162,9 +162,20 @@ export default function SiteNav({ onSearchOpen }: { onSearchOpen?: () => void })
                   fontSize: "0.85rem",
                   fontWeight: 600,
                   fontFamily: "var(--font-ibm-plex-mono)",
-                  boxShadow: "0 2px 10px rgba(0,0,0,0.3)"
+                  boxShadow: "0 2px 10px rgba(0,0,0,0.3)",
+                  overflow: "hidden"
                 }}>
-                  {user.name?.[0] || user.email?.[0] || '?'}
+                  {user.image ? (
+                    <Image 
+                      src={user.image} 
+                      alt={user.name || "Profile"} 
+                      width={30} 
+                      height={30} 
+                      style={{ objectFit: "cover" }}
+                    />
+                  ) : (
+                    user.name?.[0] || user.email?.[0] || '?'
+                  )}
                 </div>
               </>
             ) : (
