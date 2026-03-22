@@ -2,6 +2,9 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { useMutation, useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { CheckCircle2 } from "lucide-react";
 import { StudyBook, StudyLesson } from "@/data/studies";
 import ProphecyQuiz from "./ProphecyQuiz";
 
@@ -12,6 +15,17 @@ interface InteractiveStudyTemplateProps {
 }
 
 export default function InteractiveStudyTemplate({ book, lesson, VisualComponent }: InteractiveStudyTemplateProps) {
+  const markComplete = useMutation(api.profile.markLessonCompleteBySlug);
+  const isComplete = useQuery(api.profile.isLessonComplete, { bookSlug: book.slug, lessonSlug: lesson.slug });
+  const [marking, setMarking] = useState(false);
+
+  const handleMarkComplete = async () => {
+    if (isComplete || marking) return;
+    setMarking(true);
+    await markComplete({ bookSlug: book.slug, lessonSlug: lesson.slug });
+    setMarking(false);
+  };
+
   const interactiveSections = (lesson.sections ?? []).filter(s => s.id);
   const hasInteractive = interactiveSections.length > 0;
   
@@ -270,6 +284,30 @@ export default function InteractiveStudyTemplate({ book, lesson, VisualComponent
           <div className="study-footer-tag" style={{ fontFamily: 'IBM Plex Mono', fontSize: '12px', opacity: 0.5, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
             {book.title} · {lesson.scriptureRef}
           </div>
+
+          {/* Mark Complete button */}
+          <button
+            onClick={handleMarkComplete}
+            disabled={!!isComplete || marking}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '12px 28px',
+              borderRadius: '999px',
+              border: isComplete ? '1px solid rgba(232,160,32,0.4)' : '1px solid rgba(255,255,255,0.15)',
+              background: isComplete ? 'rgba(232,160,32,0.1)' : 'rgba(255,255,255,0.05)',
+              color: isComplete ? '#e8a020' : 'rgba(255,255,255,0.7)',
+              fontSize: '13px',
+              fontFamily: 'IBM Plex Mono',
+              letterSpacing: '0.08em',
+              cursor: isComplete ? 'default' : 'pointer',
+              transition: 'all 0.2s',
+            }}
+          >
+            <CheckCircle2 size={15} />
+            {isComplete ? 'Study Completed' : marking ? 'Saving...' : 'Mark as Complete'}
+          </button>
 
           {lesson.nextLesson ? (
             <Link

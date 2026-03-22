@@ -4,6 +4,7 @@ import { useState } from "react";
 import { api } from "@/convex/_generated/api";
 import ProfileOnboarding from "@/components/profile/ProfileOnboarding";
 import TailoredContent from "@/components/profile/TailoredContent";
+import LevelProgressCard from "@/components/profile/LevelProgressCard";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -24,6 +25,7 @@ export default function ProfilePage() {
   const tailoredContent = useQuery(api.profile.getTailoredContent);
   const allCoursesWithLessons = useQuery(api.studyCourses.getAllWithLessons);
   const lastLesson = useQuery(api.profile.getLastLesson);
+  const progress = useQuery(api.profile.getProgress);
 
   if (user === undefined) {
     return (
@@ -61,9 +63,6 @@ export default function ProfilePage() {
   }
 
   const totalLessons = allCoursesWithLessons?.reduce((acc, c) => acc + c.lessons.length, 0);
-  const levelLabel = user.spiritualLevel
-    ? user.spiritualLevel.charAt(0).toUpperCase() + user.spiritualLevel.slice(1)
-    : "Beginner";
 
   const stats = [
     {
@@ -79,9 +78,9 @@ export default function ProfilePage() {
       icon: <Compass size={20} />,
     },
     {
-      label: "Your Foundation",
-      value: levelLabel,
-      sub: "spiritual level",
+      label: "Studies Done",
+      value: progress === undefined ? "—" : String(progress?.completedCount ?? 0),
+      sub: "lessons completed",
       icon: <Award size={20} />,
     },
     {
@@ -250,6 +249,14 @@ export default function ProfilePage() {
                 </div>
               </div>
             </section>
+
+            {/* Level progression */}
+            {progress !== undefined && progress !== null && (
+              <LevelProgressCard
+                spiritualLevel={(user.spiritualLevel as "beginner" | "intermediate" | "advanced") ?? "beginner"}
+                completedCount={progress.completedCount}
+              />
+            )}
 
             <section className="dashboard-section promo-overlay-card">
               <div className="promo-content">

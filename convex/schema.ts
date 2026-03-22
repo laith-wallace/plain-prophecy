@@ -196,6 +196,7 @@ export default defineSchema({
     funnelLevel: v.optional(v.union(v.literal("basic"), v.literal("intermediate"), v.literal("advanced"))),
     onboardingComplete: v.optional(v.boolean()),
     lastLessonId: v.optional(v.id("studyLessons")),
+    completedLessons: v.optional(v.array(v.id("studyLessons"))),
     // Raw onboarding survey answers for user personalisation data
     onboardingAnswers: v.optional(v.object({
       motivation: v.optional(v.string()),

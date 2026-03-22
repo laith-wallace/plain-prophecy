@@ -2,6 +2,8 @@ import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
 import { getAuthUserId } from "@convex-dev/auth/server";
 
+const LEVEL_THRESHOLDS = { intermediate: 5, advanced: 15 } as const;
+
 const answersArg = v.optional(v.object({
   motivation: v.optional(v.string()),
   foundation: v.optional(v.string()),
@@ -96,6 +98,81 @@ export const getTailoredContent = query({
     }));
 
     return lessonsWithCourse;
+  },
+});
+
+export const markLessonCompleteBySlug = mutation({
+  args: { bookSlug: v.string(), lessonSlug: v.string() },
+  handler: async (ctx, { bookSlug, lessonSlug }) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) throw new Error("Not authenticated");
+
+    // Resolve the course
+    const course = await ctx.db
+      .query("studyCourses")
+      .withIndex("by_slug", (q) => q.eq("slug", bookSlug))
+      .first();
+    if (!course) return;
+
+    // Resolve the lesson
+    const lesson = await ctx.db
+      .query("studyLessons")
+      .withIndex("by_course", (q) => q.eq("courseId", course._id))
+      .collect()
+      .then((ls) => ls.find((l) => l.slug === lessonSlug));
+    if (!lesson) return;
+
+    const user = await ctx.db.get(userId);
+    const completed = user?.completedLessons ?? [];
+    if (completed.includes(lesson._id)) return; // already marked
+
+    const next = [...completed, lesson._id];
+
+    // Auto-promote spiritual level at thresholds
+    let level = user?.spiritualLevel ?? "beginner";
+    if (next.length >= LEVEL_THRESHOLDS.advanced) level = "advanced";
+    else if (next.length >= LEVEL_THRESHOLDS.intermediate) level = "intermediate";
+
+    await ctx.db.patch(userId, { completedLessons: next, spiritualLevel: level });
+  },
+});
+
+export const getProgress = query({
+  args: {},
+  handler: async (ctx) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) return null;
+    const user = await ctx.db.get(userId);
+    const completedLessons = user?.completedLessons ?? [];
+    return {
+      completedCount: completedLessons.length,
+      completedIds: completedLessons,
+      spiritualLevel: user?.spiritualLevel ?? "beginner",
+    };
+  },
+});
+
+export const isLessonComplete = query({
+  args: { bookSlug: v.string(), lessonSlug: v.string() },
+  handler: async (ctx, { bookSlug, lessonSlug }) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) return false;
+
+    const course = await ctx.db
+      .query("studyCourses")
+      .withIndex("by_slug", (q) => q.eq("slug", bookSlug))
+      .first();
+    if (!course) return false;
+
+    const lesson = await ctx.db
+      .query("studyLessons")
+      .withIndex("by_course", (q) => q.eq("courseId", course._id))
+      .collect()
+      .then((ls) => ls.find((l) => l.slug === lessonSlug));
+    if (!lesson) return false;
+
+    const user = await ctx.db.get(userId);
+    return (user?.completedLessons ?? []).includes(lesson._id);
   },
 });
 
