@@ -4,6 +4,7 @@ import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BookOpen, Map, Clock, GraduationCap, Scroll, FileText, LayoutDashboard, Layers, GitCompare } from "lucide-react";
+import Link from "next/link";
 
 const statCards = [
   { key: "evidence", label: "Evidence Sections", icon: BookOpen, href: "/admin/evidence" },
@@ -34,8 +35,8 @@ export default function AdminDashboard() {
           const published = stat && "published" in stat ? stat.published : null;
 
           return (
-            <a key={key} href={href}>
-              <Card className="bg-stone-900 border-stone-800 hover:border-stone-700 transition-colors cursor-pointer">
+            <Link key={key} href={href}>
+              <Card className="bg-stone-900 border-stone-800 hover:border-stone-700 transition-colors cursor-pointer h-full">
                 <CardHeader className="pb-1 pt-4 px-4">
                   <CardTitle className="text-xs font-medium text-stone-400 flex items-center gap-1.5">
                     <Icon className="w-3.5 h-3.5" />
@@ -51,7 +52,7 @@ export default function AdminDashboard() {
                   )}
                 </CardContent>
               </Card>
-            </a>
+            </Link>
           );
         })}
       </div>

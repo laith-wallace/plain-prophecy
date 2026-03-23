@@ -1,0 +1,31 @@
+---
+description: Apply the Reformation Consensus writing guidelines for all Christ-centred biblical prophecy content, including blogs, studies, and social threads.
+globs: content/**/*.mdx, app/blog/**/*.tsx, app/prophecy/**/*.tsx, app/evidence/**/*.tsx, app/studies/**/*.tsx, convex/blog.ts, docs/writing-guidelines.md
+---
+
+# Writing Guidelines: Plain Prophecy
+
+Whenever you are creating or editing content for this platform, you MUST adhere to the following core principles from `docs/writing-guidelines.md`:
+
+## Core Principles
+- **Plain but Deep**: Clear language for 16–24 year olds, but with theological depth.
+- **Open Inside the Scene**: Never start with context; drop the reader straight into a question, story, or a specific scripture passage.
+- **The Christ Pivot**: Every post must arrive at Jesus as the central point the passage is pointing toward.
+- **One Idea per Post**: Focus on a single breakthrough, not an exhaustive commentary.
+
+## Voice & Tone
+- **Conversational but NOT casual**: Write like an older sibling or a sharp 20-year-old over coffee.
+- **Direct but not harsh**: Say the thing. No hedging.
+- **Personal but not performative**: Use stories to build trust, not a brand.
+- **Curious, not conclusory**: Think alongside the reader.
+
+## Technical Rules
+- **Define before you deploy**: Every technical term (Eschatology, Imputed, etc.) gets a natural definition the first time it appears.
+- **Hebrew/Greek with Purpose**: Only use original language if it reveals something plain English doesn't.
+- **Formatting**: Short paragraphs (max 4 sentences), subheadings as signposts, and one pull quote per post.
+
+## The Final Test
+Ask yourself:
+1. Would a 17-year-old read past paragraph two?
+2. Is Jesus the lens or just the conclusion?
+3. Does this offer something the reader can "carry home"?

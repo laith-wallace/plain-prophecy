@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { memo } from "react";
 import {
   LayoutDashboard,
   BookOpen,
@@ -27,7 +28,7 @@ const nav = [
   { label: "Blog", href: "/admin/blog", icon: FileText },
 ];
 
-export default function AdminSidebar() {
+export const AdminSidebar = memo(function AdminSidebar() {
   const pathname = usePathname();
 
   return (
@@ -59,4 +60,6 @@ export default function AdminSidebar() {
       </nav>
     </aside>
   );
-}
+});
+
+export default AdminSidebar;
