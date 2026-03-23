@@ -44,7 +44,14 @@ function LoginPageContent() {
       }
     } catch (err) {
       console.error(err);
-      setError(flow === "signIn" ? "Invalid email or password." : "Could not create account.");
+      const msg = (err as Error).message;
+      if (msg.includes("InvalidAccountId")) {
+        setError("InvalidAccountId: Account not found. Please sign up.");
+      } else if (msg.includes("InvalidSecret")) {
+        setError("InvalidSecret: Incorrect password.");
+      } else {
+        setError(msg || (flow === "signIn" ? "Invalid email or password." : "Could not create account."));
+      }
     } finally {
       setLoading(false);
     }
@@ -155,14 +162,23 @@ function LoginPageContent() {
               </Link>
             </div>
 
-            {error && <p className="error-message text-red-500 text-sm mb-4">{error}</p>}
+            {error && (
+              <div className="error-container mb-4">
+                <p className="error-message text-red-500 text-sm">{error}</p>
+                {error.includes("InvalidAccountId") && (
+                  <p className="text-xs text-amber-400 mt-1">
+                    This account was recently reset. Please use the <strong>Sign up</strong> flow or click "Quick Fill" below.
+                  </p>
+                )}
+              </div>
+            )}
 
             <button
               type="submit"
               disabled={loading}
               className="signin-button"
             >
-              {loading ? "Signing in..." : (flow === "signIn" ? "Sign in" : "Sign up")}
+              {loading ? "Processing..." : (flow === "signIn" ? "Sign in" : "Sign up")}
             </button>
 
             {flow === "signIn" && (
@@ -176,6 +192,8 @@ function LoginPageContent() {
                     if (emailInput && passwordInput) {
                       emailInput.value = "laithwallace@gmail.com";
                       passwordInput.value = "admin123";
+                      setFlow("signUp");
+                      setRole("admin");
                     }
                   }}
                 >

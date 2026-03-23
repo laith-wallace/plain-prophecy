@@ -196,6 +196,7 @@ export default defineSchema({
     name: v.optional(v.string()),
     image: v.optional(v.string()),
     email: v.optional(v.string()),
+    role: v.optional(v.union(v.literal("admin"), v.literal("user"))),
     // Added for Profile & Funnel
     spiritualLevel: v.optional(v.union(v.literal("beginner"), v.literal("intermediate"), v.literal("advanced"))),
     interests: v.optional(v.array(v.string())),
@@ -211,5 +212,5 @@ export default defineSchema({
       background: v.optional(v.string()),
       goal: v.optional(v.string()),
     })),
-  }),
+  }).index("by_email", ["email"]),
 });

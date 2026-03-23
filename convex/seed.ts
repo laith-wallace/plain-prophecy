@@ -523,30 +523,28 @@ export const resetDemoUser = mutation({
     const email = "laithwallace@gmail.com";
     const user = await ctx.db
       .query("users")
-      .filter((q) => q.eq(q.field("email"), email))
+      .withIndex("by_email", (q) => q.eq("email", email))
       .first();
 
     if (user) {
-      // Find associated accounts if possible, or just delete the user
-      // Note: In @convex-dev/auth, accounts are linked to users.
-      // We'll delete the user; cascade depends on schema but usually we need to delete accounts too.
-      // For now, let's try deleting the user.
       await ctx.db.delete(user._id);
-      
-      // Also try to find and delete the account in the system-managed accounts table
-      // Usually named "accounts" in the authTables
-      const account = await ctx.db
-        .query("accounts" as any)
-        .filter((q) => q.eq(q.field("providerKey" as any), email))
-        .first();
-      if (account) {
-        await ctx.db.delete(account._id);
-      }
-      
-      console.log(`User and account for ${email} have been reset.`);
-    } else {
-      console.log(`User ${email} not found.`);
+      console.log(`User for ${email} deleted.`);
     }
+
+    // Correctly find and delete the account in authAccounts
+    const accounts = await ctx.db
+      .query("authAccounts" as any)
+      .withIndex("providerAndAccountId" as any, (q: any) => 
+        q.eq("provider", "password").eq("providerAccountId", email)
+      )
+      .collect();
+
+    for (const account of accounts) {
+      await ctx.db.delete(account._id);
+      console.log(`Account for ${email} (provider: password) deleted.`);
+    }
+
+    console.log(`Reset complete for ${email}.`);
   },
 });
 

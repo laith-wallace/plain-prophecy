@@ -7,6 +7,9 @@ export const dashboardStats = query({
     const userId = await getAuthUserId(ctx);
     if (!userId) throw new Error("Unauthenticated");
 
+    const user = await ctx.db.get(userId);
+    if (user?.role !== "admin") throw new Error("Unauthorized: Admin role required");
+
     const [
       evidence,
       prophecies,
