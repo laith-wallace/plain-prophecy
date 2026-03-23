@@ -25,7 +25,12 @@ interface FormState {
   slug: string;
   excerpt: string;
   author: string;
+  authorBio: string;
+  authorImage: string;
+  authorTwitter: string;
+  authorLinkedIn: string;
   publishedAt: string;
+  readingTime: string;
   tags: string;
   coverImage: string;
   body: string;
@@ -49,7 +54,12 @@ const DEFAULT: FormState = {
   slug: "",
   excerpt: "",
   author: "",
+  authorBio: "",
+  authorImage: "",
+  authorTwitter: "",
+  authorLinkedIn: "",
   publishedAt: new Date().toISOString().slice(0, 10),
+  readingTime: "",
   tags: "",
   coverImage: "",
   body: "",
@@ -86,7 +96,12 @@ export default function BlogEditPage() {
         slug: post.slug,
         excerpt: post.excerpt,
         author: post.author,
+        authorBio: post.authorBio ?? "",
+        authorImage: post.authorImage ?? "",
+        authorTwitter: post.authorTwitter ?? "",
+        authorLinkedIn: post.authorLinkedIn ?? "",
         publishedAt: timestampToDateInput(post.publishedAt),
+        readingTime: post.readingTime?.toString() ?? "",
         tags: post.tags.join(", "),
         coverImage: post.coverImage ?? "",
         body: post.body,
@@ -123,7 +138,13 @@ export default function BlogEditPage() {
         slug: form.slug,
         excerpt: form.excerpt,
         author: form.author,
+        authorBio: form.authorBio.trim() || undefined,
+        authorImage: form.authorImage.trim() || undefined,
+        authorTwitter: form.authorTwitter.trim() || undefined,
+        authorLinkedIn: form.authorLinkedIn.trim() || undefined,
         publishedAt: dateInputToTimestamp(form.publishedAt),
+        lastUpdated: Date.now(),
+        readingTime: form.readingTime ? parseInt(form.readingTime) : undefined,
         tags: form.tags
           .split(",")
           .map((t) => t.trim())
@@ -254,7 +275,7 @@ export default function BlogEditPage() {
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <Label className="text-stone-300">Author</Label>
+              <Label className="text-stone-300">Author Name</Label>
               <Input
                 type="text"
                 value={form.author}
@@ -273,17 +294,28 @@ export default function BlogEditPage() {
             </div>
           </div>
 
-          <div className="space-y-1.5">
-            <Label className="text-stone-300">
-              Tags <span className="text-stone-500 font-normal">(comma-separated)</span>
-            </Label>
-            <Input
-              type="text"
-              value={form.tags}
-              onChange={(e) => set("tags", e.target.value)}
-              placeholder="daniel, prophecy, historicism"
-              className="bg-stone-800 border-stone-700 text-stone-100 placeholder:text-stone-600 focus-visible:ring-amber-600"
-            />
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <Label className="text-stone-300">Reading Time (mins)</Label>
+              <Input
+                type="number"
+                value={form.readingTime}
+                onChange={(e) => set("readingTime", e.target.value)}
+                className="bg-stone-800 border-stone-700 text-stone-100 focus-visible:ring-amber-600"
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-stone-300">
+                Tags <span className="text-stone-500 font-normal">(comma-separated)</span>
+              </Label>
+              <Input
+                type="text"
+                value={form.tags}
+                onChange={(e) => set("tags", e.target.value)}
+                placeholder="daniel, prophecy, historicism"
+                className="bg-stone-800 border-stone-700 text-stone-100 placeholder:text-stone-600 focus-visible:ring-amber-600"
+              />
+            </div>
           </div>
 
           <div className="space-y-1.5">
@@ -340,6 +372,54 @@ export default function BlogEditPage() {
             <label htmlFor="published" className="text-sm font-medium text-stone-300 cursor-pointer">
               Published
             </label>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="bg-stone-900 border-stone-800">
+        <CardHeader>
+          <CardTitle className="text-base">Author Details</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-1.5">
+            <Label className="text-stone-300">Author Bio</Label>
+            <Textarea
+              value={form.authorBio}
+              onChange={(e) => set("authorBio", e.target.value)}
+              rows={3}
+              className="bg-stone-800 border-stone-700 text-stone-100 focus-visible:ring-amber-600"
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <Label className="text-stone-300">Author Image URL</Label>
+            <ImageUpload
+              value={form.authorImage}
+              onChange={(url) => set("authorImage", url)}
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <Label className="text-stone-300">Twitter Handle</Label>
+              <Input
+                type="text"
+                value={form.authorTwitter}
+                onChange={(e) => set("authorTwitter", e.target.value)}
+                placeholder="handle (no @)"
+                className="bg-stone-800 border-stone-700 text-stone-100 focus-visible:ring-amber-600"
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label className="text-stone-300">LinkedIn Username</Label>
+              <Input
+                type="text"
+                value={form.authorLinkedIn}
+                onChange={(e) => set("authorLinkedIn", e.target.value)}
+                placeholder="username"
+                className="bg-stone-800 border-stone-700 text-stone-100 focus-visible:ring-amber-600"
+              />
+            </div>
           </div>
         </CardContent>
       </Card>

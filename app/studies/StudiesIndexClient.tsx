@@ -63,6 +63,9 @@ export default function StudiesIndexClient() {
           <Link href="/studies/map" className="si-map-btn">
             ✦ The Map
           </Link>
+          <Link href="/studies/timeline" className="si-map-btn">
+            ✦ Timeline
+          </Link>
 
           {/* Parallels link */}
           <Link href="/studies/parallels" className="si-map-btn">

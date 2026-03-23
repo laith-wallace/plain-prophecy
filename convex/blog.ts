@@ -47,7 +47,13 @@ export const add = mutation({
     title: v.string(),
     excerpt: v.string(),
     author: v.string(),
+    authorBio: v.optional(v.string()),
+    authorImage: v.optional(v.string()),
+    authorTwitter: v.optional(v.string()),
+    authorLinkedIn: v.optional(v.string()),
     publishedAt: v.number(),
+    lastUpdated: v.optional(v.number()),
+    readingTime: v.optional(v.number()),
     body: v.string(),
     tags: v.array(v.string()),
     coverImage: v.optional(v.string()),
@@ -70,7 +76,13 @@ export const update = mutation({
     title: v.string(),
     excerpt: v.string(),
     author: v.string(),
+    authorBio: v.optional(v.string()),
+    authorImage: v.optional(v.string()),
+    authorTwitter: v.optional(v.string()),
+    authorLinkedIn: v.optional(v.string()),
     publishedAt: v.number(),
+    lastUpdated: v.optional(v.number()),
+    readingTime: v.optional(v.number()),
     body: v.string(),
     tags: v.array(v.string()),
     coverImage: v.optional(v.string()),
@@ -106,7 +118,7 @@ export const syncBlogPosts = mutation({
 
       const fields = {
         ...post,
-        published: true,
+        published: post.published,
       };
 
       if (existing) {

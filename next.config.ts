@@ -21,6 +21,8 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "img.youtube.com" },
       { protocol: "https", hostname: "*.convex.cloud" },
+      { protocol: "https", hostname: "api.dicebear.com", port: "", pathname: "/**" },
+      { protocol: "http", hostname: "api.dicebear.com", port: "", pathname: "/**" },
     ],
   },
 };

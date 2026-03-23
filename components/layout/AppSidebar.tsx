@@ -12,7 +12,6 @@ import {
   LayoutDashboard,
   BookOpen,
   Map,
-  Clock,
   Scale,
   GraduationCap,
   Gamepad2,
@@ -22,6 +21,7 @@ import {
   ChevronUp,
   ChevronDown,
   Home,
+  FileText,
 } from "lucide-react";
 import {
   Sidebar,
@@ -49,7 +49,7 @@ import {
 
 const exploreLinks = [
   { href: "/studies/map", label: "Map", icon: Map },
-  { href: "/studies/timeline", label: "Timeline", icon: Clock },
+  { href: "/blog", label: "Blog", icon: FileText },
   { href: "/compare", label: "Compare", icon: Scale },
   { href: "/learn", label: "Learn", icon: GraduationCap },
   { href: "/games", label: "Games", icon: Gamepad2 },
