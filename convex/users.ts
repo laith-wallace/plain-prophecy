@@ -26,7 +26,7 @@ export const getByEmail = query({
   handler: async (ctx, { email }) => {
     return await ctx.db
       .query("users")
-      .withIndex("by_email", (q) => q.eq("email", email))
+      .withIndex("email", (q) => q.eq("email", email))
       .first();
   },
 });
@@ -46,7 +46,7 @@ export const setAdmin = mutation({
   handler: async (ctx, { email }) => {
     const user = await ctx.db
       .query("users")
-      .withIndex("by_email", (q) => q.eq("email", email))
+      .withIndex("email", (q) => q.eq("email", email))
       .first();
     if (user) {
       await ctx.db.patch(user._id, { role: "admin" });

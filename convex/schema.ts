@@ -225,6 +225,5 @@ export default defineSchema({
     })),
   })
     .index("email", ["email"])
-    .index("phone", ["phone"])
-    .index("by_email", ["email"]),
+    .index("phone", ["phone"]),
 });

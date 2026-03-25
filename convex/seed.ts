@@ -523,7 +523,7 @@ export const resetDemoUser = mutation({
     const email = "laithwallace@gmail.com";
     const user = await ctx.db
       .query("users")
-      .withIndex("by_email", (q) => q.eq("email", email))
+      .withIndex("email", (q) => q.eq("email", email))
       .first();
 
     if (user) {
