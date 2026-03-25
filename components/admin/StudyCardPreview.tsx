@@ -25,8 +25,9 @@ export default function StudyCardPreview({ lesson, cardImageUrl }: StudyCardPrev
       <h3 className="text-sm font-medium text-stone-400 uppercase tracking-wider">Card Preview</h3>
       <div className="relative group">
         <div className="w-[320px] aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl shadow-black/50 border border-stone-800">
-          <StudyCardFront 
-            lesson={lesson as any} 
+          <StudyCardFront
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            lesson={lesson as any}
             meta={meta} 
             cardImage={displayImage} 
           />

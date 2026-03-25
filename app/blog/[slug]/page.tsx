@@ -178,7 +178,7 @@ export default async function BlogPostPage({ params }: Props) {
               <div className="p-6 bg-amber-500/5 rounded-2xl border border-amber-500/10">
                 <h5 className="text-amber-500 font-bold text-sm mb-2 font-serif">Christ-Centered Study</h5>
                 <p className="text-stone-400 text-xs leading-relaxed">
-                  Our mission is to help you understand God's plan through history and prophecy.
+                  Our mission is to help you understand God&apos;s plan through history and prophecy.
                 </p>
               </div>
             </div>

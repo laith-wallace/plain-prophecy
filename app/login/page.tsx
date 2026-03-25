@@ -167,7 +167,7 @@ function LoginPageContent() {
                 <p className="error-message text-red-500 text-sm">{error}</p>
                 {error.includes("InvalidAccountId") && (
                   <p className="text-xs text-amber-400 mt-1">
-                    This account was recently reset. Please use the <strong>Sign up</strong> flow or click "Quick Fill" below.
+                    This account was recently reset. Please use the <strong>Sign up</strong> flow or click &quot;Quick Fill&quot; below.
                   </p>
                 )}
               </div>

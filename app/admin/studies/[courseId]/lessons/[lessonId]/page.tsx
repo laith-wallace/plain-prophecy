@@ -138,6 +138,7 @@ export default function LessonEditorPage() {
           contentBlocks: s.contentBlocks ?? [],
         })),
         cardImageId: lesson.cardImageId ?? "",
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         cardImageUrl: (lesson as any).cardImageUrl ?? "",
       });
     }

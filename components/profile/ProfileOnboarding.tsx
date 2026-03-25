@@ -311,7 +311,7 @@ export default function ProfileOnboarding({ onComplete }: { onComplete: () => vo
               <div className="flex flex-col gap-6 flex-1 pt-4">
                 <div className="space-y-1">
                   <p className="text-xs uppercase tracking-widest font-mono" style={{ color: "#e8a020" }}>
-                    What you'll find
+                    What you&apos;ll find
                   </p>
                   <h2 className="text-2xl font-bold text-white">Four ways to explore prophecy</h2>
                 </div>
@@ -449,10 +449,10 @@ export default function ProfileOnboarding({ onComplete }: { onComplete: () => vo
 
                 <div className="space-y-2">
                   <h1 className="text-2xl font-bold text-white">
-                    You're all set{user?.name ? `, ${user.name.split(" ")[0]}` : ""}
+                    You&apos;re all set{user?.name ? `, ${user.name.split(" ")[0]}` : ""}
                   </h1>
                   <p style={{ color: "rgba(255,255,255,0.5)" }} className="text-sm leading-relaxed">
-                    Your study path is ready. We've personalised your library based on your answers.
+                    Your study path is ready. We&apos;ve personalised your library based on your answers.
                   </p>
                 </div>
 

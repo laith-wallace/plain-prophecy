@@ -67,7 +67,7 @@ interface StudyCardProps {
   cardImage?: string;
 }
 
-function StudyCard({ title, courseTitle: _courseTitle, courseSlug, lessonSlug, category, state, isNextUp, cardImage }: StudyCardProps) {
+function StudyCard({ title, courseSlug, lessonSlug, category, state, isNextUp, cardImage }: StudyCardProps) {
   const cardClass = [
     "study-card",
     `study-card--${category}`,

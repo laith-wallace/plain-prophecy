@@ -1,4 +1,4 @@
-import { Twitter, Linkedin, ExternalLink } from "lucide-react";
+import { Twitter, Linkedin } from "lucide-react";
 import Image from "next/image";
 
 interface AuthorProfileProps {
@@ -63,7 +63,7 @@ export default function AuthorProfile({
           
           {bio && (
             <p className="text-stone-400 leading-relaxed text-sm italic">
-              "{bio}"
+              &quot;{bio}&quot;
             </p>
           )}
 

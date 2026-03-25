@@ -20,7 +20,7 @@ export default function TableOfContents({ content }: TableOfContentsProps) {
   useEffect(() => {
     // Extract headings from markdown content
     const headingLines = content.split("\n").filter(line => line.startsWith("#"));
-    const tocItems = headingLines.map((line, index) => {
+    const tocItems = headingLines.map((line, _) => {
       const level = line.match(/^#+/)?.[0].length || 0;
       const text = line.replace(/^#+\s*/, "").trim();
       const id = text.toLowerCase().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-");
