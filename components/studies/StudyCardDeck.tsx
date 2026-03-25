@@ -227,6 +227,8 @@ export default function StudyCardDeck({ bookFilter = "all" }: StudyCardDeckProps
                   meta={meta}
                   isFlipped={isFlipped}
                   onUnflip={() => setFlippedIndex(null)}
+                  priority={slot === 0}
+                  imgLoading={slot === 0 || Math.abs(slot) === 1 ? "eager" : "lazy"}
                 />
               </motion.div>
             );

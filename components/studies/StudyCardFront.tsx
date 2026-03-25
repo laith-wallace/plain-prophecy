@@ -11,9 +11,11 @@ interface Props {
   meta: StudyCardMeta;
   cardImage?: string;
   category?: "gospel" | "prophecy" | "doctrine";
+  priority?: boolean;
+  imgLoading?: "eager" | "lazy";
 }
 
-export default function StudyCardFront({ lesson, meta, cardImage, category }: Props) {
+export default function StudyCardFront({ lesson, meta, cardImage, category, priority, imgLoading }: Props) {
   const hasArtwork = !!cardImage;
 
   return (
@@ -27,12 +29,14 @@ export default function StudyCardFront({ lesson, meta, cardImage, category }: Pr
       {/* Artwork image */}
       {cardImage && (
         <div className="scf-artwork">
-          <Image 
-            src={cardImage} 
-            alt="" 
-            fill 
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" 
-            style={{ objectFit: "cover", objectPosition: "center top" }} 
+          <Image
+            src={cardImage}
+            alt=""
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            style={{ objectFit: "cover", objectPosition: "center top" }}
+            priority={priority}
+            loading={priority ? undefined : imgLoading}
           />
           <div className="scf-artwork-overlay" />
         </div>

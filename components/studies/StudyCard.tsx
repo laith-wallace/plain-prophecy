@@ -14,6 +14,8 @@ interface Props {
   meta: StudyCardMeta;
   isFlipped: boolean;
   onUnflip: () => void;
+  priority?: boolean;
+  imgLoading?: "eager" | "lazy";
 }
 
 function getCategory(bookSlug: string): "gospel" | "prophecy" | "doctrine" {
@@ -27,6 +29,8 @@ export default function StudyCard({
   meta,
   isFlipped,
   onUnflip,
+  priority,
+  imgLoading,
 }: Props) {
   const studyHref = `/studies/${book.slug}/${lesson.slug}`;
   const cardImage = lesson.cardImageUrl || LESSON_CARD_IMAGES[lesson.slug];
@@ -58,7 +62,7 @@ export default function StudyCard({
             pointerEvents: isFlipped ? "none" : "auto"
           }}
         >
-          <StudyCardFront lesson={lesson} meta={meta} cardImage={cardImage} category={category} />
+          <StudyCardFront lesson={lesson} meta={meta} cardImage={cardImage} category={category} priority={priority} imgLoading={imgLoading} />
         </div>
 
         {/* Back */}
