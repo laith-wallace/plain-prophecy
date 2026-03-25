@@ -233,26 +233,24 @@ export default function LessonEditorPage() {
             <div className="space-y-4 flex-1 mr-8">
               <h2 className="text-sm font-semibold text-stone-300">Lesson Details</h2>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-1">
-                  <Label className="text-stone-300">Title</Label>
-                  <input {...register("title")} className="w-full px-3 py-2 bg-stone-800 border border-stone-700 rounded-lg text-stone-100 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600" placeholder="Daniel 2" />
-                </div>
-                <div className="space-y-1">
-                  <Label className="text-stone-300">Slug</Label>
-                  <input {...register("slug")} className="w-full px-3 py-2 bg-stone-800 border border-stone-700 rounded-lg text-stone-100 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-amber-600" placeholder="daniel-2" />
-                </div>
+              <div className="space-y-1">
+                <Label className="text-stone-300">Title</Label>
+                <input {...register("title")} className="w-full px-3 py-2 bg-stone-800 border border-stone-700 rounded-lg text-stone-100 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600" placeholder="Daniel 2" />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-1">
-                  <Label className="text-stone-300">Scripture Reference</Label>
-                  <input {...register("scriptureRef")} className="w-full px-3 py-2 bg-stone-800 border border-stone-700 rounded-lg text-stone-100 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600" placeholder="Daniel 2:1-49" />
-                </div>
-                <div className="space-y-1">
-                  <Label className="text-stone-300">Reading Time (minutes)</Label>
-                  <input type="number" {...register("readingTime", { valueAsNumber: true })} className="w-full px-3 py-2 bg-stone-800 border border-stone-700 rounded-lg text-stone-100 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600" />
-                </div>
+              <div className="space-y-1">
+                <Label className="text-stone-300">Slug</Label>
+                <input {...register("slug")} className="w-full px-3 py-2 bg-stone-800 border border-stone-700 rounded-lg text-stone-100 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-amber-600" placeholder="daniel-2" />
+              </div>
+
+              <div className="space-y-1">
+                <Label className="text-stone-300">Scripture Reference</Label>
+                <input {...register("scriptureRef")} className="w-full px-3 py-2 bg-stone-800 border border-stone-700 rounded-lg text-stone-100 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600" placeholder="Daniel 2:1-49" />
+              </div>
+
+              <div className="space-y-1">
+                <Label className="text-stone-300">Reading Time (minutes)</Label>
+                <input type="number" {...register("readingTime", { valueAsNumber: true })} className="w-full px-3 py-2 bg-stone-800 border border-stone-700 rounded-lg text-stone-100 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600" />
               </div>
 
               <div className="flex items-center gap-2">
