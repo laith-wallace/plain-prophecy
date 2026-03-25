@@ -10,17 +10,19 @@ interface Props {
   lesson: StudyLesson;
   meta: StudyCardMeta;
   cardImage?: string;
+  category?: "gospel" | "prophecy" | "doctrine";
 }
 
-export default function StudyCardFront({ lesson, meta, cardImage }: Props) {
+export default function StudyCardFront({ lesson, meta, cardImage, category }: Props) {
   const hasArtwork = !!cardImage;
 
   return (
     <div
-      className={`scf-root ${hasArtwork ? "scf-root--has-artwork" : ""}`}
-      style={{
-        background: `radial-gradient(ellipse at 40% 30%, ${meta.accentColor}ee 0%, #050508 100%)`,
-      }}
+      className={[
+        "scf-root",
+        hasArtwork ? "scf-root--has-artwork" : "",
+        category ? `scf-root--${category}` : "",
+      ].filter(Boolean).join(" ")}
     >
       {/* Artwork image */}
       {cardImage && (

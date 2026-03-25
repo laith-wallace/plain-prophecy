@@ -333,6 +333,13 @@
 }
 
 /* ── Card Front ───────────────────────────────────────────────────────────── */
+@keyframes scf-shimmer {
+  0%   { transform: translateX(-120%) skewX(-20deg); opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { transform: translateX(220%) skewX(-20deg); opacity: 0; }
+}
+
 .scf-root {
   position: relative;
   width: 100%;
@@ -347,6 +354,52 @@
   box-shadow:
     0 32px 80px rgba(0,0,0,0.6),
     inset 0 1px 0 rgba(255,255,255,0.08);
+  background: linear-gradient(155deg, #09091a 0%, #1a1040 60%, #09091a 100%);
+}
+
+.scf-root::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    108deg,
+    transparent 20%,
+    rgba(240, 208, 128, 0.18) 42%,
+    rgba(255, 255, 255, 0.22) 50%,
+    rgba(240, 208, 128, 0.18) 58%,
+    transparent 80%
+  );
+  opacity: 0;
+  pointer-events: none;
+  width: 60%;
+}
+
+.scf-root:hover::after {
+  animation: scf-shimmer 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.scf-root--gospel   { background: linear-gradient(155deg, #1a0f00 0%, #3d2200 60%, #1a0f00 100%); }
+.scf-root--prophecy { background: linear-gradient(155deg, #09091a 0%, #1a1040 60%, #09091a 100%); }
+.scf-root--doctrine { background: linear-gradient(155deg, #09111a 0%, #0e1e30 60%, #09111a 100%); }
+
+.scf-artwork {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.scf-artwork-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 40%,
+    rgba(8, 8, 15, 0.65) 78%,
+    rgba(8, 8, 15, 0.92) 100%
+  );
+  z-index: 1;
 }
 
 .scf-noise {
@@ -365,7 +418,7 @@
   align-items: center;
   flex-wrap: wrap;
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 .scf-badge {
@@ -399,7 +452,7 @@
   line-height: 1;
   user-select: none;
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 .scf-body {
@@ -407,7 +460,7 @@
   flex-direction: column;
   gap: 0.4rem;
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 .scf-reading-time {
@@ -424,11 +477,11 @@
 .scf-dot-glyph { opacity: 0.5; }
 
 .scf-title {
-  font-family: var(--font-playfair), serif;
-  font-size: clamp(1.5rem, 4vw, 1.9rem);
-  font-weight: 900;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  font-family: var(--font-cinzel, var(--font-playfair), serif);
+  font-size: clamp(1.3rem, 4vw, 1.7rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
   color: #fff;
   margin: 0;
 }
@@ -449,7 +502,7 @@
   color: rgba(255,255,255,0.28);
   text-align: center;
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 /* ── Card Back ────────────────────────────────────────────────────────────── */

@@ -16,6 +16,11 @@ interface Props {
   onUnflip: () => void;
 }
 
+function getCategory(bookSlug: string): "gospel" | "prophecy" | "doctrine" {
+  if (bookSlug === "gospel") return "gospel";
+  return "prophecy"; // daniel, revelation, and everything else
+}
+
 export default function StudyCard({
   lesson,
   book,
@@ -25,6 +30,7 @@ export default function StudyCard({
 }: Props) {
   const studyHref = `/studies/${book.slug}/${lesson.slug}`;
   const cardImage = lesson.cardImageUrl || LESSON_CARD_IMAGES[lesson.slug];
+  const category = getCategory(book.slug);
 
   return (
     <div className="sc-root">
@@ -52,7 +58,7 @@ export default function StudyCard({
             pointerEvents: isFlipped ? "none" : "auto"
           }}
         >
-          <StudyCardFront lesson={lesson} meta={meta} cardImage={cardImage} />
+          <StudyCardFront lesson={lesson} meta={meta} cardImage={cardImage} category={category} />
         </div>
 
         {/* Back */}

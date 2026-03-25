@@ -6,7 +6,7 @@ import JsonLd from "@/components/seo/JsonLd";
 // Dynamic imports for heavy client-side components to optimize bundle size and hydration
 const HomeAnimations = dynamic(() => import("@/components/home/HomeAnimations"));
 import ScrollHeroVideoClient from "@/components/home/ScrollHeroVideoClient";
-import StudyCardDeckClient from "@/components/home/StudyCardDeckClient";
+import StudyCardCarousel from "@/components/studies/StudyCardCarousel";
 import HeroVideo from "@/components/home/HeroVideo";
 
 import "./home-styles.css";
@@ -246,7 +246,7 @@ export default function HomePage() {
               Swipe through the prophecies. Commit to an answer, then see history converge on Christ.
             </p>
           </div>
-          <StudyCardDeckClient />
+          <StudyCardCarousel />
           <div className="studies-teaser-cta" data-animate>
             <Link href="/studies" className="btn-outline">
               View All Studies →
