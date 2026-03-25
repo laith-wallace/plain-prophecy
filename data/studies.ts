@@ -19,6 +19,7 @@ export interface StudyLesson {
   title: string;
   scriptureRef: string;
   readingTime?: number;
+  published?: boolean;
   keyVerse?: string;
   keyVerseRef?: string;
   intro?: string;
@@ -439,7 +440,11 @@ export const studyBooks: StudyBook[] = [
         ],
         christCentre:
           "Revelation 14 begins with the Lamb (v.1) and ends with the Son of Man on the cloud (v.14). The three angels' messages are not free-standing proclamations — they are the Lamb's final call to his people before he comes to gather them. The First Angel's message is the eternal gospel (v.6) — the same gospel that has always been the heart of Scripture, now proclaimed in its end-time urgency. The commandments of God and the faith of Jesus (v.12) are not two separate things — the commandments are kept by faith, and faith in Jesus produces obedience. The final generation is defined not by their own righteousness but by their total trust in his.",
-        nextLesson: undefined,
+        nextLesson: {
+          book: "gospel",
+          lesson: "love-for-god",
+          title: "Love for God",
+        },
       },
     ],
   },

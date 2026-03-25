@@ -108,6 +108,7 @@ export const studyCardMeta: Record<string, StudyCardMeta> = {
   "antichrist-development": {
     emoji: "🎭",
     accentColor: "#150505",
+    isNew: true,
     shortDescription:
       "The mystery of lawlessness — not a figure from horror movies, but a spirit from within.",
   },

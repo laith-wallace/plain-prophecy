@@ -55,6 +55,7 @@ export const add = mutation({
     lastUpdated: v.optional(v.number()),
     readingTime: v.optional(v.number()),
     body: v.string(),
+    bodyJson: v.optional(v.any()), // ★ Tiptap JSON; body kept as plain-text fallback
     tags: v.array(v.string()),
     coverImage: v.optional(v.string()),
     published: v.boolean(),
@@ -84,6 +85,7 @@ export const update = mutation({
     lastUpdated: v.optional(v.number()),
     readingTime: v.optional(v.number()),
     body: v.string(),
+    bodyJson: v.optional(v.any()), // ★ Tiptap JSON; body kept as plain-text fallback
     tags: v.array(v.string()),
     coverImage: v.optional(v.string()),
     published: v.boolean(),

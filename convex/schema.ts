@@ -83,6 +83,7 @@ export default defineSchema({
     lastUpdated: v.optional(v.number()),
     readingTime: v.optional(v.number()),
     body: v.string(),
+    bodyJson: v.optional(v.any()), // ★ Rich text editor JSON (Tiptap); body kept for backwards compat
     tags: v.array(v.string()),
     coverImage: v.optional(v.string()),
     published: v.boolean(),

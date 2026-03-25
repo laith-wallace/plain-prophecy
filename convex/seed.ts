@@ -440,7 +440,7 @@ export const syncStudyLessons = mutation({
           body: existing?.body ?? "",
           scriptureRef: lesson.scriptureRef,
           tags: existing?.tags ?? [],
-          published: existing?.published ?? true,
+          published: lesson.published === true ? true : (existing?.published ?? true),
           readingTime: lesson.readingTime,
           keyVerse: lesson.keyVerse,
           keyVerseRef: lesson.keyVerseRef,
