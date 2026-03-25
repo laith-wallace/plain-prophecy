@@ -9,6 +9,7 @@
   line-height: 1.75;
   outline: none;
   min-height: calc(100vh - 180px);
+  padding-bottom: 25vh; /* Notion-style: allow scrolling well past the end */
   caret-color: #d97706;
 }
 

@@ -1,29 +1,30 @@
 "use client";
 
-import { useEditor, EditorContent, BubbleMenu, ReactRenderer } from "@tiptap/react";
+import { useEditor, EditorContent } from "@tiptap/react";
+import { BubbleMenu } from "@tiptap/react/menus";
 import StarterKit from "@tiptap/starter-kit";
 import Placeholder from "@tiptap/extension-placeholder";
 import Underline from "@tiptap/extension-underline";
 import { Color } from "@tiptap/extension-color";
-import TextStyle from "@tiptap/extension-text-style";
+import { TextStyle } from "@tiptap/extension-text-style";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import Link from "@tiptap/extension-link";
 import Image from "@tiptap/extension-image";
 import { Extension } from "@tiptap/core";
-import Suggestion from "@tiptap/suggestion";
+import { Suggestion } from "@tiptap/suggestion";
 import { common, createLowlight } from "lowlight";
 import { useEffect, useRef, useState } from "react";
-import tippy, { Instance as TippyInstance } from "tippy.js";
+import { createPortal } from "react-dom";
 import styles from "./RichTextEditor.module.css";
 
 const lowlight = createLowlight(common);
 
-// ─── Slash command items ───────────────────────────────────────────────────
+// ─── Slash command item type ───────────────────────────────────────────────
 
 interface SlashItem {
   title: string;
   icon: string;
-  command: (params: { editor: ReturnType<typeof useEditor>; range: { from: number; to: number } }) => void;
+  command: (params: { editor: unknown; range: { from: number; to: number } }) => void;
 }
 
 const SLASH_ITEMS: SlashItem[] = [
@@ -31,66 +32,76 @@ const SLASH_ITEMS: SlashItem[] = [
     title: "Text",
     icon: "¶",
     command: ({ editor, range }) =>
-      editor!.chain().focus().deleteRange(range).setParagraph().run(),
+      (editor as ReturnType<typeof useEditor>)!
+        .chain().focus().deleteRange(range).setParagraph().run(),
   },
   {
     title: "Heading 1",
     icon: "H1",
     command: ({ editor, range }) =>
-      editor!.chain().focus().deleteRange(range).setHeading({ level: 1 }).run(),
+      (editor as ReturnType<typeof useEditor>)!
+        .chain().focus().deleteRange(range).setHeading({ level: 1 }).run(),
   },
   {
     title: "Heading 2",
     icon: "H2",
     command: ({ editor, range }) =>
-      editor!.chain().focus().deleteRange(range).setHeading({ level: 2 }).run(),
+      (editor as ReturnType<typeof useEditor>)!
+        .chain().focus().deleteRange(range).setHeading({ level: 2 }).run(),
   },
   {
     title: "Heading 3",
     icon: "H3",
     command: ({ editor, range }) =>
-      editor!.chain().focus().deleteRange(range).setHeading({ level: 3 }).run(),
+      (editor as ReturnType<typeof useEditor>)!
+        .chain().focus().deleteRange(range).setHeading({ level: 3 }).run(),
   },
   {
     title: "Bullet List",
     icon: "•",
     command: ({ editor, range }) =>
-      editor!.chain().focus().deleteRange(range).toggleBulletList().run(),
+      (editor as ReturnType<typeof useEditor>)!
+        .chain().focus().deleteRange(range).toggleBulletList().run(),
   },
   {
     title: "Numbered List",
     icon: "1.",
     command: ({ editor, range }) =>
-      editor!.chain().focus().deleteRange(range).toggleOrderedList().run(),
+      (editor as ReturnType<typeof useEditor>)!
+        .chain().focus().deleteRange(range).toggleOrderedList().run(),
   },
   {
     title: "Blockquote",
     icon: "❝",
     command: ({ editor, range }) =>
-      editor!.chain().focus().deleteRange(range).toggleBlockquote().run(),
+      (editor as ReturnType<typeof useEditor>)!
+        .chain().focus().deleteRange(range).toggleBlockquote().run(),
   },
   {
     title: "Code Block",
     icon: "<>",
     command: ({ editor, range }) =>
-      editor!.chain().focus().deleteRange(range).toggleCodeBlock().run(),
+      (editor as ReturnType<typeof useEditor>)!
+        .chain().focus().deleteRange(range).toggleCodeBlock().run(),
   },
   {
     title: "Divider",
     icon: "—",
     command: ({ editor, range }) =>
-      editor!.chain().focus().deleteRange(range).setHorizontalRule().run(),
+      (editor as ReturnType<typeof useEditor>)!
+        .chain().focus().deleteRange(range).setHorizontalRule().run(),
   },
 ];
 
-// ─── Slash Command Palette Component ──────────────────────────────────────
+// ─── Slash Palette (pure React portal) ────────────────────────────────────
 
 interface SlashPaletteProps {
   items: SlashItem[];
-  command: (item: SlashItem) => void;
+  onSelect: (item: SlashItem) => void;
+  position: { top: number; left: number };
 }
 
-function SlashPalette({ items, command }: SlashPaletteProps) {
+function SlashPalette({ items, onSelect, position }: SlashPaletteProps) {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   useEffect(() => {
@@ -101,133 +112,138 @@ function SlashPalette({ items, command }: SlashPaletteProps) {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "ArrowUp") {
         e.preventDefault();
+        e.stopPropagation();
         setSelectedIndex((i) => (i === 0 ? items.length - 1 : i - 1));
       } else if (e.key === "ArrowDown") {
         e.preventDefault();
+        e.stopPropagation();
         setSelectedIndex((i) => (i === items.length - 1 ? 0 : i + 1));
       } else if (e.key === "Enter") {
         e.preventDefault();
-        if (items[selectedIndex]) command(items[selectedIndex]);
+        e.stopPropagation();
+        if (items[selectedIndex]) onSelect(items[selectedIndex]);
       }
     };
     window.addEventListener("keydown", handleKey, true);
     return () => window.removeEventListener("keydown", handleKey, true);
-  }, [items, selectedIndex, command]);
+  }, [items, selectedIndex, onSelect]);
 
   if (!items.length) return null;
 
-  return (
-    <div className="bg-stone-900 border border-stone-700 rounded-xl shadow-2xl shadow-black/60 w-64 max-h-72 overflow-y-auto p-1.5">
-      {items.map((item, index) => (
-        <button
-          key={item.title}
-          onClick={() => command(item)}
-          className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm w-full text-left transition-colors ${
-            index === selectedIndex
-              ? "bg-amber-600/15 text-amber-300"
-              : "text-stone-300 hover:bg-stone-800 hover:text-stone-100"
-          }`}
-        >
-          <span className="w-6 text-center font-mono text-xs shrink-0 text-stone-500">{item.icon}</span>
-          <span>{item.title}</span>
-        </button>
-      ))}
-    </div>
+  return createPortal(
+    <div
+      style={{ position: "fixed", top: position.top, left: position.left, zIndex: 9999 }}
+    >
+      <div className="bg-stone-900 border border-stone-700 rounded-xl shadow-2xl shadow-black/60 w-64 max-h-72 overflow-y-auto p-1.5">
+        {items.map((item, index) => (
+          <button
+            key={item.title}
+            onMouseDown={(e) => {
+              e.preventDefault();
+              onSelect(item);
+            }}
+            className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm w-full text-left transition-colors ${
+              index === selectedIndex
+                ? "bg-amber-600/15 text-amber-300"
+                : "text-stone-300 hover:bg-stone-800 hover:text-stone-100"
+            }`}
+          >
+            <span className="w-6 text-center font-mono text-xs shrink-0 text-stone-500">
+              {item.icon}
+            </span>
+            <span>{item.title}</span>
+          </button>
+        ))}
+      </div>
+    </div>,
+    document.body
   );
 }
 
-// ─── Slash Command Extension ───────────────────────────────────────────────
+// ─── Bridge: suggestion extension → React state ───────────────────────────
 
-// We keep a ref to the tippy instance and ReactRenderer outside the component
-// because Suggestion callbacks are created once per editor instance.
-let slashPopup: TippyInstance[] | null = null;
-let slashRenderer: ReactRenderer | null = null;
+interface SlashBridge {
+  show: (items: SlashItem[], rect: DOMRect, selectFn: (item: SlashItem) => void) => void;
+  update: (items: SlashItem[], rect: DOMRect, selectFn: (item: SlashItem) => void) => void;
+  hide: () => void;
+}
 
-const SlashCommand = Extension.create({
-  name: "slashCommand",
+let slashBridge: SlashBridge | null = null;
 
-  addOptions() {
-    return {
-      suggestion: {
-        char: "/",
-        startOfLine: false,
-        command: ({
-          editor,
-          range,
-          props,
-        }: {
-          editor: ReturnType<typeof useEditor>;
-          range: { from: number; to: number };
-          props: SlashItem;
-        }) => {
-          props.command({ editor, range });
-        },
-        items: ({ query }: { query: string }) => {
-          return SLASH_ITEMS.filter((item) =>
-            item.title.toLowerCase().startsWith(query.toLowerCase())
-          );
-        },
-        render: () => {
-          return {
-            onStart: (props: { editor: ReturnType<typeof useEditor>; clientRect?: (() => DOMRect | null) | null; items: SlashItem[]; command: (item: SlashItem) => void }) => {
-              slashRenderer = new ReactRenderer(SlashPalette, {
-                props: { items: props.items, command: props.command },
-                editor: props.editor as Parameters<typeof ReactRenderer>[1]["editor"],
-              });
+function buildSlashExtension() {
+  return Extension.create({
+    name: "slashCommand",
 
-              if (!props.clientRect) return;
-
-              slashPopup = tippy("body", {
-                getReferenceClientRect: props.clientRect as () => DOMRect,
-                appendTo: () => document.body,
-                content: slashRenderer.element,
-                showOnCreate: true,
-                interactive: true,
-                trigger: "manual",
-                placement: "bottom-start",
-                theme: "slash",
-              });
+    addOptions() {
+      return {
+        suggestion: {
+          char: "/",
+          startOfLine: false,
+          allowSpaces: false,
+          command: ({
+            editor,
+            range,
+            props,
+          }: {
+            editor: unknown;
+            range: { from: number; to: number };
+            props: SlashItem;
+          }) => {
+            props.command({ editor, range });
+          },
+          items: ({ query }: { query: string }) =>
+            SLASH_ITEMS.filter((item) =>
+              item.title.toLowerCase().startsWith(query.toLowerCase())
+            ),
+          render: () => ({
+            onStart: (props: {
+              items: SlashItem[];
+              clientRect?: (() => DOMRect | null) | null;
+              command: (item: SlashItem) => void;
+            }) => {
+              const rect = props.clientRect?.();
+              if (!rect || !slashBridge) return;
+              slashBridge.show(props.items, rect, props.command);
             },
-
-            onUpdate: (props: { items: SlashItem[]; command: (item: SlashItem) => void; clientRect?: (() => DOMRect | null) | null }) => {
-              slashRenderer?.updateProps({ items: props.items, command: props.command });
-              if (!props.clientRect) return;
-              slashPopup?.[0]?.setProps({
-                getReferenceClientRect: props.clientRect as () => DOMRect,
-              });
+            onUpdate: (props: {
+              items: SlashItem[];
+              clientRect?: (() => DOMRect | null) | null;
+              command: (item: SlashItem) => void;
+            }) => {
+              const rect = props.clientRect?.();
+              if (!rect || !slashBridge) return;
+              slashBridge.update(props.items, rect, props.command);
             },
-
-            onKeyDown: (props: { event: KeyboardEvent }) => {
-              if (props.event.key === "Escape") {
-                slashPopup?.[0]?.hide();
+            onKeyDown: ({ event }: { event: KeyboardEvent }) => {
+              if (event.key === "Escape") {
+                slashBridge?.hide();
+                return true;
+              }
+              if (["ArrowUp", "ArrowDown", "Enter"].includes(event.key)) {
                 return true;
               }
               return false;
             },
-
             onExit: () => {
-              slashPopup?.[0]?.destroy();
-              slashRenderer?.destroy();
-              slashPopup = null;
-              slashRenderer = null;
+              slashBridge?.hide();
             },
-          };
+          }),
         },
-      },
-    };
-  },
+      };
+    },
 
-  addProseMirrorPlugins() {
-    return [
-      Suggestion({
-        editor: this.editor,
-        ...this.options.suggestion,
-      }),
-    ];
-  },
-});
+    addProseMirrorPlugins() {
+      return [
+        Suggestion({
+          editor: this.editor,
+          ...this.options.suggestion,
+        }),
+      ];
+    },
+  });
+}
 
-// ─── Main Component ────────────────────────────────────────────────────────
+// ─── Main component ────────────────────────────────────────────────────────
 
 interface RichTextEditorProps {
   content: object | null;
@@ -244,10 +260,46 @@ export default function RichTextEditor({
   const [linkUrl, setLinkUrl] = useState("");
   const [showLinkInput, setShowLinkInput] = useState(false);
   const linkInputRef = useRef<HTMLInputElement>(null);
+  // Keep a stable ref to onChange so the useEditor closure never goes stale
+  const onChangeRef = useRef(onChange);
+  useEffect(() => { onChangeRef.current = onChange; }, [onChange]);
+
+  // Slash palette state
+  const [slashVisible, setSlashVisible] = useState(false);
+  const [slashItems, setSlashItems] = useState<SlashItem[]>([]);
+  const [slashPosition, setSlashPosition] = useState({ top: 0, left: 0 });
+  const slashSelectRef = useRef<((item: SlashItem) => void) | null>(null);
+
+  // Register the bridge so the extension can drive React state
+  useEffect(() => {
+    slashBridge = {
+      show: (items, rect, selectFn) => {
+        setSlashItems(items);
+        setSlashPosition({ top: rect.bottom + 4, left: rect.left });
+        slashSelectRef.current = selectFn;
+        setSlashVisible(true);
+      },
+      update: (items, rect, selectFn) => {
+        setSlashItems(items);
+        setSlashPosition({ top: rect.bottom + 4, left: rect.left });
+        slashSelectRef.current = selectFn;
+      },
+      hide: () => {
+        setSlashVisible(false);
+        setSlashItems([]);
+        slashSelectRef.current = null;
+      },
+    };
+    return () => {
+      slashBridge = null;
+    };
+  }, []);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const SlashCommandExtension = useRef(buildSlashExtension()).current;
 
   const editor = useEditor({
     extensions: [
@@ -262,11 +314,18 @@ export default function RichTextEditor({
       CodeBlockLowlight.configure({ lowlight }),
       Link.configure({ openOnClick: false }),
       Image,
-      SlashCommand,
+      SlashCommandExtension,
     ],
     content: content ?? undefined,
+    immediatelyRender: false,
     onUpdate: ({ editor }) => {
-      onChange(editor.getJSON());
+      onChangeRef.current(editor.getJSON());
+    },
+    onCreate: () => {
+      // Small delay to ensure content is set if it was passed initially
+      if (content) {
+        // useEditor already handles initial content, but this ensures it's set if useEditor missed it
+      }
     },
     editorProps: {
       attributes: {
@@ -274,6 +333,18 @@ export default function RichTextEditor({
       },
     },
   });
+
+  // Handle external content updates (e.g. from the database after component mount)
+  useEffect(() => {
+    if (editor && content) {
+      const currentJSON = editor.getJSON();
+      // Only update if the content is truly different (and we are not in an onUpdate loop)
+      if (JSON.stringify(currentJSON) !== JSON.stringify(content)) {
+        // @ts-ignore - setContent signature can vary by Tiptap version
+        editor.commands.setContent(content, false);
+      }
+    }
+  }, [content, editor]);
 
   // Focus link input when shown
   useEffect(() => {
@@ -296,22 +367,33 @@ export default function RichTextEditor({
 
   function handleLinkButtonClick() {
     if (!editor) return;
-    const existing = editor.getAttributes("link").href ?? "";
+    const existing = (editor.getAttributes("link").href as string) ?? "";
     setLinkUrl(existing);
     setShowLinkInput((prev) => !prev);
   }
 
-  if (!mounted) return null;
+  function handleSlashSelect(item: SlashItem) {
+    setSlashVisible(false);
+    slashSelectRef.current?.(item);
+  }
 
-  const isInCodeBlock = editor?.isActive("codeBlock") ?? false;
+  if (!mounted) return null;
 
   return (
     <div className={styles.editor}>
-      {/* Bubble Menu */}
+      {/* Slash palette portal */}
+      {slashVisible && (
+        <SlashPalette
+          items={slashItems}
+          onSelect={handleSlashSelect}
+          position={slashPosition}
+        />
+      )}
+
+      {/* Bubble menu */}
       {editor && (
         <BubbleMenu
           editor={editor}
-          tippyOptions={{ duration: 100, placement: "top-start" }}
           shouldShow={({ editor, state }) => {
             const { from, to } = state.selection;
             if (from === to) return false;
@@ -354,7 +436,7 @@ export default function RichTextEditor({
                 onClick={() => editor.chain().focus().toggleCode().run()}
                 title="Inline code (⌘E)"
               >
-                <span className="font-mono text-xs">{"`"}</span>
+                <span className="font-mono text-xs">`</span>
               </BubbleButton>
               <BubbleButton
                 active={editor.isActive("link") || showLinkInput}
@@ -412,7 +494,7 @@ export default function RichTextEditor({
   );
 }
 
-// ─── Bubble Menu Button ────────────────────────────────────────────────────
+// ─── Bubble button ─────────────────────────────────────────────────────────
 
 function BubbleButton({
   children,
