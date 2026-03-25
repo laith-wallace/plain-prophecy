@@ -194,9 +194,16 @@ export default defineSchema({
     order: v.number(),
   }).index("by_type_order", ["type", "order"]),
   users: defineTable({
+    // Auth fields (required by @convex-dev/auth)
     name: v.optional(v.string()),
     image: v.optional(v.string()),
     email: v.optional(v.string()),
+    emailVerificationTime: v.optional(v.number()),
+    phone: v.optional(v.string()),
+    phoneVerificationTime: v.optional(v.number()),
+    isAnonymous: v.optional(v.boolean()),
+
+    // Custom profile fields
     role: v.optional(v.union(v.literal("admin"), v.literal("user"))),
     // Added for Profile & Funnel
     spiritualLevel: v.optional(v.union(v.literal("beginner"), v.literal("intermediate"), v.literal("advanced"))),
@@ -216,5 +223,8 @@ export default defineSchema({
       background: v.optional(v.string()),
       goal: v.optional(v.string()),
     })),
-  }).index("by_email", ["email"]),
+  })
+    .index("email", ["email"])
+    .index("phone", ["phone"])
+    .index("by_email", ["email"]),
 });
