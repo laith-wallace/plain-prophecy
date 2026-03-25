@@ -158,7 +158,7 @@ export default function ShareCardModal({ open, onClose, lesson, meta }: Props) {
                 className={`scm-preview-skeleton${format === "portrait" ? " scm-preview-skeleton--portrait" : ""}`}
               />
             ) : (
-              {/* eslint-disable-next-line @next/next/no-img-element */}
+              // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={previewUrl}
                 alt={`Scripture card for ${lesson.keyVerseRef}`}
