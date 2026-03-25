@@ -58,7 +58,7 @@ export const getWithLessons = query({
     const lessons = await ctx.db
       .query("studyLessons")
       .withIndex("by_course", (q) => q.eq("courseId", course._id))
-      .filter((l) => l.published)
+      .filter((q) => q.eq(q.field("published"), true))
       .collect();
     
     const lessonsWithUrls = await Promise.all(
