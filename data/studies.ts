@@ -26,7 +26,7 @@ export interface StudyLesson {
   christCentre?: string;
   nextLesson?: { book: string; lesson: string; title: string };
   cardImageId?: string;
-  cardImageUrl?: string;
+  cardImageUrl?: string | null;
 }
 
 export interface StudyBook {
