@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import Link from "next/link";
-import { Pencil } from "lucide-react";
+import { Pencil, RefreshCw } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import PublishedBadge from "@/components/admin/PublishedBadge";
@@ -16,6 +16,8 @@ import { cn } from "@/lib/utils";
 export default function AdminStudiesPage() {
   const courses = useQuery(api.studyCourses.getAllAdmin);
   const removeCourse = useMutation(api.studyCourses.remove);
+  const syncLessons = useMutation(api.seed.syncStudyLessons);
+  const [syncing, setSyncing] = useState(false);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<"all" | "published" | "draft">("all");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
@@ -37,7 +39,29 @@ export default function AdminStudiesPage() {
 
   return (
     <div className="space-y-4">
-      <h1 className="text-lg font-semibold">Studies</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="text-lg font-semibold">Studies</h1>
+        <Button
+          variant="outline"
+          size="sm"
+          disabled={syncing}
+          className="border-stone-700 text-stone-300 hover:bg-stone-800"
+          onClick={async () => {
+            setSyncing(true);
+            try {
+              await syncLessons({});
+              toast.success("Studies synced from data files");
+            } catch {
+              toast.error("Sync failed");
+            } finally {
+              setSyncing(false);
+            }
+          }}
+        >
+          <RefreshCw className={`w-3 h-3 ${syncing ? "animate-spin" : ""}`} />
+          {syncing ? "Syncing…" : "Sync from data files"}
+        </Button>
+      </div>
 
       <ListControls
         value={search}
