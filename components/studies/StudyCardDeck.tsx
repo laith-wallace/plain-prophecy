@@ -6,6 +6,7 @@ import { api } from "@/convex/_generated/api";
 import type { StudyLesson, StudyBook } from "@/data/studies";
 import { getCardMeta } from "@/data/studyCardMeta";
 import StudyCard from "./StudyCard";
+import { motion, AnimatePresence } from "framer-motion";
 
 // Flatten all lessons into a single ordered list with their book context
 interface FlatLesson {
@@ -40,8 +41,8 @@ interface StudyCardDeckProps {
 
 export default function StudyCardDeck({ bookFilter = "all" }: StudyCardDeckProps) {
   const booksData = useQuery(api.studyCourses.getAllWithLessons);
-  const lessons = booksData ? buildFlatLessons(booksData as (StudyBook & { lessons: StudyLesson[] })[], bookFilter) : [];
-  const TOTAL = lessons.length;
+  const filteredLessons = booksData ? buildFlatLessons(booksData as (StudyBook & { lessons: StudyLesson[] })[], bookFilter) : [];
+  const TOTAL = filteredLessons.length;
   const [activeIndex, setActiveIndex] = useState(0);
   const [flippedIndex, setFlippedIndex] = useState<number | null>(null);
   const [dragOffset, setDragOffset] = useState(0);
@@ -111,19 +112,16 @@ export default function StudyCardDeck({ bookFilter = "all" }: StudyCardDeckProps
     isDragging.current = false;
     const delta = e.clientX - startX.current;
     const screenW = deckRef.current?.offsetWidth ?? 400;
-    const COMMIT_THRESHOLD = screenW * 0.28; // 28% screen width to commit swipe
+    const COMMIT_THRESHOLD = screenW * 0.25; // 25% screen width to commit swipe
 
     if (Math.abs(delta) > COMMIT_THRESHOLD) {
       const dir = delta > 0 ? -1 : 1; // drag right → go back, drag left → go forward
       setIsAnimating(true);
-      setDragOffset(dir * (screenW + 100)); // fly off screen
-      setTimeout(() => {
-        goTo(activeIndex + dir);
-        setDragOffset(0);
-        setIsAnimating(false);
-      }, 260);
+      goTo(activeIndex + dir);
+      setDragOffset(0);
+      setTimeout(() => setIsAnimating(false), 350); // Match spring duration
     } else if (Math.abs(delta) < 6) {
-      // Tap — setPointerCapture swallows the click event so we flip directly here
+      // Tap — flip active card
       setDragOffset(0);
       const activeLessonIdx = wrap(activeIndex, TOTAL);
       setFlippedIndex((prev) => (prev === activeLessonIdx ? null : activeLessonIdx));
@@ -175,55 +173,70 @@ export default function StudyCardDeck({ bookFilter = "all" }: StudyCardDeckProps
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
       >
-        {slots.map(({ slot, lessonIndex }) => {
-          const { lesson, book } = lessons[lessonIndex];
-          const meta = getCardMeta(lesson.slug);
-          const isActive = slot === 0;
-          const isFlipped = flippedIndex === lessonIndex;
+        <AnimatePresence initial={false}>
+          {slots.map(({ slot, lessonIndex }) => {
+            const { lesson, book } = filteredLessons[lessonIndex];
+            const meta = getCardMeta(lesson.slug);
+            const isActive = slot === 0;
+            const isFlipped = flippedIndex === lessonIndex;
 
-          // Pixel offset from centre
-          const baseX = slot * (cardW + GAP);
-          let scale = 1;
-          let opacity = 1;
-          const zIndex = 10 - Math.abs(slot);
+            // Pixel offset from centre
+            const baseX = slot * (cardW + GAP);
+            let scale = 1;
+            let opacity = 1;
+            const zIndex = 10 - Math.abs(slot);
 
-          if (slot === -1) { scale = 0.88; opacity = 0.35; }
-          else if (slot === 1) { scale = 0.88; opacity = 0.55; }
-          else if (slot === 2) { scale = 0.78; opacity = 0.25; }
+            if (slot === -1) { scale = 0.88; opacity = 0.35; }
+            else if (slot === 1) { scale = 0.88; opacity = 0.55; }
+            else if (slot === 2) { scale = 0.78; opacity = 0.25; }
 
-          // Apply live drag to active card + shift neighbours proportionally
-          const shiftX = isActive ? dragOffset : slot !== -1 ? -dragOffset * 0.25 : 0;
-          const totalX = baseX + shiftX;
-          const rotate = isActive ? tilt : 0;
-          const isDragged = isActive && isDragging.current;
+            const shiftX = isActive ? dragOffset : (slot !== -1 ? -dragOffset * 0.2 : 0);
+            const totalX = baseX + shiftX;
+            const rotate = isActive ? tilt : 0;
+            const isDragged = isActive && isDragging.current;
 
-          return (
-            <div
-              key={slot}
-              className={`scd-card-wrap ${isActive ? "scd-card-wrap--active" : ""}`}
-              style={{
-                transform: `translateX(${totalX}px) rotate(${rotate}deg) scale(${scale})`,
-                zIndex,
-                opacity,
-                transition: isDragged ? "none" : "transform 0.32s cubic-bezier(0.4,0,0.2,1), opacity 0.32s ease",
-                pointerEvents: isActive ? "auto" : "none",
-              }}
-            >
-              <StudyCard
-                lesson={lesson}
-                book={book}
-                meta={meta}
-                isFlipped={isFlipped}
-                onUnflip={() => setFlippedIndex(null)}
-              />
-            </div>
-          );
-        })}
+            return (
+              <motion.div
+                key={lesson.slug + slot}
+                initial={false}
+                animate={{
+                  x: totalX,
+                  scale,
+                  opacity,
+                  rotate,
+                  zIndex
+                }}
+                transition={isDragged ? { type: "tween", duration: 0 } : {
+                  type: "spring",
+                  stiffness: 280,
+                  damping: 28,
+                  mass: 1
+                }}
+                className={`scd-card-wrap ${isActive ? "scd-card-wrap--active" : ""}`}
+                style={{
+                  position: "absolute",
+                  left: "50%",
+                  marginLeft: cardW / -2,
+                  pointerEvents: isActive ? "auto" : "none",
+                  willChange: "transform, opacity"
+                }}
+              >
+                <StudyCard
+                  lesson={lesson}
+                  book={book}
+                  meta={meta}
+                  isFlipped={isFlipped}
+                  onUnflip={() => setFlippedIndex(null)}
+                />
+              </motion.div>
+            );
+          })}
+        </AnimatePresence>
       </div>
 
       {/* Dot indicators */}
       <div className="scd-dots" aria-label="Study card position">
-        {lessons.map((_, i) => (
+        {filteredLessons.map((_, i) => (
           <button
             key={i}
             className={`scd-dot ${i === wrap(activeIndex, TOTAL) ? "scd-dot--active" : ""}`}

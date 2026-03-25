@@ -27,8 +27,19 @@ export const getAllWithLessons = query({
           .withIndex("by_course", (q) => q.eq("courseId", course._id))
           .filter((q) => q.eq(q.field("published"), true))
           .collect();
-        lessons.sort((a, b) => a.order - b.order);
-        return { ...course, lessons };
+        
+        const lessonsWithUrls = await Promise.all(
+          lessons.map(async (l) => {
+            let cardImageUrl = null;
+            if (l.cardImageId) {
+              cardImageUrl = await ctx.storage.getUrl(l.cardImageId);
+            }
+            return { ...l, cardImageUrl };
+          })
+        );
+        
+        lessonsWithUrls.sort((a, b) => a.order - b.order);
+        return { ...course, lessons: lessonsWithUrls };
       })
     );
   },
@@ -47,9 +58,20 @@ export const getWithLessons = query({
     const lessons = await ctx.db
       .query("studyLessons")
       .withIndex("by_course", (q) => q.eq("courseId", course._id))
+      .filter((l) => l.published)
       .collect();
     
-    return { ...course, lessons: lessons.filter(l => l.published).sort((a,b) => a.order - b.order) };
+    const lessonsWithUrls = await Promise.all(
+      lessons.map(async (l) => {
+        let cardImageUrl = null;
+        if (l.cardImageId) {
+          cardImageUrl = await ctx.storage.getUrl(l.cardImageId);
+        }
+        return { ...l, cardImageUrl };
+      })
+    );
+    
+    return { ...course, lessons: lessonsWithUrls.sort((a,b) => a.order - b.order) };
   },
 });
 

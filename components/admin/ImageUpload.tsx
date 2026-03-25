@@ -9,10 +9,11 @@ import { Upload, X, ImageIcon } from "lucide-react";
 interface ImageUploadProps {
   value: string;
   onChange: (url: string) => void;
+  onStorageIdChange?: (storageId: string) => void;
   placeholder?: string;
 }
 
-export default function ImageUpload({ value, onChange, placeholder }: ImageUploadProps) {
+export default function ImageUpload({ value, onChange, onStorageIdChange, placeholder }: ImageUploadProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
 
@@ -31,9 +32,12 @@ export default function ImageUpload({ value, onChange, placeholder }: ImageUploa
         headers: { "Content-Type": file.type },
         body: file,
       });
-      const { storageId } = await res.json() as { storageId: Id<"_storage"> };
+      const { storageId } = (await res.json()) as { storageId: Id<"_storage"> };
       const url = await resolveStorageUrl({ storageId });
-      if (url) onChange(url);
+      if (url) {
+        onChange(url);
+        onStorageIdChange?.(storageId);
+      }
     } catch (err) {
       console.error("Upload failed", err);
     } finally {
@@ -64,7 +68,10 @@ export default function ImageUpload({ value, onChange, placeholder }: ImageUploa
         {value && (
           <button
             type="button"
-            onClick={() => onChange("")}
+            onClick={() => {
+              onChange("");
+              onStorageIdChange?.("");
+            }}
             className="p-2 rounded-lg border border-stone-700 bg-stone-800 text-stone-500 hover:text-stone-200 hover:bg-stone-700 transition-colors shrink-0"
             title="Clear image"
           >

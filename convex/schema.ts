@@ -67,6 +67,7 @@ export default defineSchema({
         ref: v.string(),
       })),
     }))),
+    cardImageId: v.optional(v.string()),
   }).index("by_slug", ["slug"]).index("by_course", ["courseId"]),
 
   blogPosts: defineTable({
@@ -204,6 +205,9 @@ export default defineSchema({
     onboardingComplete: v.optional(v.boolean()),
     lastLessonId: v.optional(v.id("studyLessons")),
     completedLessons: v.optional(v.array(v.id("studyLessons"))),
+    startedLessons: v.optional(v.array(v.id("studyLessons"))),
+    currentStreak: v.optional(v.number()),
+    lastActiveDate: v.optional(v.string()),
     // Raw onboarding survey answers for user personalisation data
     onboardingAnswers: v.optional(v.object({
       motivation: v.optional(v.string()),

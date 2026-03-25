@@ -16,8 +16,15 @@ interface InteractiveStudyTemplateProps {
 
 export default function InteractiveStudyTemplate({ book, lesson, VisualComponent }: InteractiveStudyTemplateProps) {
   const markComplete = useMutation(api.profile.markLessonCompleteBySlug);
+  const markStarted = useMutation(api.profile.markLessonStarted);
   const isComplete = useQuery(api.profile.isLessonComplete, { bookSlug: book.slug, lessonSlug: lesson.slug });
   const [marking, setMarking] = useState(false);
+
+  // Record this lesson as "started" as soon as the page loads (fire-and-forget)
+  useEffect(() => {
+    markStarted({ bookSlug: book.slug, lessonSlug: lesson.slug }).catch(() => {});
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [book.slug, lesson.slug]);
 
   const handleMarkComplete = async () => {
     if (isComplete || marking) return;

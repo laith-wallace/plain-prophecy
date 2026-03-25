@@ -312,19 +312,7 @@
   height: 100%;
   transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
-  transition: transform 0.42s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 24px;
-}
-
-.sc-flipper--flipped {
-  transform: rotateY(180deg);
-}
-
-/* Front face out of view when flipped — disable pointer events so it can't
-   intercept clicks destined for the back face (backface-visibility:hidden
-   doesn't reliably disable hit-testing in all browsers). */
-.sc-flipper--flipped .sc-face--front {
-  pointer-events: none !important;
 }
 
 

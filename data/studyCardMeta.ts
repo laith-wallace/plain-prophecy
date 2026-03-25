@@ -105,6 +105,12 @@ export const studyCardMeta: Record<string, StudyCardMeta> = {
     shortDescription:
       "The final gospel call before Christ returns — three angels, three urgent messages.",
   },
+  "antichrist-development": {
+    emoji: "🎭",
+    accentColor: "#150505",
+    shortDescription:
+      "The mystery of lawlessness — not a figure from horror movies, but a spirit from within.",
+  },
 };
 
 export function getCardMeta(slug: string): StudyCardMeta {

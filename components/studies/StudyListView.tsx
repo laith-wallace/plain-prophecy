@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { getCardMeta } from "@/data/studyCardMeta";
+import { LESSON_CARD_IMAGES } from "@/data/lessonCardImages";
+import Image from "next/image";
 
 interface StudyListViewProps {
   bookFilter?: string;
@@ -47,10 +49,22 @@ export default function StudyListView({ bookFilter = "all" }: StudyListViewProps
                       className="slv-thumb"
                       style={{
                         background: `radial-gradient(ellipse at 40% 40%, ${meta.accentColor}cc 0%, #0a0a12 100%)`,
+                        overflow: 'hidden',
+                        position: 'relative'
                       }}
                       aria-hidden="true"
                     >
-                      {meta.emoji}
+                      {LESSON_CARD_IMAGES[lesson.slug] ? (
+                        <Image 
+                          src={LESSON_CARD_IMAGES[lesson.slug]} 
+                          alt="" 
+                          fill 
+                          sizes="48px"
+                          style={{ objectFit: 'cover' }}
+                        />
+                      ) : (
+                        meta.emoji
+                      )}
                     </div>
                     <div className="slv-info">
                       <div className="slv-row-top">

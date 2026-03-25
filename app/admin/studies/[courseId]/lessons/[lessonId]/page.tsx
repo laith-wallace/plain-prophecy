@@ -5,15 +5,18 @@ import { api } from "@/convex/_generated/api";
 import { useParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
-import { ArrowLeft, Plus, Trash2 } from "lucide-react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { AlertCircle, ArrowLeft, Plus, Trash2 } from "lucide-react";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { toast } from "sonner";
 import type { Id } from "@/convex/_generated/dataModel";
+import ImageUpload from "@/components/admin/ImageUpload";
+import StudyCardPreview from "@/components/admin/StudyCardPreview";
 
 type ContentBlock = { label: string; text: string };
 type Section = {
@@ -43,6 +46,8 @@ type FormValues = {
   nextLessonSlug: string;
   nextLessonTitle: string;
   sections: Section[];
+  cardImageId: string;
+  cardImageUrl: string;
 };
 
 const defaultSection = (): Section => ({
@@ -86,6 +91,8 @@ export default function LessonEditorPage() {
       nextLessonSlug: "",
       nextLessonTitle: "",
       sections: [],
+      cardImageId: "",
+      cardImageUrl: "",
     },
   });
 
@@ -130,15 +137,19 @@ export default function LessonEditorPage() {
           keyVerseRef: s.keyVerse?.ref ?? "",
           contentBlocks: s.contentBlocks ?? [],
         })),
+        cardImageId: lesson.cardImageId ?? "",
+        cardImageUrl: (lesson as any).cardImageUrl ?? "",
       });
     }
   }, [lesson, reset]);
 
   useUnsavedChanges(formState.isDirty);
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   async function onSubmit(data: FormValues) {
     setSaving(true);
+    setError(null);
     try {
       const payload = {
         courseId: courseId as Id<"studyCourses">,
@@ -169,18 +180,25 @@ export default function LessonEditorPage() {
             : undefined,
           contentBlocks: s.contentBlocks.length > 0 ? s.contentBlocks : undefined,
         })),
+        cardImageId: data.cardImageId || undefined,
       };
 
       if (isNew) {
         await addLesson(payload);
-        toast.success("Lesson created");
+        toast.success("Lesson created successfully!", {
+          style: { background: "#10b981", color: "#fff", border: "none" },
+        });
         router.push(`/admin/studies/${courseId}`);
       } else {
         await updateLesson({ id: lessonId as Id<"studyLessons">, ...payload });
-        toast.success("Saved");
+        toast.success("Changes saved successfully!", {
+          style: { background: "#10b981", color: "#fff", border: "none" },
+        });
       }
-    } catch {
-      toast.error("Failed to save");
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "An unexpected error occurred while saving.";
+      setError(msg);
+      toast.error("Failed to save. Please check the error below.");
     } finally {
       setSaving(false);
     }
@@ -197,37 +215,80 @@ export default function LessonEditorPage() {
         </Button>
       </div>
 
+      {error && (
+        <Alert variant="destructive" className="bg-red-950/20 border-red-900/50">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>Error Saving Lesson</AlertTitle>
+          <AlertDescription>
+            {error}
+          </AlertDescription>
+        </Alert>
+      )}
+
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         {/* Top fields */}
         <div className="bg-stone-900 border border-stone-800 rounded-xl p-5 space-y-4">
-          <h2 className="text-sm font-semibold text-stone-300">Lesson Details</h2>
+          <div className="flex justify-between items-start">
+            <div className="space-y-4 flex-1 mr-8">
+              <h2 className="text-sm font-semibold text-stone-300">Lesson Details</h2>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-1">
-              <Label className="text-stone-300">Title</Label>
-              <input {...register("title")} className="w-full px-3 py-2 bg-stone-800 border border-stone-700 rounded-lg text-stone-100 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600" placeholder="Daniel 2" />
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <Label className="text-stone-300">Title</Label>
+                  <input {...register("title")} className="w-full px-3 py-2 bg-stone-800 border border-stone-700 rounded-lg text-stone-100 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600" placeholder="Daniel 2" />
+                </div>
+                <div className="space-y-1">
+                  <Label className="text-stone-300">Slug</Label>
+                  <input {...register("slug")} className="w-full px-3 py-2 bg-stone-800 border border-stone-700 rounded-lg text-stone-100 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-amber-600" placeholder="daniel-2" />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <Label className="text-stone-300">Scripture Reference</Label>
+                  <input {...register("scriptureRef")} className="w-full px-3 py-2 bg-stone-800 border border-stone-700 rounded-lg text-stone-100 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600" placeholder="Daniel 2:1-49" />
+                </div>
+                <div className="space-y-1">
+                  <Label className="text-stone-300">Reading Time (minutes)</Label>
+                  <input type="number" {...register("readingTime", { valueAsNumber: true })} className="w-full px-3 py-2 bg-stone-800 border border-stone-700 rounded-lg text-stone-100 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600" />
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Switch checked={watch("published")} onCheckedChange={(v) => setValue("published", v)} />
+                <Label className="text-stone-300">Published</Label>
+              </div>
             </div>
-            <div className="space-y-1">
-              <Label className="text-stone-300">Slug</Label>
-              <input {...register("slug")} className="w-full px-3 py-2 bg-stone-800 border border-stone-700 rounded-lg text-stone-100 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-amber-600" placeholder="daniel-2" />
+
+            <div className="shrink-0 scale-[0.85] origin-top-right">
+              <StudyCardPreview 
+                lesson={{
+                  slug: watch("slug"),
+                  title: watch("title"),
+                  scriptureRef: watch("scriptureRef"),
+                  readingTime: watch("readingTime"),
+                }}
+                cardImageUrl={watch("cardImageUrl")}
+              />
             </div>
           </div>
+        </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-1">
-              <Label className="text-stone-300">Scripture Reference</Label>
-              <input {...register("scriptureRef")} className="w-full px-3 py-2 bg-stone-800 border border-stone-700 rounded-lg text-stone-100 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600" placeholder="Daniel 2:1-49" />
-            </div>
-            <div className="space-y-1">
-              <Label className="text-stone-300">Reading Time (minutes)</Label>
-              <input type="number" {...register("readingTime", { valueAsNumber: true })} className="w-full px-3 py-2 bg-stone-800 border border-stone-700 rounded-lg text-stone-100 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600" />
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <Switch checked={watch("published")} onCheckedChange={(v) => setValue("published", v)} />
-            <Label className="text-stone-300">Published</Label>
-          </div>
+        {/* Study Card artwork */}
+        <div className="bg-stone-900 border border-stone-800 rounded-xl p-5 space-y-4">
+          <h2 className="text-sm font-semibold text-stone-300">Study Card Artwork</h2>
+          <p className="text-xs text-stone-500">Upload a custom artwork image for this study card. This will override the default icon/emoji and legacy hardcoded images.</p>
+          
+          <ImageUpload 
+            value={watch("cardImageUrl")} 
+            onChange={(url) => {
+              setValue("cardImageUrl", url, { shouldDirty: true });
+            }} 
+            onStorageIdChange={(id) => {
+              setValue("cardImageId", id, { shouldDirty: true });
+            }}
+            placeholder="Upload or paste image URL..."
+          />
         </div>
 
         {/* Key verse */}

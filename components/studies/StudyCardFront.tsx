@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import type { StudyLesson } from "@/data/studies";
 import type { StudyCardMeta } from "@/data/studyCardMeta";
 import { ScriptureRef } from "@/components/ui/ScriptureRef";
@@ -8,16 +9,33 @@ import { ScriptureRef } from "@/components/ui/ScriptureRef";
 interface Props {
   lesson: StudyLesson;
   meta: StudyCardMeta;
+  cardImage?: string;
 }
 
-export default function StudyCardFront({ lesson, meta }: Props) {
+export default function StudyCardFront({ lesson, meta, cardImage }: Props) {
+  const hasArtwork = !!cardImage;
+
   return (
     <div
-      className="scf-root"
+      className={`scf-root ${hasArtwork ? "scf-root--has-artwork" : ""}`}
       style={{
         background: `radial-gradient(ellipse at 40% 30%, ${meta.accentColor}ee 0%, #050508 100%)`,
       }}
     >
+      {/* Artwork image */}
+      {cardImage && (
+        <div className="scf-artwork">
+          <Image 
+            src={cardImage} 
+            alt="" 
+            fill 
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" 
+            style={{ objectFit: "cover", objectPosition: "center top" }} 
+          />
+          <div className="scf-artwork-overlay" />
+        </div>
+      )}
+
       {/* Subtle noise texture overlay */}
       <div className="scf-noise" aria-hidden="true" />
 
@@ -27,10 +45,14 @@ export default function StudyCardFront({ lesson, meta }: Props) {
         <ScriptureRef className="scf-badge scf-badge--ref">{lesson.scriptureRef}</ScriptureRef>
       </div>
 
-      {/* Central emoji illustration */}
-      <div className="scf-emoji" aria-hidden="true">
-        {meta.emoji}
-      </div>
+      {/* Vertical spacer or emoji illustration */}
+      {!hasArtwork ? (
+        <div className="scf-emoji" aria-hidden="true">
+          {meta.emoji}
+        </div>
+      ) : (
+        <div style={{ flex: 1 }} aria-hidden="true" />
+      )}
 
       {/* Card body */}
       <div className="scf-body">

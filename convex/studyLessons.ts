@@ -29,28 +29,48 @@ const lessonFields = {
   christCentre: v.optional(v.string()),
   nextLesson: v.optional(v.object({ book: v.string(), lesson: v.string(), title: v.string() })),
   sections: v.optional(v.array(sectionValidator)),
+  cardImageId: v.optional(v.string()),
 };
 
 export const getBySlug = query({
   args: { slug: v.string() },
   handler: async (ctx, args) => {
-    return await ctx.db
+    const lesson = await ctx.db
       .query("studyLessons")
       .withIndex("by_slug", (q) => q.eq("slug", args.slug))
       .filter((q) => q.eq(q.field("published"), true))
       .first();
+    
+    if (!lesson) return null;
+    
+    let cardImageUrl = null;
+    if (lesson.cardImageId) {
+      cardImageUrl = await ctx.storage.getUrl(lesson.cardImageId);
+    }
+    
+    return { ...lesson, cardImageUrl };
   },
 });
 
 export const getByCourse = query({
   args: { courseId: v.id("studyCourses") },
   handler: async (ctx, args) => {
-    return await ctx.db
+    const lessons = await ctx.db
       .query("studyLessons")
       .withIndex("by_course", (q) => q.eq("courseId", args.courseId))
       .filter((q) => q.eq(q.field("published"), true))
       .order("asc")
       .collect();
+    
+    return Promise.all(
+      lessons.map(async (l) => {
+        let cardImageUrl = null;
+        if (l.cardImageId) {
+          cardImageUrl = await ctx.storage.getUrl(l.cardImageId);
+        }
+        return { ...l, cardImageUrl };
+      })
+    );
   },
 });
 
@@ -59,11 +79,21 @@ export const getAllByCourseAdmin = query({
   handler: async (ctx, { courseId }) => {
     const userId = await getAuthUserId(ctx);
     if (!userId) throw new Error("Unauthenticated");
-    return await ctx.db
+    const lessons = await ctx.db
       .query("studyLessons")
       .withIndex("by_course", (q) => q.eq("courseId", courseId))
       .order("asc")
       .collect();
+    
+    return Promise.all(
+      lessons.map(async (l) => {
+        let cardImageUrl = null;
+        if (l.cardImageId) {
+          cardImageUrl = await ctx.storage.getUrl(l.cardImageId);
+        }
+        return { ...l, cardImageUrl };
+      })
+    );
   },
 });
 
@@ -72,7 +102,15 @@ export const getByIdAdmin = query({
   handler: async (ctx, { id }) => {
     const userId = await getAuthUserId(ctx);
     if (!userId) throw new Error("Unauthenticated");
-    return await ctx.db.get(id);
+    const lesson = await ctx.db.get(id);
+    if (!lesson) return null;
+    
+    let cardImageUrl = null;
+    if (lesson.cardImageId) {
+      cardImageUrl = await ctx.storage.getUrl(lesson.cardImageId);
+    }
+    
+    return { ...lesson, cardImageUrl };
   },
 });
 
