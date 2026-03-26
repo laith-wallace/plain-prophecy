@@ -105,7 +105,7 @@ function StudiesNav() {
                     {/* Book toggle — shows as icon in collapsed mode */}
                     <SidebarMenuButton
                       isActive={bookActive}
-                      title={book.title}
+                      tooltip={book.title}
                       className="studies-book-btn"
                       onClick={() => handleBookClick(book.slug)}
                     >
@@ -150,7 +150,7 @@ function StudiesNav() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
-              title="Studies Home"
+              tooltip="Studies Home"
               isActive={pathname === "/studies"}
               className="studies-book-btn"
               onClick={() => router.push("/studies")}

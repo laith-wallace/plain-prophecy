@@ -340,7 +340,7 @@ export default function RichTextEditor({
       const currentJSON = editor.getJSON();
       // Only update if the content is truly different (and we are not in an onUpdate loop)
       if (JSON.stringify(currentJSON) !== JSON.stringify(content)) {
-        // @ts-ignore - setContent signature can vary by Tiptap version
+        // @ts-expect-error - setContent signature can vary by Tiptap version
         editor.commands.setContent(content, false);
       }
     }
