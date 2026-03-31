@@ -3,14 +3,17 @@ import Image from "next/image";
 
 const exploreLinks = [
   { href: "/studies", label: "Studies" },
+  { href: "/connections", label: "Connections" },
   { href: "/compare", label: "Compare" },
   { href: "/evidence", label: "Evidence" },
   { href: "/doctrine", label: "Doctrine" },
+  { href: "/prophet", label: "Prophet" },
   { href: "/blog", label: "Blog" },
   { href: "/games", label: "Games" },
 ];
 
 const learnLinks = [
+  { href: "/learn", label: "Learn" },
   { href: "/about", label: "About" },
 ];
 

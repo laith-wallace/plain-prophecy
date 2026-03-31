@@ -2388,3 +2388,424 @@ body {
   justify-content: center;
 }
 
+/* ===== VERSE MEMORY GAME — game-picker card variant ===== */
+
+.game-picker-card--memory {
+    border-color: rgba(74,107,158,0.28);
+    background: rgba(74,107,158,0.07);
+}
+
+.game-picker-card--memory:hover,
+.game-picker-card--memory:focus-visible {
+    border-color: rgba(74,107,158,0.6);
+    background: rgba(74,107,158,0.14);
+}
+
+.game-picker-card--memory .game-picker-card-label {
+    color: #8aaed4;
+    opacity: 0.85;
+}
+
+.game-picker-card--memory .game-picker-card-meta {
+    border-top-color: rgba(74,107,158,0.2);
+    color: #8aaed4;
+    opacity: 0.6;
+}
+
+/* ===== VERSE MEMORY GAME — main UI ===== */
+
+.vm-layout {
+    min-height: 100dvh;
+    background: var(--ink);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.vm-layout--loading {
+    /* skeleton — just an empty dark screen while localStorage loads */
+}
+
+.vm-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem 0.75rem;
+}
+
+.vm-header-brand {
+    font-family: var(--font-ibm-plex-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: rgba(255,255,255,0.45);
+    transition: color 0.15s;
+}
+
+.vm-header-brand:hover { color: rgba(255,255,255,0.75); }
+
+.vm-header-brand span { color: var(--sda-accent); }
+
+.vm-header-label {
+    font-family: var(--font-ibm-plex-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+}
+
+/* Progress bar */
+.vm-progress-track {
+    width: 100%;
+    height: 2px;
+    background: rgba(255,255,255,0.07);
+}
+
+.vm-progress-fill {
+    height: 100%;
+    background: var(--sda-accent);
+    transition: width 0.4s ease;
+}
+
+/* Content area */
+.vm-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem 1.25rem 2rem;
+    gap: 1rem;
+}
+
+/* ── Flashcard ── */
+.vm-card {
+    width: min(100%, 420px);
+    perspective: 1200px;
+}
+
+.vm-card-inner {
+    position: relative;
+    min-height: 420px;
+    transform-style: preserve-3d;
+    transition: transform 0.45s cubic-bezier(0.34, 1.2, 0.64, 1);
+}
+
+.vm-card-inner--flipped {
+    transform: rotateY(180deg);
+}
+
+.vm-card-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 1.75rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    background: rgba(255,255,255,0.035);
+    min-height: 420px;
+}
+
+.vm-card-back {
+    transform: rotateY(180deg);
+}
+
+/* Badges */
+.vm-card-badges {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.vm-badge {
+    font-family: var(--font-ibm-plex-mono);
+    font-size: 0.54rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid;
+}
+
+.vm-badge--book {
+    color: var(--sda-accent);
+    border-color: rgba(232,160,32,0.35);
+    background: rgba(232,160,32,0.08);
+}
+
+.vm-badge--theme {
+    color: rgba(255,255,255,0.45);
+    border-color: rgba(255,255,255,0.12);
+    background: transparent;
+}
+
+/* Reference */
+.vm-card-reference {
+    font-family: var(--font-playfair);
+    font-size: clamp(1.35rem, 4vw, 1.75rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    color: #fff;
+}
+
+.vm-card-reference--back {
+    font-size: clamp(0.9rem, 3vw, 1.1rem);
+    font-weight: 700;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 0.25rem;
+}
+
+/* Context clue */
+.vm-card-clue {
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.55);
+    font-style: italic;
+    flex: 1;
+    margin: 0;
+}
+
+/* Reveal button */
+.vm-reveal-btn {
+    margin-top: auto;
+    width: 100%;
+    min-height: 48px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.06);
+    color: #fff;
+    font-family: var(--font-ibm-plex-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.vm-reveal-btn:hover,
+.vm-reveal-btn:focus-visible {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.3);
+}
+
+/* Verse text */
+.vm-verse-text {
+    font-family: var(--font-playfair);
+    font-size: clamp(0.88rem, 2.5vw, 1rem);
+    line-height: 1.75;
+    color: rgba(255,255,255,0.9);
+    font-style: italic;
+    border-left: 2px solid rgba(232,160,32,0.5);
+    padding-left: 1rem;
+    margin: 0;
+    flex: 1;
+}
+
+/* Christ anchor */
+.vm-christ-anchor {
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.7);
+    background: rgba(232,160,32,0.08);
+    border: 1px solid rgba(232,160,32,0.2);
+    border-radius: 8px;
+    padding: 0.75rem 0.9rem;
+}
+
+.vm-christ-anchor-label {
+    display: block;
+    font-family: var(--font-ibm-plex-mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--sda-accent);
+    opacity: 0.7;
+    margin-bottom: 0.4rem;
+}
+
+/* Rating row */
+.vm-rating-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+    margin-top: auto;
+}
+
+.vm-rating-btn {
+    min-height: 46px;
+    border-radius: 8px;
+    border: 1px solid;
+    font-family: var(--font-ibm-plex-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: opacity 0.15s, background 0.15s;
+}
+
+.vm-rating-btn:hover { opacity: 0.85; }
+.vm-rating-btn:active { opacity: 0.65; transform: scale(0.97); }
+
+.vm-rating-again {
+    color: #f87171;
+    border-color: rgba(248,113,113,0.3);
+    background: rgba(248,113,113,0.08);
+}
+
+.vm-rating-hard {
+    color: #fb923c;
+    border-color: rgba(251,146,60,0.3);
+    background: rgba(251,146,60,0.08);
+}
+
+.vm-rating-good {
+    color: #86efac;
+    border-color: rgba(134,239,172,0.3);
+    background: rgba(134,239,172,0.06);
+}
+
+.vm-rating-easy {
+    color: var(--sda-accent);
+    border-color: rgba(232,160,32,0.35);
+    background: rgba(232,160,32,0.08);
+}
+
+/* Card counter + keyboard hint */
+.vm-card-counter {
+    font-family: var(--font-ibm-plex-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    color: rgba(255,255,255,0.25);
+    text-transform: uppercase;
+}
+
+.vm-keyboard-hint {
+    font-family: var(--font-ibm-plex-mono);
+    font-size: 0.54rem;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.18);
+    text-transform: uppercase;
+    margin: 0;
+}
+
+@media (max-width: 480px) {
+    .vm-keyboard-hint { display: none; }
+}
+
+/* ── Empty state ── */
+.vm-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
+    max-width: 320px;
+}
+
+.vm-empty-icon {
+    font-size: 2.5rem;
+    color: var(--sda-accent);
+    line-height: 1;
+}
+
+.vm-empty-title {
+    font-family: var(--font-playfair);
+    font-size: 1.6rem;
+    font-weight: 900;
+    margin: 0;
+}
+
+.vm-empty-sub {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.vm-empty-btn {
+    margin-top: 0.5rem;
+    min-height: 46px;
+    padding: 0 1.5rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.7);
+    font-family: var(--font-ibm-plex-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.vm-empty-btn:hover { background: rgba(255,255,255,0.1); }
+
+/* ── Session complete ── */
+.vm-session-done {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
+    max-width: 320px;
+}
+
+.vm-session-done-icon {
+    font-size: 2.5rem;
+    color: var(--sda-accent);
+    line-height: 1;
+}
+
+.vm-session-done-title {
+    font-family: var(--font-playfair);
+    font-size: 1.6rem;
+    font-weight: 900;
+    margin: 0;
+}
+
+.vm-session-done-sub {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.vm-session-done-btn {
+    margin-top: 0.5rem;
+    min-height: 46px;
+    padding: 0 1.75rem;
+    border-radius: 8px;
+    border: 1px solid rgba(232,160,32,0.35);
+    background: rgba(232,160,32,0.1);
+    color: var(--sda-accent);
+    font-family: var(--font-ibm-plex-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.vm-session-done-btn:hover { background: rgba(232,160,32,0.18); }
+
+/* Shared back link */
+.vm-back-link {
+    font-family: var(--font-ibm-plex-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+    text-decoration: none;
+    transition: color 0.15s;
+    margin-top: 0.25rem;
+}
+
+.vm-back-link:hover { color: rgba(255,255,255,0.5); }
+

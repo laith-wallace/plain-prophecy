@@ -25,6 +25,12 @@ module.exports = {
         'sda-light': '#d4edda',
         'red-flag': '#c0392b',
         'green-check': '#1a6b3c',
+        // Connections page — cosmic dark design system
+        'conn-bg': '#08080F',
+        'conn-gold': '#C9A84C',
+        'conn-gold-hi': '#F0D080',
+        'conn-text': '#F5F5F0',
+        'conn-muted': '#9A9A8A',
         sidebar: {
           DEFAULT: 'var(--sidebar-background)',
           foreground: 'var(--sidebar-foreground)',

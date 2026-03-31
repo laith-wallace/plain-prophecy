@@ -743,6 +743,16 @@ function GamePicker({ onSelect }: { onSelect: (mode: "daniel") => void }) {
           </div>
           <div className="game-picker-card-meta">22 cards · Prophecy</div>
         </Link>
+
+        <Link href="/games/verse-memory" className="game-picker-card game-picker-card--memory">
+          <div className="game-picker-card-symbol">📖</div>
+          <div className="game-picker-card-label">Memory · Spaced Repetition</div>
+          <div className="game-picker-card-title">Verse Memory</div>
+          <div className="game-picker-card-desc">
+            Commit key prophecy verses to memory. Flashcards that adapt to what you struggle with — so the word stays with you.
+          </div>
+          <div className="game-picker-card-meta">28 verses · Daniel · Revelation · Isaiah</div>
+        </Link>
       </div>
 
       <div className="game-picker-footer">

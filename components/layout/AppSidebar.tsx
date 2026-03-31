@@ -22,6 +22,12 @@ import {
   ChevronDown,
   Home,
   FileText,
+  ShieldCheck,
+  ScrollText,
+  Sparkles,
+  Clock,
+  Columns2,
+  Network,
 } from "lucide-react";
 import {
   Sidebar,
@@ -49,6 +55,12 @@ import {
 
 const exploreLinks = [
   { href: "/studies/map", label: "Map", icon: Map },
+  { href: "/studies/timeline", label: "Timeline", icon: Clock },
+  { href: "/studies/parallels", label: "Parallels", icon: Columns2 },
+  { href: "/connections", label: "Connections", icon: Network },
+  { href: "/evidence", label: "Evidence", icon: ShieldCheck },
+  { href: "/doctrine", label: "Doctrine", icon: ScrollText },
+  { href: "/prophet", label: "Prophet", icon: Sparkles },
   { href: "/blog", label: "Blog", icon: FileText },
   { href: "/compare", label: "Compare", icon: Scale },
   { href: "/learn", label: "Learn", icon: GraduationCap },

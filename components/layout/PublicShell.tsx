@@ -6,6 +6,7 @@ import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import SiteNav from "./SiteNav";
 import SiteFooter from "./SiteFooter";
+import MobileBottomNav from "./MobileBottomNav";
 import AppSidebar from "./AppSidebar";
 import SearchDialog from "@/components/search/SearchDialog";
 import { SidebarProvider, SidebarInset, SidebarTrigger, useSidebar } from "@/components/ui/sidebar";
@@ -51,7 +52,7 @@ function AppShellInner({ children }: { children: ReactNode }) {
 export default function PublicShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const isAdmin = pathname?.startsWith("/admin");
-  const isFullscreen = pathname === "/studies/map" || pathname === "/studies/timeline";
+  const isFullscreen = pathname === "/studies/map" || pathname === "/studies/timeline" || pathname === "/connections";
 
   const [searchOpen, setSearchOpen] = useState(false);
   const user = useQuery(api.users.viewer);
@@ -97,8 +98,12 @@ export default function PublicShell({ children }: { children: ReactNode }) {
   return (
     <>
       <SiteNav onSearchOpen={() => setSearchOpen(true)} />
-      {children}
+      {/* pb-20 sm:pb-0 reserves space above the mobile bottom nav */}
+      <div className="pb-20 sm:pb-0">
+        {children}
+      </div>
       <SiteFooter />
+      <MobileBottomNav onSearchOpen={() => setSearchOpen(true)} />
       <SearchDialog open={searchOpen} onClose={() => setSearchOpen(false)} />
     </>
   );
