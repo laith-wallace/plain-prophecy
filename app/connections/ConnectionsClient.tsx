@@ -704,6 +704,9 @@ export default function ConnectionsClient() {
         open={challengeOpen}
         onClose={() => setChallengeOpen(false)}
       />
+
+      {/* Mobile bottom nav spacer — prevents content hiding under the 72px fixed tab bar */}
+      <div className="h-[72px] sm:h-0" aria-hidden="true" />
     </div>
   )
 }

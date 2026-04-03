@@ -133,6 +133,47 @@ function StudyCard({ title, courseSlug, lessonSlug, category, state, isNextUp, c
   );
 }
 
+// ---- Milestones ----
+
+const MILESTONES: {
+  id: string
+  label: string
+  description: string
+  icon: string
+  condition: (completedCount: number, streak: number) => boolean
+}[] = [
+  { id: 'first_step',   label: 'First Step',     description: 'Complete your first lesson',   icon: '✦', condition: (c) => c >= 1  },
+  { id: 'five_lessons', label: 'Lamp Lit',        description: 'Complete 5 lessons',           icon: '🕯', condition: (c) => c >= 5  },
+  { id: 'ten_lessons',  label: 'Devoted',         description: 'Complete 10 lessons',          icon: '📖', condition: (c) => c >= 10 },
+  { id: 'scholar',      label: 'Scholar',         description: 'Complete 15 lessons',          icon: '⚡', condition: (c) => c >= 15 },
+  { id: 'streak_3',     label: 'Faithful',        description: '3-day reading streak',         icon: '🔥', condition: (_, s) => s >= 3 },
+  { id: 'streak_7',     label: 'Burning Flame',   description: '7-day reading streak',         icon: '🌟', condition: (_, s) => s >= 7 },
+]
+
+function MilestonesSection({ completedCount, streak }: { completedCount: number; streak: number }) {
+  const earned = MILESTONES.filter((m) => m.condition(completedCount, streak)).length
+  return (
+    <section className="milestones-section">
+      <div className="milestones-header">
+        <h2 className="milestones-title">Milestones</h2>
+        <span className="milestones-counter">{earned} / {MILESTONES.length} earned</span>
+      </div>
+      <div className="milestones-grid">
+        {MILESTONES.map((m) => {
+          const unlocked = m.condition(completedCount, streak)
+          return (
+            <div key={m.id} className={`milestone-badge${unlocked ? ' milestone-badge--unlocked' : ''}`}>
+              <span className="milestone-icon" aria-hidden="true">{m.icon}</span>
+              <span className="milestone-label">{m.label}</span>
+              <span className="milestone-desc">{m.description}</span>
+            </div>
+          )
+        })}
+      </div>
+    </section>
+  )
+}
+
 // ---- Page ----
 
 export default function ProfilePage() {
@@ -425,7 +466,12 @@ export default function ProfilePage() {
         </section>
       )}
 
-      {/* ── Section 5: Map Promo ── */}
+      {/* ── Section 5: Milestones ── */}
+      {progress !== undefined && progress !== null && (
+        <MilestonesSection completedCount={progress.completedCount} streak={progress.streak ?? 0} />
+      )}
+
+      {/* ── Section 6: Map Promo ── */}
       <section className="promo-section">
         <div className="promo-content">
           <h3>Celestial Prophecy Map</h3>

@@ -138,7 +138,7 @@ export default function VerseSearch({ data, onVerseSelect, onClear }: VerseSearc
   }
 
   return (
-    <div style={{ position: 'relative', width: '100%', maxWidth: 320 }}>
+    <div style={{ position: 'relative', width: '100%' }}>
       <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
         <input
           ref={inputRef}
