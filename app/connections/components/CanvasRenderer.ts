@@ -133,6 +133,7 @@ export class CanvasRenderer {
   // ── Resize handler ───────────────────────────────────────────────────────
   resize(cssWidth: number, cssHeight: number): void {
     if (!this.data) return
+    if (cssWidth <= 0 || cssHeight <= 0) return
     this.cssWidth = cssWidth
     this.cssHeight = cssHeight
     this._sizeCanvas(cssWidth, cssHeight)
@@ -446,7 +447,7 @@ export class CanvasRenderer {
     ctx.clearRect(0, 0, W, H)
 
     // Composite base layer
-    if (this.offscreen) {
+    if (this.offscreen && this.offscreen.width > 0 && this.offscreen.height > 0) {
       // Draw offscreen (DPR-scaled) onto main canvas at CSS size
       ctx.drawImage(this.offscreen as unknown as CanvasImageSource, 0, 0, W * this.dpr, H * this.dpr, 0, 0, W, H)
     } else {
