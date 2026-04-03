@@ -15,6 +15,15 @@ interface ModeSelectorProps {
 
 const MODES: { id: FilterMode; label: string; icon: React.ReactNode }[] = [
   {
+    id: 'christThread',
+    label: 'Christ Thread',
+    icon: (
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M7 1v12M3 5h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+      </svg>
+    ),
+  },
+  {
     id: 'base',
     label: 'Full Web',
     icon: <Layers size={14} />,
@@ -23,15 +32,6 @@ const MODES: { id: FilterMode; label: string; icon: React.ReactNode }[] = [
     id: 'verse',
     label: 'Scripture Links',
     icon: <Link2 size={14} />,
-  },
-  {
-    id: 'christThread',
-    label: 'Christ Thread',
-    icon: (
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-        <path d="M7 1v12M3 5h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-      </svg>
-    ),
   },
   {
     id: 'prophecyHighway',
@@ -48,6 +48,15 @@ const MODES: { id: FilterMode; label: string; icon: React.ReactNode }[] = [
     ),
   },
 ]
+
+const MODE_DESCRIPTORS: Record<FilterMode, string> = {
+  christThread: 'Tracing the scarlet thread from Genesis to Revelation',
+  base: 'All 63,779 cross-references — the fingerprint of divine authorship',
+  verse: 'Search any verse to see every thread connecting to it',
+  prophecyHighway: 'Connections within the prophetic-core books',
+  bookDna: 'Tap a book label on the canvas to see its connection fingerprint',
+  path: 'Following a guided journey through Scripture',
+}
 
 export default function ModeSelector({
   activeMode,
@@ -101,11 +110,28 @@ export default function ModeSelector({
               }}
             >
               {mode.icon}
-              <span className="hidden sm:inline">{mode.label}</span>
+              <span>{mode.label}</span>
             </button>
           )
         })}
       </div>
+
+      {/* Mode descriptor */}
+      <motion.p
+        key={activeMode}
+        initial={{ opacity: 0, y: 3 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.2 }}
+        style={{
+          padding: '6px 0 10px',
+          fontFamily: activeMode === 'christThread' ? 'var(--font-cinzel)' : 'var(--font-inter)',
+          fontSize: 11,
+          color: activeMode === 'christThread' ? '#C9A84C' : '#9A9A8A',
+          fontStyle: 'italic',
+        }}
+      >
+        {MODE_DESCRIPTORS[activeMode]}
+      </motion.p>
 
       {/* Scripture Links search input */}
       <AnimatePresence>
@@ -118,65 +144,13 @@ export default function ModeSelector({
             transition={{ duration: 0.25, ease: 'easeOut' }}
             style={{ overflow: 'hidden' }}
           >
-            <div style={{ padding: '10px 0 14px' }}>
+            <div style={{ paddingBottom: 14 }}>
               <VerseSearch
                 data={data}
                 onVerseSelect={onVerseSelect}
                 onClear={onVerseClear}
               />
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Book DNA instruction */}
-      <AnimatePresence>
-        {activeMode === 'bookDna' && (
-          <motion.div
-            key="dna-hint"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            style={{ overflow: 'hidden' }}
-          >
-            <p
-              style={{
-                padding: '8px 0 12px',
-                fontFamily: 'var(--font-inter)',
-                fontSize: 11,
-                color: '#9A9A8A',
-                fontStyle: 'italic',
-              }}
-            >
-              Click any book label on the canvas to see its connection fingerprint.
-            </p>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Christ Thread caption */}
-      <AnimatePresence>
-        {activeMode === 'christThread' && (
-          <motion.div
-            key="ct-caption"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            style={{ overflow: 'hidden' }}
-          >
-            <p
-              style={{
-                padding: '8px 0 12px',
-                fontFamily: 'var(--font-cinzel)',
-                fontSize: 11,
-                color: '#C9A84C',
-                fontStyle: 'italic',
-              }}
-            >
-              Every shadow has a substance. Every type has an antitype. Every arc points home.
-            </p>
           </motion.div>
         )}
       </AnimatePresence>

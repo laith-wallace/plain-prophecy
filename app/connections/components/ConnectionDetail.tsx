@@ -102,6 +102,33 @@ export default function ConnectionDetail({ arc, data, onShare }: ConnectionDetai
         </div>
       )}
 
+      {/* Why this matters — Christ Thread */}
+      {christConn && (
+        <div
+          style={{
+            borderLeft: '2px solid rgba(240,208,128,0.35)',
+            paddingLeft: 12,
+            marginBottom: 16,
+          }}
+        >
+          <p
+            style={{
+              fontFamily: 'var(--font-inter)',
+              fontSize: 12,
+              color: '#9A9A8A',
+              lineHeight: 1.7,
+              fontStyle: 'italic',
+              marginBottom: 4,
+            }}
+          >
+            This isn&apos;t coincidence — it&apos;s convergence. The same Spirit moved both writers toward the same revelation of Christ.
+          </p>
+          <p style={{ fontFamily: 'var(--font-cinzel)', fontSize: 9, color: 'rgba(201,168,76,0.55)', letterSpacing: '0.08em' }}>
+            2 TIMOTHY 3:16
+          </p>
+        </div>
+      )}
+
       {/* Time gap */}
       {shouldShowGap(gap) && (
         <div
@@ -118,8 +145,11 @@ export default function ConnectionDetail({ arc, data, onShare }: ConnectionDetai
           <div style={{ fontFamily: 'var(--font-cinzel)', fontSize: 20, color: '#C9A84C', marginBottom: 2 }}>
             {gap.toLocaleString()} years
           </div>
-          <div style={{ fontFamily: 'var(--font-inter)', fontSize: 11, color: '#9A9A8A' }}>
+          <div style={{ fontFamily: 'var(--font-inter)', fontSize: 11, color: '#9A9A8A', marginBottom: 8 }}>
             between the two authors
+          </div>
+          <div style={{ fontFamily: 'var(--font-inter)', fontSize: 11, color: 'rgba(154,154,138,0.7)', fontStyle: 'italic' }}>
+            Two people, separated by centuries — yet the echo is unmistakable.
           </div>
         </div>
       )}

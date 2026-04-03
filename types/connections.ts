@@ -65,27 +65,27 @@ export interface DiscoveryPath {
 // Study challenges
 export type ChallengeType = 'findIt' | 'countIt' | 'nameIt'
 
-export interface BaseChallengeinterfaceBase {
+export interface BaseChallengeBase {
   id: string
   type: ChallengeType
   question: string
   xpReward: number
 }
 
-export interface FindItChallenge extends BaseChallengeinterfaceBase {
+export interface FindItChallenge extends BaseChallengeBase {
   type: 'findIt'
   targetArcFrom: string    // OSIS reference
   targetArcTo: string      // OSIS reference
   hint: string
 }
 
-export interface CountItChallenge extends BaseChallengeinterfaceBase {
+export interface CountItChallenge extends BaseChallengeBase {
   type: 'countIt'
   correctAnswer: number
   tolerance: number
 }
 
-export interface NameItChallenge extends BaseChallengeinterfaceBase {
+export interface NameItChallenge extends BaseChallengeBase {
   type: 'nameIt'
   options: string[]
   correctIndex: number

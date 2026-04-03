@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Map as MapIcon } from 'lucide-react'
+import { Map as MapIcon, ArrowRight } from 'lucide-react'
 
 import ScriptureWebCanvas from './components/ScriptureWebCanvas'
 import ConnectionStats from './components/ConnectionStats'
@@ -12,6 +12,7 @@ import DiscoveryPanel from './components/DiscoveryPanel'
 import GuidedPathsDrawer from './components/GuidedPathsDrawer'
 import ChallengeModal from './components/ChallengeModal'
 import ShareCard from './components/ShareCard'
+import InsightsSection from './components/InsightsSection'
 
 import { CHRIST_THREAD } from '@/data/christ-thread'
 
@@ -24,6 +25,16 @@ import type {
 } from '@/types/connections'
 
 export default function ConnectionsClient() {
+  // ── First-visit intro overlay ─────────────────────────────────────────────
+  const [showIntro, setShowIntro] = useState(false)
+  useEffect(() => {
+    if (!localStorage.getItem('pp_connections_visited')) setShowIntro(true)
+  }, [])
+  function dismissIntro() {
+    localStorage.setItem('pp_connections_visited', '1')
+    setShowIntro(false)
+  }
+
   // ── Data loading ─────────────────────────────────────────────────────────
   const [data, setData] = useState<CrossReferenceData | null>(null)
   const [loadState, setLoadState] = useState<'idle' | 'loading' | 'loaded' | 'error'>('idle')
@@ -43,7 +54,7 @@ export default function ConnectionsClient() {
   }, [])
 
   // ── Filter / mode state ───────────────────────────────────────────────────
-  const [activeMode, setActiveMode] = useState<FilterMode>('base')
+  const [activeMode, setActiveMode] = useState<FilterMode>('christThread')
   const [filterState, setFilterState] = useState<FilterState>({ mode: 'base' })
 
   // Build OSIS → verse index map once data is loaded
@@ -59,6 +70,28 @@ export default function ConnectionsClient() {
     }
     osisMapRef.current = map
   }, [data])
+
+  // Auto-apply christThread filter once data + osisMap are ready
+  useEffect(() => {
+    if (!data || !osisMapRef.current || activeMode !== 'christThread') return
+    const osisMap = osisMapRef.current
+    const refs = data.refs
+    const arcIndices: number[] = []
+    for (const { from, to } of CHRIST_THREAD) {
+      const fromIdx = osisMap.get(from)
+      const toIdx = osisMap.get(to)
+      if (fromIdx === undefined || toIdx === undefined) continue
+      for (let i = 0; i < refs.length; i++) {
+        if (
+          (refs[i][0] === fromIdx && refs[i][1] === toIdx) ||
+          (refs[i][0] === toIdx && refs[i][1] === fromIdx)
+        ) {
+          arcIndices.push(i)
+        }
+      }
+    }
+    setFilterState({ mode: 'christThread', arcIndices })
+  }, [data]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // ── Hover state ───────────────────────────────────────────────────────────
   const [hoveredArc, setHoveredArc] = useState<ArcHit | null>(null)
@@ -150,7 +183,9 @@ export default function ConnectionsClient() {
 
   useEffect(() => {
     if (loadState !== 'loaded') return
-    challengeTimerRef.current = setTimeout(() => setChallengeOpen(true), 90_000)
+    const isMobile = window.matchMedia('(pointer: coarse)').matches
+    const delay = isMobile ? 5 * 60_000 : 90_000
+    challengeTimerRef.current = setTimeout(() => setChallengeOpen(true), delay)
     return () => {
       if (challengeTimerRef.current) clearTimeout(challengeTimerRef.current)
     }
@@ -215,6 +250,130 @@ export default function ConnectionsClient() {
         paddingBottom: 'env(safe-area-inset-bottom)',
       }}
     >
+      {/* First-visit inspiration intro */}
+      <AnimatePresence>
+        {showIntro && (
+          <motion.div
+            key="intro"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, transition: { duration: 0.4 } }}
+            style={{
+              position: 'fixed',
+              inset: 0,
+              zIndex: 120,
+              background: 'linear-gradient(160deg, #0D0D1A 0%, #08080F 100%)',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '2rem',
+              paddingBottom: 'max(2rem, env(safe-area-inset-bottom))',
+              textAlign: 'center',
+            }}
+          >
+            {/* Decorative arc glyphs */}
+            <div style={{ marginBottom: 32, opacity: 0.25 }} aria-hidden="true">
+              <svg width="160" height="40" viewBox="0 0 160 40" fill="none">
+                <path d="M10 38 Q80 2 150 38" stroke="#C9A84C" strokeWidth="1" fill="none"/>
+                <path d="M30 38 Q80 10 130 38" stroke="#C9A84C" strokeWidth="0.6" fill="none"/>
+                <path d="M50 38 Q80 18 110 38" stroke="#C9A84C" strokeWidth="0.4" fill="none"/>
+              </svg>
+            </div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15, duration: 0.5 }}
+              style={{
+                fontFamily: 'var(--font-cinzel)',
+                fontSize: 'clamp(1.75rem, 6vw, 2.75rem)',
+                color: '#F5F5F0',
+                letterSpacing: '0.04em',
+                lineHeight: 1.25,
+                marginBottom: 20,
+              }}
+            >
+              One Author.<br />One Story.
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+              style={{
+                fontFamily: 'var(--font-inter)',
+                fontSize: 'clamp(0.9rem, 2.5vw, 1.05rem)',
+                color: '#C9A84C',
+                letterSpacing: '0.02em',
+                marginBottom: 16,
+                maxWidth: 340,
+              }}
+            >
+              40 writers. 1,500 years. 3 languages.<br />Yet every thread points the same direction.
+            </motion.p>
+
+            <motion.p
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.45, duration: 0.5 }}
+              style={{
+                fontFamily: 'var(--font-inter)',
+                fontSize: 13,
+                color: '#9A9A8A',
+                lineHeight: 1.7,
+                maxWidth: 380,
+                marginBottom: 40,
+              }}
+            >
+              Every arc below is a cross-reference — a place where one part of Scripture quotes,
+              alludes to, or echoes another. Together, they are a fingerprint of divine authorship.
+            </motion.p>
+
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.55 }}
+              style={{
+                fontFamily: 'var(--font-cinzel)',
+                fontSize: 9,
+                color: 'rgba(201,168,76,0.5)',
+                letterSpacing: '0.12em',
+                marginBottom: 24,
+                textTransform: 'uppercase',
+              }}
+            >
+              2 Timothy 3:16
+            </motion.p>
+
+            <motion.button
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.4 }}
+              onClick={dismissIntro}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 8,
+                background: '#C9A84C',
+                border: 'none',
+                borderRadius: 8,
+                padding: '14px 28px',
+                cursor: 'pointer',
+                fontFamily: 'var(--font-cinzel)',
+                fontSize: 13,
+                color: '#08080F',
+                letterSpacing: '0.08em',
+                minHeight: 48,
+              }}
+            >
+              Explore the web
+              <ArrowRight size={15} />
+            </motion.button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Page header */}
       <header
         style={{
@@ -254,7 +413,7 @@ export default function ConnectionsClient() {
                 lineHeight: 1.5,
               }}
             >
-              Every connection in the Bible, visualised. Hover an arc. Click to explore.
+              40 writers. 1,500 years. One story. Tap any arc to explore a connection.
             </p>
           </div>
 
@@ -391,6 +550,66 @@ export default function ConnectionsClient() {
           )}
         </AnimatePresence>
       </div>
+
+      {/* Section navigation strip — sits below the canvas in its own row */}
+      {data && (
+        <div
+          style={{
+            maxWidth: 1400,
+            margin: '0 auto',
+            borderTop: '1px solid rgba(255,255,255,0.06)',
+            borderBottom: '1px solid rgba(255,255,255,0.06)',
+            background: 'rgba(13,13,26,0.95)',
+            padding: '10px 16px',
+          }}
+        >
+          <p style={{ fontFamily: 'var(--font-cinzel)', fontSize: 8, color: 'rgba(154,154,138,0.5)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 8 }}>
+            Explore by section
+          </p>
+          <div
+            style={{
+              display: 'flex',
+              overflowX: 'auto',
+              scrollbarWidth: 'none',
+              gap: 8,
+            }}
+          >
+            {[
+              { label: 'Torah',    bookIndex: 0,  nt: false },
+              { label: 'History',  bookIndex: 5,  nt: false },
+              { label: 'Poetry',   bookIndex: 17, nt: false },
+              { label: 'Prophets', bookIndex: 22, nt: false },
+              { label: 'Gospels',  bookIndex: 39, nt: true  },
+              { label: 'Letters',  bookIndex: 44, nt: true  },
+              { label: 'Revelation', bookIndex: 65, nt: true },
+            ].map((section) => (
+              <button
+                key={section.label}
+                onClick={() => handleBookClick(section.bookIndex)}
+                style={{
+                  flexShrink: 0,
+                  background: section.nt ? 'rgba(201,168,76,0.1)' : 'rgba(255,255,255,0.06)',
+                  border: section.nt ? '1px solid rgba(201,168,76,0.3)' : '1px solid rgba(255,255,255,0.12)',
+                  borderRadius: 6,
+                  padding: '8px 14px',
+                  cursor: 'pointer',
+                  fontFamily: 'var(--font-cinzel)',
+                  fontSize: 11,
+                  color: section.nt ? '#C9A84C' : '#C8C8B8',
+                  letterSpacing: '0.06em',
+                  minHeight: 44,
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {section.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* What does this tell us — scholarly insights */}
+      <InsightsSection />
 
       {/* Accessibility: View as table toggle */}
       <div style={{ padding: '0.5rem 1rem', maxWidth: 1400, margin: '0 auto' }}>

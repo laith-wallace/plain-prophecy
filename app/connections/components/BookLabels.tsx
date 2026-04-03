@@ -12,7 +12,6 @@ export default function BookLabels({ books, chapters, onBookClick }: BookLabelsP
   if (!books || !chapters) return null
 
   const totalVerses = chapters[chapters.length - 1].verseStart + chapters[chapters.length - 1].verseCount
-  // NT divider position
   const mattBook = books[39]
   const ntX = mattBook ? (mattBook.verseStart / totalVerses) * 100 : 50
 
@@ -24,12 +23,13 @@ export default function BookLabels({ books, chapters, onBookClick }: BookLabelsP
         bottom: 0,
         left: 0,
         right: 0,
-        height: 24,
+        height: 32,
         pointerEvents: 'none',
+        /* Gradient shelf lifts labels off the arc visualization */
+        background: 'linear-gradient(to top, rgba(8,8,15,0.85) 0%, transparent 100%)',
       }}
       className="hidden sm:block"
     >
-      {/* Book name labels */}
       {books.map((book) => {
         const leftPct = (book.verseStart / totalVerses) * 100
         const widthPct = (book.totalVerses / totalVerses) * 100
@@ -42,8 +42,8 @@ export default function BookLabels({ books, chapters, onBookClick }: BookLabelsP
               position: 'absolute',
               left: `${leftPct}%`,
               width: `${widthPct}%`,
-              bottom: 2,
-              height: 20,
+              bottom: 4,
+              height: 22,
               background: 'transparent',
               border: 'none',
               cursor: 'pointer',
@@ -59,13 +59,14 @@ export default function BookLabels({ books, chapters, onBookClick }: BookLabelsP
               <span
                 style={{
                   fontFamily: 'var(--font-cinzel)',
-                  fontSize: 7,
-                  color: '#9A9A8A',
+                  fontSize: 8,
+                  color: '#C8C8B8',
                   whiteSpace: 'nowrap',
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
                   maxWidth: '100%',
                   userSelect: 'none',
+                  letterSpacing: '0.04em',
                 }}
               >
                 {book.displayAbbr}
@@ -75,28 +76,33 @@ export default function BookLabels({ books, chapters, onBookClick }: BookLabelsP
         )
       })}
 
-      {/* OT/NT divider label */}
+      {/* OT/NT divider */}
       <div
         style={{
           position: 'absolute',
           left: `${ntX}%`,
-          bottom: 26,
+          bottom: 34,
           transform: 'translateX(-50%)',
           pointerEvents: 'none',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 4,
         }}
         className="hidden md:flex"
       >
+        <div style={{ width: 20, height: 1, background: 'rgba(201,168,76,0.3)' }} />
         <span
           style={{
             fontFamily: 'var(--font-cinzel)',
             fontSize: 7,
             color: '#C9A84C',
-            letterSpacing: '0.08em',
+            letterSpacing: '0.1em',
             whiteSpace: 'nowrap',
           }}
         >
           OT · NT
         </span>
+        <div style={{ width: 20, height: 1, background: 'rgba(201,168,76,0.3)' }} />
       </div>
     </div>
   )
