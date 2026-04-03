@@ -120,18 +120,18 @@ const reformers = ["Luther", "Calvin", "Newton", "Wesley"];
 
 const paths = [
   {
+    label: "Learn by doing",
+    desc: "Swipe through 8 Daniel prophecies — commit to an answer before the reveal, then see how history and Scripture converge on Christ.",
+    href: "/games",
+    cta: "Start Games →",
+    accent: "var(--sda-accent)",
+  },
+  {
     label: "I'm new to this",
     desc: "Start with the side-by-side timeline — see both prophetic frameworks laid out from Scripture.",
     href: "/compare#timelines",
     cta: "View Timelines →",
     accent: "var(--sda-primary)",
-  },
-  {
-    label: "Learn the prophecy frameworks",
-    desc: "See how different people understand prophecy and what is the most acurate way to understand it biblically.",
-    href: "/compare#scoring",
-    cta: "See Scoring →",
-    accent: "var(--futurist-primary)",
   },
   {
     label: "Study the foundations",
@@ -141,11 +141,11 @@ const paths = [
     accent: "#5c3d11",
   },
   {
-    label: "Learn by doing",
-    desc: "Swipe through 8 Daniel prophecies — commit to an answer before the reveal, then see how history and Scripture converge on Christ.",
-    href: "/games",
-    cta: "Start Games →",
-    accent: "var(--sda-accent)",
+    label: "Compare the frameworks",
+    desc: "Futurism vs Historicism — see how each reads Daniel and Revelation, and which one actually fits the text.",
+    href: "/compare#scoring",
+    cta: "See the Comparison →",
+    accent: "var(--futurist-primary)",
   },
 ];
 
@@ -180,20 +180,20 @@ export default function HomePage() {
 
         {/* Subheadline - One thought per line rhythm */}
         <p className="hero-sub" data-hero-fade="900">
-          Daniel and Revelation — decoded.
+          Daniel and Revelation — made clear.
           <br className="hero-sub-br" />
-          Rigorously examined.
+          Confirmed by history.
           <br className="hero-sub-br" />
           Christ at the centre.
         </p>
 
         {/* CTAs */}
         <div className="hero-ctas" data-hero-fade="1100">
-          <Link href="/studies" className="btn-primary">
-            Explore the Studies →
+          <Link href="/games" className="btn-primary">
+            Try the Games →
           </Link>
-          <Link href="/about" className="btn-ghost">
-            Our Mission
+          <Link href="/studies" className="btn-ghost">
+            Explore the Studies
           </Link>
         </div>
 
@@ -328,12 +328,13 @@ export default function HomePage() {
             The Reformation Consensus
           </div>
           <h2 className="reformers-title">
-            Luther, Calvin, Newton, and Wesley All Agreed
+            The interpretation that started the Reformation — then got buried.
           </h2>
           <p className="reformers-body">
-            The Historicist reading of Daniel and Revelation was the dominant
-            Protestant position for 300 years — a legacy of rigorous scholarship
-            and Christ-centred clarity.
+            For 300 years, the historicist reading of Daniel and Revelation was
+            the Protestant consensus. Then, in the 1800s, a different framework
+            quietly took over. Most churches today teach the newer one —
+            without knowing why it changed, or who changed it.
           </p>
           <Link href="/compare" className="btn-accent">
             See the Full Comparison →
