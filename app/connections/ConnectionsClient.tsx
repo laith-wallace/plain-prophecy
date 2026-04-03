@@ -13,6 +13,7 @@ import GuidedPathsDrawer from './components/GuidedPathsDrawer'
 import ChallengeModal from './components/ChallengeModal'
 import ShareCard from './components/ShareCard'
 import InsightsSection from './components/InsightsSection'
+import ConnectionsNav from './components/ConnectionsNav'
 
 import { CHRIST_THREAD } from '@/data/christ-thread'
 
@@ -374,11 +375,14 @@ export default function ConnectionsClient() {
         )}
       </AnimatePresence>
 
-      {/* Page header */}
+      {/* Fixed top nav — home link + auth state */}
+      <ConnectionsNav />
+
+      {/* Page header — padded to clear the fixed nav (~52px) */}
       <header
         style={{
-          padding: 'env(safe-area-inset-top, 0) 1rem 0',
-          paddingTop: 'max(env(safe-area-inset-top, 0px), 16px)',
+          padding: '0 1rem 0',
+          paddingTop: 'max(calc(env(safe-area-inset-top, 0px) + 52px), 64px)',
         }}
       >
         <div

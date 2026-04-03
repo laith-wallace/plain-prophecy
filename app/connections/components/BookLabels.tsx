@@ -35,7 +35,7 @@ export default function BookLabels({ books, chapters, onBookClick }: BookLabelsP
         const widthPct = (book.totalVerses / totalVerses) * 100
         return (
           <button
-            key={book.index}
+            key={book.abbr}
             onClick={() => onBookClick(book.index)}
             title={book.name}
             style={{
