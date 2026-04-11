@@ -753,6 +753,16 @@ function GamePicker({ onSelect }: { onSelect: (mode: "daniel") => void }) {
           </div>
           <div className="game-picker-card-meta">28 verses · Daniel · Revelation · Isaiah</div>
         </Link>
+
+        <Link href="/games/word-quest" className="game-picker-card game-picker-card--wordquest">
+          <div className="game-picker-card-symbol">🔤</div>
+          <div className="game-picker-card-label">Vocabulary · 3 Levels</div>
+          <div className="game-picker-card-title">Word Quest</div>
+          <div className="game-picker-card-desc">
+            Match the word to its meaning. Every correct match reveals the scripture behind it — from grace to resurrection.
+          </div>
+          <div className="game-picker-card-meta">15 words · Explorer → Champion</div>
+        </Link>
       </div>
 
       <div className="game-picker-footer">
