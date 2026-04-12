@@ -73,6 +73,28 @@ export default function GamesPage() {
         >
           Verse Memory
         </Link>
+
+        {/* Link: Word Quest */}
+        <Link
+          href="/games/word-quest"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 6,
+            padding: '12px 14px',
+            fontFamily: 'var(--font-cinzel)',
+            fontSize: 11,
+            color: '#9A9A8A',
+            letterSpacing: '0.06em',
+            borderBottom: '2px solid transparent',
+            whiteSpace: 'nowrap',
+            textDecoration: 'none',
+            flexShrink: 0,
+            transition: 'color 0.15s',
+          }}
+        >
+          Word Quest
+        </Link>
       </nav>
 
       <ProphetClient />
