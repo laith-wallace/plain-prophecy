@@ -8,18 +8,21 @@ import type { PlayerState } from "./state";
 const DEBOUNCE_MS = 3000;
 
 /**
- * Syncs PlayerState to Convex for authenticated users.
- * - On mount: loads server state and merges with local (take max/union)
- * - On state change: debounced push to server
+ * Inner hook that actually calls useQuery/useMutation.
+ * Separated so the outer wrapper can catch errors.
  */
-export function useConvexSync(
+function useConvexSyncInner(
   state: PlayerState,
   setState: (updater: (prev: PlayerState) => PlayerState) => void,
 ) {
   const { isAuthenticated } = useConvexAuth();
   const syncMutation = useMutation(api.gameState.syncGameState);
+  // Skip query entirely for unauthenticated users
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const serverState = (useQuery as any)(api.gameState.loadGameState, {}) as ServerGameState | null | undefined;
+  const serverState = (useQuery as any)(
+    api.gameState.loadGameState,
+    isAuthenticated ? {} : "skip",
+  ) as ServerGameState | null | undefined;
 
   const lastSyncHash = useRef("");
   const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -93,6 +96,16 @@ export function useConvexSync(
       if (debounceTimer.current) clearTimeout(debounceTimer.current);
     };
   }, [pushToServer, isAuthenticated]);
+}
+
+/**
+ * Public hook — delegates to the inner implementation.
+ */
+export function useConvexSync(
+  state: PlayerState,
+  setState: (updater: (prev: PlayerState) => PlayerState) => void,
+) {
+  useConvexSyncInner(state, setState);
 }
 
 // ── Merge logic ─────────────────────────────────────────────────────────────
