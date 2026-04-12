@@ -10,6 +10,7 @@ import {
   useImperativeHandle,
 } from 'react'
 import { gospelCards, type GospelCard } from '@/data/gospel-cards'
+import { usePlayer } from '@/lib/PlayerContext'
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
@@ -413,6 +414,7 @@ function GospelCompletionScreen({ onRestart, totalCards }: { onRestart: () => vo
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
 export default function GospelClient() {
+  const { state, awardXP, updateGameProgress, playSound } = usePlayer()
   const [currentIndex, setCurrentIndex] = useState(0)
   const [completed,    setCompleted]    = useState<string[]>([])
   const [revealCard,   setRevealCard]   = useState<GospelCard | null>(null)
@@ -420,15 +422,47 @@ export default function GospelClient() {
   const [hintsVisible, setHintsVisible] = useState(true)
   const [cardKey,      setCardKey]      = useState(0)
   const swipeCardRef = useRef<GospelCardHandle>(null)
+  const completionAwarded = useRef(false)
+
+  // Restore progress from PlayerContext on mount
+  useEffect(() => {
+    const saved = state.games.gospel
+    if (saved.cardsRevealed.length > 0) {
+      setCompleted(saved.cardsRevealed)
+      setCurrentIndex(saved.cardsRevealed.length)
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const done          = currentIndex >= gospelCards.length
   const currentCard   = gospelCards[currentIndex]
   const nextCard      = gospelCards[currentIndex + 1]
   const hideHints     = useCallback(() => setHintsVisible(false), [])
 
+  // Award completion XP once
+  useEffect(() => {
+    if (done && !completionAwarded.current) {
+      completionAwarded.current = true
+      awardXP('gospel', 50, 'Gospel deck complete')
+      playSound('completion')
+      updateGameProgress('gospel', (prev) => ({
+        ...prev,
+        completions: prev.completions + 1,
+      }))
+    }
+  }, [done, awardXP, playSound, updateGameProgress])
+
   const handleSwipeCommit = useCallback(() => {
     const card = gospelCards[currentIndex]
     if (!card) return
+
+    // Award XP and track progress
+    awardXP('gospel', 5, card.title)
+    playSound('swipe-commit')
+    updateGameProgress('gospel', (prev) => ({
+      ...prev,
+      cardsRevealed: [...new Set([...prev.cardsRevealed, card.id])],
+    }))
+
     setCompleted(prev => prev.includes(card.id) ? prev : [...prev, card.id])
     setTimeout(() => {
       setRevealCard(card)
@@ -436,7 +470,7 @@ export default function GospelClient() {
       setCardKey(k => k + 1)
       setCurrentIndex(i => i + 1)
     }, 60)
-  }, [currentIndex])
+  }, [currentIndex, awardXP, playSound, updateGameProgress])
 
   const handleReveal = useCallback(() => {
     if (!currentCard) return
@@ -462,6 +496,7 @@ export default function GospelClient() {
   }, [revealCard])
 
   const handleRestart = useCallback(() => {
+    completionAwarded.current = false
     setCurrentIndex(0)
     setCompleted([])
     setRevealCard(null)
@@ -477,6 +512,12 @@ export default function GospelClient() {
         hideHints()
         const card = gospelCards[currentIndex]
         if (!card) return
+        awardXP('gospel', 5, card.title)
+        playSound('swipe-commit')
+        updateGameProgress('gospel', (prev) => ({
+          ...prev,
+          cardsRevealed: [...new Set([...prev.cardsRevealed, card.id])],
+        }))
         setCompleted(prev => prev.includes(card.id) ? prev : [...prev, card.id])
         setTimeout(() => {
           setRevealCard(card)
@@ -491,7 +532,7 @@ export default function GospelClient() {
     }
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
-  }, [currentIndex, revealOpen, done, hideHints, handleReveal])
+  }, [currentIndex, revealOpen, done, hideHints, handleReveal, awardXP, playSound, updateGameProgress])
 
   if (done) {
     return <GospelCompletionScreen onRestart={handleRestart} totalCards={gospelCards.length} />

@@ -78,8 +78,9 @@ function freshCard(id: string): CardProgress {
   };
 }
 
-// ── localStorage persistence ───────────────────────────────────────────────
+// ── localStorage persistence (deprecated — use PlayerContext) ──────────────
 
+/** @deprecated Use PlayerContext state.games.verseMemory.cardProgress instead */
 export function loadProgress(): Record<string, CardProgress> {
   if (typeof window === "undefined") return {};
   try {
@@ -91,6 +92,7 @@ export function loadProgress(): Record<string, CardProgress> {
   }
 }
 
+/** @deprecated Use PlayerContext updateGameProgress("verseMemory", ...) instead */
 export function saveProgress(progress: Record<string, CardProgress>): void {
   if (typeof window === "undefined") return;
   try {

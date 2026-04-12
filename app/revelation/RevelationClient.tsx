@@ -10,6 +10,10 @@ import {
   useImperativeHandle,
 } from 'react'
 import { revelationCards, type RevelationCard } from '@/data/revelation-cards'
+import { usePlayer } from '@/lib/PlayerContext'
+import { ProphecyTimeline, REVELATION_ACTS, getActForIndex, isActBoundary } from '@/components/games/ProphecyTimeline'
+import { ActInterstitial } from '@/components/games/ActInterstitial'
+import { ParticleBurst } from '@/components/games/ParticleBurst'
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
@@ -64,12 +68,9 @@ function RevelationRevealPanel({
         onClose()
       } else {
         if (panelRef.current) {
-          panelRef.current.style.transition =
-            'transform 0.25s cubic-bezier(0.32, 0.72, 0, 1)'
+          panelRef.current.style.transition = 'transform 0.25s cubic-bezier(0.32, 0.72, 0, 1)'
           panelRef.current.style.transform = ''
-          setTimeout(() => {
-            if (panelRef.current) panelRef.current.style.transition = ''
-          }, 260)
+          setTimeout(() => { if (panelRef.current) panelRef.current.style.transition = '' }, 260)
         }
       }
     },
@@ -77,19 +78,14 @@ function RevelationRevealPanel({
   )
 
   useEffect(() => {
-    if (!isOpen && panelRef.current) {
-      panelRef.current.style.transform = ''
-    }
+    if (!isOpen && panelRef.current) panelRef.current.style.transform = ''
   }, [isOpen])
 
   if (!card) return null
 
   return (
     <>
-      <div
-        className={`reveal-backdrop ${isOpen ? 'open' : ''}`}
-        onClick={onClose}
-      />
+      <div className={`reveal-backdrop ${isOpen ? 'open' : ''}`} onClick={onClose} />
       <div
         ref={panelRef}
         className={`reveal-panel ${isOpen ? 'open' : ''}`}
@@ -104,41 +100,31 @@ function RevelationRevealPanel({
           onPointerUp={onHandlePointerUp}
           onPointerCancel={onHandlePointerUp}
         />
-
         <div className="reveal-panel-header">
-          <div className="reveal-card-label">
-            Chapter {card.number} of {totalCards}
-          </div>
+          <div className="reveal-card-label">Chapter {card.number} of {totalCards}</div>
           <div className="reveal-card-title">{card.title}</div>
           <div className="reveal-card-scripture">{card.scripture}</div>
         </div>
-
         <div className="reveal-scrollable">
           <div className="reveal-section">
             <div className="reveal-label">The Vision</div>
             <p>{card.reveal.what}</p>
           </div>
-
           <div className="reveal-section">
             <div className="reveal-label">Prophetic significance</div>
             <p>{card.reveal.prophecy}</p>
           </div>
-
           <div className="reveal-christ-anchor">
             <div className="reveal-label">History confirms</div>
             <p>{card.reveal.history}</p>
           </div>
-
           <div className="reveal-love-section">
             <div className="reveal-love-eyebrow">God&rsquo;s love in this</div>
             <p>{card.reveal.love}</p>
           </div>
         </div>
-
         <div className="reveal-actions">
-          <Link href={card.href} className="reveal-study-link">
-            Read full study →
-          </Link>
+          <Link href={card.href} className="reveal-study-link">Read full study →</Link>
           <button className="reveal-next-btn" onClick={onNext}>
             {isLast ? 'Finish →' : 'Next chapter →'}
           </button>
@@ -162,19 +148,20 @@ const RevelationSwipeCard = forwardRef<
     onSwipeCommit: () => void
     onReveal: () => void
     onHintUsed: () => void
+    onThresholdCross?: () => void
+    onFlyOff?: () => void
     isFirstCard?: boolean
     totalCards: number
+    actColor: string
   }
 >(function RevelationSwipeCard(
-  { card, isNext, onSwipeCommit, onReveal, onHintUsed, isFirstCard, totalCards },
+  { card, isNext, onSwipeCommit, onReveal, onHintUsed, onThresholdCross, onFlyOff, isFirstCard, totalCards, actColor },
   ref
 ) {
   const cardRef      = useRef<HTMLDivElement>(null)
   const overlayRef   = useRef<HTMLDivElement>(null)
   const overlayLabel = useRef<HTMLDivElement>(null)
-  const drag = useRef({
-    active: false, startX: 0, currentX: 0, startTime: 0, pastThreshold: false,
-  })
+  const drag = useRef({ active: false, startX: 0, currentX: 0, startTime: 0, pastThreshold: false })
   const committed  = useRef(false)
   const [promoting, setPromoting] = useState(false)
 
@@ -220,23 +207,23 @@ const RevelationSwipeCard = forwardRef<
       o.style.background     = flying === 'right' ? 'rgba(26,109,60,0.75)' : 'rgba(192,57,43,0.65)'
       l.textContent          = flying === 'right' ? '✓ Fulfilled' : '? Not sure'
       l.style.transform      = `rotate(${flying === 'right' ? '-20deg' : '20deg'})`
+      onFlyOff?.()
       return
     }
 
-    const absDx    = Math.abs(dx)
-    const peakDx   = THRESHOLD * PEAK_FRACTION
-    const rotate   = Math.sign(dx) * Math.min(absDx / peakDx, 1) * MAX_ROTATE
-    const scale    = 1 - Math.min(absDx / THRESHOLD, 1) * 0.04
+    const absDx = Math.abs(dx)
+    const peakDx = THRESHOLD * PEAK_FRACTION
+    const rotate = Math.sign(dx) * Math.min(absDx / peakDx, 1) * MAX_ROTATE
+    const scale  = 1 - Math.min(absDx / THRESHOLD, 1) * 0.04
 
     c.style.transition = 'none'
     c.style.transform  = `translateX(${dx}px) rotate(${rotate}deg) scale(${scale})`
-
-    const norm         = dx / THRESHOLD
-    o.style.opacity    = String(Math.min(Math.abs(norm) * 1.8, 0.88))
+    o.style.opacity    = String(Math.min(Math.abs(dx / THRESHOLD) * 1.8, 0.88))
 
     const past = Math.abs(dx) > window.innerWidth * 0.28
     if (past && !drag.current.pastThreshold) {
       navigator.vibrate?.(8)
+      onThresholdCross?.()
       drag.current.pastThreshold = true
     } else if (!past) {
       drag.current.pastThreshold = false
@@ -253,22 +240,22 @@ const RevelationSwipeCard = forwardRef<
       l.textContent          = '? Not sure'
       l.style.transform      = 'rotate(20deg)'
     }
-  }, [])
+  }, [onThresholdCross, onFlyOff])
 
   const snapBack = useCallback((releaseDx: number) => {
     const c = cardRef.current
     const o = overlayRef.current
     if (!c || !o) return
-    const THRESHOLD     = window.innerWidth * THRESHOLD_FRAC
-    const frac          = Math.min(Math.abs(releaseDx) / THRESHOLD, 1)
-    const releaseRotate = Math.sign(releaseDx) * frac * MAX_ROTATE
-    const overshootX    = -Math.sign(releaseDx) * frac * 14
-    const overshootR    = -Math.sign(releaseDx) * frac * 2.5
+    const THRESHOLD = window.innerWidth * THRESHOLD_FRAC
+    const frac      = Math.min(Math.abs(releaseDx) / THRESHOLD, 1)
+    const rr        = Math.sign(releaseDx) * frac * MAX_ROTATE
+    const ox        = -Math.sign(releaseDx) * frac * 14
+    const or2       = -Math.sign(releaseDx) * frac * 2.5
 
     c.animate(
       [
-        { transform: `translateX(${releaseDx}px) rotate(${releaseRotate}deg) scale(${1 - frac * 0.04})` },
-        { transform: `translateX(${overshootX}px) rotate(${overshootR}deg) scale(1.008)`, offset: 0.65 },
+        { transform: `translateX(${releaseDx}px) rotate(${rr}deg) scale(${1 - frac * 0.04})` },
+        { transform: `translateX(${ox}px) rotate(${or2}deg) scale(1.008)`, offset: 0.65 },
         { transform: 'translateX(0) rotate(0deg) scale(1)' },
       ],
       { duration: 360 + frac * 220, easing: 'cubic-bezier(0.34,1.56,0.64,1)', fill: 'forwards' }
@@ -276,9 +263,7 @@ const RevelationSwipeCard = forwardRef<
     o.style.transition = 'opacity 0.22s ease-out'
     o.style.opacity    = '0'
     drag.current.pastThreshold = false
-    setTimeout(() => {
-      if (c) { c.style.transform = ''; c.getAnimations().forEach(a => a.cancel()) }
-    }, 640)
+    setTimeout(() => { if (c) { c.style.transform = ''; c.getAnimations().forEach(a => a.cancel()) } }, 640)
   }, [])
 
   const commitSwipe = useCallback(
@@ -328,10 +313,7 @@ const RevelationSwipeCard = forwardRef<
 
   useEffect(() => {
     if (!isFirstCard || isNext) return
-    const t = setTimeout(() => {
-      applyTransform(32)
-      setTimeout(resetTransform, 420)
-    }, 900)
+    const t = setTimeout(() => { applyTransform(32); setTimeout(resetTransform, 420) }, 900)
     return () => clearTimeout(t)
   }, [isFirstCard, isNext, applyTransform, resetTransform])
 
@@ -354,16 +336,13 @@ const RevelationSwipeCard = forwardRef<
       role="button"
       tabIndex={0}
       aria-label={`Chapter ${card.number}: ${card.title}. Tap to reveal.`}
+      style={{ borderColor: `${actColor}22` }}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       onPointerCancel={handlePointerUp}
-      onKeyDown={e => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onReveal() }
-      }}
-      onClick={() => {
-        if (Math.abs(drag.current.currentX - drag.current.startX) < 8) onReveal()
-      }}
+      onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onReveal() } }}
+      onClick={() => { if (Math.abs(drag.current.currentX - drag.current.startX) < 8) onReveal() }}
     >
       <div ref={overlayRef} className="swipe-overlay" style={{ opacity: 0 }}>
         <div ref={overlayLabel} className="overlay-label" />
@@ -384,9 +363,11 @@ const RevelationSwipeCard = forwardRef<
 function RevelationCompletionScreen({
   onRestart,
   totalCards,
+  sessionXP,
 }: {
   onRestart: () => void
   totalCards: number
+  sessionXP: number
 }) {
   return (
     <div className="completion-screen">
@@ -396,18 +377,15 @@ function RevelationCompletionScreen({
         One story.{' '}
         <span>One centre. One love.</span>
       </h1>
+      <div className="completion-xp">+{sessionXP} XP earned</div>
       <p className="completion-text">
         From the risen Christ in chapter one to &ldquo;Come, Lord Jesus&rdquo; in chapter
         twenty-two — every vision, every seal, every trumpet points to the same
         Lamb who was slain and is now worthy to open every seal.
       </p>
       <div className="completion-actions">
-        <button className="completion-restart-btn" onClick={onRestart}>
-          Start again →
-        </button>
-        <Link href="/studies/map" className="completion-map-btn">
-          🕸 View full map
-        </Link>
+        <button className="completion-restart-btn" onClick={onRestart}>Start again →</button>
+        <Link href="/studies/map" className="completion-map-btn">🕸 View full map</Link>
         <Link
           href="/studies"
           className="completion-restart-btn"
@@ -420,39 +398,142 @@ function RevelationCompletionScreen({
   )
 }
 
+// ─── Resume Prompt ───────────────────────────────────────────────────────────
+
+function ResumePrompt({
+  chapterNumber,
+  onResume,
+  onRestart,
+}: {
+  chapterNumber: number
+  onResume: () => void
+  onRestart: () => void
+}) {
+  return (
+    <div className="act-interstitial">
+      <div className="act-interstitial-eyebrow" style={{ color: '#7A9ABB' }}>
+        Welcome back
+      </div>
+      <h2 className="act-interstitial-title">
+        Resume from Chapter {chapterNumber}?
+      </h2>
+      <div className="act-interstitial-divider" style={{ background: '#7A9ABB' }} />
+      <button
+        className="act-interstitial-btn"
+        onClick={onResume}
+        style={{ borderColor: '#7A9ABB', color: '#7A9ABB' }}
+        autoFocus
+      >
+        Continue →
+      </button>
+      <button
+        className="act-interstitial-btn"
+        onClick={onRestart}
+        style={{ borderColor: 'rgba(255,255,255,0.15)', color: 'rgba(255,255,255,0.4)', marginTop: '0.5rem' }}
+      >
+        Start from beginning
+      </button>
+    </div>
+  )
+}
+
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
 export default function RevelationClient() {
+  const { state, awardXP, updateGameProgress, playSound } = usePlayer()
   const [currentIndex, setCurrentIndex] = useState(0)
   const [completed,    setCompleted]    = useState<string[]>([])
   const [revealCard,   setRevealCard]   = useState<RevelationCard | null>(null)
   const [revealOpen,   setRevealOpen]   = useState(false)
   const [hintsVisible, setHintsVisible] = useState(true)
   const [cardKey,      setCardKey]      = useState(0)
+  const [sessionXP,    setSessionXP]    = useState(0)
+  const [showActInterstitial, setShowActInterstitial] = useState(false)
+  const [pendingAct, setPendingAct] = useState<typeof REVELATION_ACTS[number] | null>(null)
+  const [actXP, setActXP] = useState(0)
+  const [showResumePrompt, setShowResumePrompt] = useState(false)
+  const [particleBurst, setParticleBurst] = useState<{ key: number } | null>(null)
   const swipeCardRef = useRef<RevelationCardHandle>(null)
+  const completionAwarded = useRef(false)
+
+  // Restore progress and show resume prompt if applicable
+  useEffect(() => {
+    const saved = state.games.revelation
+    if (saved.lastCardIndex > 0 && saved.lastCardIndex < revelationCards.length) {
+      setCompleted(saved.cardsRevealed)
+      setCurrentIndex(saved.lastCardIndex)
+      setShowResumePrompt(true)
+    } else if (saved.cardsRevealed.length > 0) {
+      setCompleted(saved.cardsRevealed)
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const done        = currentIndex >= revelationCards.length
   const currentCard = revelationCards[currentIndex]
   const nextCard    = revelationCards[currentIndex + 1]
   const hideHints   = useCallback(() => setHintsVisible(false), [])
+  const currentAct  = getActForIndex(currentIndex)
+
+  // Award completion XP once
+  useEffect(() => {
+    if (done && !completionAwarded.current) {
+      completionAwarded.current = true
+      awardXP('revelation', 80, 'Revelation complete')
+      setSessionXP(x => x + 80)
+      playSound('completion')
+      updateGameProgress('revelation', (prev) => ({
+        ...prev,
+        completions: prev.completions + 1,
+      }))
+    }
+  }, [done, awardXP, playSound, updateGameProgress])
+
+  const advanceCard = useCallback((nextIdx: number) => {
+    // Check if crossing an act boundary
+    if (nextIdx < revelationCards.length && isActBoundary(nextIdx - 1, nextIdx)) {
+      const completedAct = getActForIndex(nextIdx - 1)
+      // Award act checkpoint XP
+      const actBonus = 20
+      awardXP('revelation', actBonus, `${completedAct.label} complete`)
+      setSessionXP(x => x + actBonus)
+      setPendingAct(completedAct)
+      setActXP(actBonus)
+      setShowActInterstitial(true)
+      playSound('completion')
+    }
+  }, [awardXP, playSound])
 
   const handleSwipeCommit = useCallback(() => {
     const card = revelationCards[currentIndex]
     if (!card) return
+
+    awardXP('revelation', 5, card.title)
+    setSessionXP(x => x + 5)
+    playSound('swipe-commit')
+    updateGameProgress('revelation', (prev) => ({
+      ...prev,
+      cardsRevealed: [...new Set([...prev.cardsRevealed, card.id])],
+      lastCardIndex: currentIndex + 1,
+    }))
+
     setCompleted(prev => prev.includes(card.id) ? prev : [...prev, card.id])
     setTimeout(() => {
       setRevealCard(card)
       setRevealOpen(true)
+      playSound('reveal-open')
       setCardKey(k => k + 1)
-      setCurrentIndex(i => i + 1)
+      const nextIdx = currentIndex + 1
+      setCurrentIndex(nextIdx)
+      advanceCard(nextIdx)
     }, 60)
-  }, [currentIndex])
+  }, [currentIndex, awardXP, playSound, updateGameProgress, advanceCard])
 
   const handleReveal = useCallback(() => {
     if (!currentCard) return
     setRevealCard(currentCard)
     setRevealOpen(true)
-  }, [currentCard])
+    playSound('reveal-open')
+  }, [currentCard, playSound])
 
   const handleRevealClose = useCallback(() => setRevealOpen(false), [])
 
@@ -465,35 +546,46 @@ export default function RevelationClient() {
     setCurrentIndex(i => {
       if (revealCard && revelationCards[i]?.id === revealCard.id) {
         setCardKey(k => k + 1)
-        return i + 1
+        const nextIdx = i + 1
+        advanceCard(nextIdx)
+        return nextIdx
       }
       return i
     })
-  }, [revealCard])
+  }, [revealCard, advanceCard])
 
   const handleRestart = useCallback(() => {
+    completionAwarded.current = false
     setCurrentIndex(0)
     setCompleted([])
     setRevealCard(null)
     setRevealOpen(false)
     setHintsVisible(true)
     setCardKey(k => k + 1)
-  }, [])
+    setSessionXP(0)
+    setShowActInterstitial(false)
+    setPendingAct(null)
+    updateGameProgress('revelation', (prev) => ({
+      ...prev,
+      lastCardIndex: 0,
+      cardsRevealed: [],
+    }))
+  }, [updateGameProgress])
 
+  const handleThresholdCross = useCallback(() => playSound('swipe-threshold'), [playSound])
+  const handleFlyOff = useCallback(() => {
+    playSound('card-flyoff')
+    setParticleBurst({ key: Date.now() })
+  }, [playSound])
+
+  // Keyboard controls
   useEffect(() => {
+    if (showActInterstitial || showResumePrompt) return
     const handler = (e: KeyboardEvent) => {
       if (revealOpen || done) return
       if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
         hideHints()
-        const card = revelationCards[currentIndex]
-        if (!card) return
-        setCompleted(prev => prev.includes(card.id) ? prev : [...prev, card.id])
-        setTimeout(() => {
-          setRevealCard(card)
-          setRevealOpen(true)
-          setCardKey(k => k + 1)
-          setCurrentIndex(i => i + 1)
-        }, 60)
+        swipeCardRef.current?.triggerSwipe(e.key === 'ArrowRight' ? 'right' : 'left')
       } else if (e.key === ' ') {
         e.preventDefault()
         handleReveal()
@@ -501,40 +593,79 @@ export default function RevelationClient() {
     }
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
-  }, [currentIndex, revealOpen, done, hideHints, handleReveal])
+  }, [revealOpen, done, hideHints, handleReveal, showActInterstitial, showResumePrompt])
 
+  // ── Resume Prompt ───────────────────────────────────────────────────────
+  if (showResumePrompt) {
+    const resumeChapter = revelationCards[currentIndex]?.number ?? 1
+    return (
+      <div className="prophet-layout">
+        <header className="prophet-header">
+          <Link href="/games" className="prophet-header-brand">Plain<span>Prophecy</span></Link>
+          <div className="prophet-progress">Revelation</div>
+        </header>
+        <main className="prophet-stage" style={{ justifyContent: 'center' }}>
+          <ResumePrompt
+            chapterNumber={resumeChapter}
+            onResume={() => setShowResumePrompt(false)}
+            onRestart={() => { handleRestart(); setShowResumePrompt(false) }}
+          />
+        </main>
+      </div>
+    )
+  }
+
+  // ── Act Interstitial ───────────────────────────────────────────────────
+  if (showActInterstitial && pendingAct) {
+    const actIdx = REVELATION_ACTS.indexOf(pendingAct)
+    return (
+      <div className="prophet-layout">
+        <header className="prophet-header">
+          <Link href="/games" className="prophet-header-brand">Plain<span>Prophecy</span></Link>
+          <div className="prophet-progress">Revelation</div>
+        </header>
+        <main className="prophet-stage" style={{ justifyContent: 'center' }}>
+          <ActInterstitial
+            actLabel={pendingAct.label}
+            actColor={pendingAct.color}
+            actNumber={actIdx + 1}
+            totalActs={REVELATION_ACTS.length}
+            xpEarned={actXP}
+            onContinue={() => { setShowActInterstitial(false); setPendingAct(null); setActXP(0) }}
+          />
+        </main>
+      </div>
+    )
+  }
+
+  // ── Completion ──────────────────────────────────────────────────────────
   if (done) {
     return (
       <RevelationCompletionScreen
         onRestart={handleRestart}
         totalCards={revelationCards.length}
+        sessionXP={sessionXP}
       />
     )
   }
 
+  // ── Playing ─────────────────────────────────────────────────────────────
   return (
     <div className="prophet-layout">
       <header className="prophet-header">
-        <Link href="/" className="prophet-header-brand">
-          Plain<span>Prophecy</span>
-        </Link>
-        <div className="prophet-progress">
+        <Link href="/games" className="prophet-header-brand">Plain<span>Prophecy</span></Link>
+        <div className="prophet-progress" style={{ color: currentAct.color }}>
           {currentIndex + 1} / {revelationCards.length}
         </div>
-        <Link href="/games" className="prophet-map-btn">
-          ← Games
-        </Link>
+        <Link href="/games" className="prophet-map-btn">← Games</Link>
       </header>
 
-      <div className="prophet-progress-bar-track">
-        <div
-          className="prophet-progress-bar-fill"
-          style={{
-            width: `${(completed.length / revelationCards.length) * 100}%`,
-            background: '#7A9ABB',
-          }}
-        />
-      </div>
+      {/* Prophecy timeline replaces simple progress bar */}
+      <ProphecyTimeline
+        cards={revelationCards}
+        currentIndex={currentIndex}
+        completed={completed}
+      />
 
       <main className="prophet-stage">
         <div
@@ -542,16 +673,17 @@ export default function RevelationClient() {
             textAlign: 'center',
             marginBottom: '1.25rem',
             fontFamily: 'var(--font-ibm-plex-mono)',
-            fontSize: '0.65rem',
+            fontSize: '0.6rem',
             letterSpacing: '0.15em',
             textTransform: 'uppercase',
-            opacity: 0.4,
+            color: currentAct.color,
+            opacity: 0.7,
           }}
         >
-          Swipe or tap · Book of Revelation
+          {currentAct.label}
         </div>
 
-        <div className="card-stack">
+        <div className="card-stack" style={{ position: 'relative' }}>
           {nextCard && (
             <RevelationSwipeCard
               key={`next-${nextCard.id}`}
@@ -561,6 +693,7 @@ export default function RevelationClient() {
               onReveal={() => {}}
               onHintUsed={() => {}}
               totalCards={revelationCards.length}
+              actColor={getActForIndex(currentIndex + 1).color}
             />
           )}
           {currentCard && (
@@ -572,8 +705,21 @@ export default function RevelationClient() {
               onSwipeCommit={handleSwipeCommit}
               onReveal={handleReveal}
               onHintUsed={hideHints}
+              onThresholdCross={handleThresholdCross}
+              onFlyOff={handleFlyOff}
               isFirstCard={currentIndex === 0 && cardKey === 0}
               totalCards={revelationCards.length}
+              actColor={currentAct.color}
+            />
+          )}
+          {particleBurst && (
+            <ParticleBurst
+              key={particleBurst.key}
+              x={180}
+              y={240}
+              count={14}
+              color={currentAct.color}
+              onDone={() => setParticleBurst(null)}
             />
           )}
         </div>
@@ -590,28 +736,14 @@ export default function RevelationClient() {
         </div>
 
         <div className="swipe-action-btns">
-          <button
-            className="swipe-action-btn swipe-action-btn--left"
-            onClick={() => { hideHints(); swipeCardRef.current?.triggerSwipe('left') }}
-            aria-label="Not sure"
-          >✕</button>
-          <button
-            className="swipe-action-btn swipe-action-btn--reveal"
-            onClick={handleReveal}
-            aria-label="Reveal chapter details"
-          >?</button>
-          <button
-            className="swipe-action-btn swipe-action-btn--right"
-            onClick={() => { hideHints(); swipeCardRef.current?.triggerSwipe('right') }}
-            aria-label="Fulfilled"
-          >✓</button>
+          <button className="swipe-action-btn swipe-action-btn--left" onClick={() => { hideHints(); swipeCardRef.current?.triggerSwipe('left') }} aria-label="Not sure">✕</button>
+          <button className="swipe-action-btn swipe-action-btn--reveal" onClick={handleReveal} aria-label="Reveal chapter details">?</button>
+          <button className="swipe-action-btn swipe-action-btn--right" onClick={() => { hideHints(); swipeCardRef.current?.triggerSwipe('right') }} aria-label="Fulfilled">✓</button>
         </div>
       </main>
 
       <footer className="prophet-footer">
-        <div className="prophet-footer-text">
-          Tap to open · Swipe to move · Space to reveal
-        </div>
+        <div className="prophet-footer-text">Tap to open · Swipe to move · Space to reveal</div>
       </footer>
 
       <RevelationRevealPanel

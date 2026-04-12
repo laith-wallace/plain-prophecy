@@ -10,6 +10,8 @@ import Image from "next/image";
 import { Lock, Search, User as UserIcon } from "lucide-react";
 import { motion } from "framer-motion";
 import { LESSON_CARD_IMAGES } from "@/data/lessonCardImages";
+import { RANK_ICONS, RANK_THRESHOLDS, type PlayerRank } from "@/lib/player/state";
+import { TROPHY_DEFS } from "@/lib/player/trophies";
 import './profile.css';
 
 // ---- Types ----
@@ -185,6 +187,7 @@ export default function ProfilePage() {
   const lastLesson = useQuery(api.profile.getLastLesson);
   const progress = useQuery(api.profile.getProgress);
   const completionMap = useQuery(api.profile.getStudyCompletionMap);
+  const fullProfile = useQuery(api.profileStats.getFullProfile);
 
   // ---- Loading ----
   if (user === undefined) {
@@ -324,21 +327,21 @@ export default function ProfilePage() {
         <h1 className="hero-name">{user.name || "Seeker"}</h1>
 
         <div className="hero-level-badge">
-          {levelLabel} · Level {levelNum}
+          {fullProfile ? `${RANK_ICONS[fullProfile.rank as PlayerRank] ?? ""} ${fullProfile.rank}` : `${levelLabel} · Level ${levelNum}`}
         </div>
 
         <div className="hero-stats-row">
           <div className="hero-stat">
-            <span className="hero-stat-value">{progress?.completedCount ?? 0}</span>
-            <span className="hero-stat-label">Collected</span>
+            <span className="hero-stat-value">{fullProfile?.totalXP ?? progress?.totalXp ?? 0}</span>
+            <span className="hero-stat-label">Total XP</span>
           </div>
           <div className="hero-stat">
-            <span className="hero-stat-value">{progress?.streak ?? 0}</span>
+            <span className="hero-stat-value">{fullProfile?.currentStreak ?? progress?.streak ?? 0}</span>
             <span className="hero-stat-label">Day Streak</span>
           </div>
           <div className="hero-stat">
-            <span className="hero-stat-value">{progress?.totalXp ?? 0}</span>
-            <span className="hero-stat-label">Total XP</span>
+            <span className="hero-stat-value">{fullProfile?.trophies.length ?? 0}</span>
+            <span className="hero-stat-label">Trophies</span>
           </div>
         </div>
 
@@ -347,7 +350,103 @@ export default function ProfilePage() {
         </Link>
       </motion.section>
 
-      {/* ── Section 2: Collection Grid ── */}
+      {/* ── Section 2: Game Stats Grid ── */}
+      {fullProfile && (
+        <section className="game-stats-section">
+          <div className="game-stats-header">
+            <h2 className="game-stats-title">Your Arena</h2>
+            <Link href="/games" className="game-stats-link">Play games →</Link>
+          </div>
+          <div className="game-stats-grid">
+            <Link href="/games" className="game-stat-tile" style={{ borderColor: "rgba(201,168,76,0.3)" }}>
+              <span className="game-stat-icon">🦁</span>
+              <span className="game-stat-name">Daniel</span>
+              <span className="game-stat-detail">{fullProfile.daniel.cardsRevealed}/8 prophecies</span>
+              {fullProfile.daniel.completions > 0 && (
+                <span className="game-stat-badge">{fullProfile.daniel.completions}x</span>
+              )}
+            </Link>
+            <Link href="/gospel" className="game-stat-tile" style={{ borderColor: "rgba(232,160,32,0.3)" }}>
+              <span className="game-stat-icon">✝️</span>
+              <span className="game-stat-name">Gospel</span>
+              <span className="game-stat-detail">{fullProfile.gospel.cardsRevealed}/8 cards</span>
+              {fullProfile.gospel.completions > 0 && (
+                <span className="game-stat-badge">{fullProfile.gospel.completions}x</span>
+              )}
+            </Link>
+            <Link href="/revelation" className="game-stat-tile" style={{ borderColor: "rgba(122,154,187,0.3)" }}>
+              <span className="game-stat-icon">📜</span>
+              <span className="game-stat-name">Revelation</span>
+              <span className="game-stat-detail">{fullProfile.revelation.cardsRevealed}/22 chapters</span>
+              {fullProfile.revelation.completions > 0 && (
+                <span className="game-stat-badge">{fullProfile.revelation.completions}x</span>
+              )}
+            </Link>
+            <Link href="/games/verse-memory" className="game-stat-tile" style={{ borderColor: "rgba(107,203,119,0.3)" }}>
+              <span className="game-stat-icon">🧠</span>
+              <span className="game-stat-name">Verses</span>
+              <span className="game-stat-detail">{fullProfile.verseMemory.cardsLearned}/28 learned</span>
+            </Link>
+            <Link href="/games/word-quest" className="game-stat-tile" style={{ borderColor: "rgba(167,139,250,0.3)" }}>
+              <span className="game-stat-icon">📚</span>
+              <span className="game-stat-name">Word Quest</span>
+              <span className="game-stat-detail">{fullProfile.wordQuest.levelsCompleted.length}/3 levels</span>
+            </Link>
+          </div>
+        </section>
+      )}
+
+      {/* ── Section 2b: Rank Progression ── */}
+      {fullProfile && (
+        <section className="rank-section">
+          <h2 className="rank-section-title">Rank Progression</h2>
+          <div className="rank-ladder">
+            {[...RANK_THRESHOLDS].reverse().map(({ rank, minXP }) => {
+              const isCurrent = fullProfile.rank === rank;
+              const isAchieved = fullProfile.totalXP >= minXP;
+              return (
+                <div
+                  key={rank}
+                  className={`rank-step ${isAchieved ? "rank-step--achieved" : ""} ${isCurrent ? "rank-step--current" : ""}`}
+                >
+                  <span className="rank-step-icon">{RANK_ICONS[rank as PlayerRank]}</span>
+                  <span className="rank-step-name">{rank}</span>
+                  <span className="rank-step-xp">{minXP.toLocaleString()} XP</span>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
+
+      {/* ── Section 2c: Trophy Shelf ── */}
+      {fullProfile && (
+        <section className="profile-trophy-section">
+          <div className="profile-trophy-header">
+            <h2 className="profile-trophy-title">Trophies</h2>
+            <span className="profile-trophy-counter">
+              {fullProfile.trophies.length} / {TROPHY_DEFS.length} earned
+            </span>
+          </div>
+          <div className="profile-trophy-grid">
+            {TROPHY_DEFS.map((def) => {
+              const unlocked = fullProfile.trophies.some((t) => t.id === def.id);
+              return (
+                <div
+                  key={def.id}
+                  className={`profile-trophy-item ${unlocked ? "profile-trophy-item--unlocked" : ""}`}
+                  title={unlocked ? `${def.name}: ${def.description}` : def.description}
+                >
+                  <span className="profile-trophy-icon">{unlocked ? def.icon : "🔒"}</span>
+                  <span className="profile-trophy-name">{def.name}</span>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
+
+      {/* ── Section 3: Collection Grid ── */}
       <section className="collection-section">
         <div className="collection-header-row">
           <h2 className="collection-title">Your Collection</h2>
@@ -466,8 +565,8 @@ export default function ProfilePage() {
         </section>
       )}
 
-      {/* ── Section 5: Milestones ── */}
-      {progress !== undefined && progress !== null && (
+      {/* ── Section 5: Milestones (legacy — shown only if no game trophies) ── */}
+      {progress !== undefined && progress !== null && !fullProfile && (
         <MilestonesSection completedCount={progress.completedCount} streak={progress.streak ?? 0} />
       )}
 

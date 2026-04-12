@@ -158,12 +158,22 @@ export const getProgress = query({
     if (!userId) return null;
     const user = await ctx.db.get(userId);
     const completedLessons = user?.completedLessons ?? [];
+    // Use unified gameState XP if available, fall back to lesson-based calculation
+    const gameXP = user?.gameState?.totalXP ?? 0;
+    const lessonXP = completedLessons.length * 100;
+    const totalXp = Math.max(gameXP, lessonXP);
+
+    // Use unified streak if available
+    const streak = user?.gameState?.currentStreak ?? user?.currentStreak ?? 0;
+
     return {
       completedCount: completedLessons.length,
       completedIds: completedLessons,
       spiritualLevel: user?.spiritualLevel ?? "beginner",
-      totalXp: completedLessons.length * 100,
-      streak: user?.currentStreak ?? 0,
+      totalXp,
+      streak,
+      // Game stats for profile display
+      gameState: user?.gameState ?? null,
     };
   },
 });

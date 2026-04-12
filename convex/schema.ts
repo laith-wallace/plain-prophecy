@@ -216,6 +216,49 @@ export default defineSchema({
     startedLessons: v.optional(v.array(v.id("studyLessons"))),
     currentStreak: v.optional(v.number()),
     lastActiveDate: v.optional(v.string()),
+    // Word Quest game progress (legacy — kept for backward compat)
+    wordQuestGamesPlayed: v.optional(v.number()),
+    wordQuestHighScores: v.optional(v.object({
+      level1: v.number(),
+      level2: v.number(),
+      level3: v.number(),
+    })),
+    // Unified game state (synced from PlayerContext localStorage)
+    gameState: v.optional(v.object({
+      totalXP: v.number(),
+      currentStreak: v.number(),
+      longestStreak: v.number(),
+      lastActiveDate: v.string(),
+      soundEnabled: v.boolean(),
+      trophies: v.any(), // Record<TrophyId, { unlockedAt: number }>
+      games: v.object({
+        daniel: v.object({
+          completions: v.number(),
+          bestTime: v.optional(v.number()),
+          cardsRevealed: v.array(v.string()),
+          fulfillmentChoices: v.any(),
+        }),
+        gospel: v.object({
+          completions: v.number(),
+          bestTime: v.optional(v.number()),
+          cardsRevealed: v.array(v.string()),
+          fulfillmentChoices: v.any(),
+        }),
+        revelation: v.object({
+          completions: v.number(),
+          bestTime: v.optional(v.number()),
+          cardsRevealed: v.array(v.string()),
+          fulfillmentChoices: v.any(),
+          lastCardIndex: v.number(),
+        }),
+        verseMemory: v.object({ cardProgress: v.any() }),
+        wordQuest: v.object({
+          levelsCompleted: v.array(v.number()),
+          bestScores: v.any(),
+        }),
+      }),
+      syncedAt: v.number(),
+    })),
     // Raw onboarding survey answers for user personalisation data
     onboardingAnswers: v.optional(v.object({
       motivation: v.optional(v.string()),

@@ -1145,3 +1145,251 @@
     gap: 0.5rem;
   }
 }
+
+/* ============================================================
+   Game Stats Grid
+   ============================================================ */
+
+.game-stats-section {
+  padding: 0 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.game-stats-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.game-stats-title {
+  font-family: var(--font-playfair);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+}
+
+.game-stats-link {
+  font-family: var(--font-ibm-plex-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sda-accent);
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+
+.game-stats-link:hover { opacity: 0.7; }
+
+.game-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.6rem;
+}
+
+.game-stat-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.75rem 0.85rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.035);
+  text-decoration: none;
+  transition: transform 0.15s, background 0.15s;
+  position: relative;
+}
+
+.game-stat-tile:hover {
+  transform: translateY(-1px);
+  background: rgba(255,255,255,0.06);
+}
+
+.game-stat-icon {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.game-stat-name {
+  font-family: var(--font-playfair);
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.game-stat-detail {
+  font-family: var(--font-ibm-plex-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+}
+
+.game-stat-badge {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.6rem;
+  font-family: var(--font-ibm-plex-mono);
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #86efac;
+  background: rgba(134,239,172,0.1);
+  padding: 0.15rem 0.4rem;
+  border-radius: 6px;
+}
+
+/* Last tile spans full width on odd count */
+.game-stats-grid > :last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
+/* ============================================================
+   Rank Progression
+   ============================================================ */
+
+.rank-section {
+  padding: 0 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.rank-section-title {
+  font-family: var(--font-playfair);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 0.75rem;
+}
+
+.rank-ladder {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.rank-step {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.02);
+  opacity: 0.4;
+  transition: opacity 0.2s, background 0.2s;
+}
+
+.rank-step--achieved {
+  opacity: 0.7;
+  background: rgba(255,255,255,0.04);
+}
+
+.rank-step--current {
+  opacity: 1;
+  border-color: rgba(201,168,76,0.4);
+  background: rgba(201,168,76,0.08);
+}
+
+.rank-step-icon {
+  font-size: 1.15rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.rank-step-name {
+  font-family: var(--font-playfair);
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #fff;
+  flex: 1;
+}
+
+.rank-step-xp {
+  font-family: var(--font-ibm-plex-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+}
+
+/* ============================================================
+   Trophy Shelf (Profile)
+   ============================================================ */
+
+.profile-trophy-section {
+  padding: 0 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.profile-trophy-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.profile-trophy-title {
+  font-family: var(--font-playfair);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+}
+
+.profile-trophy-counter {
+  font-family: var(--font-ibm-plex-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+}
+
+.profile-trophy-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.profile-trophy-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.65rem 0.4rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.02);
+  opacity: 0.35;
+  transition: opacity 0.2s;
+}
+
+.profile-trophy-item--unlocked {
+  opacity: 1;
+  border-color: rgba(201,168,76,0.25);
+  background: rgba(201,168,76,0.06);
+}
+
+.profile-trophy-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.profile-trophy-name {
+  font-family: var(--font-ibm-plex-mono);
+  font-size: 0.48rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  text-align: center;
+  line-height: 1.3;
+}
+
+@media (min-width: 640px) {
+  .game-stats-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .profile-trophy-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
