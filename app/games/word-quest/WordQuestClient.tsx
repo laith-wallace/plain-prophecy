@@ -282,10 +282,13 @@ function LevelSelect({
 
 // ─── RevealModal ──────────────────────────────────────────────────────────────
 
-function RevealModal({ entry, comboCount }: { entry: WordQuestEntry; comboCount: number }) {
+function RevealModal({ entry, comboCount, onClose }: { entry: WordQuestEntry; comboCount: number; onClose: () => void }) {
   return (
-    <div className="wq-reveal" role="dialog" aria-live="polite">
-      <div className="wq-reveal-card">
+    <div className="wq-reveal" role="dialog" aria-live="polite" onClick={onClose}>
+      <div className="wq-reveal-card" onClick={(e) => e.stopPropagation()}>
+        <button className="wq-reveal-close" onClick={onClose} aria-label="Close">
+          ✕
+        </button>
         <div className="wq-reveal-emoji" aria-hidden="true">
           {entry.emoji}
         </div>
@@ -556,6 +559,17 @@ export default function WordQuestClient() {
   }), [bestScores, playerState.currentStreak, dailyLastPlayed, dailyBestScore]);
 
   const confettiRef = useRef<HTMLCanvasElement>(null);
+  const pendingGameOverRef = useRef<(() => void) | null>(null);
+
+  const dismissReveal = useCallback(() => {
+    setCelebrating(false);
+    setRevealed(null);
+    setJustMatched(null);
+    if (pendingGameOverRef.current) {
+      pendingGameOverRef.current();
+      pendingGameOverRef.current = null;
+    }
+  }, []);
 
   // Timer countdown
   useEffect(() => {
@@ -682,18 +696,12 @@ export default function WordQuestClient() {
       if (confettiRef.current) spawnConfetti(confettiRef.current);
 
       const wasLastMatch = newMatched.length === words.length;
-      const timeout = window.setTimeout(() => {
-        setCelebrating(false);
-        setRevealed(null);
-        setJustMatched(null);
-        if (wasLastMatch) {
+      if (wasLastMatch) {
+        pendingGameOverRef.current = () => {
           const bonus = timerEnabled ? timeLeft * 2 : 0;
           setTimeBonus(bonus);
           setTimerRunning(false);
 
-          // Calculate final score for persistence
-          // score state already includes combo bonuses from all matches
-          // We need the current score + the points we just added + time bonus
           const currentScore = score + points;
           const finalScore = currentScore + bonus;
 
@@ -722,11 +730,12 @@ export default function WordQuestClient() {
           setGameOver(true);
           playSound("completion");
           if (confettiRef.current) spawnConfetti(confettiRef.current);
-        }
-      }, 2600);
+        };
+      } else {
+        pendingGameOverRef.current = null;
+      }
       setSelectedLeft(null);
       setSelectedRight(null);
-      return () => window.clearTimeout(timeout);
     }
 
     // Wrong match
@@ -948,7 +957,7 @@ export default function WordQuestClient() {
         </div>
       </div>
 
-      {celebrating && revealed && <RevealModal entry={revealed} comboCount={combo} />}
+      {celebrating && revealed && <RevealModal entry={revealed} comboCount={combo} onClose={dismissReveal} />}
     </div>
   );
 }
