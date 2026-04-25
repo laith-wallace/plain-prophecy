@@ -112,6 +112,60 @@ export const studyCardMeta: Record<string, StudyCardMeta> = {
     shortDescription:
       "The mystery of lawlessness — not a figure from horror movies, but a spirit from within.",
   },
+  "suffering-servant": {
+    emoji: "🔥",
+    accentColor: "#1a0505",
+    shortDescription:
+      "The most detailed portrait of Christ's death — written 700 years before Calvary.",
+  },
+  "first-promise": {
+    emoji: "🐍",
+    accentColor: "#050a05",
+    shortDescription: "The first prophecy in Scripture — a seed who would crush the serpent's head.",
+  },
+  "seventy-weeks": {
+    emoji: "⌛",
+    accentColor: "#0a0a1a",
+    shortDescription: "The prophecy that names the exact year of Christ's baptism and crucifixion.",
+  },
+  "born-in-bethlehem": {
+    emoji: "⭐",
+    accentColor: "#0a0805",
+    shortDescription: "A ruler from an obscure village — predicted 700 years in advance.",
+  },
+  "virgin-shall-conceive": {
+    emoji: "👼",
+    accentColor: "#05050f",
+    shortDescription: "Immanuel — God with us. The sign that would change everything.",
+  },
+  "triumphal-entry-prophecy": {
+    emoji: "🫏",
+    accentColor: "#050a0a",
+    shortDescription:
+      "A king on a donkey — the exact scene of Palm Sunday, written centuries before Rome.",
+  },
+  "thirty-pieces-of-silver": {
+    emoji: "🪙",
+    accentColor: "#0d0d05",
+    shortDescription: "The precise betrayal price — and what would happen to the money afterward.",
+  },
+  "forsaken-one": {
+    emoji: "😭",
+    accentColor: "#12050a",
+    shortDescription:
+      "David's cry that Christ would echo from the cross — hands and feet pierced.",
+  },
+  "risen-lord": {
+    emoji: "🌄",
+    accentColor: "#050d08",
+    shortDescription:
+      "He would not see corruption. Peter's proof text for the resurrection at Pentecost.",
+  },
+  "priest-forever": {
+    emoji: "👑",
+    accentColor: "#0a050f",
+    shortDescription: "The most-cited OT passage in the NT — a priest and king on an eternal throne.",
+  },
 };
 
 export function getCardMeta(slug: string): StudyCardMeta {

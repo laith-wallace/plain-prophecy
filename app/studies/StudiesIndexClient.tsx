@@ -11,7 +11,7 @@ import "../studies-index.css";
 
 const PREF_KEY = "pp-studies-view";
 
-type BookFilter = "all" | "gospel" | "daniel" | "revelation";
+type BookFilter = "all" | "gospel" | "daniel" | "revelation" | "messianic-prophecies";
 
 export default function StudiesIndexClient() {
   const [view, setView] = useState<"card" | "list">("card");
@@ -55,6 +55,7 @@ export default function StudiesIndexClient() {
               <option value="gospel">The Gospel</option>
               <option value="daniel">Daniel</option>
               <option value="revelation">Revelation</option>
+              <option value="messianic-prophecies">Messianic Prophecies</option>
             </select>
             <span className="si-filter-chevron" aria-hidden="true">›</span>
           </div>

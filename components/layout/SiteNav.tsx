@@ -36,6 +36,16 @@ const NAV: NavEntry[] = [
           },
         ],
       },
+      {
+        title: "Messianic",
+        items: [
+          {
+            href: "/studies",
+            label: "Messianic Prophecies",
+            description: "Christ in every scroll — ten OT prophecies fulfilled in Jesus",
+          },
+        ],
+      },
     ],
   },
   {
@@ -174,7 +184,8 @@ export default function SiteNav({ onSearchOpen }: { onSearchOpen?: () => void })
           {NAV.map((entry) => {
             const active = isEntryActive(entry, pathname);
             const isOpen = openMenu === entry.label;
-            const isTwoCol = (entry.sections?.length ?? 0) > 1;
+            const sectionCount = entry.sections?.length ?? 0;
+            const isTwoCol = sectionCount > 1;
 
             if (!entry.sections) {
               return (
@@ -250,9 +261,9 @@ export default function SiteNav({ onSearchOpen }: { onSearchOpen?: () => void })
                       borderRadius: 10,
                       padding: "1rem",
                       display: "grid",
-                      gridTemplateColumns: isTwoCol ? "repeat(2, 1fr)" : "1fr",
+                      gridTemplateColumns: sectionCount >= 3 ? "repeat(3, 1fr)" : isTwoCol ? "repeat(2, 1fr)" : "1fr",
                       gap: isTwoCol ? "0.5rem 2rem" : "0.125rem",
-                      minWidth: isTwoCol ? 460 : 280,
+                      minWidth: sectionCount >= 3 ? 620 : isTwoCol ? 460 : 280,
                       boxShadow: "0 8px 40px rgba(0,0,0,0.6)",
                       zIndex: 200,
                     }}

@@ -1529,7 +1529,679 @@ export const studyBooks: StudyBook[] = [
         nextLesson: undefined,
       }
     ]
-  }
+  },
+  {
+    slug: "messianic-prophecies",
+    title: "Messianic Prophecies",
+    icon: "✡",
+    description:
+      "Christ in every scroll — ten prophecies written centuries before Calvary that converge on one Person.",
+    lessons: [
+      {
+        slug: "suffering-servant",
+        title: "The Suffering Servant",
+        scriptureRef: "Isaiah 52:13–53:12",
+        readingTime: 8,
+        published: true,
+        keyVerse: "He was pierced for our transgressions; he was crushed for our iniquities.",
+        keyVerseRef: "Isaiah 53:5",
+        intro:
+          "The most detailed portrait of Christ's death in the entire Old Testament — written 700 years before Calvary, cited or alluded to in over a dozen New Testament passages, and the text that led the Ethiopian eunuch to faith.",
+        sections: [
+          {
+            heading: "The Servant Exalted (52:13–15)",
+            contentBlocks: [
+              {
+                label: "The Prophecy",
+                text: "Isaiah opens with a shocking reversal: the Servant will be 'exalted and lifted up and greatly honoured' — the very language used of God in Isaiah 6:1. But first, 'his appearance was marred beyond human semblance.' The passage begins at the end, with glory guaranteed before the suffering is described.",
+              },
+              {
+                label: "NT Fulfilment",
+                text: "The 'lifting up' language is taken by John directly to the crucifixion and glorification of Christ (John 12:32–34). The nations who are 'astonished' (52:15) find their fulfilment in Paul's Gentile mission — 'those who were not told about him will see, and those who have not heard will understand' (Romans 15:21).",
+              },
+            ],
+          },
+          {
+            heading: "The Report Nobody Believed (53:1–3)",
+            contentBlocks: [
+              {
+                label: "The Prophecy",
+                text: "'Who has believed our report? And to whom has the arm of the LORD been revealed?' The Servant grew up 'like a root out of dry ground' — in obscurity, without outward majesty. He was despised and rejected, a man of sorrows acquainted with grief. The people hid their faces from him; he was not esteemed.",
+              },
+              {
+                label: "NT Fulfilment",
+                text: "John 12:37–38 quotes Isaiah 53:1 directly: 'Though he had done so many signs before them, they still did not believe in him, so that the word spoken by the prophet Isaiah might be fulfilled.' The rejection of Jesus by the religious establishment is presented not as a divine failure but as the fulfilment of a 700-year-old prophecy.",
+              },
+              {
+                label: "Jewish Reception",
+                text: "Targum Jonathan opens Isaiah 53 with the words 'Behold my servant the Messiah' — the ancient Aramaic translation already applied this chapter to the Messiah before the Christian era. Only with Rashi (c. 1100 AD), amid the trauma of First Crusade massacres, did the corporate-Israel reading become dominant in Ashkenazi exegesis.",
+              },
+            ],
+          },
+          {
+            heading: "The Vicarious Suffering (53:4–6)",
+            contentBlocks: [
+              {
+                label: "The Prophecy",
+                text: "'Surely he has borne our griefs and carried our sorrows... He was pierced for our transgressions; he was crushed for our iniquities; upon him was the chastisement that brought us peace, and with his wounds we are healed.' The substitutionary logic is explicit: our sin, his punishment; our peace, his wounding.",
+              },
+              {
+                label: "NT Fulfilment",
+                text: "Matthew 8:17 quotes verse 4 as fulfilled in Jesus' healings. 1 Peter 2:24 quotes verse 5 directly — 'by his wounds you have been healed.' Romans 4:25 draws on verse 5's logic — 'delivered up for our trespasses.' Paul's summary of the gospel in 1 Corinthians 15:3 — 'Christ died for our sins in accordance with the Scriptures' — anchors the atonement in Isaiah 53.",
+              },
+            ],
+          },
+          {
+            heading: "Silent Before His Accusers (53:7)",
+            contentBlocks: [
+              {
+                label: "The Prophecy",
+                text: "'He was oppressed, and he was afflicted, yet he opened not his mouth; like a lamb that is led to the slaughter, and like a sheep that before its shearers is silent, so he opened not his mouth.' The silence is specific — not passive resignation but chosen restraint before unjust accusers.",
+              },
+              {
+                label: "NT Fulfilment",
+                text: "Matthew 26:62–63: 'The high priest stood up and said, \"Have you no answer to make? What is it that these men testify against you?\" But Jesus remained silent.' Matthew 27:12–14: 'When he was accused by the chief priests and elders, he gave no answer... so that the governor was greatly amazed.' Peter Stoner assigned this prophecy a probability of 1 in 1,000 of accidental fulfilment.",
+              },
+            ],
+          },
+          {
+            heading: "The Burial and the Vindication (53:8–12)",
+            contentBlocks: [
+              {
+                label: "The Prophecy",
+                text: "The Servant is 'cut off out of the land of the living' for the transgression of the people. He 'made his grave with the wicked and with a rich man in his death' — two groups in one verse. Then: 'he shall see his offspring; he shall prolong his days.' Death does not end the Servant's story. He is given 'a portion among the many' and 'shall bear their iniquities.'",
+              },
+              {
+                label: "NT Fulfilment",
+                text: "Isaiah 53:9's 'grave with the rich' finds perfect fulfilment in Matthew 27:57–60: Joseph of Arimathea, a rich man, donated his own tomb. Isaiah 53:12's 'numbered with the transgressors' is cited by Jesus himself in Luke 22:37, fulfilled when he was crucified between two criminals. The 'seeing of offspring' after death points unmistakably to resurrection.",
+              },
+              {
+                label: "The Textual Evidence",
+                text: "The Great Isaiah Scroll (1QIsaᵃ) from Qumran, dated c. 125 BC, confirms the entire text of Isaiah 53 predates the Christian era — refuting any claim that the chapter was written after the fact. Driver and Neubauer's two-volume Oxford study (1877) documented the older Jewish messianic consensus on Isaiah 53 exhaustively.",
+              },
+            ],
+          },
+        ],
+        christCentre:
+          "Isaiah 53 is the prophecy the Ethiopian eunuch was reading when Philip found him on the desert road (Acts 8:32–35). 'About whom does the prophet say this — about himself or someone else?' Philip began with that same scripture and told him the good news about Jesus. Written when crucifixion was unknown as a Roman execution method, it describes not a general martyr but a specific Person whose suffering is vicarious, whose burial is dignified, and whose death leads to life.",
+        nextLesson: {
+          book: "messianic-prophecies",
+          lesson: "first-promise",
+          title: "The First Promise",
+        },
+      },
+      {
+        slug: "first-promise",
+        title: "The First Promise",
+        scriptureRef: "Genesis 3:15",
+        readingTime: 5,
+        published: true,
+        keyVerse:
+          "I will put enmity between you and the woman, and between your offspring and her offspring; he shall bruise your head, and you shall bruise his heel.",
+        keyVerseRef: "Genesis 3:15",
+        intro:
+          "The first prophecy in all of Scripture — spoken in Eden before the first exile began, promising a Redeemer who would be wounded in the conflict but would ultimately destroy the serpent.",
+        sections: [
+          {
+            heading: "The Protoevangelium",
+            contentBlocks: [
+              {
+                label: "The Prophecy",
+                text: "God speaks directly to the serpent in Eden: 'I will put enmity between you and the woman, and between your offspring and her offspring; he shall bruise your head, and you shall bruise his heel.' This is the protoevangelium — the first gospel. Before the first chapter of human history closes, God announces its resolution.",
+              },
+              {
+                label: "Ancient Jewish Reception",
+                text: "Targum Pseudo-Jonathan and the Jerusalem Targum both read this text messianically — 'in the days of King Messiah.' Genesis Rabbah 23:5 identifies the Seed as 'the King Messiah.' Justin Martyr and Irenaeus called this the first messianic prophecy. This was not a Christian invention but an ancient Jewish reading.",
+              },
+            ],
+          },
+          {
+            heading: "The Seed of the Woman",
+            contentBlocks: [
+              {
+                label: "Why 'Seed of the Woman'?",
+                text: "In every other genealogical reference in Scripture, the seed is traced through the man. This is the only place in the Old Testament where the seed is explicitly identified as the woman's — a grammatical anomaly that points forward to a birth without a human father. Paul picks up this exact language in Galatians 4:4: 'God sent forth his Son, born of woman.'",
+              },
+              {
+                label: "NT Fulfilment",
+                text: "Galatians 4:4 — born of woman. Romans 16:20 — 'The God of peace will soon crush Satan under your feet.' Hebrews 2:14 — 'he himself partook of flesh and blood, that through death he might destroy the one who has the power of death, that is, the devil.' 1 John 3:8 — 'The reason the Son of God appeared was to destroy the works of the devil.' Revelation 12 maps the entire conflict symbolically.",
+              },
+            ],
+          },
+          {
+            heading: "The Wound and the Victory",
+            contentBlocks: [
+              {
+                label: "Bruised Heel, Crushed Head",
+                text: "The Hebrew verb for 'bruise' is the same in both clauses — but the targets are different. The serpent strikes the heel (a wound, painful but survivable); the Seed crushes the head (a mortal blow). The cross looked like the serpent winning — the Seed was struck down. But the resurrection revealed it as the moment the serpent's head was crushed. What looked like defeat was the decisive victory.",
+              },
+              {
+                label: "The Whole Bible in One Verse",
+                text: "Every subsequent messianic prophecy is an elaboration of this single verse. The Abrahamic covenant (Genesis 12, 22) specifies through which line the Seed will come. The Davidic covenant (2 Samuel 7) narrows to a royal lineage. The prophets sketch the details of the wounding. The Psalms give the Seed a voice. And Revelation 20:10 narrates the final fulfilment: 'the devil who had deceived them was thrown into the lake of fire.'",
+              },
+            ],
+          },
+        ],
+        christCentre:
+          "The first word God speaks after the fall is not judgment but gospel. Before expelling Adam and Eve from Eden, God turns to the serpent and announces that its victory will be short-lived. The rest of the Bible is the long unfolding of that promise — leading to a garden tomb on the third day, and a risen Seed who holds the keys of death and Hades (Revelation 1:18).",
+        nextLesson: {
+          book: "messianic-prophecies",
+          lesson: "seventy-weeks",
+          title: "The 70 Weeks",
+        },
+      },
+      {
+        slug: "seventy-weeks",
+        title: "The 70 Weeks",
+        scriptureRef: "Daniel 9:24–27",
+        readingTime: 10,
+        published: true,
+        keyVerse:
+          "Know and understand this: From the time the word goes out to restore and rebuild Jerusalem until the Anointed One, the ruler, comes, there will be seven 'sevens,' and sixty-two 'sevens.'",
+        keyVerseRef: "Daniel 9:25",
+        intro:
+          "The single prophecy that names the exact year of Christ's baptism and crucifixion — the chronological backbone of the entire messianic case, anchoring the story from 457 BC to AD 34.",
+        sections: [
+          {
+            heading: "The Six Redemptive Purposes (v. 24)",
+            contentBlocks: [
+              {
+                label: "What God Declared",
+                text: "Gabriel announces six purposes 'determined' upon Israel and Jerusalem: finish transgression, put an end to sin, atone for iniquity, bring in everlasting righteousness, seal vision and prophecy, and anoint the Most Holy. All six are Christological. Not one was fulfilled by the Maccabean revolt — the preterist alternative — but all six were accomplished at the cross and resurrection of Jesus.",
+              },
+              {
+                label: "The Hebrew Word 'Neḥtak'",
+                text: "The verb translated 'determined' (neḥtak) means literally 'cut off' — pointing to the 490 years being cut off from the longer 2,300-year prophecy of Daniel 8:14. Adventist scholars (Maxwell, Shea, Pfandl) read both prophecies as anchored at the same starting point: the decree of Artaxerxes in 457 BC.",
+              },
+            ],
+          },
+          {
+            heading: "The Decree: 457 BC (v. 25)",
+            contentBlocks: [
+              {
+                label: "Which Decree?",
+                text: "Four Persian decrees are candidates: Cyrus (538 BC), Darius (520 BC), Artaxerxes in his seventh year (457 BC), and Artaxerxes in his twentieth year (444 BC). Only Artaxerxes' seventh-year decree (Ezra 7:11–26) authorises the full civil restoration of Jerusalem — with magistrates, judges, and the power of capital punishment — exactly what Daniel 9:25's 'restore and build' requires. The other decrees concern only the Temple.",
+              },
+              {
+                label: "Archaeological Confirmation",
+                text: "Horn and Wood's The Chronology of Ezra 7 (Review and Herald, 1953) established 457 BC through the Aramaic Elephantine papyri — 5th-century documents from a Jewish military colony in Egypt. These double-dated documents prove a fall-to-fall Tishri regnal calendar, confirmed by Ptolemy's Canon and a key Ur tablet fixing Xerxes's death. 457 BC is one of the most precisely documented dates in ancient history.",
+              },
+            ],
+          },
+          {
+            heading: "From 457 BC to AD 27 — Christ's Baptism",
+            contentBlocks: [
+              {
+                label: "The Arithmetic",
+                text: "The 69 weeks (7 + 62) = 483 prophetic days. By the year-day principle (Numbers 14:34; Ezekiel 4:6), 483 days = 483 literal years. From autumn 457 BC, adding 483 years — with no year zero between BC and AD — yields autumn AD 27: the baptism of Jesus and his anointing with the Holy Spirit (Luke 3:21–22; Acts 10:38).",
+              },
+              {
+                label: "Jesus' Own Claim",
+                text: "Mark 1:14–15 records Jesus' first public sermon: 'The time is fulfilled, and the kingdom of God is at hand.' The word 'fulfilled' (peplerōtai) is the technical Greek term for a prophecy reaching its terminus. Jesus was announcing that Daniel's prophetic clock — running since 457 BC — had just terminated. His baptism was not a private spiritual event but a publicly timed prophetic fulfilment.",
+              },
+            ],
+          },
+          {
+            heading: "Cut Off in the Midst (v. 27) — The Crucifixion",
+            contentBlocks: [
+              {
+                label: "The Prophecy",
+                text: "Daniel 9:27 states that 'in the midst of the week he shall cause the sacrifice and the oblation to cease.' The 70th week spans AD 27–34. The midpoint is spring AD 31. This is when the Messiah is 'cut off' — crucified. The sacrifice and offering cease because the entire Levitical system has found its antitype and is now superseded.",
+              },
+              {
+                label: "NT Fulfilment",
+                text: "At the moment of Christ's death, 'the curtain of the temple was torn in two, from top to bottom' (Matthew 27:51). This was God's own declaration that the ceremonial system was finished — not by Roman armies (that came in AD 70) but by the completed work of the Lamb of God. The Daniel 9 prediction of the Messiah being 'cut off' is fulfilled in all four Passion narratives.",
+              },
+            ],
+          },
+          {
+            heading: "The Final Week and AD 34",
+            contentBlocks: [
+              {
+                label: "The 70th Week Closes",
+                text: "The 70th week ends in AD 34 — marked by the stoning of Stephen (Acts 7), the scattering persecution, the conversion of Saul of Tarsus, and the formal opening of the gospel to Samaritans (Acts 8) and Gentiles (Acts 10 — Cornelius). Israel's national probationary advantage was not revoked in AD 70 but in AD 34, when the 490-year covenant period expired.",
+              },
+              {
+                label: "The Larger Frame: 2,300 Years",
+                text: "The 490 years are 'cut off' from the 2,300-year prophecy of Daniel 8:14. Subtracting 490 from 2,300 leaves 1,810 years. From AD 34, adding 1,810 years yields AD 1844 — the date Adventists identify as the inauguration of Christ's antitypical Day-of-Atonement ministry in the heavenly sanctuary, foreshadowed by every Yom Kippur in the Levitical calendar.",
+              },
+            ],
+          },
+        ],
+        christCentre:
+          "Daniel 9 is the only prophecy in the Old Testament that gives an actual date for the Messiah's appearance. When Jesus announced 'The time is fulfilled' in Mark 1:15, he was not speaking generally — he was claiming that the clock Gabriel set running in 457 BC had just reached its terminus at his baptism. The prophecy that named the year of his anointing also named the year of his death. History was not happening to Jesus; he was walking into a script written centuries before.",
+        nextLesson: {
+          book: "messianic-prophecies",
+          lesson: "born-in-bethlehem",
+          title: "Born in Bethlehem",
+        },
+      },
+      {
+        slug: "born-in-bethlehem",
+        title: "Born in Bethlehem",
+        scriptureRef: "Micah 5:2",
+        readingTime: 5,
+        published: true,
+        keyVerse:
+          "But you, Bethlehem Ephrathah, though you are small among the clans of Judah, out of you will come for me one who will be ruler over Israel, whose origins are from of old, from ancient times.",
+        keyVerseRef: "Micah 5:2",
+        intro:
+          "A ruler from an obscure village — predicted 700 years in advance, so well-known by the first century that the chief priests cited it without hesitation when Herod asked where the Messiah was to be born.",
+        sections: [
+          {
+            heading: "The Prophecy",
+            contentBlocks: [
+              {
+                label: "Bethlehem Ephrathah",
+                text: "Micah specifies not merely 'Bethlehem' but 'Bethlehem Ephrathah' — distinguishing the village in Judah from a Bethlehem in Zebulun. This is the city of David. The ruler would come from David's own birthplace. Though small among the clans of Judah — a footnote on the map — it would produce the ruler of Israel.",
+              },
+              {
+                label: "Ancient Jewish Reception",
+                text: "The prophecy was universally accepted as messianic in Second-Temple Judaism. Targum Jonathan explicitly inserts 'Messiah' into the text. When Herod summoned the chief priests and scribes to ask where the Christ was to be born, they answered without deliberation: Bethlehem of Judea. The prophecy was so well-established that it required no debate — Matthew 2:5–6 records their citation of Micah 5:2 verbatim.",
+              },
+            ],
+          },
+          {
+            heading: "The Fulfilment",
+            contentBlocks: [
+              {
+                label: "The Census That Moved a Family",
+                text: "Mary and Joseph lived in Nazareth — 90 miles from Bethlehem. The mechanism that brought them south was a Roman imperial census ordered by Augustus (Luke 2:1–5). No human arranged this. A pagan emperor's administrative decree fulfilled a 700-year-old Jewish prophecy, transporting a Galilean carpenter and his pregnant wife to the precise village Micah had named.",
+              },
+              {
+                label: "NT Fulfilment",
+                text: "Matthew 2:1–6 records the chief priests citing Micah 5:2 to Herod. John 7:42 records the crowd debating whether Jesus could be the Christ, since 'the Christ comes from the offspring of David, and comes from Bethlehem.' Ironically, they used the prophecy against him — not knowing he was born there.",
+              },
+            ],
+          },
+          {
+            heading: "Pre-existence in the Text",
+            contentBlocks: [
+              {
+                label: "'From of Old, from Ancient Times'",
+                text: "The Hebrew phrase 'whose origins are from of old, from ancient times' (miqedem mimei olam) is not merely a reference to Davidic ancestry. The word olam denotes eternity or the distant past — the same word used in Psalm 90:2 ('from everlasting to everlasting, you are God'). Micah is signalling that the one born in Bethlehem pre-existed Bethlehem — that his origins are not merely historical but eternal.",
+              },
+              {
+                label: "Christological Implication",
+                text: "John 1:1–14 and Colossians 1:16–17 describe the eternal pre-existence of the Word who became flesh. The incarnation at Bethlehem was not the beginning of the Son of God's existence but his entry into human history. Micah saw both simultaneously: the smallness of Bethlehem and the eternity of the one who would emerge from it.",
+              },
+            ],
+          },
+        ],
+        christCentre:
+          "The God who created the universe chose to enter it in a village so small it nearly didn't register on the census rolls. Bethlehem was not chosen for its prestige — it was chosen because God had promised it seven centuries earlier. The Magi travelled hundreds of miles following a star; the answer to where it led was already written in Jewish Scripture. The smallness of Bethlehem magnifies the greatness of the One it produced.",
+        nextLesson: {
+          book: "messianic-prophecies",
+          lesson: "virgin-shall-conceive",
+          title: "A Virgin Shall Conceive",
+        },
+      },
+      {
+        slug: "virgin-shall-conceive",
+        title: "A Virgin Shall Conceive",
+        scriptureRef: "Isaiah 7:14",
+        readingTime: 5,
+        published: true,
+        keyVerse:
+          "Therefore the Lord himself will give you a sign: The virgin will conceive and give birth to a son, and will call him Immanuel.",
+        keyVerseRef: "Isaiah 7:14",
+        intro:
+          "Immanuel — God with us. A sign that God himself would give: not a natural birth but one that would signal the presence of God in human flesh.",
+        sections: [
+          {
+            heading: "The Sign Given",
+            contentBlocks: [
+              {
+                label: "The Context",
+                text: "Isaiah 7 is set during the Syro-Ephraimite war (c. 735 BC). King Ahaz of Judah is terrified. God tells him to ask for a sign — from the depths of Sheol to the heights of heaven. Ahaz refuses, falsely pious. So God gives the sign anyway: a virgin conceiving and bearing a son named Immanuel. The sign's magnitude matches the scope of the offer — this is not a small reassurance but a cosmic declaration.",
+              },
+              {
+                label: "The Name 'Immanuel'",
+                text: "The child is to be named Immanuel — literally 'God with us' in Hebrew. This is not a symbolic nickname. Matthew 1:23 quotes Isaiah 7:14 and interprets the name theologically: it is the identification of Jesus as the presence of God himself entering human history. John 1:14 — 'the Word became flesh and dwelt among us' — is the gospel of Immanuel.",
+              },
+            ],
+          },
+          {
+            heading: "The Hebrew Word Almah",
+            contentBlocks: [
+              {
+                label: "What the Word Means",
+                text: "The Hebrew word translated 'virgin' is almah — which means a young woman of marriageable age, with the cultural assumption of chastity. Critics argue almah doesn't require virginity and that the common word for virgin (betulah) was not used. But almah appears nine times in the Old Testament and in every case refers to a young unmarried woman. A married or pregnant woman would not be called an almah.",
+              },
+              {
+                label: "The Pre-Christian Jewish Translation",
+                text: "The most powerful evidence is not Christian exegesis but Jewish translation. The Septuagint — the Greek translation of the Hebrew Bible produced by Jewish scholars in Alexandria in the 3rd century BC, two centuries before Christ — renders almah as parthenos, the unambiguous Greek word for virgin. This was a Jewish translation choice made long before any Christian apologetic existed. The LXX translators understood what Isaiah meant.",
+              },
+            ],
+          },
+          {
+            heading: "Matthew's Fulfilment",
+            contentBlocks: [
+              {
+                label: "The Explicit Citation",
+                text: "Matthew 1:22–23: 'All this took place to fulfil what the Lord had spoken by the prophet: \"Behold, the virgin shall conceive and bear a son, and they shall call his name Immanuel.\"' Matthew quotes the LXX — parthenos — not to twist the text but because the LXX accurately represented the Hebrew original's intent. The miraculous sign Isaiah pointed to was fulfilled in Mary: no human father, no natural conception.",
+              },
+              {
+                label: "The Dual Horizon",
+                text: "Isaiah 7:14 has an immediate historical reference — a sign relevant to Ahaz's crisis — and a distant messianic fulfilment. The 'Immanuel' born in the 8th century was a sign pointing to the greater Immanuel to come. Matthew's use of 'fulfilment' language recognises this: the prophecy found its complete, intended meaning in Jesus. Luke 1:31–35 confirms the mechanism — 'the Holy Spirit will come upon you, and the power of the Most High will overshadow you.'",
+              },
+            ],
+          },
+        ],
+        christCentre:
+          "The virgin birth is not a theological footnote — it is the hinge on which the incarnation turns. For Jesus to be the Seed of the woman (Genesis 3:15) without the seed of a man, for him to be born under the law (Galatians 4:4) yet without inheriting the guilt of Adam, required exactly what Isaiah predicted: a miraculous conception. Immanuel means God chose not to send a messenger but to come himself. That is the astonishing claim at the heart of Christmas.",
+        nextLesson: {
+          book: "messianic-prophecies",
+          lesson: "triumphal-entry-prophecy",
+          title: "The Triumphal Entry",
+        },
+      },
+      {
+        slug: "triumphal-entry-prophecy",
+        title: "The Triumphal Entry",
+        scriptureRef: "Zechariah 9:9",
+        readingTime: 5,
+        published: true,
+        keyVerse:
+          "Rejoice greatly, Daughter Zion! Shout, Daughter Jerusalem! See, your king comes to you, righteous and victorious, lowly and riding on a donkey, on a colt, the foal of a donkey.",
+        keyVerseRef: "Zechariah 9:9",
+        intro:
+          "A king on a donkey — the exact choreography of Palm Sunday, written five centuries before Rome existed, already wrestled with by the Talmud for its paradox of humility and conquest.",
+        sections: [
+          {
+            heading: "The Prophecy",
+            contentBlocks: [
+              {
+                label: "Zechariah's Vision",
+                text: "Zechariah 9:9, written c. 520 BC, describes a king arriving in Jerusalem — righteous, victorious (or 'having salvation'), humble, riding on a donkey. All four attributes are packed into one verse: moral character (righteous), military outcome (victorious), posture (humble), and transport (a donkey's colt). The king who arrives this way is presented as the fulfilment of the nation's deepest hope.",
+              },
+              {
+                label: "Rabbinic Reception",
+                text: "The Babylonian Talmud (Sanhedrin 98a) explicitly wrestles with the paradox in Zechariah 9:9: how can the Messiah arrive on a humble donkey if Daniel 7:13 shows him coming on the clouds of heaven? The rabbis answered: if Israel is worthy, he comes on clouds; if not, on a donkey. This shows the verse was firmly established as messianic in Jewish tradition before and beyond the Christian era.",
+              },
+            ],
+          },
+          {
+            heading: "Donkey vs. Horse — Ancient Symbolism",
+            contentBlocks: [
+              {
+                label: "The Cultural Code",
+                text: "In the ancient Near East, every royal entry carried a clear symbolic vocabulary: a king entering a city on a horse was coming for war; a king entering on a donkey was coming in peace. Solomon had ridden a royal mule to his own anointing (1 Kings 1:33). Zechariah's specification of a donkey — the foal of a donkey — was not incidental colour but a deliberate peace-arrival signal. The king comes to save, not to conquer by force.",
+              },
+              {
+                label: "The Deeper Paradox",
+                text: "The same verse calls him 'victorious' — but his victory is achieved through lowliness, not military power. This is the cross-shaped logic the disciples could not grasp until after the resurrection. The king wins by losing. The conqueror arrives on a colt. The throne he inherits is a cross before it is a cloud.",
+              },
+            ],
+          },
+          {
+            heading: "The Fulfilment on Palm Sunday",
+            contentBlocks: [
+              {
+                label: "Jesus' Deliberate Choreography",
+                text: "All four gospels record the Triumphal Entry (Matthew 21:1–9; Mark 11:1–10; Luke 19:28–40; John 12:12–16). John 12:14–16 explicitly cites Zechariah 9:9 and notes that the disciples 'did not understand these things at first, but when Jesus was glorified, then they remembered.' Jesus did not accidentally ride a donkey — he sent disciples ahead to fetch a specific animal, the colt of a donkey, fulfilling the precise detail of the prophecy.",
+              },
+              {
+                label: "The Crowd's Response",
+                text: "The crowd spread cloaks and palm branches — the reception due a conquering king — and shouted 'Hosanna to the Son of David! Blessed is he who comes in the name of the Lord!' (Matthew 21:9, citing Psalm 118:26). They read the symbolism correctly: this was a royal arrival. They misread its nature — expecting political liberation, not redemptive sacrifice. The king had come to conquer death, not Rome.",
+              },
+            ],
+          },
+        ],
+        christCentre:
+          "Jesus entered Jerusalem knowing what the week would hold. He did not arrive on a war horse demanding surrender; he arrived on a donkey, offering peace. The prophecy's paradox — righteous and victorious, yet humble — is the gospel paradox. The greatest victory in history was won by the most seemingly defeated Person in history. Palm Sunday is not a triumphant prelude to a tragic week; it is the announcement of the kind of King who wins by giving himself away.",
+        nextLesson: {
+          book: "messianic-prophecies",
+          lesson: "thirty-pieces-of-silver",
+          title: "Thirty Pieces of Silver",
+        },
+      },
+      {
+        slug: "thirty-pieces-of-silver",
+        title: "Thirty Pieces of Silver",
+        scriptureRef: "Zechariah 11:12–13",
+        readingTime: 5,
+        published: true,
+        keyVerse:
+          "So they paid me thirty pieces of silver. And the Lord said to me, 'Throw it to the potter' — the handsome price at which they valued me! So I took the thirty pieces of silver and threw them into the house of the Lord to the potter.",
+        keyVerseRef: "Zechariah 11:12–13",
+        intro:
+          "The precise betrayal price — and what would happen to the money afterward — prophesied in a single passage 500 years before Judas walked into the temple with a fistful of coins.",
+        sections: [
+          {
+            heading: "The Prophecy",
+            contentBlocks: [
+              {
+                label: "Zechariah's Acted Parable",
+                text: "In Zechariah 11, the prophet acts out the role of a rejected shepherd. He asks his employers to pay him his wages. They weigh out thirty pieces of silver — a contemptuous sum. God's response drips with irony: 'the lordly price at which I was priced by them.' Then the prophet is told to throw the money to 'the potter' in the house of the LORD — a strange, specific, seemingly arbitrary instruction.",
+              },
+              {
+                label: "The Price of a Slave",
+                text: "Thirty shekels of silver was the legal price for a slave gored by an ox under Mosaic law (Exodus 21:32). The priests and elders were assigning the value of a damaged slave to the Shepherd of Israel. The irony Zechariah flags — 'the handsome price at which they valued me' — is God's own sardonic commentary on how badly they had underestimated who stood before them.",
+              },
+            ],
+          },
+          {
+            heading: "Thrown to the Potter",
+            contentBlocks: [
+              {
+                label: "The Specific Instruction",
+                text: "The command is oddly specific: throw it to the potter, in the house of the LORD. Not donated to the treasury. Not spent on food. Thrown to a potter, in the temple precincts. This level of detail — amount, action, location, recipient — is unusual even for biblical prophecy. It demands a precise historical match.",
+              },
+              {
+                label: "Matthew's Fulfilment",
+                text: "Matthew 27:3–10 records the fulfilment in granular detail. Judas, regretting his betrayal, returns the thirty pieces to the chief priests and elders in the temple. They refuse to put it back in the treasury — 'it is blood money' — and use it instead to buy the Potter's Field as a burial ground for foreigners. Matthew explicitly cites this as the fulfilment of the prophecy. Every specific detail — amount, location of the return, the potter, the purchase — lands within hours of the crucifixion.",
+              },
+            ],
+          },
+          {
+            heading: "The Probability",
+            contentBlocks: [
+              {
+                label: "Peter Stoner's Calculation",
+                text: "Mathematician Peter Stoner assigned the 'thirty pieces of silver' prophecy a probability of 1 in 1,000 — that any random person would be betrayed for exactly that amount. He assigned the 'thrown to the potter in the house of the LORD' detail a separate probability of 1 in 100,000. Combined with the other six prophecies in his famous eight, the statistical case becomes staggering. But the numbers only sharpen what the text itself makes plain: this was written 500 years before it happened.",
+              },
+            ],
+          },
+        ],
+        christCentre:
+          "Judas received thirty pieces of silver — the price of a slave — for the Son of God. The priests declared him worth less than a man accidentally killed by an ox. But the irony cuts the other way: the price of Christ's betrayal became the price of a field for the dead — a burial place. From the cheapest possible valuation, God produced a gift for the unburied poor of Jerusalem. The one who was treated as worthless made even his betrayal into grace.",
+        nextLesson: {
+          book: "messianic-prophecies",
+          lesson: "forsaken-one",
+          title: "The Forsaken One",
+        },
+      },
+      {
+        slug: "forsaken-one",
+        title: "The Forsaken One",
+        scriptureRef: "Psalm 22",
+        readingTime: 7,
+        published: true,
+        keyVerse:
+          "My God, my God, why have you forsaken me? Why are you so far from saving me, so far from my cries of anguish?",
+        keyVerseRef: "Psalm 22:1",
+        intro:
+          "David's cry of dereliction — including the mocking, the piercing of hands and feet, and the casting of lots for garments — becomes Christ's cry from the cross, in a psalm written 1,000 years before crucifixion.",
+        sections: [
+          {
+            heading: "The Opening Cry (v. 1)",
+            contentBlocks: [
+              {
+                label: "The Dereliction",
+                text: "Psalm 22 opens with a cry of absolute abandonment: 'My God, my God, why have you forsaken me?' It is the language of a man who has lost the felt sense of God's presence entirely — not because God has abandoned his covenant, but because the psalmist is bearing something that creates the experience of total separation.",
+              },
+              {
+                label: "Jesus' Quotation",
+                text: "Matthew 27:46 and Mark 15:34 record Jesus crying these exact words from the cross in Aramaic: 'Eloi, Eloi, lema sabachthani?' In rabbinic practice, quoting the opening line of a psalm was the conventional way of citing the entire psalm — the first line was the title. Jesus was not expressing mere emotional desolation; he was announcing, to anyone literate in Scripture, that the entirety of Psalm 22 was being enacted in that moment.",
+              },
+            ],
+          },
+          {
+            heading: "The Mocking (vv. 7–8)",
+            contentBlocks: [
+              {
+                label: "The Prophecy",
+                text: "'All who see me mock me; they make mouths at me; they wag their heads: \"He trusts in the LORD; let him deliver him; let him rescue him, for he delights in him!\"' The specific content of the mockery is predicted: not just that he would be mocked, but the form — head-wagging and the taunt that God should rescue his favoured one.",
+              },
+              {
+                label: "NT Fulfilment",
+                text: "Matthew 27:39, 43 records the fulfilment verbatim: 'Those who passed by derided him, wagging their heads... \"He trusts in God; let God deliver him now, if he desires him.\"' The bystanders at Calvary were not inventing cruelty — they were reciting a script written a millennium earlier, without knowing it.",
+              },
+            ],
+          },
+          {
+            heading: "Pierced Hands and Feet (v. 16)",
+            contentBlocks: [
+              {
+                label: "The Prophecy",
+                text: "'For dogs encompass me; a company of evildoers encircles me; they have pierced my hands and feet.' This is the single most debated verse in the psalm. The Masoretic text reads ka'ari ('like a lion'), which gives an incomplete sentence. The LXX, the Dead Sea Scrolls text, and the Nahal Hever scroll all read ka'aru ('they have pierced') — the reading behind the standard English translations.",
+              },
+              {
+                label: "The Textual Evidence",
+                text: "The Great Psalm Scroll from Qumran (4QPsf) and the Nahal Hever scroll (c. 1st century BC) both support the 'pierced' reading — predating the Christian era. These manuscripts decisively refute the claim that the 'piercing' reading was a Christian invention. Crucifixion was not a Jewish method of execution; the image of pierced hands and feet in a Jewish psalm, written 1,000 years before Christ, points to a fulfilment the psalmist himself could not have engineered.",
+              },
+            ],
+          },
+          {
+            heading: "Garments Divided (v. 18)",
+            contentBlocks: [
+              {
+                label: "The Prophecy",
+                text: "'They divide my garments among them, and for my clothing they cast lots.' This is remarkable in its specificity: not merely that the victim's clothes are taken, but that lots are cast for a specific garment — implying it was too valuable to divide but worth gambling over.",
+              },
+              {
+                label: "NT Fulfilment",
+                text: "John 19:23–24 is the only gospel to record both the dividing and the lot-casting: 'When the soldiers had crucified Jesus, they took his garments and divided them into four parts... But his tunic was seamless, woven in one piece from top to bottom, so they said, \"Let us not tear it, but cast lots for it.\"' John then explicitly states: 'This was to fulfil the Scripture.' The seamless tunic was too whole to divide — so they gambled for it, fulfilling Psalm 22:18 in both clauses.",
+              },
+            ],
+          },
+        ],
+        christCentre:
+          "Psalm 22 ends not in abandonment but in praise: 'He has not despised or scorned the suffering of the afflicted one; he has not hidden his face from him but has listened to his cry for help' (v. 24). The dereliction was real — Christ bore the full weight of sin's separation — but it was not the last word. The psalm that opened with 'My God, my God, why have you forsaken me?' closes with 'future generations will be told about the Lord, and proclaim his righteousness.' The cross is not the end of the story. It is the pivot.",
+        nextLesson: {
+          book: "messianic-prophecies",
+          lesson: "risen-lord",
+          title: "The Risen Lord",
+        },
+      },
+      {
+        slug: "risen-lord",
+        title: "The Risen Lord",
+        scriptureRef: "Psalm 16:10",
+        readingTime: 5,
+        published: true,
+        keyVerse:
+          "Because you will not abandon me to the realm of the dead, nor will you let your faithful one see decay.",
+        keyVerseRef: "Psalm 16:10",
+        intro:
+          "He would not see corruption — and Peter's Pentecost proof rested entirely on this single observation: David's tomb was still occupied, so the prophecy must refer to someone else.",
+        sections: [
+          {
+            heading: "The Prophecy",
+            contentBlocks: [
+              {
+                label: "Psalm 16 — A Psalm of Trust",
+                text: "Psalm 16 is David's expression of complete confidence in God's protection: 'I have set the LORD always before me; because he is at my right hand, I shall not be shaken.' The psalm reaches its climax in verses 9–11: 'Therefore my heart is glad, and my whole being rejoices; my flesh also dwells secure. For you will not abandon my soul to Sheol, or let your holy one see corruption.' The word translated 'corruption' or 'decay' (shaḥat) refers to the decomposition of the body in the grave.",
+              },
+              {
+                label: "The Problem with a Literal Reading",
+                text: "If Psalm 16:10 simply expresses David's confidence that God will protect his life, it had already been falsified — David died. His tomb was in Jerusalem (1 Kings 2:10; Nehemiah 3:16), and it was well-known. The promise of 'not seeing corruption' could not have been fulfilled in David's own body. The prophecy either fails, or it points beyond David to someone whose body did not decay.",
+              },
+            ],
+          },
+          {
+            heading: "Peter's Pentecost Proof",
+            contentBlocks: [
+              {
+                label: "The Apostolic Argument",
+                text: "Acts 2:25–32 records Peter's Pentecost sermon. He quotes Psalm 16:8–11 and then makes his argument explicit: 'Brothers, I may say to you with confidence about the patriarch David that he both died and was buried, and his tomb is with us to this day.' David's occupied tomb is the linchpin. If the prophecy applied to David, it had already failed. Therefore David 'foresaw and spoke about the resurrection of Christ, that he was not abandoned to Hades, nor did his flesh see corruption.'",
+              },
+              {
+                label: "The Logic",
+                text: "Peter's argument is not mystical — it is historical and textual. He reasons from three premises: (1) David wrote Psalm 16; (2) David died and his body decomposed; (3) therefore David was prophesying about someone else whose body would not decompose. The resurrection of Jesus is the only event in history that satisfies premise 3. The empty tomb is not just a claim — it is the fulfilment of a 1,000-year-old prophetic logic.",
+              },
+            ],
+          },
+          {
+            heading: "Paul at Antioch",
+            contentBlocks: [
+              {
+                label: "The Second Citation",
+                text: "Acts 13:34–37 records Paul using the identical argument at Antioch: 'And as for the fact that he raised him from the dead, no more to return to corruption, he has spoken in this way: \"I will give you the holy and sure blessings of David.\" Therefore he also says in another psalm, \"You will not let your Holy One see corruption.\" For David, after he had served the purpose of God in his own generation, fell asleep and was laid with his fathers and saw corruption, but he whom God raised up did not see corruption.'",
+              },
+              {
+                label: "The Resurrection as Prophetic Fulfilment",
+                text: "For both Peter and Paul, the resurrection is not primarily a miracle performed to prove Jesus is powerful — it is the fulfilment of a prophetic necessity. It had to happen because Psalm 16 said it would. The resurrection was not an afterthought to the cross; it was the prophetic plan. Every Easter morning is the answer to a thousand-year-old question embedded in a psalm of trust.",
+              },
+            ],
+          },
+        ],
+        christCentre:
+          "Psalm 16 is a psalm of trust — David resting in God's faithfulness. The deepest expression of that trust is the confidence that not even death is the final word. Christ entered death trusting the Father completely. Three days later, the Father answered. 'You will not abandon my soul to Sheol' was not wishful thinking — it was prophecy. And the empty tomb is how God said Amen.",
+        nextLesson: {
+          book: "messianic-prophecies",
+          lesson: "priest-forever",
+          title: "Priest Forever",
+        },
+      },
+      {
+        slug: "priest-forever",
+        title: "Priest Forever",
+        scriptureRef: "Psalm 110",
+        readingTime: 6,
+        published: true,
+        keyVerse:
+          "The Lord says to my lord: 'Sit at my right hand until I make your enemies a footstool for your feet.'",
+        keyVerseRef: "Psalm 110:1",
+        intro:
+          "The most-cited Old Testament passage in the entire New Testament — a priest and king on an eternal throne, whose ongoing ministry is the basis of every believer's access to God right now.",
+        sections: [
+          {
+            heading: "The Throne Promise (v. 1)",
+            contentBlocks: [
+              {
+                label: "The Psalm",
+                text: "Psalm 110 opens with a divine declaration: 'The LORD (Yahweh) says to my Lord (Adonai): Sit at my right hand until I make your enemies your footstool.' David is speaking, but he addresses someone as 'my Lord' — a person of superior status to himself. The question Jesus posed to the Pharisees in Matthew 22:41–46 was devastating: if the Messiah is David's Son, why does David call him Lord?",
+              },
+              {
+                label: "The Most-Cited OT Text in the NT",
+                text: "Psalm 110:1 is quoted or directly alluded to more than any other Old Testament passage in the New Testament — appearing in Matthew 22, Mark 12, Luke 20, Acts 2, Romans 8, 1 Corinthians 15, Ephesians 1, Colossians 3, Hebrews 1, 5, 7, 8, 10, 12, and 1 Peter 3. The early church's entire understanding of the ascension, heavenly session, and second advent was framed by this verse.",
+              },
+            ],
+          },
+          {
+            heading: "The Melchizedek Priesthood (v. 4)",
+            contentBlocks: [
+              {
+                label: "The Prophecy",
+                text: "'The LORD has sworn and will not change his mind: You are a priest forever after the order of Melchizedek.' This verse combines two offices that the Law of Moses kept strictly separate: king and priest. In Israel, kings were from Judah/David; priests were from Levi/Aaron. Psalm 110 prophesies a Messiah who holds both offices simultaneously — not by Levitical descent but by a divine oath rooted in the older, pre-Levitical priesthood of Melchizedek.",
+              },
+              {
+                label: "The Hebrews Exposition",
+                text: "The book of Hebrews devotes three full chapters (5, 7, 10) to Psalm 110:4. The argument: Melchizedek was a priest before Abraham, superior to Levi (since Levi's ancestor Abraham paid tithes to Melchizedek). Christ's priesthood is therefore superior to the entire Levitical system — not because he broke the Law but because he fulfils a priesthood the Law could only shadow. His priesthood rests not on genealogy but on 'the power of an indestructible life' (Hebrews 7:16).",
+              },
+            ],
+          },
+          {
+            heading: "The Heavenly Ministry",
+            contentBlocks: [
+              {
+                label: "Sitting and Interceding",
+                text: "Hebrews 7:25 — 'He is able to save to the uttermost those who draw near to God through him, since he always lives to make intercession for them.' Christ's current ministry is not passive waiting. He is the Great High Priest who, having offered himself once for all, now intercedes for every believer. The 'sitting' of Psalm 110:1 denotes the completion of the sacrificial work; the ongoing priesthood of verse 4 denotes the continuous intercessory work.",
+              },
+              {
+                label: "The Second Advent",
+                text: "'Until I make your enemies your footstool' — the sitting is not permanent. Psalm 110:1 anticipates a moment when the session ends and the reign is fully and visibly established. 1 Corinthians 15:25–26 maps this to the resurrection and consummation: 'For he must reign until he has put all his enemies under his feet. The last enemy to be destroyed is death.' The priest who intercedes becomes the King who reigns — the two roles of Psalm 110 reach their full expression at the second advent.",
+              },
+            ],
+          },
+        ],
+        christCentre:
+          "Psalm 110 answers the question every suffering believer asks: what is Jesus doing right now? He is seated at the right hand of the Majesty on high (Hebrews 1:3), interceding for us by name (Romans 8:34), as a priest after the order of Melchizedek — not by law but by life. The same Jesus who offered himself at Calvary is the Jesus who stands in our defence in the heavenly sanctuary. The priesthood that began with a cross continues in a throne room — and it will not end until every enemy, including death itself, is under his feet.",
+      },
+    ],
+  },
 ];
 
 export function findLesson(
